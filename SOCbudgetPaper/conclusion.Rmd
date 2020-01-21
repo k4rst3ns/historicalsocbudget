@@ -1,0 +1,4 @@
+\conclusions
+
+The conclusion goes here.
+You can modify the section name with  `\conclusions[modified heading if necessary]`.

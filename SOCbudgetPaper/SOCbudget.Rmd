@@ -1,0 +1,98 @@
+---
+title: Historical Soil Organic Carbon Budget
+journal: "`r rticles::copernicus_journal_abbreviations(journal_name = 'communication')`"
+author:
+  - given_name: Kristine
+    surname: Karstens
+    affiliation: 1
+    email: kristine.karstenst@pik-potsdam.de
+    corresponding: true
+  - given_name: Benjamin Leon
+    surname: Bodirsky
+    affiliation: 1
+  - given_name: Alexander
+    surname: Popp
+    affiliation: 1
+
+affiliation:
+  - code: 1
+    address: Potsdam-Institut of Climate Impacts Research, Potsdam, Germany
+
+abstract: | 
+
+ SOC one of larges c sinks on earth (3 times larger biospehre pool). Agricultural management leads to a depletion of soil organic crabon. However
+ this depletion of soil organic carbon (SOC) pools are so far not well represented in global assessments of historic carbon emissions. While SOC
+ models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these 
+ biophysical processes are still little investigated.
+ Here we create a spatial explicit data set for crop residue and manure management on cropland based on global historic production (FAOSTAT) and 
+ land-use (LUH2) data and combine it with the IPCC Tier 2 approach to create a half-degree resolution soil organic carbon budget on mineral soils.
+ We estimate that due to arable farming soils have lost over (?) GtOC of which (??) GtOC have been released within the period 1990-2010.
+ Tier 2 IPCC methodolgy estimates higher soil organic carbon losses than Tier 1 methods, which may origin from … . We also find that SOC is very 
+ sensity to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models. 
+
+bibliography: SOCbudget.bib
+running:
+  title: R Markdown Template for Copernicus
+  author: Nüst et al.
+# This section is mandatory even if you declare that no competing interests are present.
+competinginterests: |
+  The authors declare no competing interests.
+# OPTIONAL:
+
+algorithms: true
+# See https://publications.copernicus.org/for_authors/licence_and_copyright.html, normally used for transferring the copyright, if needed.
+
+copyrightstatement: |
+  The author's copyright for this publication is transferred to institution/company.
+
+availability:
+  codedata: |
+    use this to add a statement when having data sets and software code available
+
+authorcontribution: |
+  Karstens wrote code and paper build on work of Bodirsky. Bodirsky and Popp revised paper.
+
+disclaimer: |
+  We like Copernicus.
+
+acknowledgements: |
+  Thanks to the rticles contributors!
+
+appendix: |
+  \section{Figures and tables in appendices}
+  Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
+  \subsection{Option 1}
+  If you sorted all figures and tables into the sections of the text, please also sort the appendix figures and appendix tables into the respective appendix sections.
+  They will be correctly named automatically.
+  \subsection{Option 2}
+  If you put all figures after the reference list, please insert appendix tables and figures after the normal tables and figures.
+  
+  To rename them correctly to A1, A2, etc., please add the following commands in front of them:
+  `\appendixfigures` needs to be added in front of appendix figures
+  `\appendixtables` needs to be added in front of appendix tables
+  
+  Please add `\clearpage` between each table and/or figure. Further guidelines on figures and tables can be found below.
+
+output:
+  rticles::copernicus_article: default
+  bookdown::pdf_book:
+    base_format: rticles::copernicus_article # for using bookdown features like \@ref()
+---
+
+```{r child = 'introduction.Rmd'}
+```
+
+```{r child = 'methods.Rmd'}
+```
+
+```{r child = 'results.Rmd'}
+```
+
+```{r child = 'discussion.Rmd'}
+```
+
+```{r child = 'conclusion.Rmd'}
+```
+
+
+

@@ -1,0 +1,32 @@
+# Content section with citations
+
+See the [R Markdown docs for bibliographies and citations](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html).
+
+Copernicus supports biblatex and a sample bibliography is in file `sample.bib`.
+Read [], and [see ].
+
+# Content section with R code chunks
+
+```{r, echo = FALSE}
+sum <- 1 + 41
+```
+
+You should always use `echo = FALSE` on R Markdown code blocks as they add formatting and styling not desired by Copernicus.
+The hidden workflow results in `r sum`.
+
+You can add verbatim code snippets without extra styles by using ` ``` ` without additional instructions.
+
+```
+sum <- 1 + 41
+```
+
+# Content section with list
+
+If you want to insert a list, you must
+
+- leave
+
+- empty lines
+
+- between each list item
+
