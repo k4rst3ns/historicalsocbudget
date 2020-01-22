@@ -149,53 +149,75 @@ Introduction text goes here. You can change the name of the section if
 neccessary using
 \texttt{\textbackslash{}introduction{[}modified\ heading{]}}.
 
-The following settings can or must be configured in the header of this
-file and are bespoke for Copernicus manuscripts:
-
-\begin{itemize}
-\item
-  The \texttt{journal} you are submitting to using the official
-  abbreviation.
-\item
-  You can use the function
-  \texttt{rticles::copernicus\_journal\_abbreviations(name\ =\ \textquotesingle{}...\textquotesingle{})}
-  to search the existing journals.
-\end{itemize}
-
 \section{Method (50)}
 
 \subsection{Carbon Budget (50)}
 
-Based on the IPCC guidelines \citep[\citet{IPCC2019}]{IPCC2006} for soil
-organic carbon stocks, we combining approaches to estimate SOC stocks by
-weighting inflows via dead plant material (see @ref(sec:carboninputs))
-against outflows through SOC decay (see @ref(sec:tier1),
-@ref(sec:tier2)). Carbon displacement via leaching and erosion is
-neglected for this budget.
+Based on the IPCC guidelines vol.~4 and their refinement
+(\citep{ipcc_2006_2006},\citep{ipcc_2019_2019}) for soil organic carbon
+stocks, we combining approaches to estimate SOC stocks by weighting
+inflows via dead plant material (see \ref{sec:carboninputs}) against
+outflows through SOC decay (see \ref{sec:tier2}). Carbon displacement
+via leaching and erosion is neglected in this study. We calculate annual
+land use type specific budgets for cropland, pastures and natural
+vegetation, also representin land conversion as transfer between landuse
+type budgets. A simple approach based o the tier 1 method of the older
+IPCC guidelines vol 4. (\citet{ipcc_2006_2006}) using stock change
+factors, is applied to cross validated results \ref{sec:tier1}
 
-Connecting carbon inputs with soil carbon dynamics will create a budget
-of in- and outflows.
+\subsubsection{Carbon Inputs to the Soil}\label{sec:carboninputs}
+
+Carbon input estimations are based on the land use type. Whereas
+cropland inputs are mainly formed by disaggregated country statistics on
+residue, dead below ground and cover crop biomass, pasture and natural
+vegetation inputs are estimate via modelled annual litterfall rates.
+Using the steady-state method of the IPCC guidelines
+(\citep{ipcc_2019_2019}) carbon inputs have to be accompined by data on
+lignin and nitrogen content to allocate dead plant biomass to the
+corrosponding soil pools based on the chemical texture. Sources for all
+use data can be found in table \ref{tab:datasourceinputs}
+
+\begin{table*}[h]
+\caption{Sources for carbon input data}
+\begin{tabular}{l l l}
+\tophline
+ Land use types   & carbon inputs & nitrogen and lignin content \\
+\middlehline
+ Cropland         & FAO statistics, AQUASTAT, LPJmL4 [1] & default values [\cite{ipcc_2006_2006}] \\
+ Pasture          & annual litterfall in $\tfrac{gC}{m^2}$ from LPJmL4 - manage grassland [3] & default values [2] \\
+ Natural vegetation & annual litterfall in $\tfrac{gC}{m^2}$ from LPJmL4  & \begin{minipage}[t]{0.37\columnwidth}\raggedright\strut Nitrogen and lignin content of tree compartments used in CENTURY \strut \end{minipage}\tabularnewline
+\bottomhline
+\end{tabular}
+\label{tab:datasourceinputs}
+\belowtable{}
+\end{table*}
 
 \subsubsection{Soil Carbon turnover following (new) Tier 2 method
 (300)}\label{sec:tier2}
 
-Yearly turnover between three different SOC pools for the topsoil is
-model using global parameters.
+We are following the steady-state method of the refinement of the IPCC
+guidelines vol.~4 (\citet{ipcc_2019_2019}) by calculating yearly
+turnover and transfer rates between three different SOC pools for the
+topsoil (0-30 cm). The approach is based on global parameters
+({[}@ref(ipcc\_2019\_2019){]}) as well as half-degree data on sand
+fraction (SoilGrids), temperature, preciptation and potential
+evapotranspiration (CRU). Next to the given climatic and natural
+biophysical properties irrigation regime (rainfed vs.~irrigated) as well
+as tillage (as soil disturbance indicator) modificate processes. For
+cropland an assessment of tillage types and irrigation conditions has
+been made, whereas on pastures and natural vegetation, we assume rainfed
+and non-tilled conditions.
 
 \subsubsection{Soil Carbon turnover following Tier 1
 (150)}\label{sec:tier1}
 
-Stock changes are calculated using simple change factors on the SOC
-pools for the topsoil.
-
-\subsubsection{Carbon Inputs to the Soil}\label{sec:carboninputs}
-
-Carbon inputs are estimated based on the land use. Whereas cropland
-inputs are mainly formed by residue, dead below ground and cover crop
-biomass alterate by the corresponding management practice, pasture and
-natural vegetation inputs are estimate via modelled annual litterfall
-rates. For the former we use various data sets and rule based
-approaches, which are specified in @ref(sec:agrimanagement)
+Following the tier 1 approach of the IPCC guidelines vol.~4
+(\citet{ipcc_2006_2006}), stocks are estimated via stock change factors
+given by the IPCC for the topsoil (0-30 cm) and based on measurements.
+The factors are differentiate between different crop and management
+systems reflecting different dynamics under changed in- and outflows
+without explicitly tracking these. They can be seen as conservative
+guesses and will be used to evaluate our modelling based results.
 
 \subsection{Agricultural management (50)}\label{sec:agrimanagement}
 
@@ -229,160 +251,9 @@ LUH2v2 are use to estimate water effects on decay rates.
 Tillage data sets of {[}Vera, others{]} together with rules are used to
 drive tillage effect on decay rates.
 
-\section{Content section with citations}
+\section{Results}
 
-See the
-\href{http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{R
-Markdown docs for bibliographies and citations}.
-
-Copernicus supports biblatex and a sample bibliography is in file
-\texttt{sample.bib}. Read {[}{]}, and {[}see {]}.
-
-\section{Content section with R code chunks}
-
-You should always use \texttt{echo\ =\ FALSE} on R Markdown code blocks
-as they add formatting and styling not desired by Copernicus. The hidden
-workflow results in 42.
-
-You can add verbatim code snippets without extra styles by using
-\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}} without
-additional instructions.
-
-\begin{verbatim}
-sum <- 1 + 41
-\end{verbatim}
-
-\section{Content section with list}
-
-If you want to insert a list, you must
-
-\begin{itemize}
-\item
-  leave
-\item
-  empty lines
-\item
-  between each list item
-\end{itemize}
-
-\section{Examples from the official template}
-
-\subsection{FIGURES}
-
-When figures and tables are placed at the end of the MS (article in
-one-column style), please add \clearpage between bibliography and first
-table and/or figure as well as between each table and/or figure.
-
-\subsection{FIGURES}
-
-When figures and tables are placed at the end of the MS (article in
-one-column style), please add \clearpage between bibliography and first
-table and/or figure as well as between each table and/or figure.
-
-\subsubsection{ONE-COLUMN FIGURES}
-
-Include a 12cm width figure of Nikolaus Copernicus from
-\href{https://en.wikipedia.org/wiki/File:Nikolaus_Kopernikus.jpg}{Wikipedia}
-with caption using R Markdown.
-
-\subsubsection{TWO-COLUMN FIGURES}
-
-You can also include a larger figure.
-
-\subsection{TABLES}
-
-You can ad \LaTeX table in an R Markdown document to meet the template
-requirements.
-
-\subsubsection{ONE-COLUMN TABLE}
-
-\begin{table}[t]
-\caption{TEXT}
-\begin{tabular}{l c r}
-\tophline
-
-a & b & c \\
-\middlehline
-1 & 2 & 3 \\
-
-\bottomhline
-\end{tabular}
-\belowtable{Table Footnotes}
-\end{table}
-
-\subsubsection{TWO-COLUMN TABLE}
-
-\begin{table*}[t]
-\caption{TEXT}
-\begin{tabular}{l c r}
-\tophline
-
-a & b & c \\
-\middlehline
-1 & 2 & 3 \\
-
-\bottomhline
-\end{tabular}
-\belowtable{Table footnotes}
-\end{table*}
-
-\subsection{MATHEMATICAL EXPRESSIONS}
-
-All papers typeset by Copernicus Publications follow the math
-typesetting regulations given by the IUPAC Green Book (IUPAC:
-Quantities, Units and Symbols in Physical Chemistry, 2nd Edn., Blackwell
-Science, available at:
-http://old.iupac.org/publications/books/gbook/green\_book\_2ed.pdf,
-1993).
-
-Physical quantities/variables are typeset in italic font (t for time, T
-for Temperature)
-
-Indices which are not defined are typeset in italic font (x, y, z, a, b,
-c)
-
-Items/objects which are defined are typeset in roman font (Car A, Car B)
-
-Descriptions/specifications which are defined by itself are typeset in
-roman font (abs, rel, ref, tot, net, ice)
-
-Abbreviations from 2 letters are typeset in roman font (RH, LAI)
-
-Vectors are identified in bold italic font using \vec{x}
-
-Matrices are identified in bold roman font
-
-Multiplication signs are typeset using the LaTeX commands
-\texttt{\textbackslash{}times} (for vector products, grids, and
-exponential notations) or \texttt{\textbackslash{}cdot}
-
-The character * should not be applied as mutliplication sign
-
-\subsection{ALGORITHM}
-
-If you want to use algorithms, you can either enable the required
-packages in the header (the default, see \texttt{algorithms:\ true}), or
-make sure yourself that the \LaTeX packages \texttt{algorithms} and
-\texttt{algorithmicx} are installed so that \texttt{algorithm.sty}
-respectively \texttt{algorithmic.sty} can be loaded by the Copernicus
-template. Copernicus staff will remove all undesirable packages from
-your LaTeX source code, so please stick to using the header option,
-which only adds the two acceptable packages.
-
-\begin{algorithm}
-\caption{Algorithm Caption}
-\label{a1}
-\begin{algorithmic}
-\STATE $i\gets 10$
-  \IF {$i\geq 5$} 
-\STATE $i\gets i-1$
-  \ELSE
-\IF {$i\leq 3$}
-\STATE $i\gets i+2$
-  \ENDIF
-\ENDIF
-\end{algorithmic}
-\end{algorithm}
+\section{Discussion}
 
 \conclusions
 
@@ -402,26 +273,25 @@ available} %% use this section when having data sets and software code available
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\section{Figures and tables in appendices}
+\section{Figures and tables in appendices}\subsection{Option 1}
 
-Regarding figures and tables in appendices, the following two options
-are possible depending on your general handling of figures and tables in
-the manuscript environment: \subsection{Option 1} If you sorted all
-figures and tables into the sections of the text, please also sort the
-appendix figures and appendix tables into the respective appendix
-sections. They will be correctly named automatically.
-\subsection{Option 2} If you put all figures after the reference list,
-please insert appendix tables and figures after the normal tables and
-figures.
+If you sorted all figures and tables into the sections of the text,
+please also sort the appendix figures and appendix tables into the
+respective appendix sections. They will be correctly named
+automatically. \subsection{Option 2} If you put all figures after the
+reference list, please insert appendix tables and figures after the
+normal tables and figures.
 
-To rename them correctly to A1, A2, etc., please add the following
-commands in front of them: \texttt{\textbackslash{}appendixfigures}
-needs to be added in front of appendix figures
-\texttt{\textbackslash{}appendixtables} needs to be added in front of
-appendix tables
+\texttt{\textbackslash{}appendixfigures} needs to be added in front of
+appendix figures \texttt{\textbackslash{}appendixtables} needs to be
+added in front of appendix tables
 
 Please add \texttt{\textbackslash{}clearpage} between each table and/or
 figure. Further guidelines on figures and tables can be found below.
+Regarding figures and tables in appendices, the following two options
+are possible depending on your general handling of figures and tables in
+the manuscript environment: To rename them correctly to A1, A2, etc.,
+please add the following commands in front of them:
 \noappendix
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
