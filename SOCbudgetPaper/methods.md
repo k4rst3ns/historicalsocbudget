@@ -9,7 +9,7 @@ A simple approach based o the tier 1 method of the older IPCC guidelines vol 4. 
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
 
-Carbon input estimations are based on the land use type. Whereas cropland inputs are mainly formed by disaggregated country statistics on residue, dead below ground and cover crop biomass, pasture and natural vegetation inputs are estimate via modelled annual litterfall rates. Using the steady-state method of the IPCC guidelines ([@ipcc_2019_2019]) carbon inputs have to be accompined by data on lignin and nitrogen content to allocate dead plant biomass to the corrosponding soil pools based on the chemical texture. Sources for all use data can be found in table \@ref(tab:datasourceinputs)
+Carbon input estimations are based on the land use type. Whereas cropland inputs are mainly(?) formed by disaggregated country statistics on residue, dead below ground and cover crop biomass (see section X), pasture and natural vegetation inputs are estimate via modelled annual litterfall rates (make seperate section for pastures if they are calcualted differently). Using the steady-state method of the IPCC guidelines ([@ipcc_2019_2019]) carbon inputs have to be accompined by data on lignin and nitrogen content to allocate dead plant biomass to the corrosponding soil pools based on the chemical texture. Sources for all use data can be found in table \@ref(tab:datasourceinputs)
 
 
 \begin{table*}[h]
