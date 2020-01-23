@@ -3,15 +3,13 @@
 <!-- Soil carbon dynamics are modeled using a yearly based SOC model and carbon input and management data. -->
 
 ## Carbon Budget (50)
-
-Based on the IPCC guidelines vol. 4 and their refinement ([@ipcc_2006_2006],[@ipcc_2019_2019]) for soil organic carbon stocks, we combining approaches to estimate SOC stocks by weighting inflows via dead plant material (see \@ref(sec:carboninputs)) against outflows through SOC decay (see \@ref(sec:tier2)). Carbon displacement via leaching and erosion is neglected in this study. We calculate annual land use type specific budgets for cropland, pastures and natural vegetation, also representin land conversion as transfer between landuse type budgets. <!-- Maybe include a flow figure and reference to it here --> 
-A simple approach based o the tier 1 method of the older IPCC guidelines vol 4. (@ipcc_2006_2006) using stock change factors, is applied to cross validated results \@ref(sec:tier1) 
+Our soil carbon stock estimates are base on the IPCC guidelines vol. 4 and their refinement ([@ipcc_2006_2006],[@ipcc_2019_2019]), combining several approaches to estimate SOC stocks by weighting inflows via dead plant material (see \@ref(sec:carboninputs)) against outflows through SOC decay (see \@ref(sec:tier2)). (Carbon displacement via leaching and erosion is neglected in this study. --> move to discussion) We calculate annual land use type specific budgets for cropland, pastures and natural vegetation, also representing land conversion as transfer between landuse type budgets. <!-- Maybe include a flow figure and reference to it here --> 
+(A simple approach based on the tier 1 method of the older IPCC guidelines vol 4. (@ipcc_2006_2006) using stock change factors, is applied to cross validated results \@ref(sec:tier1) --> move somewhere else)
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
 
 Carbon input estimations are based on the land use type. Whereas cropland inputs are mainly(?) formed by disaggregated country statistics on residue, dead below ground and cover crop biomass (see section X), pasture and natural vegetation inputs are estimate via modelled annual litterfall rates (make seperate section for pastures if they are calcualted differently). Using the steady-state method of the IPCC guidelines ([@ipcc_2019_2019]) carbon inputs have to be accompined by data on lignin and nitrogen content to allocate dead plant biomass to the corrosponding soil pools based on the chemical texture. Sources for all use data can be found in table \@ref(tab:datasourceinputs)
-
-
+patch-1
 \begin{table*}[h]
 \caption{Sources for carbon input data}
 \begin{tabular}{l l l}
