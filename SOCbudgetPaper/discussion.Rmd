@@ -1,1 +1,7 @@
 # Discussion
+
+Shortcommings:
+
+- Carbon displacement via leaching and erosion is neglected in this study.
+
+- Non-net/Gross land use transitions are not tracked in this study.

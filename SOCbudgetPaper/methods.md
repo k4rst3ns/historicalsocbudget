@@ -2,50 +2,135 @@
 
 <!-- Soil carbon dynamics are modeled using a yearly based SOC model and carbon input and management data. -->
 
-## Carbon Budget (50)
-Our soil carbon stock estimates are base on the IPCC guidelines vol. 4 and their refinement ([@ipcc_2006_2006],[@ipcc_2019_2019]), combining several approaches to estimate SOC stocks by weighting inflows via dead plant material (see \@ref(sec:carboninputs)) against outflows through SOC decay (see \@ref(sec:tier2)). (Carbon displacement via leaching and erosion is neglected in this study. --> move to discussion) We calculate annual land use type specific budgets for cropland, pastures and natural vegetation, also representing land conversion as transfer between landuse type budgets. <!-- Maybe include a flow figure and reference to it here --> 
-(A simple approach based on the tier 1 method of the older IPCC guidelines vol 4. (@ipcc_2006_2006) using stock change factors, is applied to cross validated results \@ref(sec:tier1) --> move somewhere else)
+## Carbon Stocks following (new) Tier 2 method (50) {#sec:carbonbudget}
+
+We calculate annual land use type specific soil organic carbon stocks for cropland, pastures and natural vegetation on half-degree resolution for the period of 1965 to 2010 based on the following three steps: (1) Calculating the land use (sub-)type specific steady-states and decay rates for SOC stocks given the current biophysical, climatic and agronomic conditions, (2) accounting for land conversation effects by transferring SOC between land use types and (3) updating SOC stocks based on the previous stock, the steady-state and the decay rate. 
+
+### Steady-state SOC stocks and decay rates
+
+In a simple first order kinetic approach the steady-state soil organic carbon stocks $SOC^{eq}$ are given by 
+\begin{equation}
+SOC^{eq} =\frac{C^{\textrm{in}}}{k}
+\label{eq:inoutflow}
+\end{equation}
+with $C^{\textrm{in}}$ being carbon inputs to the soil and $k$ denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon pools and entangled dynamics between them. Carbon inflow to each subpool (see \@ref(sec:carboninputs)) and decay rates (see \@ref(sec:tier2)) of each subpool are still the key components to determining steady-state SOC stocks.  
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
 
-Carbon input estimations are based on the land use type. Whereas cropland inputs are mainly(?) formed by disaggregated country statistics on residue, dead below ground and cover crop biomass (see section X), pasture and natural vegetation inputs are estimate via modelled annual litterfall rates (make seperate section for pastures if they are calcualted differently). Using the steady-state method of the IPCC guidelines ([@ipcc_2019_2019]) carbon inputs have to be accompined by data on lignin and nitrogen content to allocate dead plant biomass to the corrosponding soil pools based on the chemical texture. Sources for all use data can be found in table \@ref(tab:datasourceinputs)
-patch-1
-\begin{table*}[h]
-\caption{Sources for carbon input data}
-\begin{tabular}{l l l}
-\tophline
- Land use types   & carbon inputs & nitrogen and lignin content \\
-\middlehline
- Cropland         & FAO statistics, AQUASTAT, LPJmL4 [1] & default values [\cite{ipcc_2006_2006}] \\
- Pasture          & annual litterfall in $\tfrac{gC}{m^2}$ from LPJmL4 - manage grassland [3] & default values [2] \\
- Natural vegetation & annual litterfall in $\tfrac{gC}{m^2}$ from LPJmL4  & \begin{minipage}[t]{0.37\columnwidth}\raggedright\strut Nitrogen and lignin content of tree compartments used in CENTURY \strut \end{minipage}\tabularnewline
-\bottomhline
-\end{tabular}
-\label{tab:datasourceinputs}
-\belowtable{}
-\end{table*}
+We account for different carbon inputs sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+
+```{=latex}
+
+ \begin{table*}[h]
+ \caption{Type and data sources for carbon inputs to different land use types}
+ \begin{tabular}{l l l l}
+ \tophline
+  Land use types   & source of carbon inputs & data source & nitrogen and lignin content \\
+ \middlehline
+ \multirow{3}{*}{Cropland} & residues & FAOSTAT, LPJmL4 [2, sec:residues] & default values given by [2]  \\
+                            & dead below ground biomass of crops & FAOSTAT, LPJmL4 [2, sec:residues] & default values given by [2] \\
+                            & manure & FAOSTAT, Isabelle [2, sec:manure] & default values given by [2] \\
+                            \hline
+ \multirow{2}{*}{Pasture}  & annual litterfall & LPJmL4 [3] & default values given by [2] \\ 
+                            & manure  & FAOSTAT, Isabelle [2, sec:manure] & default values given by [2] \\
+                            \hline
+  Natural vegetation        & annual litterfall & LPJmL4 [4]& \begin{minipage}[t]{0.28\columnwidth}\raggedright\strut Nitrogen and lignin content of tree compartments used in CENTURY [4] \strut \end{minipage}\tabularnewline
+ \bottomhline
+ \end{tabular}
+ \label{tab:datasourceinputs}
+ \belowtable{}
+ \end{table*}
+```
+
+### Soil Organic Carbon decay (300) {#sec:tier2}
+
+Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates $k_{sub}$ given by the IPCC via
+
+\begin{equation}
+k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \underbrace{\cdot sf_{t,i} \quad \cdot till_{t,i}.}_{\text{only included for some subpools}}
+\label{eq:decayrates}
+\end{equation}
+
+For cropland we performed an assessment of tillage types and irrigation conditions, whereas on pastures and natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as considered effects for each land use types are shown in table \@ref(tab:datasourcedecay). To account for variations of decay rates within grid cells based on different tillage and irrigation regimes, average rates based on area shares are calculated.
+
+```{=latex}
+
+ \begin{table*}[h]
+ \caption{Type and data sources for carbon inputs to different land use types}
+ \begin{tabular}{l l l l}
+ \tophline
+  Land use types   & type of decay driver & parameter use to represent driver & data source \\
+ \middlehline
+ \multirow{2}{*}{all} & Soil quality & Sand fraction of the first 0-30 cm &  [SoilGrids]  \\
+                      \cline{2-4}
+                      
+                      & Mircobial activity & air temperature & [CRUp4.0] \\
+                      \cline{2-4}
+                      
+                      & Water restriction & precipitation \& potential evapotranspiration & [CRUp4.0] \\
+                      \cline{1-4}
+\multirow{2}{*}{\begin{minipage}[t]{0.2\columnwidth}\raggedright\strut Cropland\\(additionally)\strut\end{minipage}} & Water restriction*  & irrigation  & [sec:irrigation] \\ 
+                      \cline{2-4}
+                      
+                      & Soil disturbance & tillage & [sec:tillage] \\
+ \bottomhline
+ \end{tabular}
+ \label{tab:datasourcedecay}
+ \belowtable{}
+ \end{table*}
+```
+
+### SOC transfer between land use types
+
+We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type into another, a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{lut,t*}$ via 
+
+\begin{equation}
+SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,t} + \frac{SOC_{!lut,t-1}}{A_{!lut,t-1}} \cdot  AE_{lut,t} \qquad \forall sub, i  
+\label{eq:ctransfer}
+\end{equation}
+
+with $A$ being the area, $AR$ the area reduction and $AE$ the area expansion for a given land use type $lut$. Note that $!lut$ denotes the (sum over) land use type(s), which decrease(s) in the specific time step $t$. Data sources and methodology on land use states and changes are descripted in \@ref(sec:landuse).    
+
+### Total SOC stocks
+
+Carbon stocks $SOC$ for each subpool (sub) converge towards the calculate steady-state stock $SOC^{eq}$ for each land-use types (lut), each subpool (sub) and each annual time step (t) as represented in equation \@ref(eq:steadystate).
+
+\begin{equation}
+SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot \Delta t \qquad \forall lut, sub, i.
+\label{eq:steadystate}
+\end{equation}
+
+The global SOC stock for each time step can than be calculated via
+
+\begin{equation}
+SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t, i}.}^{\text{land use type specific SOC stock within a grid cell}}}_{\text{total SOC stock within a grid cell}}
+\label{eq:totalstock}
+\end{equation}
+
+<!-- Rewriting was till here!!!!!!!!!!! -->
+
+\newpage
 
 
-### Soil Carbon turnover following (new) Tier 2 method (300) {#sec:tier2}
 
-We are following the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) by calculating yearly turnover and transfer rates between three different SOC pools for the topsoil (0-30 cm). The approach is based on global parameters ([\@ref(ipcc_2019_2019)]) as well as half-degree data on sand fraction (SoilGrids), temperature, preciptation and potential evapotranspiration (CRU). 
-Next to the given climatic and natural biophysical properties irrigation regime (rainfed vs. irrigated) as well as tillage (as soil disturbance indicator) modificate processes. For cropland an assessment of tillage types and irrigation conditions has been made, whereas on pastures and natural vegetation, we assume rainfed and non-tilled conditions.
-<!-- Maybe clearify that the approach originally is not proposed on pasture and natural vegetation? -->
 
-### Soil Carbon turnover following Tier 1 (150) {#sec:tier1}
+
+## Carbon Budget following Tier 1 (150) {#sec:tier1}
 
 Following the tier 1 approach of the IPCC guidelines vol. 4 (@ipcc_2006_2006), stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on measurements. The factors are differentiate between different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. They can be seen as conservative guesses and will be used to evaluate our modelling based results.
-
 
 
 ## Agricultural management	(50) {#sec:agrimanagement}
 We combine data sets to estimate agricultural flows and management decisions on cropland.
 
-### Landuse and Landuse Change (150)
-We use LUH2v2 data for major Landuse types and their transition and fit cropspecific areas to country scale FAO data. 
+### Landuse and Landuse Change (150) {#sec:landuse}
+
+We use the Land-Use Harmonization 2 (LUH2, [@LUH2]) half-degree data for major land-use states. Cropland is subdivided using country scale FAO data ([@FAOSTAT]) as well as crop type specific half-degree data from LUH2v2 to disaggregate into our 19 crop types on half degree resolution (see appendix for table on crop types and their mapping to FAOSTAT and LUH types as well as for technical discription of the disaggregation method).
+Landuse transitions are calculate as area differences, allowing any land use type to either expand or shrink in each time step. Within cropland we do not track area transitions, following the averaging approach as descripted in \@ref(sec:tier2)/\@ref(sec:carbonbudget)
+<!-- How to explain why we do not track inside-cropland transitions? --> 
 
 ### Crop Production and Residues	(300)
-FAO Production values are combined with Feed estimations from [Isabelles Paper] and rule based demand shares. LPJmL yield and LUH landuse patterns are used to scale down to half-degree.
+FAOSTAT production ([@FAOSTAT]) values are combined with feed estimations including residue intake ([@weindl]) and rule based demand shares. LPJmL yield and calculate land use pattern (see \@ref(#sec:landuse)) are used to scale down to half-degree.
 
 ### Livestock Distribution and Manure Excretion	(300)
 Based on [Gridded Livestock of the world] we use rule based asumption to estimate livestock and manure distribution on the globe. Animal waste system shares are used as is [Bodirsky].

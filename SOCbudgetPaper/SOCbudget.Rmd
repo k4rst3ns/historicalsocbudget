@@ -63,25 +63,32 @@ appendix: |
 output:
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
+    md_extensions: +raw_attribute
   rticles::copernicus_article: default
   md_document:
     variant: markdown_github
 ---
+\newpage
 
 ```{r child = 'introduction.Rmd'}
 ```
+\newpage
 
 ```{r child = 'methods.Rmd'}
 ```
+\newpage
 
 ```{r child = 'results.Rmd'}
 ```
+\newpage
 
 ```{r child = 'discussion.Rmd'}
 ```
+\newpage
 
 ```{r child = 'conclusion.Rmd'}
 ```
+\newpage
 
 
 
