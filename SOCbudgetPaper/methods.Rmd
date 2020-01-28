@@ -16,6 +16,7 @@ SOC^{eq} =\frac{C^{\textrm{in}}}{k}
 with $C^{\textrm{in}}$ being carbon inputs to the soil and $k$ denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon pools and entangled dynamics between them. Carbon inflow to each subpool (see \@ref(sec:carboninputs)) and decay rates (see \@ref(sec:tier2)) of each subpool are still the key components to determining steady-state SOC stocks.  
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
+BB: maybe consider to include as text instead of table. The table takes it a bit out of focus. Maybe you want to have the focus on this rather than on other parts.
 
 We account for different carbon inputs sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
 
@@ -51,6 +52,9 @@ k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \underb
 \label{eq:decayrates}
 \end{equation}
 
+BB: braket includes sandyness instead of water.
+I would leave out the braket, and just state that non-crop areas are neither tilled nor irrigated. then the formulas are still correct.
+
 For cropland we performed an assessment of tillage types and irrigation conditions, whereas on pastures and natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as considered effects for each land use types are shown in table \@ref(tab:datasourcedecay). To account for variations of decay rates within grid cells based on different tillage and irrigation regimes, average rates based on area shares are calculated.
 
 ```{=latex}
@@ -82,14 +86,14 @@ For cropland we performed an assessment of tillage types and irrigation conditio
 
 ### SOC transfer between land use types
 
-We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type into another, a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{lut,t*}$ via 
+We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type (lut) into another(!lut) (BB: like this? then you need to change the order of the !lut in the equation; lut is reduced, !lut is expanded), a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{lut,t*}$ via 
 
 \begin{equation}
 SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,t} + \frac{SOC_{!lut,t-1}}{A_{!lut,t-1}} \cdot  AE_{lut,t} \qquad \forall sub, i  
 \label{eq:ctransfer}
 \end{equation}
 
-with $A$ being the area, $AR$ the area reduction and $AE$ the area expansion for a given land use type $lut$. Note that $!lut$ denotes the (sum over) land use type(s), which decrease(s) in the specific time step $t$. Data sources and methodology on land use states and changes are descripted in \@ref(sec:landuse).    
+with $A$ being the area, $AR$ the area reduction and $AE$ the area expansion for a given land use type $lut$. Note that $!lut$ denotes the (sum over) (BB: why braket?) land use type(s), which decrease(s) in the specific time step $t$. Data sources and methodology on land use states and changes are descripted in \@ref(sec:landuse).    
 
 ### Total SOC stocks
 
@@ -99,6 +103,8 @@ Carbon stocks $SOC$ for each subpool (sub) converge towards the calculate steady
 SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot \Delta t \qquad \forall lut, sub, i.
 \label{eq:steadystate}
 \end{equation}
+
+BB: What is delta t doing in this equation? The value woudl be 1, no?
 
 The global SOC stock for each time step can than be calculated via
 
@@ -117,26 +123,25 @@ SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t
 
 ## Carbon Budget following Tier 1 (150) {#sec:tier1}
 
-Following the tier 1 approach of the IPCC guidelines vol. 4 (@ipcc_2006_2006), stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on measurements. The factors are differentiate between different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. They can be seen as conservative guesses and will be used to evaluate our modelling based results.
-
+Following the tier 1 approach of the IPCC guidelines vol. 4 (@ipcc_2006_2006), stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on measurements. The factors  differentiate between different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. This method is used additionally to the Tier-2 approach to evaluate model accuracy.
 
 ## Agricultural management	(50) {#sec:agrimanagement}
-We combine data sets to estimate agricultural flows and management decisions on cropland.
+We combine data sets to estimate agricultural flows and management decisions on cropland. BB: wow. definetly shorter than 50 words! but do you need text hear at all?
 
 ### Landuse and Landuse Change (150) {#sec:landuse}
 
-We use the Land-Use Harmonization 2 (LUH2, [@LUH2]) half-degree data for major land-use states. Cropland is subdivided using country scale FAO data ([@FAOSTAT]) as well as crop type specific half-degree data from LUH2v2 to disaggregate into our 19 crop types on half degree resolution (see appendix for table on crop types and their mapping to FAOSTAT and LUH types as well as for technical discription of the disaggregation method).
-Landuse transitions are calculate as area differences, allowing any land use type to either expand or shrink in each time step. Within cropland we do not track area transitions, following the averaging approach as descripted in \@ref(sec:tier2)/\@ref(sec:carbonbudget)
-<!-- How to explain why we do not track inside-cropland transitions? --> 
+We use the Land-Use Harmonization 2 (LUH2, [@LUH2]) half-degree data for major land-use states. Cropland is subdivided using country scale FAO data ([@FAOSTAT]) as well as crop type (BB: crop functional type? ots not crop-specific) specific half-degree data from LUH2v2 to disaggregate into our 19 crop types on half degree resolution (see appendix for table on crop types and their mapping to FAOSTAT and LUH types as well as for technical discription of the disaggregation method).
+Landuse transitions are calculated as area differences, allowing any land use type to either expand or shrink in each time step. Within cropland we do not track area transitions, following the averaging approach as descripted in \@ref(sec:tier2)/\@ref(sec:carbonbudget)
+<!-- How to explain why we do not track inside-cropland transitions? --> BB: just dont explain it.
 
 ### Crop Production and Residues	(300)
-FAOSTAT production ([@FAOSTAT]) values are combined with feed estimations including residue intake ([@weindl]) and rule based demand shares. LPJmL yield and calculate land use pattern (see \@ref(#sec:landuse)) are used to scale down to half-degree.
+FAOSTAT production ([@FAOSTAT]) values are combined with feed basket estimates including residue and pasture intake ([@weindl]) and rule based demand shares(BB:?). LPJmL yields and calculated land use patterns (see \@ref(#sec:landuse)) are used to scale down to half-degree.
 
 ### Livestock Distribution and Manure Excretion	(300)
-Based on [Gridded Livestock of the world] we use rule based asumption to estimate livestock and manure distribution on the globe. Animal waste system shares are used as is [Bodirsky].
+Based on [Gridded Livestock of the world] we use rule based assumptions(BB?) to estimate livestock and manure distribution on global scale(BB: more detail). Animal waste system shares are used as in [Bodirsky].
 
 ### Irrigation (100)
-Simple growing period calculations together with irrigation shares of LUH2v2 are use to estimate water effects on decay rates.
+Simple growing period calculations together with irrigation shares of LUH2v2 are used (BB: you dont like d's, on't you?) to estimate water effects on decay rates.
 
 ### Tillage (100)
 Tillage data sets of [Vera, others] together with rules are used to drive tillage effect on decay rates.
