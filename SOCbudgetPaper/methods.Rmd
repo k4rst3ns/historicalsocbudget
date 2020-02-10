@@ -13,12 +13,12 @@ In a simple first order kinetic approach the steady-state soil organic carbon st
 SOC^{eq} =\frac{C^{\textrm{in}}}{k}
 \label{eq:inoutflow}
 \end{equation}
-with $C^{\textrm{in}}$ being carbon inputs to the soil and $k$ denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon pools and entangled dynamics between them. Carbon inflow to each subpool (see \@ref(sec:carboninputs)) and decay rates (see \@ref(sec:tier2)) of each subpool are still the key components to determining steady-state SOC stocks.  
+with $C^{\textrm{in}}$ being carbon inputs to the soil and $k$ denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon sub-pools (active, slow and passive) and entangled dynamics between them. Carbon inflow to each sub-pool (see \@ref(sec:carboninputs)) and decay rates (see \@ref(sec:tier2)) of each sub-pool are still the key components to determining steady-state SOC stocks.  
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
-BB: maybe consider to include as text instead of table. The table takes it a bit out of focus. Maybe you want to have the focus on this rather than on other parts.
+<!-- BB: maybe consider to include as text instead of table. The table takes it a bit out of focus. Maybe you want to have the focus on this rather than on other parts. -->
 
-We account for different carbon inputs sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+We account for different carbon inputs sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub-pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
 
 ```{=latex}
 
@@ -45,15 +45,12 @@ We account for different carbon inputs sources depending on the land use type (s
 
 ### Soil Organic Carbon decay (300) {#sec:tier2}
 
-Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates $k_{sub}$ given by the IPCC via
+Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates. Since the three different SOC sub-pools represent different SOC characteristics, the global decay rates and the associated drivers differ. Thus $k_{sub}$ is given by
 
 \begin{equation}
-k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \underbrace{\cdot sf_{t,i} \quad \cdot till_{t,i}.}_{\text{only included for some subpools}}
+k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \quad \underbrace{\cdot till_{t,i} \quad \overbrace{\cdot sf_{t,i}.}^\text{only for sub = active}}_{\text{for sub = (active,slow)}}
 \label{eq:decayrates}
 \end{equation}
-
-BB: braket includes sandyness instead of water.
-I would leave out the braket, and just state that non-crop areas are neither tilled nor irrigated. then the formulas are still correct.
 
 For cropland we performed an assessment of tillage types and irrigation conditions, whereas on pastures and natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as considered effects for each land use types are shown in table \@ref(tab:datasourcedecay). To account for variations of decay rates within grid cells based on different tillage and irrigation regimes, average rates based on area shares are calculated.
 
@@ -86,25 +83,35 @@ For cropland we performed an assessment of tillage types and irrigation conditio
 
 ### SOC transfer between land use types
 
-We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type (lut) into another(!lut) (BB: like this? then you need to change the order of the !lut in the equation; lut is reduced, !lut is expanded), a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{lut,t*}$ via 
+We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type into another, a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{lut,t*}$ via 
+
+<!--
+If land is converted from one land use type (lut) into another(!lut)
+(BB: like this? then you need to change the order of the !lut in the equation; lut is reduced, !lut is expanded)
+KK: Not sure, since it might be three different land use types there is no one into 'the' other.
+-->
 
 \begin{equation}
 SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,t} + \frac{SOC_{!lut,t-1}}{A_{!lut,t-1}} \cdot  AE_{lut,t} \qquad \forall sub, i  
 \label{eq:ctransfer}
 \end{equation}
 
-with $A$ being the area, $AR$ the area reduction and $AE$ the area expansion for a given land use type $lut$. Note that $!lut$ denotes the (sum over) (BB: why braket?) land use type(s), which decrease(s) in the specific time step $t$. Data sources and methodology on land use states and changes are descripted in \@ref(sec:landuse).    
+with $A$ being the area, $AR$ the area reduction and $AE$ the area expansion for a given land use type $lut$. Note that $!lut$ denotes the sum over all other land use types, which decreases in the specific time step $t$. Data sources and methodology on land use states and changes are descripted in \@ref(sec:landuse).   
 
 ### Total SOC stocks
 
-Carbon stocks $SOC$ for each subpool (sub) converge towards the calculate steady-state stock $SOC^{eq}$ for each land-use types (lut), each subpool (sub) and each annual time step (t) as represented in equation \@ref(eq:steadystate).
+Carbon stocks $SOC$ for each sub-pool (sub) converge towards the calculate steady-state stock $SOC^{eq}$ for each land-use types (lut), each sub-pool (sub) and each annual time step (t) as represented in equation \@ref(eq:steadystate).
 
 \begin{equation}
 SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot \Delta t \qquad \forall lut, sub, i.
 \label{eq:steadystate}
 \end{equation}
 
-BB: What is delta t doing in this equation? The value woudl be 1, no?
+<!-- 
+BB: What is delta t doing in this equation? The value woudl be 1, no? 
+KK: Yes, but the unit is important, since k is 1/a, we need something with a as unit to counteract it.
+We could also just write \cdot 1\unit{a}. I had the feeling the Detla is more elegant.
+-->
 
 The global SOC stock for each time step can than be calculated via
 
@@ -113,14 +120,10 @@ SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t
 \label{eq:totalstock}
 \end{equation}
 
-<!-- Rewriting was till here!!!!!!!!!!! -->
-
 \newpage
 
 
-
-
-
+<!--
 ## Carbon Budget following Tier 1 (150) {#sec:tier1}
 
 Following the tier 1 approach of the IPCC guidelines vol. 4 (@ipcc_2006_2006), stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on measurements. The factors  differentiate between different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. This method is used additionally to the Tier-2 approach to evaluate model accuracy.
@@ -132,8 +135,10 @@ We combine data sets to estimate agricultural flows and management decisions on 
 
 We use the Land-Use Harmonization 2 (LUH2, [@LUH2]) half-degree data for major land-use states. Cropland is subdivided using country scale FAO data ([@FAOSTAT]) as well as crop type (BB: crop functional type? ots not crop-specific) specific half-degree data from LUH2v2 to disaggregate into our 19 crop types on half degree resolution (see appendix for table on crop types and their mapping to FAOSTAT and LUH types as well as for technical discription of the disaggregation method).
 Landuse transitions are calculated as area differences, allowing any land use type to either expand or shrink in each time step. Within cropland we do not track area transitions, following the averaging approach as descripted in \@ref(sec:tier2)/\@ref(sec:carbonbudget)
-<!-- How to explain why we do not track inside-cropland transitions? --> BB: just dont explain it.
+-->
+<!-- How to explain why we do not track inside-cropland transitions? --> <!-- BB: just dont explain it. -->
 
+<!--
 ### Crop Production and Residues	(300)
 FAOSTAT production ([@FAOSTAT]) values are combined with feed basket estimates including residue and pasture intake ([@weindl]) and rule based demand shares(BB:?). LPJmL yields and calculated land use patterns (see \@ref(#sec:landuse)) are used to scale down to half-degree.
 
@@ -145,5 +150,4 @@ Simple growing period calculations together with irrigation shares of LUH2v2 are
 
 ### Tillage (100)
 Tillage data sets of [Vera, others] together with rules are used to drive tillage effect on decay rates.
-
-
+-->

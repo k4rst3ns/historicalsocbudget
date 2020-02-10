@@ -84,6 +84,11 @@ mipLineHistorical(reg_SOCStock, hist, facet.ncol=4, scales="free_y")
     cell_GSOC      <- readSource("GSOC",  convert="onlycorrect")
     cell_WISE      <- readSource("WISE",  convert="onlycorrect")
     cell_SoilGrids <- readSource("SoilGrids",  convert="onlycorrect")
+    
+    koeppen     <- readSource("LPJml_rev21", subtype ="koeppen", convert="onlycorrect" )
+    koepp2IPCC  <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
+    climateIPCC <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced")
+    
   
 ```
 ```{r plot density maps}

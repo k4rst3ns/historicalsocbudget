@@ -157,12 +157,12 @@ In a simple first order kinetic approach the steady-state soil organic carbon st
 SOC^{eq} =\frac{C^{\textrm{in}}}{k}
 \label{eq:inoutflow}
 \end{equation}
-with \(C^{\textrm{in}}\) being carbon inputs to the soil and \(k\) denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils, which assume three soil carbon pools and entangled dynamics between them. Carbon inflow to each subpool (see \ref{sec:carboninputs}) and decay rates (see \ref{sec:tier2}) of each subpool are still the key components to determining steady-state SOC stocks.
+with \(C^{\textrm{in}}\) being carbon inputs to the soil and \(k\) denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils, which assume three soil carbon sub-pools (active, slow and passive) and entangled dynamics between them. Carbon inflow to each sub-pool (see \ref{sec:carboninputs}) and decay rates (see \ref{sec:tier2}) of each sub-pool are still the key components to determining steady-state SOC stocks.
 
 \hypertarget{sec:carboninputs}{%
 \subsubsection{Carbon Inputs to the Soil}\label{sec:carboninputs}}
 
-We account for different carbon inputs sources depending on the land use type (see table \ref{tab:datasourceinputs}). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see @ref(ipcc\_2019\_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \ref{tab:datasourceinputs}.
+We account for different carbon inputs sources depending on the land use type (see table \ref{tab:datasourceinputs}). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see @ref(ipcc\_2019\_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub-pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \ref{tab:datasourceinputs}.
 
  \begin{table*}[h]
  \caption{Type and data sources for carbon inputs to different land use types}
@@ -187,10 +187,10 @@ We account for different carbon inputs sources depending on the land use type (s
 \hypertarget{sec:tier2}{%
 \subsubsection{Soil Organic Carbon decay (300)}\label{sec:tier2}}
 
-Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates \(k_{sub}\) given by the IPCC via
+Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates. Since the three different SOC sub-pools represent different SOC characteristics, the global decay rates and the associated drivers differ. Thus \(k_{sub}\) is given by
 
 \begin{equation}
-k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \underbrace{\cdot sf_{t,i} \quad \cdot till_{t,i}.}_{\text{only included for some subpools}}
+k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \quad \underbrace{\cdot till_{t,i} \quad \overbrace{\cdot sf_{t,i}.}^\text{only for sub = active}}_{\text{for sub = (active,slow)}}
 \label{eq:decayrates}
 \end{equation}
 
@@ -230,12 +230,12 @@ SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,
 \label{eq:ctransfer}
 \end{equation}
 
-with \(A\) being the area, \(AR\) the area reduction and \(AE\) the area expansion for a given land use type \(lut\). Note that \(!lut\) denotes the (sum over) land use type(s), which decrease(s) in the specific time step \(t\). Data sources and methodology on land use states and changes are descripted in \ref{sec:landuse}.
+with \(A\) being the area, \(AR\) the area reduction and \(AE\) the area expansion for a given land use type \(lut\). Note that \(!lut\) denotes the sum over all other land use types, which decreases in the specific time step \(t\). Data sources and methodology on land use states and changes are descripted in \ref{sec:landuse}.
 
 \hypertarget{total-soc-stocks}{%
 \subsubsection{Total SOC stocks}\label{total-soc-stocks}}
 
-Carbon stocks \(SOC\) for each subpool (sub) converge towards the calculate steady-state stock \(SOC^{eq}\) for each land-use types (lut), each subpool (sub) and each annual time step (t) as represented in equation \eqref{eq:steadystate}.
+Carbon stocks \(SOC\) for each sub-pool (sub) converge towards the calculate steady-state stock \(SOC^{eq}\) for each land-use types (lut), each sub-pool (sub) and each annual time step (t) as represented in equation \eqref{eq:steadystate}.
 
 \begin{equation}
 SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot \Delta t \qquad \forall lut, sub, i.
@@ -250,42 +250,6 @@ SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t
 \end{equation}
 
 \newpage
-
-\hypertarget{sec:tier1}{%
-\subsection{Carbon Budget following Tier 1 (150)}\label{sec:tier1}}
-
-Following the tier 1 approach of the IPCC guidelines vol.~4 (\citet{ipcc_2006_2006}), stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on measurements. The factors are differentiate between different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. They can be seen as conservative guesses and will be used to evaluate our modelling based results.
-
-\hypertarget{sec:agrimanagement}{%
-\subsection{Agricultural management (50)}\label{sec:agrimanagement}}
-
-We combine data sets to estimate agricultural flows and management decisions on cropland.
-
-\hypertarget{sec:landuse}{%
-\subsubsection{Landuse and Landuse Change (150)}\label{sec:landuse}}
-
-We use the Land-Use Harmonization 2 (LUH2, \citep{LUH2}) half-degree data for major land-use states. Cropland is subdivided using country scale FAO data (\citep{FAOSTAT}) as well as crop type specific half-degree data from LUH2v2 to disaggregate into our 19 crop types on half degree resolution (see appendix for table on crop types and their mapping to FAOSTAT and LUH types as well as for technical discription of the disaggregation method).
-Landuse transitions are calculate as area differences, allowing any land use type to either expand or shrink in each time step. Within cropland we do not track area transitions, following the averaging approach as descripted in \ref{sec:tier2}/\ref{sec:carbonbudget}
-
-\hypertarget{crop-production-and-residues-300}{%
-\subsubsection{Crop Production and Residues (300)}\label{crop-production-and-residues-300}}
-
-FAOSTAT production (\citep{FAOSTAT}) values are combined with feed estimations including residue intake (\citep{weindl}) and rule based demand shares. LPJmL yield and calculate land use pattern (see @ref(\#sec:landuse)) are used to scale down to half-degree.
-
-\hypertarget{livestock-distribution-and-manure-excretion-300}{%
-\subsubsection{Livestock Distribution and Manure Excretion (300)}\label{livestock-distribution-and-manure-excretion-300}}
-
-Based on {[}Gridded Livestock of the world{]} we use rule based asumption to estimate livestock and manure distribution on the globe. Animal waste system shares are used as is {[}Bodirsky{]}.
-
-\hypertarget{irrigation-100}{%
-\subsubsection{Irrigation (100)}\label{irrigation-100}}
-
-Simple growing period calculations together with irrigation shares of LUH2v2 are use to estimate water effects on decay rates.
-
-\hypertarget{tillage-100}{%
-\subsubsection{Tillage (100)}\label{tillage-100}}
-
-Tillage data sets of {[}Vera, others{]} together with rules are used to drive tillage effect on decay rates.
 
 \newpage
 
