@@ -1,6 +1,9 @@
 ---
 title: "First SOC budget analysis"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 ```{r load data}
@@ -9,7 +12,8 @@ library(mrvalidation)
 library(socbudget)
 
 setConfig(cachefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/cache/rev4.18.cellpanda/", forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+#setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(sourcefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/sources/")
 
 SoilCarbon <- calcOutput("CarbonBudget", aggregate = FALSE)
 Landuse    <- calcOutput("Landuse",      aggregate=FALSE)
@@ -60,10 +64,11 @@ plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="re
 
 Plot regional stocks
 
-```{r plot reg stocks}
+```{r plot reg stock, out.width="100%", out.height=1000}
 
 library(mip)
-
+library(quitte)
+library(ggplot2)
 
 getNames(reg_SOCStock) <- paste0("modeloutput.SOCbudget.", getNames(WISE,dim=3))
 getSets(reg_SOCStock)  <- getSets(WISE) 
@@ -80,19 +85,35 @@ mipLineHistorical(reg_SOCStock, hist, facet.ncol=4, scales="free_y")
 ```
 
 
-```{r Validation Densities}
+```{r table dens climatezones}
     cell_GSOC      <- readSource("GSOC",  convert="onlycorrect")
     cell_WISE      <- readSource("WISE",  convert="onlycorrect")
     cell_SoilGrids <- readSource("SoilGrids",  convert="onlycorrect")
     
-    koeppen     <- readSource("LPJml_rev21", subtype ="koeppen", convert="onlycorrect" )
+    koeppen     <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
+    getNames(koeppen) <- tolower(getNames(koeppen))
     koepp2IPCC  <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
-    climateIPCC <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced")
-    
+    koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
+    climateIPCC <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
+    climateIPCC <- climateIPCC[,getYears(SoilCarbon),]
   
+    SOCDens_lut <- dimSums(SoilCarbon, dim=3.2) 
+    SoilCshare  <- SOCDens_lut[,,"crop"]/collapseNames(SOCDens_lut[,,"natveg"])
+    SoilCshare[is.na(SoilCshare)]       <- 1
+    SoilCshare[is.infinite(SoilCshare)] <- 1
+    
+    SoilCshare_ipcczone <- dimSums(climateIPCC * SoilCshare * Landuse[,,"crop"], dim=1)/dimSums(climateIPCC * Landuse[,,"crop"], dim=1)
+    print(SoilCshare_ipcczone)
+    
+    
 ```
+
+
 ```{r plot density maps}
 
+cropland_share <- dimSums(SoilCarbon[,,"crop"], dim=3)/dimSums(SoilCarbon[,,"natveg"], dim=3)
+
+luplot::plotmap(cropland_share[,"y2000",])
 
 
 ```

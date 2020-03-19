@@ -88,7 +88,8 @@
 \Author[1]{Alexander}{Popp}
 
 
-\affil[1]{Potsdam-Institut of Climate Impacts Research, Potsdam, Germany}
+\affil[1]{Potsdam-Institut of Climate Impacts Research, Potsdam,
+Germany}
 
 %% The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should be inserted.
 
@@ -99,7 +100,7 @@
 \runningauthor{Nüst et al.}
 
 
-\correspondence{Kristine\ Karstens\ (\href{mailto:kristine.karstenst@pik-potsdam.de}{\nolinkurl{kristine.karstenst@pik-potsdam.de}})}
+\correspondence{Kristine\ Karstens\ (kristine.karstenst@pik-potsdam.de)}
 
 
 
@@ -118,51 +119,83 @@
 
 
 \begin{abstract}
-SOC one of larges c sinks on earth (3 times larger biospehre pool). Agricultural management leads to a depletion of soil organic crabon. However
-this depletion of soil organic carbon (SOC) pools are so far not well represented in global assessments of historic carbon emissions. While SOC
-models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these
-biophysical processes are still little investigated.
-Here we create a spatial explicit data set for crop residue and manure management on cropland based on global historic production (FAOSTAT) and
-land-use (LUH2) data and combine it with the IPCC Tier 2 approach to create a half-degree resolution soil organic carbon budget on mineral soils.
-We estimate that due to arable farming soils have lost over (?) GtOC of which (??) GtOC have been released within the period 1990-2010.
-Tier 2 IPCC methodolgy estimates higher soil organic carbon losses than Tier 1 methods, which may origin from \ldots{} . We also find that SOC is very
-sensity to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models.
+SOC one of larges c sinks on earth (3 times larger biospehre pool).
+Agricultural management leads to a depletion of soil organic crabon.
+However this depletion of soil organic carbon (SOC) pools are so far not
+well represented in global assessments of historic carbon emissions.
+While SOC models often represent well the biochemical processes that
+lead to the accumulation and decay of SOC, the management decisions
+driving these biophysical processes are still little investigated. Here
+we create a spatial explicit data set for crop residue and manure
+management on cropland based on global historic production (FAOSTAT) and
+land-use (LUH2) data and combine it with the IPCC Tier 2 approach to
+create a half-degree resolution soil organic carbon budget on mineral
+soils. We estimate that due to arable farming soils have lost over (?)
+GtOC of which (??) GtOC have been released within the period 1990-2010.
+Tier 2 IPCC methodolgy estimates higher soil organic carbon losses than
+Tier 1 methods, which may origin from \ldots{} . We also find that SOC
+is very sensity to management decision such as residue recycling
+indicating the nessessity to incorporated better management data in soil
+models.
 \end{abstract}
 
 
-\copyrightstatement{The author's copyright for this publication is transferred to institution/company.}
+\copyrightstatement{The author's copyright for this publication is
+transferred to institution/company.}
 
 
 \newpage
 
 \introduction
 
-Introduction text goes here.
-You can change the name of the section if neccessary using \texttt{\textbackslash{}introduction{[}modified\ heading{]}}.
-\newpage
+Introduction text goes here. You can change the name of the section if
+neccessary using
+\texttt{\textbackslash{}introduction{[}modified\ heading{]}}. \newpage
 
-\hypertarget{method-50}{%
-\section{Method (50)}\label{method-50}}
+\section{Method (50)}
 
 \hypertarget{sec:carbonbudget}{%
-\subsection{Carbon Stocks following (new) Tier 2 method (50)}\label{sec:carbonbudget}}
+\subsection{Carbon Stocks following (new) Tier 2 method
+(50)}\label{sec:carbonbudget}}
 
-We calculate annual land use type specific soil organic carbon stocks for cropland, pastures and natural vegetation on half-degree resolution for the period of 1965 to 2010 based on the following three steps: (1) Calculating the land use (sub-)type specific steady-states and decay rates for SOC stocks given the current biophysical, climatic and agronomic conditions, (2) accounting for land conversation effects by transferring SOC between land use types and (3) updating SOC stocks based on the previous stock, the steady-state and the decay rate.
+We calculate annual land use type specific soil organic carbon stocks
+for cropland, pastures and natural vegetation on half-degree resolution
+for the period of 1965 to 2010 based on the following three steps: (1)
+Calculating the land use (sub-)type specific steady-states and decay
+rates for SOC stocks given the current biophysical, climatic and
+agronomic conditions, (2) accounting for land conversation effects by
+transferring SOC between land use types and (3) updating SOC stocks
+based on the previous stock, the steady-state and the decay rate.
 
-\hypertarget{steady-state-soc-stocks-and-decay-rates}{%
-\subsubsection{Steady-state SOC stocks and decay rates}\label{steady-state-soc-stocks-and-decay-rates}}
+\subsubsection{Steady-state SOC stocks and decay rates}
 
-In a simple first order kinetic approach the steady-state soil organic carbon stocks \(SOC^{eq}\) are given by
-\begin{equation}
+In a simple first order kinetic approach the steady-state soil organic
+carbon stocks \(SOC^{eq}\) are given by \begin{equation}
 SOC^{eq} =\frac{C^{\textrm{in}}}{k}
 \label{eq:inoutflow}
-\end{equation}
-with \(C^{\textrm{in}}\) being carbon inputs to the soil and \(k\) denoting the soil organic carbon decay rate. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils, which assume three soil carbon sub-pools (active, slow and passive) and entangled dynamics between them. Carbon inflow to each sub-pool (see \ref{sec:carboninputs}) and decay rates (see \ref{sec:tier2}) of each sub-pool are still the key components to determining steady-state SOC stocks.
+\end{equation} with \(C^{\textrm{in}}\) being carbon inputs to the soil
+and \(k\) denoting the soil organic carbon decay rate. We use for our
+calculations the steady-state method of the refinement of the IPCC
+guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils, which
+assume three soil carbon sub-pools (active, slow and passive) and
+entangled dynamics between them. Carbon inflow to each sub-pool (see
+@ref(sec:carboninputs)) and decay rates (see @ref(sec:tier2)) of each
+sub-pool are still the key components to determining steady-state SOC
+stocks.
 
 \hypertarget{sec:carboninputs}{%
 \subsubsection{Carbon Inputs to the Soil}\label{sec:carboninputs}}
 
-We account for different carbon inputs sources depending on the land use type (see table \ref{tab:datasourceinputs}). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see @ref(ipcc\_2019\_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub-pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \ref{tab:datasourceinputs}.
+We account for different carbon inputs sources depending on the land use
+type (see table @ref(tab:datasourceinputs)). Following the IPCC
+methodology carbon inputs are disaggregated into different structural
+components depending on their lignin and nitrogen content (see
+@ref(ipcc\_2019\_2019)). For each structural components the sum over all
+carbon inputs sources is allocated to the respective SOC sub-pools. This
+implies that not only the amount of carbon, but also their structural
+composition is determining the effective inflow. Data sources for all
+considered carbon inputs as well as for lignin and nitrogen content can
+be found in table @ref(tab:datasourceinputs).
 
  \begin{table*}[h]
  \caption{Type and data sources for carbon inputs to different land use types}
@@ -187,14 +220,32 @@ We account for different carbon inputs sources depending on the land use type (s
 \hypertarget{sec:tier2}{%
 \subsubsection{Soil Organic Carbon decay (300)}\label{sec:tier2}}
 
-Decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that vary over time (t) and space (i). Following the steady-state method of the refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for mineral soils we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to spatially disaggregate default global decay rates. Since the three different SOC sub-pools represent different SOC characteristics, the global decay rates and the associated drivers differ. Thus \(k_{sub}\) is given by
+Decay rates are influenced by climatic conditions, biophysical and
+biochemical soil properties as well as management factors that vary over
+time (t) and space (i). Following the steady-state method of the
+refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for
+mineral soils we consider temperature (temp), water (wat), sand fraction
+(sf) and tillage (till) effects to spatially disaggregate default global
+decay rates. Since the three different SOC sub-pools represent different
+SOC characteristics, the global decay rates and the associated drivers
+differ. Thus \(k_{sub}\) is given by
 
 \begin{equation}
-k_{sub,t,i} = \quad k_{sub} \quad \cdot temp_{t,i} \quad \cdot wat_{t,i} \quad \underbrace{\cdot till_{t,i} \quad \overbrace{\cdot sf_{t,i}.}^\text{only for sub = active}}_{\text{for sub = (active,slow)}}
+\begin{aligned}
+& k_{active,t,i}  & = &~ k_{active}  ~ &\cdot~ temp_{t,i} ~ &\cdot~ wat_{t,i} ~ &\cdot~ till_{t,i} ~ & \cdot~ sf_{t,i}\\
+& k_{slow,t,i}    & = &~ k_{slow}    ~ &\cdot~ temp_{t,i} ~ &\cdot~ wat_{t,i} ~ &\cdot~ till_{t,i} ~ &\\
+& k_{passive,t,i} & = &~ k_{passive} ~ &\cdot~ temp_{t,i} ~ &\cdot~ wat_{t,i} ~ & ~ &
 \label{eq:decayrates}
+\end{aligned}
 \end{equation}
 
-For cropland we performed an assessment of tillage types and irrigation conditions, whereas on pastures and natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as considered effects for each land use types are shown in table \ref{tab:datasourcedecay}. To account for variations of decay rates within grid cells based on different tillage and irrigation regimes, average rates based on area shares are calculated.
+For cropland we performed an assessment of tillage types and irrigation
+conditions, whereas on pastures and natural vegetation, we assume
+rainfed and non-tilled conditions. Data sources as well as considered
+effects for each land use types are shown in table
+@ref(tab:datasourcedecay). To account for variations of decay rates
+within grid cells based on different tillage and irrigation regimes,
+average rates based on area shares are calculated.
 
  \begin{table*}[h]
  \caption{Type and data sources for carbon inputs to different land use types}
@@ -220,67 +271,188 @@ For cropland we performed an assessment of tillage types and irrigation conditio
  \belowtable{}
  \end{table*}
 
-\hypertarget{soc-transfer-between-land-use-types}{%
-\subsubsection{SOC transfer between land use types}\label{soc-transfer-between-land-use-types}}
+\subsubsection{SOC transfer between land use types}
 
-We calculate SOC stocks based on the area shares of land use types (lut) within the half-degree grid cells (i). If land is converted from one land use type into another, a respective share of the SOC stocks have to be reallocated as well. We account for land conversion at the beginning of each time step \(t\) by calculating a preliminary stock \(SOC_{lut,t*}\) via
+We calculate SOC stocks based on the area shares of land use types (lut)
+within the half-degree grid cells (i). If land is converted from one
+land use type into others (!lut), a respective share of the SOC stocks
+have to be reallocated as well. We account for land conversion at the
+beginning of each time step \(t\) by calculating a preliminary stock
+\(SOC_{lut,t*}\) via
 
 \begin{equation}
 SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,t} + \frac{SOC_{!lut,t-1}}{A_{!lut,t-1}} \cdot  AE_{lut,t} \qquad \forall sub, i  
 \label{eq:ctransfer}
 \end{equation}
 
-with \(A\) being the area, \(AR\) the area reduction and \(AE\) the area expansion for a given land use type \(lut\). Note that \(!lut\) denotes the sum over all other land use types, which decreases in the specific time step \(t\). Data sources and methodology on land use states and changes are descripted in \ref{sec:landuse}.
+with \(A\) being the area, \(AR\) the area reduction and \(AE\) the area
+expansion for a given land use type \(lut\). Note that \(!lut\) denotes
+the sum over all other land use types, which decreases in the specific
+time step \(t\). Data sources and methodology on land use states and
+changes are described in @ref(sec:landuse).
 
-\hypertarget{total-soc-stocks}{%
-\subsubsection{Total SOC stocks}\label{total-soc-stocks}}
+\subsubsection{Total SOC stocks}
 
-Carbon stocks \(SOC\) for each sub-pool (sub) converge towards the calculate steady-state stock \(SOC^{eq}\) for each land-use types (lut), each sub-pool (sub) and each annual time step (t) as represented in equation \eqref{eq:steadystate}.
+Carbon stocks \(SOC\) for each sub-pool (sub) converge towards the
+calculate steady-state stock \(SOC^{eq}\) for each land-use types (lut),
+each sub-pool (sub) and each annual time step (t) as represented in
+equation @ref(eq:steadystate).
 
 \begin{equation}
-SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot \Delta t \qquad \forall lut, sub, i.
+SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot 1\unit{a} \qquad \forall lut, sub, i.
 \label{eq:steadystate}
 \end{equation}
 
 The global SOC stock for each time step can than be calculated via
 
 \begin{equation}
-SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t, i}.}^{\text{land use type specific SOC stock within a grid cell}}}_{\text{total SOC stock within a grid cell}}
+SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t, i}.}^{\text{$SOC_{lut, t, i}$ - land use type specific SOC stock within cell}}}_{\text{$SOC_{t, i}$ - total SOC stock within cell}}
 \label{eq:totalstock}
 \end{equation}
 
 \newpage
 
+\hypertarget{sec:tier1}{%
+\subsection{Carbon Budget following Tier 1 (150)}\label{sec:tier1}}
+
+Following the tier 1 approach of the IPCC guidelines vol.~4
+(\citet{ipcc_2006_2006}), stocks are estimated via stock change factors
+given by the IPCC for the topsoil (0-30 cm) and based on measurement
+data and expert choice. The factors differentiate between different crop
+and management systems reflecting different dynamics under changed in-
+and outflows without explicitly tracking these. This method is used
+additionally to the Tier-2 approach to evaluate model accuracy.
+
+\hypertarget{sec:agrimanagement}{%
+\subsection{Agricultural management (50)}\label{sec:agrimanagement}}
+
+\hypertarget{sec:landuse}{%
+\subsubsection{Landuse and Landuse Change (150)}\label{sec:landuse}}
+
+Our land use patterns are based on the Land-Use Harmonization 2 (LUH2,
+\citep{LUH2}) data set, which we aggregate from quarter degree to half
+degree resolution. To transform the five different cropland
+subcategories of LUH2 into our crop functional types we define country
+and year specific area shares based on FAOSTAT data (\citep{FAOSTAT})
+(see @ref(appendix:fao2luh2mag). Where no data is available we fill data
+gaps by using similar countries as proxies or global averages. Land use
+transitions are calculated as area differences of the land use data,
+allowing any land use type to either expand or shrink in each time step.
+
+\subsubsection{Crop Production and Residues (300)}
+
+Using half-degree yield data from LPJmL (\citep{LPJmL4_1}) as well as
+half-degree cropland pattern (see @ref(\#sec:landuse)) we compile crop
+functional type specific half-degree production patterns. We calibrate
+them to country level FAOSTAT production (\citep{FAOSTAT}) values to be
+in line with historical observations.
+
+Starting from this harvested fraction we calculate above ground and
+below ground residual biomass using harvest indices and shoot:root
+ratios as described in (\citep{bodirsky2012}). We assume that all below
+ground biomass is left on the fields, whereas above ground biosmass can
+be drawn away for other purposes such as feeding animals
+(\citep{weindl}), fuel or for material uses. We calculate recycle shares
+by subtracting all residue usages (see \citep{bodirsky1012}) from the
+total above ground biomass.
+
+To transform dry matter values into carbon quantities used as soil
+input, we compiled crop functional type specific carbon to dry matter
+(c:dm) ratios for harvested organs and applied a universal c:dm ratio of
+0.44 for all above and below ground residue biomass.
+
+\subsubsection{Pasture production}
+
+Using livestock production statistics as well as feed mix assumptions as
+describted in (\citep{weindl}) we estimating country specific pasture
+production.
+
+Using the same method as for crop production we disaggregate and
+calibrate half-degree pasture production pattern.
+
+\subsubsection{Livestock Distribution and Manure Excretion (300)}
+
+Since their is no native, biophysical indicator to disaggregate country
+level FAOSTAT livestock production values to half-degree pattern, we use
+the following rule based assumptions:
+
+\begin{itemize}
+\item
+  Based on the development state of a country, we devide poultry, egg
+  and monogastric meat production into intensive and extensive systems.
+\item
+  Extensive production is allocated to urban area share within a country
+  based on the assumption that these animals are held in households,
+  subsistence or small-holder farming systems that are labour rich.
+\item
+  Intensive production is distributed within a country using the crop
+  production (excluding 2nd generation bioenergy crops) share, assuming
+  that feed availability is the most driving factor for livestock
+  location.
+\item
+  We split dairy and ruminated meat production into pasture fed and
+  non-pasture fed fractions based on the aggregated feed mix within a
+  country
+\end{itemize}
+
+\begin{itemize}
+\item
+  Pasture fed animals are apportioned to half-degree cells according to
+  the pasture production shares of that cell within a country.
+\item
+  Non-pasture fed animals are distributed again using crop production
+  (excluding 2nd generation bioenergy crops) shares.
+\end{itemize}
+
+We calculate excretions using the nitrogen balance of the livestock
+system (\citep{bodirsky1012}) by assuming that every feed intake not
+incoorpared in the slaugher mass, has to excreted. Using C:N ratios
+(given by \citep[(][]{ipcc_2019_2019}) we estimate carbon content
+
+\subsubsection{Irrigation (100)}
+
+Simple growing period calculations together with irrigation shares of
+LUH2v2 are used (BB: you dont like d's, on't you?) to estimate water
+effects on decay rates.
+
+\subsubsection{Tillage (100)}
+
+Tillage data sets of {[}Vera, others{]} together with rules are used to
+drive tillage effect on decay rates. \newpage
+
+\section{Results}
+
 \newpage
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
-
-\newpage
-
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\section{Discussion}
 
 Shortcommings:
 
 \begin{itemize}
 \item
-  Carbon displacement via leaching and erosion is neglected in this study.
+  Carbon displacement via leaching and erosion is neglected in this
+  study.
 \item
   Non-net/Gross land use transitions are not tracked in this study.
-  \newpage
+\item
+  Within cropland we do not track area transitions, but rather look at
+  statistical distributions of the crop functional types. Due to crop
+  rotations and missing data on crop specific distributions, these
+  transitions would be any way rather uncertain. \newpage
 \end{itemize}
 
 \conclusions
 
-The conclusion goes here.
-You can modify the section name with \texttt{\textbackslash{}conclusions{[}modified\ heading\ if\ necessary{]}}.
+The conclusion goes here. You can modify the section name with
+\texttt{\textbackslash{}conclusions{[}modified\ heading\ if\ necessary{]}}.
 \newpage
 
 
 
 
-\codedataavailability{use this to add a statement when having data sets and software code available} %% use this section when having data sets and software code available
+\codedataavailability{use this to add a statement when having data sets
+and software code
+available} %% use this section when having data sets and software code available
 
 
 
@@ -292,26 +464,35 @@ You can modify the section name with \texttt{\textbackslash{}conclusions{[}modif
 \section{Figures and tables in appendices}
 \subsection{Option 1}
 
-If you sorted all figures and tables into the sections of the text, please also sort the appendix figures and appendix tables into the respective appendix sections.
-They will be correctly named automatically.
+If you sorted all figures and tables into the sections of the text,
+please also sort the appendix figures and appendix tables into the
+respective appendix sections. They will be correctly named
+automatically.
 
 \subsection{Option 2}
 
-If you put all figures after the reference list, please insert appendix tables and figures after the normal tables and figures.
+If you put all figures after the reference list, please insert appendix
+tables and figures after the normal tables and figures.
 
-\texttt{\textbackslash{}appendixfigures} needs to be added in front of appendix figures
-\texttt{\textbackslash{}appendixtables} needs to be added in front of appendix tables
+\texttt{\textbackslash{}appendixfigures} needs to be added in front of
+appendix figures \texttt{\textbackslash{}appendixtables} needs to be
+added in front of appendix tables
 
-Please add \texttt{\textbackslash{}clearpage} between each table and/or figure. Further guidelines on figures and tables can be found below.
-Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
-To rename them correctly to A1, A2, etc., please add the following commands in front of them:
+Please add \texttt{\textbackslash{}clearpage} between each table and/or
+figure. Further guidelines on figures and tables can be found below.
+Regarding figures and tables in appendices, the following two options
+are possible depending on your general handling of figures and tables in
+the manuscript environment: To rename them correctly to A1, A2, etc.,
+please add the following commands in front of them:
 \noappendix
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontribution{Karstens wrote code and paper build on work of Bodirsky. Bodirsky and Popp revised paper.} %% optional section
+\authorcontribution{Karstens wrote code and paper build on work of
+Bodirsky. Bodirsky and Popp revised paper.} %% optional section
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\competinginterests{The authors declare no competing interests.} %% this section is mandatory even if you declare that no competing interests are present
+\competinginterests{The authors declare no competing
+interests.} %% this section is mandatory even if you declare that no competing interests are present
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \disclaimer{We like Copernicus.} %% optional section

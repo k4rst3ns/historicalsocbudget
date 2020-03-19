@@ -5,3 +5,5 @@ Shortcommings:
 - Carbon displacement via leaching and erosion is neglected in this study.
 
 - Non-net/Gross land use transitions are not tracked in this study.
+
+- Within cropland we do not track area transitions, but rather look at statistical distributions of the crop functional types. Due to crop rotations and missing data on crop specific distributions, these transitions would be any way rather uncertain.
