@@ -148,30 +148,38 @@ Using the same method as for crop production we disaggregate and calibrate half-
 
 
 ### Livestock Distribution and Manure Excretion	(300)
-Since their is no native, biophysical indicator to disaggregate country level FAOSTAT livestock production values to half-degree pattern, we use the following rule based assumptions:
 
-* Based on the development state of a country, we devide poultry, egg and monogastric meat production into intensive and extensive systems.
+To disaggregate country level FAOSTAT livestock production values to half-degree pattern, we use the following rule based assumptions which was inspired by the approach of [@gilbert].
 
-* Extensive production is allocated to urban area share within a country based on the assumption that these animals are held in households, subsistence or small-holder farming systems that are labour rich.  
+For poultry, egg and monogastric meat production we 
+* divide into intensive and extensiv eproduction systems based on a per-capita (explain rules in more detail)
+
+* Based on the development state (thats not a fixed term) of a country, we devide poultry, egg and monogastric meat production into intensive and extensive systems.
+
+* Extensive production is allocated to built-up area share <!-- built-up is the more correct terminology for our urban are --> within a country based on the assumption that these animals are held in households, subsistence or small-holder farming systems.  
 
 * Intensive production is distributed within a country using the crop production (excluding 2nd generation bioenergy crops) share, assuming that feed availability is the most driving factor for livestock location.
 
-* We split dairy and ruminated meat production into pasture fed and non-pasture fed fractions based on the aggregated feed mix within a country
+For dairy and ruminated meat production we
+
+* splot into pasture fed and non-pasture fed fractions based on the aggregated feed mix within a country (explain rules)
 
 <!-- how to spell out that crop is everything else then pasture? -->
 
-* Pasture fed animals are apportioned to half-degree cells according to the pasture production shares of that cell within a country.
+* Pasture fed animals are distributed to half-degree cells according to the pasture production shares of that cell within a country (not methodologically clear description).
 
-* Non-pasture fed animals are distributed again using crop production (excluding 2nd generation bioenergy crops) shares.
+* Non-pasture fed animals are distributed again using crop production (excluding 2nd generation bioenergy crops) shares (not clear, either).
 
-<!-- Add formular, drawings or visualisation here? -->
+<!-- Add formular, drawings or visualisation here? --> <!-- No formulas needed, but precise wording --> 
 
 <!-- TILL HERE -->
 
-We calculate excretions using the nitrogen balance of the livestock system ([@bodirsky1012]) by assuming that every feed intake not incoorpared in the slaugher mass, has to excreted. Using C:N ratios (given by [(@ipcc_2019_2019)]) we estimate carbon content  
+We calculate excretions by first estimating the nitrogen balance of the livestock system ([@bodirsky1012]) on the basis of comprehensive livestock feed baskets ([weindl]), assuming that all nitrogen in protein feed intake, minus the nitrogen in the slaugher mass, is excreted. 
+Carbon in excreted manure is estimated by applying fixed C:N ratios (given by [(@ipcc_2019_2019)]).
+What about animal waste management losses?
 
 ### Irrigation (100)
-Simple growing period calculations together with irrigation shares of LUH2v2 are used (BB: you dont like d's, on't you?) to estimate water effects on decay rates.
+Simple growing period calculations together with irrigation shares of LUH2v2 are used (BB: you dont like d's, on't you) to estimate water effects on decay rates.
 
 ### Tillage (100)
 Tillage data sets of [Vera, others] together with rules are used to drive tillage effect on decay rates.
