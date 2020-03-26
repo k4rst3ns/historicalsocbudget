@@ -123,35 +123,37 @@ Following the tier 1 approach of the IPCC guidelines vol. 4 (@ipcc_2006_2006), s
 
 ### Landuse and Landuse Change (150) {#sec:landuse}
 
-Land use patterns are based on the Land-Use Harmonization 2 (LUH2, [@LUH2]) data set, which we aggregate from quarter degree to half degree resolution. We disaggregate the five different cropland subcategories of LUH2 into our X crop groups, assuming relative shares for each gridcell based on the country and year specific area shares of FAOSTAT data ([@FAOSTAT]) (see \@ref(appendix:fao2luh2mag)<!--glaube nicht dass du da noch n appendix brauchst-->. For X countries without FAOSTAT data, we fill data gaps by using similar countries as proxies or global averages<!--heisst das die haben HURTT data aber keine FAO daten? woher kriegt dann hurtt die daten?-->. Land use transitions are calculated as area differences of the land use data.
+Land use patterns are based on the Land-Use Harmonization 2 (LUH2, [@LUH2]) data set, which we aggregate from quarter degree to half degree resolution. We disaggregate the five different cropland subcategories of LUH2 into our 17 crop groups, assuming relative shares for each gridcell based on the country and year specific area shares of FAOSTAT data ([@FAOSTAT]). Land use transitions are calculated as net area differences of the land use data on half-degree.
 
-### Crop Production and Residues	(300)
+### Crop, Crop Residues and Pasture Production	(300)
+
 Using half-degree yield data from LPJmL ([@LPJmL4_1]) as well as half-degree cropland patterns (see \@ref(#sec:landuse)) we compile crop functional type specific half-degree production patterns. We calibrate cellular yields with one country-level calibration factor for each crop-group to meet historical FAOSTAT production ([@FAOSTAT]).
 
-Starting from these production estimates of the harvested organs and their respective crop area, we estimate above-ground and below-ground residual biomass using yield-dependent harvest indices and shoot:root ratios as described in ([@bodirsky2012]). We assume that all below ground biomass is left on the fields. A fixed share of the above-ground residues is assumed to be burnt on field, which depends on the per-capita income of the country. For low-income countries according to worldbank definitions (<1000 USD/yr), we assume a ... etc.
-ground biomass can be burned or harvested for other purposes such as feeding animals ([@weindl]), fuel or for material uses. We calculate recycle shares by subtracting all residue usages (see [@bodirsky1012, @weindl2019]) from the total above ground biomass.
+Crop residues production is based on a revised methodology as described in ([@bodirsky2012]) and will be explained in key aspects again due to its central role for soil carbon modelling. Starting from crop production estimates of the harvested organs and their respective crop area, we estimate above-ground (ag) and below-ground (bg) residual biomass using yield-dependent harvest indices and shoot:root ratios. We assume that all bg residues are recycled to the soil, whereas ag residues can be burned or harvested for other purposes such as feeding animals ([@weindl]), fuel or for material use.
+
+A fixed share of the ag residues is assumed to be burned on field, which depends on the per-capita income of the country. Following [@smil1999]) we assume 25% burn share for low-income countries according to worldbank definitions ($<\,1000\,\tfrac{USD}{yr}$), 15% for high-income  ($>\,10000\,\tfrac{USD}{yr}$ and linearly interpolated shares for all middle-income countries.
+
+Residue demand for feed is based on regional livestock specific feed basekts (see [@weindl]) taking available ag residual biomass as well as livestock production systems and thus again development state into account. Here we aggregate crop groups to residue groups based on their suitability as feed (see \@ref(append:Table_kcr2kres)).
+
+We estimated a material use share for the straw residues group of 5% and a fuel demand share demand of 10% in low income countries.
+
+The remaining ag residues are assumend to be recycled to the soil.
 
 <!-- Add formular or drawings here? --> 
 <!-- if you want, but first finish the rest -->
-<!-- Ask benni if it is ok to just cite his paper here and not go into detail, how we distribute the residues --> <!-- Benni: No, explain in detail as it is important for your manuscript and adds credibility to your detailed calcualtions. Also, some assumptions may have changed (e.g. DevelopmentState as function of gdp) -->
 
-To transform dry matter estimates into carbon, we compiled crop functional type specific carbon to dry matter (c:dm) ratios (see appendix table X) [citations] for harvested organs and applied a universal c:dm ratio of 0.44 [citation] for all above and below ground residue biomass.
 
-<!-- Do we have to explain our choice for the crop functional type specific data. Anyway we have to discuss here a bit, because the overall balance is not clear to me. -->
+Using livestock production statistics as well as feed mix assumptions as describted in ([@weindl]) we estimating country specific pasture production. Following the same approach as for crop production we disaggregate and calibrate half-degree pasture production pattern from grass yields from LPJmL and pasture area and rangeland patterns ( (see \@ref(#sec:landuse))) to derive half-degree pasture production patterns.
 
-### Pasture production
-Using livestock production statistics as well as feed mix assumptions as describted in ([@weindl]) we estimating country specific pasture production. 
-<!-- Is this true? Ask Isabelle again. -->
 
-Using the same method as for crop production we disaggregate and calibrate half-degree pasture production pattern.
-<!--As for cropland production we used pasture yields from LPJmL and pasture and rangeland patterns to derive half-degree pasture production patterns. Again country specific pasture production is used to calibrated the pattern.-->
-
+To transform dry matter estimates into carbon, we compiled crop and residue group specific carbon to dry matter (c:dm) ratios (see appendix table X) [citations] for harvested organs and applied a universal c:dm ratio of 0.44 [LPJml???] for all above and below ground residue biomass as well as for grass biomass.
 
 ### Livestock Distribution and Manure Excretion	(300)
 
 To disaggregate country level FAOSTAT livestock production values to half-degree pattern, we use the following rule based assumptions which was inspired by the approach of [@gilbert].
 
 For poultry, egg and monogastric meat production we 
+
 * divide into intensive and extensiv eproduction systems based on a per-capita (explain rules in more detail)
 
 * Based on the development state (thats not a fixed term) of a country, we devide poultry, egg and monogastric meat production into intensive and extensive systems.
@@ -160,9 +162,7 @@ For poultry, egg and monogastric meat production we
 
 * Intensive production is distributed within a country using the crop production (excluding 2nd generation bioenergy crops) share, assuming that feed availability is the most driving factor for livestock location.
 
-For dairy and ruminated meat production we
-
-* splot into pasture fed and non-pasture fed fractions based on the aggregated feed mix within a country (explain rules)
+For dairy and ruminated meat production we split into pasture fed and non-pasture fed fractions based on the aggregated feed mix within a country (explain rules)
 
 <!-- how to spell out that crop is everything else then pasture? -->
 

@@ -324,95 +324,122 @@ and outflows without explicitly tracking these. This method is used
 additionally to the Tier-2 approach to evaluate model accuracy.
 
 \hypertarget{sec:agrimanagement}{%
-\subsection{Agricultural management (50)}\label{sec:agrimanagement}}
+\subsection{Agricultural management data on 0.5 degrees
+(50)}\label{sec:agrimanagement}}
 
 \hypertarget{sec:landuse}{%
 \subsubsection{Landuse and Landuse Change (150)}\label{sec:landuse}}
 
-Our land use patterns are based on the Land-Use Harmonization 2 (LUH2,
+Land use patterns are based on the Land-Use Harmonization 2 (LUH2,
 \citep{LUH2}) data set, which we aggregate from quarter degree to half
-degree resolution. To transform the five different cropland
-subcategories of LUH2 into our crop functional types we define country
-and year specific area shares based on FAOSTAT data (\citep{FAOSTAT})
-(see @ref(appendix:fao2luh2mag). Where no data is available we fill data
-gaps by using similar countries as proxies or global averages. Land use
-transitions are calculated as area differences of the land use data,
-allowing any land use type to either expand or shrink in each time step.
+degree resolution. We disaggregate the five different cropland
+subcategories of LUH2 into our 17 crop groups, assuming relative shares
+for each gridcell based on the country and year specific area shares of
+FAOSTAT data (\citep{FAOSTAT}). Land use transitions are calculated as
+net area differences of the land use data on half-degree.
 
-\subsubsection{Crop Production and Residues (300)}
+\subsubsection{Crop, Crop Residues and Pasture Production (300)}
 
 Using half-degree yield data from LPJmL (\citep{LPJmL4_1}) as well as
-half-degree cropland pattern (see @ref(\#sec:landuse)) we compile crop
+half-degree cropland patterns (see @ref(\#sec:landuse)) we compile crop
 functional type specific half-degree production patterns. We calibrate
-them to country level FAOSTAT production (\citep{FAOSTAT}) values to be
-in line with historical observations.
+cellular yields with one country-level calibration factor for each
+crop-group to meet historical FAOSTAT production (\citep{FAOSTAT}).
 
-Starting from this harvested fraction we calculate above ground and
-below ground residual biomass using harvest indices and shoot:root
-ratios as described in (\citep{bodirsky2012}). We assume that all below
-ground biomass is left on the fields, whereas above ground biosmass can
-be drawn away for other purposes such as feeding animals
-(\citep{weindl}), fuel or for material uses. We calculate recycle shares
-by subtracting all residue usages (see \citep{bodirsky1012}) from the
-total above ground biomass.
+Crop residues production is based on a revised methodology as described
+in (\citep{bodirsky2012}) and will be explained in key aspects again due
+to its central role for soil carbon modelling. Starting from crop
+production estimates of the harvested organs and their respective crop
+area, we estimate above-ground (ag) and below-ground (bg) residual
+biomass using yield-dependent harvest indices and shoot:root ratios. We
+assume that all bg residues are recycled to the soil, whereas ag
+residues can be burned or harvested for other purposes such as feeding
+animals (\citep{weindl}), fuel or for material use.
 
-To transform dry matter values into carbon quantities used as soil
-input, we compiled crop functional type specific carbon to dry matter
-(c:dm) ratios for harvested organs and applied a universal c:dm ratio of
-0.44 for all above and below ground residue biomass.
+A fixed share of the ag residues is assumed to be burned on field, which
+depends on the per-capita income of the country. Following
+\citep{smil1999}) we assume 25\% burn share for low-income countries
+according to worldbank definitions (\(<\,1000\,\tfrac{USD}{yr}\)), 15\%
+for high-income (\(>\,10000\,\tfrac{USD}{yr}\) and linearly interpolated
+shares for all middle-income countries.
 
-\subsubsection{Pasture production}
+Residue demand for feed is based on regional livestock specific feed
+basekts (see \citep{weindl}) taking available ag residual biomass as
+well as livestock production systems and thus again development state
+into account. Here we aggregate crop groups to residue groups based on
+their suitability as feed (see @ref(append:Table\_kcr2kres)).
+
+We estimated a material use share for the straw residues group of 5\%
+and a fuel demand share demand of 10\% in low income countries.
+
+The remaining ag residues are assumend to be recycled to the soil.
 
 Using livestock production statistics as well as feed mix assumptions as
 describted in (\citep{weindl}) we estimating country specific pasture
-production.
+production. Following the same approach as for crop production we
+disaggregate and calibrate half-degree pasture production pattern from
+grass yields from LPJmL and pasture area and rangeland patterns ( (see
+@ref(\#sec:landuse))) to derive half-degree pasture production patterns.
 
-Using the same method as for crop production we disaggregate and
-calibrate half-degree pasture production pattern.
+To transform dry matter estimates into carbon, we compiled crop and
+residue group specific carbon to dry matter (c:dm) ratios (see appendix
+table X) {[}citations{]} for harvested organs and applied a universal
+c:dm ratio of 0.44 {[}LPJml???{]} for all above and below ground residue
+biomass as well as for grass biomass.
 
 \subsubsection{Livestock Distribution and Manure Excretion (300)}
 
-Since their is no native, biophysical indicator to disaggregate country
-level FAOSTAT livestock production values to half-degree pattern, we use
-the following rule based assumptions:
+To disaggregate country level FAOSTAT livestock production values to
+half-degree pattern, we use the following rule based assumptions which
+was inspired by the approach of \citep{gilbert}.
+
+For poultry, egg and monogastric meat production we
 
 \begin{itemize}
 \item
-  Based on the development state of a country, we devide poultry, egg
-  and monogastric meat production into intensive and extensive systems.
+  divide into intensive and extensiv eproduction systems based on a
+  per-capita (explain rules in more detail)
 \item
-  Extensive production is allocated to urban area share within a country
-  based on the assumption that these animals are held in households,
-  subsistence or small-holder farming systems that are labour rich.
+  Based on the development state (thats not a fixed term) of a country,
+  we devide poultry, egg and monogastric meat production into intensive
+  and extensive systems.
+\item
+  Extensive production is allocated to built-up area share within a
+  country based on the assumption that these animals are held in
+  households, subsistence or small-holder farming systems.
 \item
   Intensive production is distributed within a country using the crop
   production (excluding 2nd generation bioenergy crops) share, assuming
   that feed availability is the most driving factor for livestock
   location.
-\item
-  We split dairy and ruminated meat production into pasture fed and
-  non-pasture fed fractions based on the aggregated feed mix within a
-  country
 \end{itemize}
+
+For dairy and ruminated meat production we split into pasture fed and
+non-pasture fed fractions based on the aggregated feed mix within a
+country (explain rules)
 
 \begin{itemize}
 \item
-  Pasture fed animals are apportioned to half-degree cells according to
-  the pasture production shares of that cell within a country.
+  Pasture fed animals are distributed to half-degree cells according to
+  the pasture production shares of that cell within a country (not
+  methodologically clear description).
 \item
   Non-pasture fed animals are distributed again using crop production
-  (excluding 2nd generation bioenergy crops) shares.
+  (excluding 2nd generation bioenergy crops) shares (not clear, either).
 \end{itemize}
 
-We calculate excretions using the nitrogen balance of the livestock
-system (\citep{bodirsky1012}) by assuming that every feed intake not
-incoorpared in the slaugher mass, has to excreted. Using C:N ratios
-(given by \citep[(][]{ipcc_2019_2019}) we estimate carbon content
+We calculate excretions by first estimating the nitrogen balance of the
+livestock system (\citep{bodirsky1012}) on the basis of comprehensive
+livestock feed baskets ({[}weindl{]}), assuming that all nitrogen in
+protein feed intake, minus the nitrogen in the slaugher mass, is
+excreted. Carbon in excreted manure is estimated by applying fixed C:N
+ratios (given by \citep[(][]{ipcc_2019_2019}). What about animal waste
+management losses?
 
 \subsubsection{Irrigation (100)}
 
 Simple growing period calculations together with irrigation shares of
-LUH2v2 are used (BB: you dont like d's, on't you?) to estimate water
+LUH2v2 are used (BB: you dont like d's, on't you) to estimate water
 effects on decay rates.
 
 \subsubsection{Tillage (100)}
