@@ -4,7 +4,7 @@
 
 ## Carbon Stocks following (new) Tier 2 method (50) {#sec:carbonbudget}
 
-We calculate annual land use type specific soil organic carbon stocks for cropland, pastures and natural vegetation on half-degree resolution for the period of 1965 to 2010 based on the following three steps: (1) Calculating the land use (sub-)type specific steady-states and decay rates for SOC stocks given the current biophysical, climatic and agronomic conditions, (2) accounting for land conversation effects by transferring SOC between land use types and (3) updating SOC stocks based on the previous stock, the steady-state and the decay rate. 
+We calculate annual land use type specific soil organic carbon stocks for cropland, pastures and natural vegetation on half-degree resolution for the period of 1965 to 2010 based on the following three steps: (1) Calculating the land use (sub-)type specific steady-states <!-- BB: Do we calculate the steady states? I would say we are calculating budgets with in- and outflows, so its a dynamic state. Steady state we only use to initialize in 1960, no? This is not only for here but throughout the text. Steady state is misleading in my opinion, we are doing better :) --> and decay rates for SOC stocks given the current biophysical, climatic and agronomic conditions, (2) accounting for land conversation effects by transferring SOC between land use types and (3) updating SOC stocks based on the previous stock, the steady-state and the decay rate. 
 
 ### Steady-state SOC stocks and decay rates
 
@@ -17,7 +17,7 @@ with $C^{\textrm{in}}$ being carbon inputs to the soil and $k$ denoting the soil
 
 ### Carbon Inputs to the Soil {#sec:carboninputs}
 
-We account for different carbon inputs sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub-pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+We account for different carbon input sources depending on the land use type (see table \@ref(tab:datasourceinputs)). Following the IPCC methodology carbon inputs are disaggregated into different structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each structural components the sum over all carbon inputs sources is allocated to the respective SOC sub-pools. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
 
 ```{=latex}
 
@@ -114,6 +114,7 @@ SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t
 
 \newpage
 
+<-- you also need a section on the initialisation, assuming a (now really) steady state for 1960 -->
 
 ## Carbon Budget following Tier 1 (150) {#sec:tier1}
 
