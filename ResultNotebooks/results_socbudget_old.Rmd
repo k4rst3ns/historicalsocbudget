@@ -1,18 +1,18 @@
 ---
-title: "First SOC budget analysis"
+  title: "First SOC budget analysis"
 output:
   html_document:
-    df_print: paged
-  pdf_document: default
+  df_print: paged
+pdf_document: default
 ---
-
+  
 ```{r load data}
 library(moinput)
 library(mrvalidation)
 library(socbudget)
 
-#setConfig(cachefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/cache/rev4.18.cellpanda/", forcecache = TRUE)
-setConfig(cachefolder = "/home/kristine/mnt/rd3mod/inputdata/cache/rev4.43/", forcecache = TRUE)
+setConfig(cachefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/cache/rev4.18.cellpanda/", forcecache = TRUE)
+#setConfig(cachefolder = "/home/kristine/mnt/rd3mod/inputdata/cache/rev4.43/", forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 #setConfig(sourcefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/sources/")
 
@@ -35,16 +35,16 @@ reg_SOCStock <- toolAggregate(iso_SOCStock, rel=iso2reg, from="CountryCode", to=
 ```
 
 Load validation data:
-
-```{r Validation Stocks}
-
-  LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
-  LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
-  LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
-  WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
-  GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
-  SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
   
+  ```{r Validation Stocks}
+
+LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
+LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
+LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
+WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
+GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
+SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
+
 ```
 
 Plot global stocks
@@ -87,26 +87,26 @@ mipLineHistorical(reg_SOCStock, hist, facet.ncol=4, scales="free_y")
 
 
 ```{r table dens climatezones}
-    cell_GSOC      <- readSource("GSOC",  convert="onlycorrect")
-    cell_WISE      <- readSource("WISE",  convert="onlycorrect")
-    cell_SoilGrids <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
-    
-    koeppen     <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
-    getNames(koeppen) <- tolower(getNames(koeppen))
-    koepp2IPCC  <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
-    koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
-    climateIPCC <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
-    climateIPCC <- climateIPCC[,getYears(SoilCarbon),]
-  
-    SOCDens_lut <- dimSums(SoilCarbon, dim=3.2) 
-    SoilCshare  <- SOCDens_lut[,,"crop"]/collapseNames(SOCDens_lut[,,"natveg"])
-    SoilCshare[is.na(SoilCshare)]       <- 1
-    SoilCshare[is.infinite(SoilCshare)] <- 1
-    
-    SoilCshare_ipcczone <- dimSums(climateIPCC * SoilCshare * Landuse[,,"crop"], dim=1)/dimSums(climateIPCC * Landuse[,,"crop"], dim=1)
-    print(SoilCshare_ipcczone)
-    
-    
+cell_GSOC      <- readSource("GSOC",  convert="onlycorrect")
+cell_WISE      <- readSource("WISE",  convert="onlycorrect")
+cell_SoilGrids <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
+
+koeppen     <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
+getNames(koeppen) <- tolower(getNames(koeppen))
+koepp2IPCC  <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
+koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
+climateIPCC <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
+climateIPCC <- climateIPCC[,getYears(SoilCarbon),]
+
+SOCDens_lut <- dimSums(SoilCarbon, dim=3.2) 
+SoilCshare  <- SOCDens_lut[,,"crop"]/collapseNames(SOCDens_lut[,,"natveg"])
+SoilCshare[is.na(SoilCshare)]       <- 1
+SoilCshare[is.infinite(SoilCshare)] <- 1
+
+SoilCshare_ipcczone <- dimSums(climateIPCC * SoilCshare * Landuse[,,"crop"], dim=1)/dimSums(climateIPCC * Landuse[,,"crop"], dim=1)
+print(SoilCshare_ipcczone)
+
+
 ```
 
 

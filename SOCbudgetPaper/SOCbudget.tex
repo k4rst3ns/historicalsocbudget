@@ -158,14 +158,16 @@ neccessary using
 \subsection{Carbon Stocks following (new) Tier 2 method
 (50)}\label{sec:carbonbudget}}
 
-We calculate annual land use type specific soil organic carbon stocks
-for cropland, pastures and natural vegetation on half-degree resolution
-for the period of 1965 to 2010 based on the following three steps: (1)
-Calculating the land use (sub-)type specific steady-states and decay
-rates for SOC stocks given the current biophysical, climatic and
-agronomic conditions, (2) accounting for land conversation effects by
-transferring SOC between land use types and (3) updating SOC stocks
-based on the previous stock, the steady-state and the decay rate.
+Following the tier 2 approach of the refinement of IPCC guidelines
+vol.~4 (\citet{ipcc_2019_2019}), we calculate annual land use type
+specific soil organic carbon stocks for cropland, pastures and natural
+vegetation on half-degree resolution for the period of 1965 to 2010
+based on the following three steps: (1) Calculating the land use
+(sub-)type specific steady-states and decay rates for SOC stocks given
+the current biophysical, climatic and agronomic conditions, (2)
+accounting for land conversation effects by transferring SOC between
+land use types and (3) updating SOC stocks based on the previous stock,
+the steady-state and the decay rate.
 
 \subsubsection{Steady-state SOC stocks and decay rates}
 
@@ -186,16 +188,16 @@ stocks.
 \hypertarget{sec:carboninputs}{%
 \subsubsection{Carbon Inputs to the Soil}\label{sec:carboninputs}}
 
-We account for different carbon inputs sources depending on the land use
+We account for different carbon input sources depending on the land use
 type (see table @ref(tab:datasourceinputs)). Following the IPCC
-methodology carbon inputs are disaggregated into different structural
-components depending on their lignin and nitrogen content (see
-@ref(ipcc\_2019\_2019)). For each structural components the sum over all
-carbon inputs sources is allocated to the respective SOC sub-pools. This
-implies that not only the amount of carbon, but also their structural
-composition is determining the effective inflow. Data sources for all
-considered carbon inputs as well as for lignin and nitrogen content can
-be found in table @ref(tab:datasourceinputs).
+methodology carbon inputs are disaggregated into metabolic and
+structural components depending on their lignin and nitrogen content
+(see @ref(ipcc\_2019\_2019)). For each component the sum over all carbon
+input sources is allocated to the respective SOC sub-pools via transfer
+coefficients. This implies that not only the amount of carbon, but also
+their structural composition is determining the effective inflow. Data
+sources for all considered carbon inputs as well as for lignin and
+nitrogen content can be found in table @ref(tab:datasourceinputs).
 
  \begin{table*}[h]
  \caption{Type and data sources for carbon inputs to different land use types}
@@ -220,15 +222,14 @@ be found in table @ref(tab:datasourceinputs).
 \hypertarget{sec:tier2}{%
 \subsubsection{Soil Organic Carbon decay (300)}\label{sec:tier2}}
 
-Decay rates are influenced by climatic conditions, biophysical and
-biochemical soil properties as well as management factors that vary over
-time (t) and space (i). Following the steady-state method of the
-refinement of the IPCC guidelines vol.~4 (\citet{ipcc_2019_2019}) for
-mineral soils we consider temperature (temp), water (wat), sand fraction
-(sf) and tillage (till) effects to spatially disaggregate default global
-decay rates. Since the three different SOC sub-pools represent different
-SOC characteristics, the global decay rates and the associated drivers
-differ. Thus \(k_{sub}\) is given by
+The sub-pool specific decay rates are influenced by climatic conditions,
+biophysical and biochemical soil properties as well as management
+factors that vary over time (t) and space (i). Following the
+steady-state method of the refinement of the IPCC guidelines vol.~4
+(\citet{ipcc_2019_2019}) for mineral soils we consider temperature
+(temp), water (wat), sand fraction (sf) and tillage (till) effects to
+account for spatial variation of decay rates. Thus \(k_{sub}\) is given
+by
 
 \begin{equation}
 \begin{aligned}
@@ -239,12 +240,13 @@ differ. Thus \(k_{sub}\) is given by
 \end{aligned}
 \end{equation}
 
-For cropland we performed an assessment of tillage types and irrigation
-conditions, whereas on pastures and natural vegetation, we assume
-rainfed and non-tilled conditions. Data sources as well as considered
-effects for each land use types are shown in table
+For cropland we distinguish the effect of different tillage (see
+@ref(\#sec:tillage)) and irrigation (see @ref(\#sec:irrigation))
+practices on decay rates, whereas on pastures and natural vegetation, we
+assume rainfed and non-tilled conditions. Data sources as well as
+considered effects for each land use types are shown in table
 @ref(tab:datasourcedecay). To account for variations of decay rates
-within grid cells based on different tillage and irrigation regimes,
+within each grid cell due to different tillage and irrigation regimes,
 average rates based on area shares are calculated.
 
  \begin{table*}[h]
@@ -275,10 +277,9 @@ average rates based on area shares are calculated.
 
 We calculate SOC stocks based on the area shares of land use types (lut)
 within the half-degree grid cells (i). If land is converted from one
-land use type into others (!lut), a respective share of the SOC stocks
-have to be reallocated as well. We account for land conversion at the
-beginning of each time step \(t\) by calculating a preliminary stock
-\(SOC_{lut,t*}\) via
+land use type into others (!lut), the respective share of the SOC stocks
+is reallocated. We account for land conversion at the beginning of each
+time step \(t\) by calculating a preliminary stock \(SOC_{lut,t*}\) via
 
 \begin{equation}
 SOC_{lut,t*} = SOC_{lut,t-1} - \frac{SOC_{lut,t-1}}{A_{lut,t-1}} \cdot  AR_{lut,t} + \frac{SOC_{!lut,t-1}}{A_{!lut,t-1}} \cdot  AE_{lut,t} \qquad \forall sub, i  
@@ -294,9 +295,9 @@ changes are described in @ref(sec:landuse).
 \subsubsection{Total SOC stocks}
 
 Carbon stocks \(SOC\) for each sub-pool (sub) converge towards the
-calculate steady-state stock \(SOC^{eq}\) for each land-use types (lut),
-each sub-pool (sub) and each annual time step (t) as represented in
-equation @ref(eq:steadystate).
+calculated steady-state stock \(SOC^{eq}\) for each land-use types
+(lut), each sub-pool (sub) and each annual time step (t) as represented
+in equation @ref(eq:steadystate).
 
 \begin{equation}
 SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot 1\unit{a} \qquad \forall lut, sub, i.
@@ -310,18 +311,34 @@ SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t
 \label{eq:totalstock}
 \end{equation}
 
+\subsubsection{Initialisation of SOC pools}
+
+To initialize all SOC sub-pools we assume that
+
 \newpage
 
 \hypertarget{sec:tier1}{%
 \subsection{Carbon Budget following Tier 1 (150)}\label{sec:tier1}}
 
-Following the tier 1 approach of the IPCC guidelines vol.~4
-(\citet{ipcc_2006_2006}), stocks are estimated via stock change factors
-given by the IPCC for the topsoil (0-30 cm) and based on measurement
-data and expert choice. The factors differentiate between different crop
-and management systems reflecting different dynamics under changed in-
-and outflows without explicitly tracking these. This method is used
-additionally to the Tier-2 approach to evaluate model accuracy.
+Additionally to the tier 2 approach of the refinement of IPCC guidelines
+vol.~4 (\citet{ipcc_2019_2019}), we also estimate SOC pools using the
+IPCC tier 1 approach of IPCC guidelines vol.~4 (\citet{ipcc_2006_2006})
+for comparison. Here, stocks are estimated via stock change factors
+given by the IPCC for the topsoil (0-30 cm) and based on a review of
+measurement data. The factors differentiate different crop and
+management systems reflecting different dynamics under changed in- and
+outflows without explicitly tracking these. The SOC stocks as thus
+calulated
+
+\begin{equation}
+SOC_{\text{target}} = \sum_{c,s,i} SOC_{\text{ref}_{c,s,i}} \cdot F_{\text{LU}_{c,s,i}} \cdot F_{\text{MG}_{c,s,i}} \cdot F_{\text{I}_{c,s,i}} \cdot A_{c,s,i}
+\label{eq:tier1}
+\end{equation}
+
+\textless!- also include an equation here --\textgreater{} \textless!-
+even if there are just ``copied'' out of te guidelines so to say?
+--\textgreater{} \textless!- more details will follow - how deep to go?
+--\textgreater{}
 
 \hypertarget{sec:agrimanagement}{%
 \subsection{Agricultural management data on 0.5 degrees
@@ -333,21 +350,25 @@ additionally to the Tier-2 approach to evaluate model accuracy.
 Land use patterns are based on the Land-Use Harmonization 2 (LUH2,
 \citep{LUH2}) data set, which we aggregate from quarter degree to half
 degree resolution. We disaggregate the five different cropland
-subcategories of LUH2 into our 17 crop groups, assuming relative shares
-for each gridcell based on the country and year specific area shares of
-FAOSTAT data (\citep{FAOSTAT}). Land use transitions are calculated as
-net area differences of the land use data on half-degree.
+subcategories (c3ann, c3per, c4ann, c4per, c3nfx) of LUH2 into our 17
+crop groups, assuming relative shares for each gridcell based on the
+country and year specific area shares of FAOSTAT data (\citep{FAOSTAT})
+(see @ref(append:Table\_luh2fao2mag) for more details on the crop type
+mapping). Land use transitions are calculated as net area differences of
+the land use data on half-degree.
 
 \subsubsection{Crop, Crop Residues and Pasture Production (300)}
 
 Using half-degree yield data from LPJmL (\citep{LPJmL4_1}) as well as
 half-degree cropland patterns (see @ref(\#sec:landuse)) we compile crop
-functional type specific half-degree production patterns. We calibrate
-cellular yields with one country-level calibration factor for each
-crop-group to meet historical FAOSTAT production (\citep{FAOSTAT}).
+group specific half-degree production patterns. We calibrate cellular
+yields with one country-level calibration factor for each crop group to
+meet historical FAOSTAT production (\citep{FAOSTAT}). Note that by using
+physical cropland areas we account for multiple crop harvest events as
+well as for fallows.
 
-Crop residues production is based on a revised methodology as described
-in (\citep{bodirsky2012}) and will be explained in key aspects again due
+Crop residue production and management is based on a revised methodology
+of (\citep{bodirsky2012}) and will be explained in key aspects again due
 to its central role for soil carbon modelling. Starting from crop
 production estimates of the harvested organs and their respective crop
 area, we estimate above-ground (ag) and below-ground (bg) residual
@@ -360,19 +381,24 @@ A fixed share of the ag residues is assumed to be burned on field, which
 depends on the per-capita income of the country. Following
 \citep{smil1999}) we assume 25\% burn share for low-income countries
 according to worldbank definitions (\(<\,1000\,\tfrac{USD}{yr}\)), 15\%
-for high-income (\(>\,10000\,\tfrac{USD}{yr}\) and linearly interpolated
-shares for all middle-income countries.
+for high-income (\(>\,10000\,\tfrac{USD}{yr}\) and linearly interpolate
+shares for all middle-income countries depending on their per-capita
+income.
 
-Residue demand for feed is based on regional livestock specific feed
+Residue demand for feed is based on country and livestock specific feed
 basekts (see \citep{weindl}) taking available ag residual biomass as
-well as livestock production systems and thus again development state
-into account. Here we aggregate crop groups to residue groups based on
-their suitability as feed (see @ref(append:Table\_kcr2kres)).
+well as livestock productivity into account. The three residue groups
+(straw, high-lignin and low-lignin residues) of the feed baskets are
+disaggregated to the crop groups, using\ldots. (see
+@ref(append:Table\_kcr2kres)). \textless-- its a disggregation, no
+--\textgreater{}
 
 We estimated a material use share for the straw residues group of 5\%
-and a fuel demand share demand of 10\% in low income countries.
+and a fuel demand share demand of 10\% \textless-- only for straw, or
+for all groups? --\textgreater{} in low income countries.
 
-The remaining ag residues are assumend to be recycled to the soil.
+The remaining ag residues as well as all bg residues are assumend to be
+recycled to the soil.
 
 Using livestock production statistics as well as feed mix assumptions as
 describted in (\citep{weindl}) we estimating country specific pasture
@@ -381,42 +407,36 @@ disaggregate and calibrate half-degree pasture production pattern from
 grass yields from LPJmL and pasture area and rangeland patterns ( (see
 @ref(\#sec:landuse))) to derive half-degree pasture production patterns.
 
-To transform dry matter estimates into carbon, we compiled crop and
-residue group specific carbon to dry matter (c:dm) ratios (see appendix
-table X) {[}citations{]} for harvested organs and applied a universal
-c:dm ratio of 0.44 {[}LPJml???{]} for all above and below ground residue
-biomass as well as for grass biomass.
+To transform dry matter estimates into carbon, we compiled crop group
+and plant part specific carbon to dry matter (c:dm) ratios (see
+@ref(append:Table\_c2dm)) (\citet{Ma2018}).
 
 \subsubsection{Livestock Distribution and Manure Excretion (300)}
 
 To disaggregate country level FAOSTAT livestock production values to
 half-degree pattern, we use the following rule based assumptions which
-was inspired by the approach of \citep{gilbert}.
+were inspired by the approach of \citep{gilbert}.
 
-For poultry, egg and monogastric meat production we
+For poultry, egg and monogastric meat production we divide into
+intensive and extensive production systems based on a per-capita income
+of the country. For low-income countries according to worldbank
+definitions (\textless1000 USD/yr), we assume extensive production
+systems. We located them according to (built-up areas shares\textbar{}
+population shares) based on the idea that these animals are held in
+households, subsistence or small-holder farming systems.
 
 \begin{itemize}
-\item
-  divide into intensive and extensiv eproduction systems based on a
-  per-capita (explain rules in more detail)
-\item
-  Based on the development state (thats not a fixed term) of a country,
-  we devide poultry, egg and monogastric meat production into intensive
-  and extensive systems.
-\item
-  Extensive production is allocated to built-up area share within a
-  country based on the assumption that these animals are held in
-  households, subsistence or small-holder farming systems.
 \item
   Intensive production is distributed within a country using the crop
   production (excluding 2nd generation bioenergy crops) share, assuming
   that feed availability is the most driving factor for livestock
   location.
+\item
+  For dairy and ruminated meat production we
+\item
+  splot into pasture fed and non-pasture fed fractions based on the
+  aggregated feed mix within a country (explain rules)
 \end{itemize}
-
-For dairy and ruminated meat production we split into pasture fed and
-non-pasture fed fractions based on the aggregated feed mix within a
-country (explain rules)
 
 \begin{itemize}
 \item

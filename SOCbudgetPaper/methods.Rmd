@@ -124,9 +124,7 @@ To initialize all SOC sub-pools we assume that
 Additionally to the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019), we also estimate SOC pools using the IPCC tier 1 approach of IPCC guidelines vol. 4 (@ipcc_2006_2006) for comparison. Here, stocks are estimated via stock change factors given by the IPCC for the topsoil (0-30 cm) and based on a review of measurement data. The factors differentiate  different crop and management systems reflecting different dynamics under changed in- and outflows without explicitly tracking these. The SOC stocks as thus calulated
 
 \begin{equation}
-SOC_{t} = SOC_{t-1} - \frac{SOC_{t-1}-SOC_{\text{target}}}{D}
-\intertext{with}
-SOC_{\text{target}} = \sum_{c,s,i} SOC_{\text{ref}_{c,s,i}} \cdot F_{\text{LU}_{c,s,i}} \cdot F_{\text{MG}_{c,s,i}} \cdot F_{\text{I}_{c,s,i}} \cdot A_{c,s,i}}
+SOC_{\text{target}} = \sum_{c,s,i} SOC_{\text{ref}_{c,s,i}} \cdot F_{\text{LU}_{c,s,i}} \cdot F_{\text{MG}_{c,s,i}} \cdot F_{\text{I}_{c,s,i}} \cdot A_{c,s,i}
 \label{eq:tier1}
 \end{equation}
 
@@ -174,7 +172,7 @@ For poultry, egg and monogastric meat production we divide into intensive and ex
 
 * Intensive production is distributed within a country using the crop production (excluding 2nd generation bioenergy crops) share, assuming that feed availability is the most driving factor for livestock location.
 
-For dairy and ruminated meat production we
+* For dairy and ruminated meat production we
 
 * splot into pasture fed and non-pasture fed fractions based on the aggregated feed mix within a country (explain rules)
 
