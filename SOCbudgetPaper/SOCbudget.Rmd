@@ -61,8 +61,8 @@ appendix: |
   Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
   To rename them correctly to A1, A2, etc., please add the following commands in front of them:
 output:
-  rticles::copernicus_article: default
   bookdown::word_document2: default
+  rticles::copernicus_article: default
   md_document:
     variant: markdown_github
   bookdown::pdf_book:
