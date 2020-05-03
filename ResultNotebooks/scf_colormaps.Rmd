@@ -1,0 +1,88 @@
+---
+  title: "Stock Change Factor maps (coloured)"
+output:
+  html_document:
+  df_print: paged
+pdf_document: default
+---
+  
+```{r load data}
+library(moinput)
+
+SoilCarbon <- readRDS("/home/kristine/mnt/rd3mod/inputdata/cache/rev4.43_SOC_0.5.0/SoilCarbon.rds")
+Landuse    <- readRDS("/home/kristine/mnt/rd3mod/inputdata/cache/rev4.43_SOC_0.5.0/Landuse.rds")
+
+setConfig(cachefolder  = "/home/kristine/mnt/rd3mod/inputdata/cache/rev4.43/", forcecache = TRUE)
+setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(mappingfolder = "/home/kristine/mnt/rd3mod/inputdata/mappings/")
+
+koeppen           <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
+getNames(koeppen) <- tolower(getNames(koeppen))
+koepp2IPCC        <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
+koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
+climateIPCC       <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
+climateIPCC       <- climateIPCC[,getYears(SoilCarbon),]
+
+```
+
+
+```{r calculate SCF}
+
+# one colour scheme
+cropland_share <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)/
+                  dimSums(SoilCarbon[,,"actualstate"][,,"natveg"], dim=3)
+cropland_share[Landuse[,,"crop"]==0] <- NA
+
+# 4 colour scheme
+test          <- cropland_share
+test[Landuse[,,"crop"]==0] <- NA
+test[test>2]  <- 1.9999
+test[test==0] <- 0.0001
+test          <- test*climateIPCC[,,1]+(test+2)*climateIPCC[,,2]+(test+4)*climateIPCC[,,3]+(test+6)*climateIPCC[,,4]
+
+```
+
+```{r plot density maps}
+
+# No climate zone specification
+library(RColorBrewer)
+cols      <- colorRampPalette(brewer.pal(11, "RdYlGn"))(1000)
+
+luplot::plotmap(cropland_share[,"y1965",], legend_range = c(0,2), legend_colours = cols, main="C_share on Cropland 1965")
+png("CShare_1965.png",width = 1280, height = 720, res = 108)
+luplot::plotmap(cropland_share[,"y1965",], legend_range = c(0,2), legend_colours = cols, main="C_share on Cropland 1965")
+dev.off()
+
+luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols, main="Stock Change Factor on Cropland 2010")
+png("CShare_2010.png",width = 1280, height = 720, res = 108)
+luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols, main="Stock Change Factor on Cropland 2010")
+dev.off()
+
+```
+
+```{r plot density maps 4 colours}
+
+# With climate zone specification
+library(RColorBrewer)
+pal_pink   <- c("#330022","#aa99aa","#ccbbcc","#FFBBEE")
+pal_green  <- c("#003300","#99aa99","#bbccbb","#CCFFCC")
+pal_blue   <- c("#000044","#9999aa","#bbbbcc","#CCFFFF")
+pal_red    <- c("#FFEECC","#ccc2bb","#aaa299","#440000")
+
+pal_pink   <- c("#110044","#774499","#aaaaaa","#FF0088","#FFAADD")
+pal_green  <- c("#004400","#00FF00","#aaaaaa","#FFFF00","#FFFFCC")
+pal_blue   <- c("#000044","#0000FF","#aaaaaa","#00FFFF","#CCFFFF")
+pal_red    <- c("#FFDD99","#feb24c","#aaaaaa","#FF0000","#440000")
+
+cols <- c(colorRampPalette(pal_pink)(500)[500:1],
+          colorRampPalette(pal_red)(500),
+          colorRampPalette(pal_blue)(500)[500:1],
+          colorRampPalette(pal_green)(500)[500:1]
+)
+
+luplot::plotmap(test[,"y2010",], legend_range = c(0,8), legend_colours = cols, main="Stock Change Factor on Cropland 2010 (climate zones color coded)")
+png("CShare_4ColorClimates.png", width = 1280, height = 720, res = 108)
+
+luplot::plotmap(test[,"y2010",], legend_range = c(0,8), legend_colours = cols, main="Stock Change Factor on Cropland 2010 (climate zones color coded)")
+dev.off()
+```

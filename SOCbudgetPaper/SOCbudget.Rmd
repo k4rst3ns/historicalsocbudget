@@ -17,15 +17,11 @@ affiliation:
   - code: 1
     address: Potsdam-Institut of Climate Impacts Research, Potsdam, Germany
 abstract: | 
- SOC one of larges c sinks on earth (3 times larger biospehre pool). Agricultural management leads to a depletion of soil organic crabon. However
- this depletion of soil organic carbon (SOC) pools are so far not well represented in global assessments of historic carbon emissions. While SOC
- models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these 
- biophysical processes are still little investigated.
- Here we create a spatial explicit data set for crop residue and manure management on cropland based on global historic production (FAOSTAT) and 
- land-use (LUH2) data and combine it with the IPCC Tier 2 approach to create a half-degree resolution soil organic carbon budget on mineral soils.
- We estimate that due to arable farming soils have lost over (?) GtOC of which (??) GtOC have been released within the period 1990-2010.
- Tier 2 IPCC methodolgy estimates higher soil organic carbon losses than Tier 1 methods, which may origin from … . We also find that SOC is very 
- sensity to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models. 
+ SOC one of larges c sinks on earth (3 times larger biosphere pool). 
+ Agricultural management leads to a depletion of soil organic carbon. However this depletion of soil organic carbon (SOC) pools are so far not well represented in global assessments of historic carbon emissions. 
+ While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated. 
+ Here we create a spatial explicit data set for crop residue and manure management on cropland based on global historic production (FAOSTAT) and land-use (LUH2) data and combine it with the IPCC Tier 2 approach to create a half degree resolution soil organic carbon budget on mineral soils. We estimate that due to arable farming soils have lost over (?) GtOC of which (??) GtOC have been released within the period 1990-2010. 
+ We show that, our results on global scale based on Tier 2 IPCC methodolgy are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models.
 bibliography: SOCbudget.bib
 running:
   title: R Markdown Template for Copernicus
@@ -61,10 +57,10 @@ appendix: |
   Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
   To rename them correctly to A1, A2, etc., please add the following commands in front of them:
 output:
-  bookdown::word_document2: default
   rticles::copernicus_article: default
   md_document:
     variant: markdown_github
+  bookdown::word_document2: default
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
     md_extensions: +raw_attribute

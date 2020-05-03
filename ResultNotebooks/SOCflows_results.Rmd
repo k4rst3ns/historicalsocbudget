@@ -1,0 +1,149 @@
+---
+  title: "First SOC budget analysis"
+output:
+  html_document:
+  df_print: paged
+pdf_document: default
+---
+
+```{r load}
+library(moinput)
+library(mrvalidation)
+library(socbudget)
+library(magpiesets)
+
+#input       <- "/home/kristine/WORK/R libraries/rd3mod_inputdata/output/rev1_690d3718e151be1b450b394c1064b1c5_validation.tgz"
+#inputfolder <- gsub("[^/]*$","", input)
+#untar(input, inputfolder)
+
+
+setConfig(cachefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/cache/rev4.43_SOC_0.5.0/", forcecache = TRUE)
+setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+
+```
+
+
+
+```{r residues}
+
+### Residues
+  # originally from moinput
+  ResidueDemand       <- dimSums(collapseNames(calcOutput("ResFieldBalancePast", cellular=TRUE, products = "kres", aggregate = FALSE)[,,"c"]), dim=1)
+  ResidueRecyclingAg  <- ResidueDemand[,,"recycle"]
+  ResidueRecyclingBg  <- dimSums(calcOutput("ResBiomass", cellular=TRUE, aggregate = FALSE)[,,"bg"][,,c("c")], dim=c(1,3))
+  ResiduesMoinput     <- dimSums(ResidueRecyclingAg, dim=3) + ResidueRecyclingBg
+  
+  # Residues with cut of overflow
+  ResiduesDensities   <- calcOutput("CarbonResidues", aggregate=FALSE)[,,"c"]
+  Landuse             <- calcOutput("Landuse", aggregate=FALSE)
+  ResiduesSOCbudget   <- dimSums(Landuse[,getYears(ResiduesDensities),"crop"]*ResiduesDensities, dim=c(1,3))
+
+  print(mbind(ResiduesMoinput, ResiduesSOCbudget, ResiduesSOCbudget/ResiduesMoinput))
+
+  # Corrected Residues shares for different plant parts  
+  RatioPlantParts     <- mbind(ResidueRecyclingAg, setNames(ResidueRecyclingBg, "res_roots"))/(dimSums(ResidueRecyclingAg, dim=3)+ResidueRecyclingBg)
+  
+  ResiduesCorrected   <- collapseNames(RatioPlantParts * ResiduesSOCbudget)
+  
+  # total residues and residue demands
+  
+  ResidueBg     <- ResidueRecyclingBg
+  ResidueAg     <- dimSums(calcOutput("ResBiomass", cellular=TRUE, aggregate = FALSE)[,,"ag"][,,c("c")], dim=c(1,3))
+  ResidueTotal  <- ResidueAg + ResidueBg 
+  
+```
+  
+Quite a lot of residues get lost, due to cutting extreme values in the later years.
+Cutting algorithm, cuts everything bigger the 95%-percentile.
+How we deal with that? 
+* Should we do a yearly extrem value cutting?
+* Should we investigate that deeper?
+* Should we leave it like this?
+
+
+
+```{r manure}
+
+### Manure
+  # originally from moinput
+  ManureApplication   <- calcOutput("ManureRecyclingCroplandPast", products = "kli", cellular = TRUE, aggregate = FALSE)[,,"c"]
+  ManureGrazing       <- calcOutput("Excretion", cellular = TRUE, attributes = "npkc", aggregate = FALSE)[,,"stubble_grazing"][,,"c"]
+  ManureMoinput       <- collapseNames(dimSums(ManureApplication, dim=1) + dimSums(ManureGrazing, dim=1))
+ 
+  # Manure with cut of overflow
+  ManureDensities     <- calcOutput("CarbonManure", aggregate=FALSE)[,,"c"]
+  Landuse             <- calcOutput("Landuse", aggregate=FALSE)
+  ManureSOCbudget     <- dimSums(Landuse[,getYears(ManureDensities),"crop"]*ManureDensities, dim=1)
+ 
+  print(mbind(dimSums(ManureMoinput, dim=3), dimSums(ManureSOCbudget, dim=3), dimSums(ManureSOCbudget, dim=3)/dimSums(ManureMoinput, dim=3)))
+  
+  ManureCorrected     <- ManureSOCbudget
+  
+  ManureExcreted      <- dimSums(calcOutput("Excretion", cellular = TRUE, attributes = "npkc", aggregate = FALSE)[,,"c"][,,c("confinement","stubble_grazing")], dim=c(1,3.3))
+  
+  print(mbind(dimSums(ManureExcreted, dim=3), dimSums(ManureMoinput, dim=3), dimSums(ManureCorrected, dim=3)))
+  print(quantile(ManureApplication+ManureGrazing, probs=seq(0,1,0.02)))
+  range(ManureApplication+ManureGrazing)
+```
+  
+Same problem here. Manure share is going down.
+
+
+
+
+```{r production}
+
+#Production     <- collapseNames(calcOutput("Production", products="kcr", cellular=TRUE, attributes="dm", irrigation=FALSE, aggregate = FALSE))
+Balance        <- calcOutput("FAOmassbalance", aggregate=FALSE)
+
+CropProduction <- dimSums(Balance[,,findset("kcr")][,,"production"][,,"c"], dim=c(1,3))
+FeedProduction <- dimSums(Balance[,,c("pasture",findset("kap"),findset("kres"),"scp"), invert=TRUE][,,"feed"][,,"c"], dim=c(1,3))
+ResidueFeed    <- dimSums(Balance[,,findset("kres")][,,"feed"][,,"c"], dim=c(1,3))
+
+print(mbind(CropProduction,FeedProduction,ResidueFeed))
+```
+
+Biomass excreted ist bigger than feed intake via plant harvest and residues taken for feed.
+  
+```{r soc}
+
+  Litter             <- dimSums(calcOutput("CarbonLitter", aggregate=FALSE)[,,"c"]*Landuse[,,"natveg"], dim=1)
+  
+  # Calculate effective input
+  param <- readSource("IPCCSoil", convert=FALSE)
+  param.f1_metab2a          <- setYears(param[,,"f1"], NULL) 
+  # stabilization efficiencies for metabolic decay products entering the active pool
+  param.f3_struc2s          <- setYears(param[,,"f3"], NULL) 
+  # stabilization efficiencies for structural decay products entering the slow pool
+  param.f2_struc2a <- mbind(setNames(setYears(param[,,"f2_ft"], NULL), "crop"),
+                            setNames(setYears(param[,,"f2_nt"], NULL), "natveg"))
+  # stabilization efficiencies for structural decay products entering the active pool (tillage and no tillage specific)
+  
+  
+  cell.input       <- mbind(add_dimension(dimSums(calcOutput("CarbonInput", landtype="crop", aggregate = FALSE),dim=3.2),
+                                          dim=3.1, nm = "crop",   add="landuse"),
+                            add_dimension(collapseNames(calcOutput("CarbonInput", landtype="natveg", aggregate = FALSE)),
+                                          dim=3.1, nm = "natveg", add="landuse"))
+  CarbonInput      <- dimSums(cell.input[,,"totalC"]*Landuse, dim=c(1))
+  
+  CarbonInputEff   <- collapseNames(dimSums((cell.input[,,"metabDOC"] * param.f1_metab2a +
+                                             cell.input[,,"strucDOC"] * param.f2_struc2a +
+                                             cell.input[,,"ligninC"]  * param.f3_struc2s) * Landuse, dim=c(1)))
+  
+
+  CarbonInputTot   <- collapseNames(dimSums(SOC[,,"steadystate"]*SOC[,,"decayrate"]*Landuse, dim=c(1,3.3)))
+  
+  # Load inputs, active steady state stock and decay rate
+
+  SOC                <- calcOutput("SoilCarbon", output="full", aggregate=FALSE)
+  Landuse            <- calcOutput("Landuse",       aggregate=FALSE)
+  LanduseChange      <- calcOutput("LanduseChange", aggregate=FALSE)
+
+  CarbonStocks       <- collapseNames(dimSums(SOC[,,c("steadystate","actualstate")]*Landuse, dim=1))
+  CarbonTransfer     <- dimSums(toolConditionalReplace(SOC[,,"carbontransfer"], "<0", 0),dim=c(1,3.3))
+  CarbonRelease      <- collapseNames(dimSums(SOC[,,"interstate"]*SOC[,,"decayrate"]*Landuse, dim=c(1, 3.3)))
+  
+print(mbind(CarbonTransfer, CarbonRelease))
+```
+
+
