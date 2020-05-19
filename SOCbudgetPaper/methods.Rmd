@@ -4,10 +4,10 @@
 
 ## Carbon Stocks following (new) Tier 2 method (50) {#sec:carbonbudget}
 
-Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019), we estimate global land-use type specific soil organic carbon (SOC) stocks for cropland and natural vegetation on half-degree resolution from 1965 to 2010. We assume the actual SOC state converges towards a stable steady state, that itself is changing over time and space depending on biophysical, climatic and agronomic conditions. Therefor we conduct the following three steps: 
-(1) Calculating annual land-use (sub-)type specific steady states and decay rates for SOC stocks, 
-(2) accounting for land conversion by transferring SOC between land-use types and 
-(3) updating SOC stocks based on the previous stock, the steady state and the decay rate. 
+Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019), we estimate global land-use type specific soil organic carbon (SOC) stocks for cropland and natural vegetation on half-degree resolution from 1965 to 2010. We assume the actual SOC state converges towards a stable steady state, that itself is changing over time and space depending on biophysical, climatic and agronomic conditions. Therefore we conduct the following three steps within each yearly timestep: 
+(1) We calculate annual land-use (sub-)type specific steady states and decay rates for SOC stocks, 
+(2) We account for land conversion by transferring SOC between land-use types and 
+(3) We estimate SOC stocks based on the stocks of the previous time period, the steady state stocks and the decay rate. 
 
 ### Steady-state SOC stocks and decay rates
 
@@ -102,6 +102,13 @@ Carbon stocks $SOC$ for each sub-pool (sub) converge towards the calculated stea
 
 \begin{equation}
 SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot 1\unit{a} \qquad \forall lut, sub, i.
+\label{eq:steadystate}
+\end{equation}
+
+This equation can also be reformulated to a massbalance equation as follows:
+
+\begin{equation}
+SOC_{t} = SOC_{t-1} (1 - k_{t} \cdot 1\unit{a}) + C^{\textrm{in}}  \qquad \forall lut, sub, i.
 \label{eq:steadystate}
 \end{equation}
 
