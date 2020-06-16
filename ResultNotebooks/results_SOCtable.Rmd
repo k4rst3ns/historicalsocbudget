@@ -1,0 +1,94 @@
+---
+title: "Table on stock change factors per clinate zone"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r load}
+library(mrcommons)
+library(mrvalidation)
+library(mrSOCbudget)
+library(magpiesets)
+
+rev <- "rev0.6_mrSOC"
+
+setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
+setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+
+SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Landuse.rds")
+
+```
+
+```{r table scf climatezones}
+
+library(knitr)
+library(stats)
+library(luplot)
+library(reshape2)
+
+koeppen           <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
+getNames(koeppen) <- tolower(getNames(koeppen))
+koepp2IPCC        <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
+koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
+climateIPCC       <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
+climateIPCC       <- climateIPCC[,getYears(SoilCarbon),]
+
+rm(koeppen)
+  
+SOCDens           <- dimSums(SoilCarbon[,,c("steadystate","actualstate","naturalstate")], dim=3.3) 
+SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
+
+CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"]   * Landuse[,,"crop"], dim=1)/
+                     dimSums(climateIPCC * SOCDens[,,"natveg"] * Landuse[,,"crop"], dim=1)
+
+print(collapseNames(CShare_ipcczone[,findset("past"),]))
+
+actualstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"actualstate"])), 
+                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
+
+naturalstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"naturalstate"])), 
+                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
+
+steadystate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"steadystate"])), 
+                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
+
+saveRDS(list(naturalstate_table = naturalstate_table,
+             actualstate_table  = actualstate_table, 
+             steadystate_table  = steadystate_table), "Output/SFC_climatezone.rds")
+
+#knitr::kable(naturalstate_table, "latex",digits=2, label="naturalstate_table")
+#knitr::kable(actualstate_table, "markdown", digits=2)
+```
+
+```{r table ipcc scf}
+
+library(knitr)
+library(stats)
+library(luplot)
+library(reshape2)
+
+CShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),unique(koepp2IPCC$ipcc_reduced), paste, sep="."))
+
+CShare_ipcc[,,"IPCC2006.tropical_moist"]  <- "0.48"
+CShare_ipcc[,,"IPCC2006.tropical_dry"]    <- "0.58-0.64" 
+CShare_ipcc[,,"IPCC2006.temperate_moist"] <- "0.69"
+CShare_ipcc[,,"IPCC2006.temperate_dry"]   <- "0.80"
+
+CShare_ipcc[,,"IPCC2019.tropical_moist"]  <- "0.83"
+CShare_ipcc[,,"IPCC2019.tropical_dry"]    <- "0.92" 
+CShare_ipcc[,,"IPCC2019.temperate_moist"] <- "0.69-0.70"
+CShare_ipcc[,,"IPCC2019.temperate_dry"]   <- "0.76-0.77"
+
+comparison <- mbind(CShare_ipcc, 
+                    round(add_dimension(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),
+                                  add="SOCbudget",nm="model"),2))
+
+print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
+
+
+```

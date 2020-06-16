@@ -1,0 +1,177 @@
+---
+title: "SOC budget analysis in comparsion"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r load}
+library(mrcommons)
+library(mrvalidation)
+library(mrSOCbudget)
+library(magpiesets)
+
+rev <- "rev0.6_mrSOC"
+
+setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
+setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+
+SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Landuse.rds")
+
+```
+
+
+Calculate global carbon stocks
+
+```{r Carbon Stock (cell iso reg glo)}
+
+SOCStock     <- dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, dim=3)
+glo_SOCStock <- dimSums(SOCStock, dim=1) 
+cell2iso     <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
+iso_SOCStock <- toolCountryFill(toolAggregate(SOCStock, rel=cell2iso, from="celliso", to="iso", dim=1), fill=0)
+iso2reg      <- toolMappingFile("regional",getConfig("regionmapping"),readcsv = TRUE)
+reg_SOCStock <- toolAggregate(iso_SOCStock, rel=iso2reg, from="CountryCode", to="RegionCode")
+
+print(mbind(dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, dim=c(1,3)),
+            dimSums(dimSums(SoilCarbon[,,"steadystate"], dim=3.3)* Landuse, dim=c(1,3))))
+
+```
+
+
+Load validation data:
+
+```{r Validation Stocks}
+
+  LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
+  LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
+  LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
+  WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
+  GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
+  SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
+  
+```
+
+Plot global stocks
+
+```{r plot glo stocks}
+
+plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red", xlim=c(1951,2017),  ylim=c(400000,1300000))
+lines(getYears(LPJ_IPCC, as.integer = TRUE), LPJ_IPCC["GLO",,1], type="l", col="green")
+lines(getYears(LPJ_car, as.integer = TRUE), LPJ_car["GLO",,], type="l", col="darkgreen")
+lines(getYears(LPJ_rev21, as.integer = TRUE), LPJ_rev21["GLO",,2], type="l", col="lightgreen")
+lines(getYears(WISE, as.integer = TRUE), WISE["GLO",,], type="l", col="brown")
+lines(getYears(SoilGrids, as.integer = TRUE), SoilGrids["GLO",,], type="l", col="blue")
+lines(getYears(GSOC, as.integer = TRUE), GSOC["GLO",,], type="l", col="pink")
+plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red")
+```
+
+
+
+Plot regional stocks
+
+```{r plot reg stock, out.width="100%", out.height=1000}
+
+library(mip)
+library(quitte)
+library(ggplot2)
+
+getNames(reg_SOCStock) <- paste0("modeloutput.SOCbudget.", getNames(WISE,dim=3))
+getSets(reg_SOCStock)  <- getSets(WISE) 
+
+hist <- rbind(as.quitte(WISE["GLO",,,invert=TRUE]),
+              as.quitte(GSOC["GLO",,,invert=TRUE]),
+              as.quitte(SoilGrids["GLO",,,invert=TRUE]),
+              as.quitte(LPJ_rev21["GLO",,,invert=TRUE][,,2]))
+
+mipLineHistorical(reg_SOCStock, hist, facet.ncol=4, scales="free_y", ylab="SOC (0-30cm) in MtC")
+```
+
+```{r bar plot}
+
+### FROM ISABELLE
+
+# p.tc <- ggplot() 
+# # agass Hauptszenarien --> Balken
+# p.tc <-p.tc + geom_bar(data = dat1a, aes(x = Region, y = Value, fill=Mainscen,group=factor(Mainscen)),stat = "identity",width = 0.7,position=position_dodge(0.7),alpha=0.8, show_guide=FALSE) 
+# p.tc <- p.tc + scale_fill_manual(values = c("#999999","#FF3300","#66CC00","#3366FF"),breaks=c("baseline","S1a","S3a","S3c"),
+#                                  labels=c("Baseline     ","Climate_impacts     ","Shift_to_rangeland     ","Shift_to_mixed     "))
+# # agass mit co2 --> graue K?stchen
+# p.tc <- p.tc + geom_point(data=dat2a,aes(x = Region, y = Value, group=factor(Mainscen)),size=4,position=position_dodge(0.7),colour="black",shape=22,fill="grey")
+# 
+# # Spread GCMs ohne co2
+# p.tc <- p.tc + geom_errorbar(data=dat4a,aes(x = Region, ymin = min,ymax=max, group=Mainscen),position=position_dodge(0.7),width=.2,colour="dark red", linetype="dashed",size=0.6,show_guide=FALSE)
+# #p.tc <- p.tc + geom_point(data=dat3a,aes(x = Region, y = Value, group=factor(Mainscen)),size=1.5,position=position_dodge(0.7),colour="red", show_guide=FALSE)
+# p.tc <- p.tc + geom_point(data=dat4a,aes(x = Region, y = min, group=factor(Mainscen)),size=3.8,position=position_dodge(0.7),colour="dark red",shape=21,fill="white", show_guide=FALSE)
+# p.tc <- p.tc + geom_point(data=dat4a,aes(x = Region, y = max, group=factor(Mainscen)),size=2.5,position=position_dodge(0.7),colour="dark red",shape=19, show_guide=FALSE)
+# 
+# # Spread GCMs mit co2
+# p.tc <- p.tc + geom_errorbar(data=dat4b,aes(x = Region, ymin = min,ymax=max, group=Mainscen),position=position_dodge(0.7),width=.2,colour="#003300",size=0.6, show_guide=FALSE)
+# #p.tc <- p.tc + geom_point(data=dat3b,aes(x = Region, y = Value, group=factor(Mainscen)),size=1.5,position=position_dodge(0.7),colour="#003300", show_guide=FALSE)
+# p.tc <- p.tc + geom_point(data=dat4b,aes(x = Region, y = min, group=factor(Mainscen)),size=3.5,position=position_dodge(0.7),colour="#003300",shape=23,fill="white", show_guide=FALSE)
+# p.tc <- p.tc + geom_point(data=dat4b,aes(x = Region, y = max, group=factor(Mainscen)),size=3.8,position=position_dodge(0.7),colour="#003300",shape=18, show_guide=FALSE)
+# 
+# #Layout
+# p.tc <- p.tc + labs(y="Average annual TC rates 2005-2045 [%] \n",x="")
+# guides(colour = guide_legend(override.aes = list(shape = NA)))
+# p.tc <- p.tc + geom_hline(yintercept=0)
+# 
+# #p.tc <- p.tc + ylim(0, 2.4)
+# p.tc <- p.tc + theme_bw() +
+#   theme(axis.text = element_text(size = 16,face="bold"),
+#         axis.title = element_text(size = 18,face="bold"),
+#                 
+#         legend.background = element_rect(fill = "white",colour="black",size=0.7),
+#         legend.text =       element_text(size = 14, face="bold"),
+#         legend.title =      element_blank(),
+#         legend.position = c(0.25, 1.01),
+#         legend.key = element_rect(colour = "white",size=2),
+#         legend.key.height = unit(0.7,"cm"),
+#         legend.key.width = unit(1.8,"cm"),
+#         legend.margin = unit(100,"lines"),
+#         
+#         panel.grid.major = element_blank(),
+#         panel.grid.minor = element_blank(),
+#         
+#         panel.border = element_rect(size = 0.8, colour = "black"),
+#         plot.margin = unit(c(0.5,0.5,0.5,0.5),"cm")  # top, right, bottom, and left margins
+#   )
+# 
+# #Legend 1
+# p.tc <- p.tc + annotate("rect", xmin = 0.6, xmax = 4.5, ymin = 2.3, ymax = 3.3,fill = "white",colour="black",size=0.7)
+# 
+# p.tc <- p.tc + annotate("text", x = 0.8, y = 3.1, label = "IAASTD~climate~scenario~w/o~CO[2]~effect",parse = TRUE,size = 4.7, hjust=0)
+# 
+# p.tc <- p.tc + annotate("text", x = 1.8, y = 2.9, label = "climate_impacts",size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("rect", xmin = 0.8, xmax = 1.6, ymin = 2.85, ymax = 2.95,fill = "#FF3300",size=0.7)
+# 
+# p.tc <- p.tc + annotate("text", x = 1.8, y = 2.7, label = "shift_to_rangeland",size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("rect", xmin = 0.8, xmax = 1.6, ymin = 2.65, ymax = 2.75,fill = "#66CC00",size=0.7)
+# 
+# p.tc <- p.tc + annotate("text", x = 1.8, y = 2.5, label = "shift_to_mixed",size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("rect", xmin = 0.8, xmax = 1.6, ymin = 2.45, ymax = 2.55,fill = "#3366FF",size=0.7)
+# 
+# 
+# #Legend 2
+# p.tc <- p.tc + annotate("rect", xmin = 7.6, xmax = 11.4,  ymin = 2.3, ymax = 3.3,fill = "white",colour="black",size=0.7)
+# 
+# p.tc <- p.tc + annotate("text", x = 9, y = 3.0, label = "full~CO[2]~effect~(IAASTD)",parse = TRUE, size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("point", x = 8.4, y = 3.0, colour="black",shape=22,fill="grey",size=4.5)
+# 
+# p.tc <- p.tc + annotate("text", x = 9, y = 2.8, label = "full~CO[2]~effect~(all~GCMs)",parse = TRUE, size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("segment", x = 8, xend=8.8, y = 2.8, yend=2.8,colour="#003300",size=0.7)
+# p.tc <- p.tc + annotate("point", x = 8, y = 2.8, colour="#003300",shape=23,fill="white",size=3.8)
+# p.tc <- p.tc + annotate("point", x = 8.8, y = 2.8, colour="#003300",shape=18,size=5)
+# 
+# p.tc <- p.tc + annotate("text", x = 9, y = 2.6, label = "w/o~CO[2]~effect~(all~GCMs)",parse = TRUE,size = 4.7, hjust=0)
+# p.tc <- p.tc + annotate("segment", x = 8, xend=8.8, y = 2.6, yend=2.6,colour="dark red",linetype="dashed",size=0.7)
+# p.tc <- p.tc + annotate("point", x = 8, y = 2.6, colour="dark red",shape=21,fill="white",size=4)
+# p.tc <- p.tc + annotate("point", x = 8.8, y = 2.6, colour="dark red",shape=19,size=4)
+# 
+# 
+# print(p.tc)
+
+```

@@ -1,5 +1,5 @@
 ---
-  title: "First SOC budget analysis"
+  title: "First SOC budget flow analysis"
 output:
   html_document:
   df_print: paged
@@ -7,18 +7,42 @@ pdf_document: default
 ---
 
 ```{r load}
-library(moinput)
+library(mrcommons)
 library(mrvalidation)
-library(socbudget)
+library(mrSOCbudget)
 library(magpiesets)
 
-#input       <- "/home/kristine/WORK/R libraries/rd3mod_inputdata/output/rev1_690d3718e151be1b450b394c1064b1c5_validation.tgz"
-#inputfolder <- gsub("[^/]*$","", input)
-#untar(input, inputfolder)
+rev <- "rev0.6_mrSOC"
 
-
-setConfig(cachefolder = "/home/kristine/WORK/R libraries/rd3mod_inputdata/cache/rev4.43_SOC_0.5.0/", forcecache = TRUE)
+setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+
+SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Landuse.rds")
+
+```
+
+```{r load data}
+
+files <- list.files("Data")
+
+CarbonInput      <- readRDS("Data/CarbonInput.rds")
+CarbonLitter     <- readRDS("Data/CarbonLitter.rds")
+CarbonManure     <- readRDS("Data/CarbonManure.rds")           
+CarbonResidues   <- readRDS("Data/CarbonResidues.rds")
+CarbonHarvest    <- readRDS("Data/Crop_Harvest.rds")
+SoilCarbon       <- readRDS("Data/SoilCarbon.rds")
+
+Landuse          <- readRDS("Data/Landuse.rds")
+LanduseChange    <- readRDS("Data/LanduseChange.rds")
+
+FAOmassbalance   <- readRDS("Data/FAOmassbalance_ISO.rds" )
+ManureExcreted   <- readRDS("Data/Manure_excreted.rds")
+ManureRecycled   <- readRDS("Data/Manure_recycled.rds")
+ResidueBiomass   <- readRDS("Data/Residue_Biomass.rds")
+ResiduesAgDemand <- readRDS("Data/ResiduesAg_FieldBalance.rds")
 
 ```
 
