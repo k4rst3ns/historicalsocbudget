@@ -1,4 +1,78 @@
 \introduction
 
-Introduction text goes here.
-You can change the name of the section if neccessary using `\introduction[modified heading]`.
+<!-- Relevance of the general topic
+- why important (rescue the world)
+Stand der Forschung, sher spezifisch auf deine fragestellung
+- Gibt viel biophysikalische Modellierung
+Forschungslücke (fängt mit "However" an.)
+- Zu wenig Fokus auf management, obwohl sehr einflussreich
+Fragestellung, Subfragestellungen
+Struktur der Arbeit
+-->
+
+<!-- You can change the name of the section if neccessary using `\introduction[modified heading]`. -->
+
+Within the last centuries the recognition of soil organic carbon (SOC) has developed from being a major source of agricultural carbon emissions towards a potentially large additional sink to offset other green house gas emissions and thus mitigate climate change. Whereas the extent of sink potential by SOC enhancement is highly debated (add refs), it is largely agreed upon that the SOC pool itself is the biggest terrestrial carbon pool, over topping the atmospheric and even more the biospheric carbon pool multiple times. Even small changes in SOC drivers might lead to substantial shifts in earth carbon cycled and influence the atmospheric CO2 concentration (ref. permafrost melting). The specific amount of carbon stored in the soil is uncertain though and estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996). 
+
+Mapping the worlds SOC has been of great interest over the last decades and led to an increased quality of SOC maps as well as a even better understanding of factors driving magnitude, distribution and dynamics of SOC pools. It is undisputed that natural properties like climatic, biophysical and landscape characteristics play the most important role in this regard. These factors can not be easily altered by human intervention, leaving land cover, land use and land management changes the most important factors for SOC dynamics till dawn of civilization <!--to heroic find another word-->.
+
+Recent studies identified the SOC debt of anthropogenic source at around 116 GtC (Sanderman et al.), which compares to older estimates of around 60-130 GtC <!--look up --> (Lal, 2006). Other studies have focus more closely on spatially disaggregation SOC changes via advanced digital soil mapping techniques (S-World; Stoorvogel 2, 2017) or better representation of biogeochemcial processes within SOC dynamics  (<!-- find microbial study -->). Most of these studies doing cutting edge research in their field, but seem to lack proper representation of available information on land management. 
+
+On the other hand small-scale models (ref. Daycent, RothC, Ecosse, C-Tool) are able to represent fairly well SOC dynamics on field-scale driven by high quality management data on yield levels, fertilizer inputs and various other on farming activities. Due to the lack of proper, concise management data to feed these input demanding models on larger extends, it seems still very complex to scale them up to a global extent.
+
+This study however wants to contribute filling the gap on impacts of agricultural management like yield levels, residue recycling, manure amendments, irrigation and tillage on SOC stocks of the worlds croplands. It is doing so by combining work on agricultural management data on global level with a robust but light weighted SOC model to estimate SOC stocks and stock change factors as well as OC flow dynamics within the agricultural system.
+
+This is critically important since managing agricultural soil might be one of the few setscrew for humans to _naturally_ combat climate change (ref. to natural climate solutions). Other _natural_ options, which might be summarized by restoring potential natural stocks via renaturation of managed land, seem to be often limited due to increased pressure on the land systems for feed, food and energy demand of a growing and developing population on earth.
+
+
+<!--
+
+Within the terrestrical carbon cycle, soil organic carbon (SOC) accounts for over 1500 GtC/PgC. It is b far bigger than the biosperic pool and almost twice as big as the athmosperic pool. Small changes in SOC stocks migh lead to  
+
+ Assessing the size of SOC pool as been a subject to multiple analysis, using variuos kinds of tools and methods to address getting a grip on SOC states.
+
+Not only the state but also the development over time as been lately researched more and more (ref: sanderman, Pugh, LPJmL), looking on the key aspects that change over time: climatic conditions as well as human interventions like land use change.
+Whereas it is commonly agreed upon that SOC stocks decline for most of the cropping activities for humid and wet climates (dry cimlates might be an exception to this general statement), the level of degradation is an ongoing topic of research. It has been access heavly from the experiemntal site as well as been researched by the theoretical models. 
+
+
+Soil organic carbon (SOC) enhancement is important for climate change mitigation and, if practiced large scale a negative emissions technique as well. This is why, we need a good understanding of the current state of SOC and its most important drivers.
+
+CLAIM
+
+Soil organic carbon (SOC) enhancement is important for climate change mitigation and, if practiced large scale a negative emissions technique as well. This is why, we need a good understanding of the current state of SOC and its most important drivers.
+
+EVIDENCE
+
+The SOC carbon pool up to 1 meter depth contains about 1500 GtC and is the largest terrestrial carbon pool on earth. It is twice as big as the atmospheric and almost three times bigger than the vegetation carbon pool. Even small changes might lead to substantial shifts in earth carbon cycled and influence the atmospheric CO2 concentration.
+
+ 
+REBUTTAL
+
+However most of the SOC is stored in boreal climate zones as well as in peat and wetlands around the world, which might be more exposed to carbon degradation, than actually being able to store additional carbon.
+Although this holds true, the total amount of SOC under cropped and grazed land that might be altered by improved agricultural techniques is still substantial and might lead according to Minansy et al. (2018) to a additive carbon uptake of around 5-10 GtC per year. 
+
+
+SOC enhancement will also lead to co-benefits for soil quality and therefor also for resilience, ecosystem services and in the end crop yields.
+
+Their are widely known and tested SOC enhancement techniques that could used large scale, if C storage would be rewarded (carbon price).
+
+
+WARRANTS
+
+The bigger the pool the bigger even small changes will be.
+
+CC mitigation needs co-benifits
+
+
+
+* sanderman
+* WISE
+* SoilGrids
+* Stoorvogel
+* HANPP
+
+
+* Smith/Powlson
+* Lal
+* Bathjes
+-->

@@ -1,5 +1,18 @@
 # Results
 
+```{r, results = 'asis', echo=FALSE, fig.show='hold', fig.width=2, fig.height=2, fig.cap="Test", fig.subcap = c("1","2")}
+knitr::include_graphics(c("images/maps/CShare_1965.png"))
+knitr::include_graphics(c("images/maps/CIncrease_1965.png"))
+```
+
+```{r, out.width = "12cm", echo = FALSE, fig.cap = "one column figure"}
+knitr::include_graphics("images/maps/CShare_4ColorClimates.png")
+```
+
+plot(1:10)
+plot(rnorm(10))
+```
+
 ```{r, out.width = "12cm", echo = FALSE, fig.cap = "two column figure", fig.show='hold'}
 knitr::include_graphics("images/figs_draft-1.png")
 ```
@@ -27,4 +40,24 @@ knitr::include_graphics(c("images/maps/CIncrease_1965.png","images/maps/CIncreas
 
 ```{r, out.width = "12cm", echo = FALSE, fig.cap = "one column figure"}
 knitr::include_graphics("images/maps/CShare_4ColorClimates.png")
+```
+
+
+
+
+```{r 4planel plot, out.width="50%", fig.hold="hold"}
+par(mar = c(4, 4, 0.1, 0.1))
+
+
+
+
+```
+
+```{r table, echo = FALSE}
+
+table <- readRDS("../ResultNotebooks/Output/SFC_climatezone.rds")
+knitr::kable(table$naturalstate_table, "latex", digit=2, caption="SCF compared to potential natural state")
+knitr::kable(table$actualstate_table,  "latex", digit=2, caption="SCF compared to actual natural state")
+knitr::kable(table$steadystate_table,  "latex", digit=2, caption="Steady state SCF compared to actual natural state")
+
 ```

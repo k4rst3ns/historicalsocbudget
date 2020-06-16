@@ -1,5 +1,23 @@
 # Discussion
 
+Big points:
+
+- SOC initialization is bad (Task: find a better representation)
+
+- natural land representation is lacking proper  parametrization of natural input (n, lg content of litterfall) (--> ask Christop again)
+
+- boreal zone and dry regions are not well represented (maybe because of the bad parameterization of the soil model for natural soils)
+
+- As pointed out by Keel (2017), Smith (2019) the results might be highly sensitive to carbon input calculations more precisly to below and above ground residue carbon estimates derived from harvested quantities. It has been questioned, that below ground residues might increase with a fixed root:shot ratio (maybe specifically in high end farming systems (?)). Following this argumentation SOC results shown in this study might especially in high-yielding farming system (europe etc.) overestimate actual SOC stocks.
+
+- fertilizer interaction (--> ask LPJmLer again)
+
+- diaggregation of manure with urban area is leeding to a lot of displaced manure (?) that is cut off
+
+- mismatches between FAO/LUH
+
+
+
 Shortcommings:
 
 - Carbon displacement via leaching and erosion is neglected in this study.
