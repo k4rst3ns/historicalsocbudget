@@ -18,7 +18,14 @@ Big points:
 
 
 
+
 Shortcommings:
+
+- pasture dynamics are neglected and treated as natveg
+
+- no tillage adaptaion is neglected on cropland. Pastures are assumed to be not tilled at all (propably at least heavy managed pastures are tilled with some rotation)
+
+- irrigated areas are no crop specific and growing periods are not considered (since this is very complex to calculate average growing periods). Crop specific growing periods might be possible using LPJmL data.
 
 - Carbon displacement via leaching and erosion is neglected in this study.
 
