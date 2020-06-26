@@ -16,7 +16,7 @@ rev <- "rev0.6_mrSOC"
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
 SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
 Landuse    <- read.magpie("Data/Landuse.rds")
@@ -30,16 +30,22 @@ Calc global numbers
 SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
 SOCStock        <- dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2)
 glo_SOCStock    <- dimSums(SOCStock, dim=1) 
-glo_SOCEmission <- glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"]  
+glo_SOCEmission <- (glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
 plot(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCEmission/1000, type="l", xlab="Time", ylab="Global SOC Debt in GtC")
 plot(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCStock[,,"actualstate"])
 lines(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCStock[,,"naturalstate"])
+
+SOCemis <- ggplot() + geom_line(data= as.data.frame(glo_SOCEmission)[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
+  labs( x = "Year", 
+        y = "Global cummulative SOC emission in GtC") +
+  scale_x_discrete(breaks=seq(1965,2010,5)) +
+  scale_y_continuous(limits=c(25,40), breaks=seq(25,40,5)) +
+  theme(rect=element_blank())
+  
 ```
 
 
 Plot cellular maps
-
-
 
 
 ```{r plot density maps}
@@ -54,31 +60,134 @@ cropland_share[Landuse[,,"crop"]==0] <- NA
 cropland_increase <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)-dimSums(SoilCarbon[,,"actualstate"][,,"natveg"], dim=3) 
 cropland_increase[Landuse[,,"crop"]==0] <- NA
 
+library("ggplot2")
+theme_set(theme_bw())
+library("sf")
+library("rnaturalearth")
+library("rnaturalearthdata")
 library(RColorBrewer)
-cols      <- colorRampPalette(brewer.pal(11, "RdYlGn"))(7)
-cols_dens <- colorRampPalette(brewer.pal(11, "RdYlGn"))(30)[c(1:20, rep(c(21:30), each=10))]
+
+cols_dens <- colorRampPalette(brewer.pal(11, "RdYlBu"))(30)[c(1:20, rep(c(21:30), each=10))]
+
 outputdir <- "Output/Images"
 
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+share2plot    <- merge(as.data.frame(cropland_share), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+increase2plot <- merge(as.data.frame(cropland_increase), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+density2plot  <- merge(as.data.frame(cropland_dens), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
+world.robin   <- st_transform(world,"+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
 
-png(paste0(outputdir,"CDens_2010.png"), width = 1280, height = 720, res = 108)
-luplot::plotmap(cropland_dens[,"y2010",], legend_range = c(0,300), legend_colours = cols_dens , main="Soil Organic Carbon Stocks under Cropland")
-dev.off()
+SOCshare <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(share2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(0,2), colours = cols, 
+                      name = expression("ratio of cropland SOC to potential natural SOC"), 
+                      breaks=c(0.3,0.6,0.9,1.1,1.4,1.7,2),
+                      labels=c("0     0.3","  0.6", "  0.9","  1.1","  1.4","  1.7","> 2"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=10),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = T,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          )
 
-# png(paste0(outputdir,"CShare_1965.png"),width = 1280, height = 720, res = 108)
-# luplot::plotmap(cropland_share[,"y1965",], legend_range = c(0,2), legend_colours = cols, main="C_share on Cropland 1965")
+
+SOCincrease <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression("cropland SOC change in tons of carbon per hectar"), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("> -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=10),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = T,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          )
+
+cols <- colorRampPalette(brewer.pal(9, "YlGn"))(8)[2:8]
+display.brewer.pal(9, "YlGn")
+display.brewer.pal(9, "RdYlGn")
+
+SOCdensity <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(density2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(0,150), colours = cols, 
+                      name = expression("cropland SOC in tons of carbon per hectar"), 
+                      values=c(0,5,10,20,40,70,100,150)/150,
+                      breaks=c(5,10,20,40,70,100,150),
+                      labels=c("0     5","  10","  20","  40","  70","  100"," >150"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=10),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = T,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          )
+
+
+
+# png(paste0(outputdir,"CDens_2010.png"), width = 1280, height = 720, res = 108)
+# luplot::plotmap2(cropland_dens[,"y2010",], legend_range = c(0,300), lowcol = cols[1], midcol = cols[4], highcol = cols[7], ncol=7, legend_discrete = TRUE)
 # dev.off()
-
-png(paste0(outputdir,"CShare_2010.png"), width = 1280, height = 720, res = 108)
-luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols, main="Stock Change Factor on Cropland 2010")
-dev.off()
-
-# png(paste0(outputdir,"CIncrease_1965.png"),width = 1280, height = 720, res = 108)
-# luplot::plotmap(cropland_increase[,"y1965",], legend_range = c(-80,80), legend_colours = cols, main="Absoulte C change on Cropland 1965")
+# 
+# # png(paste0(outputdir,"CShare_1965.png"),width = 1280, height = 720, res = 108)
+# # luplot::plotmap(cropland_share[,"y1965",], legend_range = c(0,2), legend_colours = cols, main="C_share on Cropland 1965")
+# # dev.off()
+# 
+# png(paste0(outputdir,"CShare_2010.png"), width = 1280, height = 720, res = 108)
+# luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols, main="Stock Change Factor on Cropland 2010")
 # dev.off()
-
-png(paste0(outputdir,"CIncrease_2010.png"),width = 1280, height = 720, res = 108)
-luplot::plotmap(cropland_increase[,"y2010",], legend_range = c(-80,80), legend_colours = cols, legend_title = "tC/ha", main="Absoulte C change on Cropland 2010")
-dev.off()
+# 
+# # png(paste0(outputdir,"CIncrease_1965.png"),width = 1280, height = 720, res = 108)
+# # luplot::plotmap(cropland_increase[,"y1965",], legend_range = c(-80,80), legend_colours = cols, main="Absoulte C change on Cropland 1965")
+# # dev.off()
+# 
+# png(paste0(outputdir,"CIncrease_2010.png"),width = 1280, height = 720, res = 108)
+# luplot::plotmap(cropland_increase[,"y2010",], legend_range = c(-80,80), legend_colours = cols, legend_title = "tC/ha", main="Absoulte C change on Cropland 2010")
+# dev.off()
 
 
 ```
@@ -88,16 +197,9 @@ dev.off()
 ```{r grid plot}
 library(gridExtra)
 
-par(mfrow = c(2, 2))
-
-luplot::plotmap(cropland_dens[,"y2010",], legend_range = c(0,300), legend_colours = cols_dens , 
-                main="SOC Stocks under Cropland")
-plot(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCEmission/1000, type="l", xlab="Time",
-     ylab="Global SOC Debt in GtC")
-luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols)
-luplot::plotmap(cropland_increase[,"y2010",], legend_range = c(-80,80), legend_colours = cols,
-                legend_title = "tC/ha")
-
+grid <- grid.arrange(SOCdensity, SOCemis, SOCincrease, SOCshare, ncol=2)
+grid
+ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid)
 
 ```
 

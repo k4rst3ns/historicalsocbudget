@@ -90,5 +90,11 @@ comparison <- mbind(CShare_ipcc,
 
 print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
 
+comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(comparison)), 
+                            Data1 ~ Data2, value.var="Value", 
+                            row.names=levels(as.data.frame(comparison)$Data1)))
+
+saveRDS(list(comparison_table = comparison_table), "Output/SFC_comparison.rds")
+
 
 ```
