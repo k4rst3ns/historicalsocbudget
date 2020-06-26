@@ -3,20 +3,22 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: SOCbudget.aux
 The style file: copernicus.bst
 Database file #1: SOCbudget.bib.bib
+Warning--I didn't find a database entry for "LPJmL4_1"
 Warning--I didn't find a database entry for "FAOSTAT"
 Warning--I didn't find a database entry for "LUH2"
-Warning--I didn't find a database entry for "LPJmL4_1"
 Warning--I didn't find a database entry for "bodirsky2012"
 Warning--I didn't find a database entry for "weindl"
 Warning--I didn't find a database entry for "smil1999"
 Warning--I didn't find a database entry for "Ma2018"
 Warning--I didn't find a database entry for "gilbert"
+Warning--I didn't find a database entry for "weindl.We"
 Warning--I didn't find a database entry for "ippc_2006_2006"
+Warning--I didn't find a database entry for "porvolik"
 Warning--missing institution in ipcc_2006_2006
 Warning--missing institution in ipcc_2019_2019
 You've used 2 entries,
             2811 wiz_defined-function locations,
-            1013 strings with 9145 characters,
+            1016 strings with 9171 characters,
 and the built_in function-call counts, 716 in all, are:
 = -- 43
 > -- 20
@@ -55,4 +57,4 @@ warning$ -- 2
 while$ -- 6
 width$ -- 0
 write$ -- 29
-(There were 11 warnings)
+(There were 13 warnings)

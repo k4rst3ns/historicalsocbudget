@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.21)  16 JUN 2020 12:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.1.21)  27 JUN 2020 01:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -951,12 +951,6 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 
 LaTeX Warning: Label `eq:steadystate' multiply defined.
 
-
-LaTeX Warning: Label `tab:table' multiply defined.
-
-
-LaTeX Warning: Label `tab:table' multiply defined.
-
 )
 \openout1 = `SOCbudget.aux'.
 
@@ -1047,196 +1041,169 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 8.54997pt on input line 181.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 304.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
 
-Overfull \hbox (120.20155pt too wide) in paragraph at lines 305--317
+LaTeX Warning: Reference `(' on page 4 undefined on input line 311.
+
+
+LaTeX Warning: Reference `(' on page 4 undefined on input line 312.
+
+
+Package natbib Warning: Citation `LPJmL4_1' on page 4 undefined on input line 3
+12.
+
+
+Overfull \hbox (33.61108pt too wide) in paragraph at lines 307--313
+\T1/ptm/m/n/10 We ac-count for dif-fer-ent car-bon in-put sources de-pend-ing o
+n our two dis-tin-guished land-use types (see ta-ble @ref(tab:datasourceinputs)
+);
+ []
+
+[4]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 325.
+
+Overfull \hbox (16.93658pt too wide) in paragraph at lines 326--338
  []$[]$ 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3] [4] [5]
+[5]
 
-Package natbib Warning: Citation `FAOSTAT' on page 6 undefined on input line 45
+LaTeX Warning: Reference `(' on page 6 undefined on input line 426.
+
+
+LaTeX Warning: Reference `(' on page 6 undefined on input line 430.
+
+[6] [7]
+
+Package natbib Warning: Citation `FAOSTAT' on page 8 undefined on input line 45
 6.
 
 
-Package natbib Warning: Citation `LUH2' on page 6 undefined on input line 469.
+Package natbib Warning: Citation `LUH2' on page 8 undefined on input line 467.
 
 
-Package natbib Warning: Citation `FAOSTAT' on page 6 undefined on input line 47
-4.
+Package natbib Warning: Citation `FAOSTAT' on page 8 undefined on input line 47
+2.
 
 
-Package natbib Warning: Citation `LPJmL4_1' on page 6 undefined on input line 4
-82.
+Package natbib Warning: Citation `LPJmL4_1' on page 8 undefined on input line 4
+81.
 
 
-Package natbib Warning: Citation `FAOSTAT' on page 6 undefined on input line 48
-6.
-
-[6]
-
-Package natbib Warning: Citation `bodirsky2012' on page 7 undefined on input li
-ne 493.
-
-
-Package natbib Warning: Citation `weindl' on page 7 undefined on input line 500
-.
-
-
-Package natbib Warning: Citation `smil1999' on page 7 undefined on input line 5
-08.
-
-
-Package natbib Warning: Citation `weindl' on page 7 undefined on input line 524
-.
-
-
-Package natbib Warning: Citation `weindl' on page 7 undefined on input line 543
-.
-
-[7]
-
-Package natbib Warning: Citation `Ma2018' on page 8 undefined on input line 558
-.
-
-
-Package natbib Warning: Citation `gilbert' on page 8 undefined on input line 56
-6.
-
-
-Package natbib Warning: Citation `weindl' on page 8 undefined on input line 567
-.
+Package natbib Warning: Citation `FAOSTAT' on page 8 undefined on input line 48
+5.
 
 
 Package natbib Warning: Citation `bodirsky2012' on page 8 undefined on input li
-ne 598.
-
-
-Package natbib Warning: Citation `weindl' on page 8 undefined on input line 602
-.
-
-
-Package natbib Warning: Citation `ippc_2006_2006' on page 8 undefined on input 
-line 610.
+ne 492.
 
 
 Package natbib Warning: Citation `bodirsky2012' on page 8 undefined on input li
-ne 624.
-
-[8] [9]
-<../OldDataNotTracked/images/maps/CShare_1965.png, id=111, 856.53334pt x 481.8p
-t>
-File: ../OldDataNotTracked/images/maps/CShare_1965.png Graphic file (type png)
-<use ../OldDataNotTracked/images/maps/CShare_1965.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/maps/CShare_1965.png  used
- on input line 641.
-(pdftex.def)             Requested size: 1284.96051pt x 722.81584pt.
-<../OldDataNotTracked/images/maps/CIncrease_1965.png, id=112, 856.53334pt x 481
-.8pt>
-File: ../OldDataNotTracked/images/maps/CIncrease_1965.png Graphic file (type pn
-g)
-<use ../OldDataNotTracked/images/maps/CIncrease_1965.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/maps/CIncrease_1965.png  u
-sed on input line 641.
-(pdftex.def)             Requested size: 1284.96051pt x 722.81584pt.
-
-Overfull \hbox (781.34674pt too wide) in paragraph at lines 641--641
- [][] 
- []
+ne 510.
 
 
-Overfull \hbox (781.34674pt too wide) in paragraph at lines 641--641
- [] 
- []
+Package natbib Warning: Citation `weindl' on page 8 undefined on input line 514
+.
+
+[8]
+
+Package natbib Warning: Citation `smil1999' on page 9 undefined on input line 5
+20.
 
 
-LaTeX Warning: Float too large for page by 889.38817pt on input line 642.
+Package natbib Warning: Citation `weindl' on page 9 undefined on input line 535
+.
 
-<../OldDataNotTracked/images/figs_draft-1.png, id=113, 1662.21pt x 2347.77126pt
->
-File: ../OldDataNotTracked/images/figs_draft-1.png Graphic file (type png)
-<use ../OldDataNotTracked/images/figs_draft-1.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/figs_draft-1.png  used on 
-input line 645.
-(pdftex.def)             Requested size: 341.43306pt x 482.22766pt.
-<../OldDataNotTracked/images/figs_draft-2.png, id=114, 1662.21pt x 2347.77126pt
->
-File: ../OldDataNotTracked/images/figs_draft-2.png Graphic file (type png)
-<use ../OldDataNotTracked/images/figs_draft-2.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/figs_draft-2.png  used on 
-input line 649.
-(pdftex.def)             Requested size: 341.43306pt x 482.22766pt.
-<../OldDataNotTracked/images/figs_draft-3.png, id=115, 1662.21pt x 2347.77126pt
->
-File: ../OldDataNotTracked/images/figs_draft-3.png Graphic file (type png)
-<use ../OldDataNotTracked/images/figs_draft-3.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/figs_draft-3.png  used on 
-input line 653.
-(pdftex.def)             Requested size: 341.43306pt x 482.22766pt.
-<../OldDataNotTracked/images/RegionPlot+Valid.png, id=116, 602.25pt x 451.6875p
-t>
-File: ../OldDataNotTracked/images/RegionPlot+Valid.png Graphic file (type png)
-<use ../OldDataNotTracked/images/RegionPlot+Valid.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/RegionPlot+Valid.png  used
- on input line 657.
-(pdftex.def)             Requested size: 341.43306pt x 256.0861pt.
-<../OldDataNotTracked/images/maps/CShare_4ColorClimates.png, id=117, 856.53334p
-t x 481.8pt>
-File: ../OldDataNotTracked/images/maps/CShare_4ColorClimates.png Graphic file (
-type png)
-<use ../OldDataNotTracked/images/maps/CShare_4ColorClimates.png>
-Package pdftex.def Info: ../OldDataNotTracked/images/maps/CShare_4ColorClimates
-.png  used on input line 661.
-(pdftex.def)             Requested size: 341.43306pt x 192.05493pt.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 665.
+
+Package natbib Warning: Citation `Ma2018' on page 9 undefined on input line 551
+.
+
+
+Package natbib Warning: Citation `gilbert' on page 9 undefined on input line 56
+5.
+
+
+Package natbib Warning: Citation `weindl.We' on page 9 undefined on input line 
+566.
+
+[9]
+
+Package natbib Warning: Citation `bodirsky2012' on page 10 undefined on input l
+ine 586.
+
+
+Package natbib Warning: Citation `weindl' on page 10 undefined on input line 59
+0.
+
+
+Package natbib Warning: Citation `ippc_2006_2006' on page 10 undefined on input
+ line 598.
+
+
+Package natbib Warning: Citation `bodirsky2012' on page 10 undefined on input l
+ine 612.
+
+
+Package natbib Warning: Citation `porvolik' on page 10 undefined on input line 
+632.
+
+[10] [11]
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 717.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 718.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 666.
-[10] [11 <../OldDataNotTracked/images/maps/CShare_1965.png (PNG copy)> <../OldD
-ataNotTracked/images/maps/CIncrease_1965.png (PNG copy)>] [12 <../OldDataNotTra
-cked/images/figs_draft-1.png>] [13 <../OldDataNotTracked/images/figs_draft-2.pn
-g>] [14 <../OldDataNotTracked/images/figs_draft-3.png>] [15 <../OldDataNotTrack
-ed/images/RegionPlot+Valid.png (PNG copy)> <../OldDataNotTracked/images/maps/CS
-hare_4ColorClimates.png (PNG copy)>] [16] [17]
-Overfull \hbox (13.58418pt too wide) in paragraph at lines 813--815
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 719.
+<../ResultNotebooks/Output/Images/4panelfigure.png, id=125, 526.8483pt x 325.21
+5pt>
+File: ../ResultNotebooks/Output/Images/4panelfigure.png Graphic file (type png)
+
+<use ../ResultNotebooks/Output/Images/4panelfigure.png>
+Package pdftex.def Info: ../ResultNotebooks/Output/Images/4panelfigure.png  use
+d on input line 723.
+(pdftex.def)             Requested size: 455.24408pt x 281.01433pt.
+[12] [13 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>] [14]
+Overfull \hbox (13.58418pt too wide) in paragraph at lines 788--790
 \T1/ptm/m/n/10 The con-clu-sion goes here. You can mod-ify the sec-tion name wi
 th \T1/pcr/m/n/10 \conclusions[modified heading if necessary]\T1/ptm/m/n/10 . 
  []
 
-[18] (./SOCbudget.bbl [19]
+[15] (./SOCbudget.bbl [16]
 
 Package lineno Warning: Linenumber reference failed, 
 (lineno)                rerun to get it right.
 
-) [20]
+) [17]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 911.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 911.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 886.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 886.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 911.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 911.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 886.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 886.
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 911.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 886.
  ) 
 Here is how much of TeX's memory you used:
- 11195 strings out of 494847
- 158678 string characters out of 6179080
- 286291 words of memory out of 5000000
- 14200 multiletter control sequences out of 15000+600000
- 48223 words of font info for 78 fonts, out of 8000000 for 9000
+ 11167 strings out of 494847
+ 157203 string characters out of 6179080
+ 285327 words of memory out of 5000000
+ 14185 multiletter control sequences out of 15000+600000
+ 50611 words of font info for 81 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 43i,17n,40p,324b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,17n,40p,324b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -1247,14 +1214,14 @@ msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
 y7.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
-/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.
-pfb>
-Output written on SOCbudget.pdf (20 pages, 1590175 bytes).
+/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8
+a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on SOCbudget.pdf (17 pages, 573280 bytes).
 PDF statistics:
- 262 PDF objects out of 1000 (max. 8388607)
- 213 compressed objects within 3 object streams
- 86 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 241 PDF objects out of 1000 (max. 8388607)
+ 203 compressed objects within 3 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

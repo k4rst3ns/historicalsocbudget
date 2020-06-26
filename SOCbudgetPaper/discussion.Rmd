@@ -21,7 +21,7 @@ Big points:
 
 Shortcommings:
 
-- pasture dynamics are neglected and treated as natveg
+- pasture dynamics are neglected and treated as natveg  / Note that manure excreted to pastures is neglected within these analysis, since we focus purely on cropland dynamics.
 
 - no tillage adaptaion is neglected on cropland. Pastures are assumed to be not tilled at all (propably at least heavy managed pastures are tilled with some rotation)
 

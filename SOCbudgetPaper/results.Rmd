@@ -1,11 +1,19 @@
 # Results
 
 
-```{r table, echo = FALSE}
 
+
+```{r table, echo = FALSE}
 table <- readRDS("../ResultNotebooks/Output/SFC_climatezone.rds")
 knitr::kable(table$naturalstate_table, "latex", digit=2, caption="SCF compared to potential natural state")
-knitr::kable(table$actualstate_table,  "latex", digit=2, caption="SCF compared to actual natural state")
-knitr::kable(table$steadystate_table,  "latex", digit=2, caption="Steady state SCF compared to actual natural state")
+```
 
+```{r table2, echo = FALSE}
+table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
+knitr::kable(table$comparison_table, "latex", digit=2, caption="SCF compared to IPCC Tier 1")
+```
+
+```{r out.width = "16cm"}
+# All defaults
+knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```

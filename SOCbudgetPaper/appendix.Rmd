@@ -1,0 +1,11 @@
+* table on method subsections to functions within R packages
+
+* table on mapping LUH2FAO2MAG
+
+* kcr2kres mapping
+
+* carbon 2 dry matter @Ma2018 (??) -> Litter is coming from LPJmL in carbon units - transformation with 0.44 is done twice reverting the effect of the transformation 
+
+* closs in AWMS - Table
+
+* map on climate zone used for SCF
