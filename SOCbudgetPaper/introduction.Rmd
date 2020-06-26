@@ -1,22 +1,10 @@
 \introduction
 
-<!-- Relevance of the general topic
-- why important (rescue the world)
-Stand der Forschung, sher spezifisch auf deine fragestellung
-- Gibt viel biophysikalische Modellierung
-Forschungslücke (fängt mit "However" an.)
-- Zu wenig Fokus auf management, obwohl sehr einflussreich
-Fragestellung, Subfragestellungen
-Struktur der Arbeit
--->
+The depletion of soil organic carbon (SOC) due agricultural management has been a major source of carbon emissions, but also offers the potential to turn into a large additional carbon sink and thus mitigate climate change. Whereas the extent of the sink potential by SOC enhancement is highly debated (add refs), it is largely agreed upon that the SOC pool itself is the biggest terrestrial carbon pool, exceeding the atmospheric and even more the biospheric carbon pool multiple times. Even small changes in SOC drivers might lead to substantial shifts in earth carbon cycled and influence the atmospheric CO2 concentration (ref. permafrost melting). The specific amount of carbon stored in the soil is uncertain though and estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996). 
 
-<!-- You can change the name of the section if neccessary using `\introduction[modified heading]`. -->
+Mapping the worlds SOC has been investigated intensivly over the last decades and led to an increased quality of SOC maps as well as a even better understanding of factors driving magnitude, distribution and dynamics of SOC pools. Natural properties like climatic, biophysical and landscape characteristics clearly play the most important role in this regard. 
 
-<!-- this is not a mitigation paper. Your first paragraph is however on mitigation. I would frame it closer to your research. This is a better intro for your next paper -->
-
-Soil organic carbon (SOC) is the biggest terrestrial carbon pool, exceeding the atmospheric and even more the biospheric carbon pool multiple times. Estimates of this carbon pool are still connected to large uncertainties, with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996). Even small changes in SOC can therefore lead to substantial shifts in earth carbon cycled and influence the atmospheric CO2 concentration (ref. permafrost melting).  Mapping the worlds SOC has been investigated intensivly over the last decades and led to an increased quality of SOC maps as well as a even better understanding of factors driving magnitude, distribution and dynamics of SOC pools. Natural properties like climatic, biophysical and landscape characteristics clearly play the most important role in this regard.
-
-Human intervention, including land cover change and land management, has however added a further driver to SOC change, which alters terrestrial carbon pools in much shorter time scales and is likely the dominant driver of SOC change today. These  The depletion of Soil organic carbon (SOC) due to agricultural management has been a major source of carbon emissions. Recent studies identified the anthropogenic SOC debt at around 116 GtC (Sanderman et al.), which compares to older estimates of around 60-130 GtC <!--look up --> (Lal, 2006). Other studies have focused more closely on spatial disaggregated SOC changes via advanced digital soil mapping techniques (S-World; Stoorvogel 2, 2017) or better representation of biogeochemcial processes within SOC dynamics  (<!-- find microbial study -->). Despite providing a rough estimate of the order of magnitude of change, these studies lack a detailed consideration of land management. 
+Human intervention, including land cover change and land management, has however added a further driver to SOC change, which alters terrestrial carbon pools in much shorter time scales and is likely the dominant driver of SOC change on managed land today. Recent studies identified the anthropogenic SOC debt at around 116 GtC (Sanderman et al.), which compares to older estimates of around 60-130 GtC <!--look up --> (Lal, 2006). Other studies have focused more closely on spatial disaggregated SOC changes via advanced digital soil mapping techniques (S-World; Stoorvogel 2, 2017) or better representation of biogeochemcial processes within SOC dynamics  (<!-- find microbial study -->). Despite providing a rough estimate of the order of magnitude of change, these studies lack a detailed consideration of land management. 
 
 Field-scale models (ref. Daycent, RothC, Ecosse, C-Tool) are able to capture these land mangement impacts by using detailed information on yield levels, fertilizer inputs and various other on farming activities. Yet, due to the lack of comprehensive global management data to feed these input demanding models, it seems still very complex to scale them up to a global extent.
 
@@ -24,7 +12,6 @@ Our study combines an spatial-explicit estimate of agricultural management data 
 
 This paper will introduce in the the first part of the method section the basic concept of SOC dynamics. We continue in the second part with a detailed description of the used global gridded management data on production levels, residue recycling rates, manure amendments, irrigation and tillage adoption. In a third, small part, we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines. 
 In our result section we will focus on the SOC dynamics on global croplands by analysing (1) the spatial explicit SOC distribution and depletion over the last decades, (2) compare the climate zone specfic stock changes with default stock changes factors from the IPCC Tier 1 approach and (3) compare global agricultrual carbon flows and stocks to contextualize the importants of the different management aspects. 
-
 Finally, we will discuss our findings and their implications on SOC model development and conlude with an analysis and outlook on the the opportunities for SOC management for climate change mitigation and negative emissions.
 
 <!--
