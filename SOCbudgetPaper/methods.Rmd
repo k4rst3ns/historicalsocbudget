@@ -1,16 +1,17 @@
 # Method (50)
 
-We compiled calculations as open-source R packages available under github.com/pik-piam/mrcommons (management related functions) and github.com/pik-piam/mrSOCbudget (soil dynamic related functions), which are both based on github.com/pik-piam/madrat, a framework improving reproducibility and transparency in data processing.
+We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons (management related functions) and github.com/pik-piam/mrSOCbudget (soil dynamic related functions), which are both based on the MADRaT package (package citation?), a framework which aims to improve reproducibility and transparency in data processing.
 In the following chapter we outine the most important relationships and assumptions. See table \@ref(append:subsection2mrfunctions) for further information on corresponding code within the R packages.
-
 
 
 ## Carbon Stocks following (new) Tier 2 method (50) {#sec:carbonbudget}
 
-Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019), we estimate soil organic carbon (SOC) stocks for cropland and all other land represented by natural vegetation on half-degree resolution from 1975 to 2010. We assume the actual SOC state converges towards a stable steady state, that itself is changing over time and space depending on biophysical, climatic and agronomic conditions. Therefore we conduct the following three steps within each yearly timestep: 
-(1) We calculate annual land-use (sub-)type specific steady states and decay rates for SOC stocks, 
+Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019), we estimate soil organic carbon (SOC) stocks for cropland and all other land represented by natural vegetation on half-degree <!-- (55km at the equator) put this in for clarification? --> resolution from 1975 to 2010. We assume the actual SOC state converges towards a stable steady state, which itself is changing over time and space depending on biophysical, climatic and agronomic conditions. Therefore we conduct the following three steps within each yearly timestep: 
+(1) We calculate annual land-use (sub-)type-specific steady states and decay rates for SOC stocks, 
 (2) We account for land conversion by transferring SOC between land-use types and 
 (3) We estimate SOC stocks based on the stocks of the previous time period, the steady state stocks and the decay rate. 
+
+<!-- maybe make it more clear what the steady state is ? what does actual (actual SOC) mean here ? what does actual mean?  quantity of total carbon? so far not so clear to me, and its a bit confusing when you say its still changing over time.  i think these lines need to be more clear, something like "which still includes changing internal dynamics over space and time depending on biophysical..." -->
 
 ### Steady-state SOC stocks and decay rates
 
@@ -19,13 +20,17 @@ In a simple first order kinetic approach the steady-state soil organic carbon st
 SOC^{eq} =\frac{C^{\textrm{in}}}{k} \qquad\forall\quad i,t
 \label{eq:inoutflow}
 \end{equation}
-with $C^{\textrm{in}}$ being carbon inputs to the soil, $k$ denoting the soil organic carbon decay rate; as well as $i$ representing grid cells indecies and $t$ years. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon sub-pools (active, slow and passive) and entangled dynamics between them. Annual carbon inflow to each sub-pool (see \@ref(sec:carboninputs)) and annual decay rates (see \@ref(sec:tier2)) of each sub-pool are still the key components to determining steady-state SOC stocks.  
+with $C^{\textrm{in}}$ being carbon inputs to the soil, $k$ denoting the soil organic carbon decay rate; as well as $i$ representing grid cells indices and $t$ years. We use for our calculations the steady-state method of the refinement of the IPCC guidelines vol. 4 (@ipcc_2019_2019) for mineral soils, which assume three soil carbon sub-pools (active, slow and passive) and interactions between them. Annual carbon inflow to each sub-pool (see \@ref(sec:carboninputs)) and annual decay rates (see \@ref(sec:tier2)) of each sub-pool are the key components to determining steady-state SOC stocks.  
 
 #### Carbon Inputs to the Soil {#sec:carboninputs}
 
-We account for different carbon input sources depending on our two distinguished land-use types (see table \@ref(tab:datasourceinputs)); in particular for recycled crop residues, below ground biomass of crops (for both see \@ref(sec:residues)) and recycled manure (see \ref(sec:livst_manure)) on croplands; and litterfall (\ref(@LPJmL4_1)) on natural vegetation.
+We account for different carbon input sources depending on the two land-use types (croplands and natural vegetation) we distinguish (see table \@ref(tab:datasourceinputs)). Sources for cropland are recycled crop residues, below ground biomass of crops (for both see \@ref(sec:residues)) and recycled manure (see \ref(sec:livst_manure)); For natural vegetation litterfall (\ref(@LPJmL4_1)) litterfall is the (main/only?) source.
 
-Following the IPCC methodology carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each component the sum over all carbon input sources is allocated to the respective SOC sub-pools via transfer coefficients. This implies that not only the amount of carbon, but also their structural composition is determining the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+<!-- i took out in particular because this means there are more than the 3 you list? didn't look at the list though. If the 3 you listed here for croplands are not exhaustive, I would rather write "Important sources for cropland are ..., while litterfall dominates for nat veg") -->
+
+Following the IPCC carbon accounting methodology, carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content (see \@ref(ipcc_2019_2019)). For each component the sum over all carbon input sources is allocated to the respective SOC sub-pools via transfer coefficients. This implies that both the amount of carbon as well as its structural composition determine the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+
+
 
 ```{=latex}
 
