@@ -1,52 +1,15 @@
 \introduction
 
-The depletion of soil organic carbon (SOC) due to agricultural management has been <!--still is, no? try to avoid passive tense and if possible just use "is a major source" here, if possible--> a major source of carbon emissions, however, SOC has <!-- may have?  in the next paragraph you say the extent is debated - only the total value?--> the potential, given XXX, to instead act as a large carbon sink and thus mitigate climate change <!-- maybe citation needed here --> . 
+Soil Organic Carbon (SOC), the amount of organic carbon stored through the earth's soil, is the largest terrestrial carbon pool, exceeding the carbon in the atmospheric and biospheric pools multiple times (Bathjes). As such, even small changes in drivers of SOC may thus lead to substantial shifts in earth carbon cycle and influence the amount of CO2 in the atmosphere  (ref. permafrost melting). The specific amount of carbon stored in the soil is however uncertain, with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996). The quality of SOC maps has markedly improved in recent decades, along with better understanding of the factors driving the global magnitude, distribution, and dynamics of SOC pools. Natural properties like climatic, biophysical, and landscape characteristics clearly play the most important roles in this regard. 
 
-<!-- the way this sentence was written originally, "the depletion..., but also offers..." makes it look like it is the depletion which offers the potential. You also had the word additional,but it is a bit unclear because we don't know additional to what?  for the XXX, i am thinking to put "given alternative/better/reduced management (regimes)", to -->
-
-Whereas the extent of the sink potential by SOC enhancement is debated (add refs), <!-- what is SOC enhancement? unclear to me if the potential is the SOC sink, or the sink potential is the enhancement, which sounds like particular techniques or policies? if former, i would write  "...the extent of the sink potential of SOC (no enhancement)" --> it is well established that the SOC pool itself is the biggest terrestrial carbon pool, exceeding that of the atmospheric and biospheric carbon pools multiple times. Even small changes in drivers of SOC may thus lead to substantial shifts in the amount of earth carbon cycled and influence the amount of CO2 in the atmosphere  (ref. permafrost melting). The specific amount of carbon stored in the soil is however uncertain, with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996).
-
-<!-- Reading this first paragraph, the first sentence is introducing ag management and more "flows" of SOC, whereas the 2nd sentence is talking about the "stock". After reading this paragraph, I am not clear if intention is to measure SOC flows - and especially measuring the climate impacts/mitigation of ag practices - especially since you say "enhancement", or rather measuring the pool in total, which the last sentence is more saying... and which I understand to be true in the next parts (along with flows). I would put the second part first...and this way the more certain thing is also stated first. something like,,, :
-
-"Soil Organic Carbon, the amount of carbon stored (and cycled?) through the earth's soil, is the largest terrestrial carbon pool, exceeding the carbon in the atmospheric and biospheric pools multiple times (cite). As such, even small changes in drivers of SOC may thus lead to substantial shifts in the amount of earth carbon cycled and influence the amount of CO2 in the atmosphere  (ref. permafrost melting). The specific amount of carbon stored in the soil is however uncertain, with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile (Bathjes, 1996). The depletion of soil organic carbon (SOC) due to agricultural management has been (is/has been) a major source of carbon emissions, however, SOC has/may also have the potential, given XXX, to instead act as a large carbon sink and thus mitigate climate change <!-- maybe citation needed here  -->
-
-The quality of SOC maps has markedly improved in recent decades, along with better understanding of the factors driving the global magnitude, distribution, and dynamics of SOC pools. Natural properties like climatic, biophysical and landscape characteristics clearly play some of the most important roles in this regard. 
-
-<!-- multiple properties play multiple roleS, and i would switch it to "some of the most important roles" so that it flows into the importance of Human intervention in next line, esp. when its the dominant driver on mnged land" -->
-
-<!-- Oxford comma is illegal in german and optional in english but i personally really like it for clarity when separating lists -->
-
-Human intervention, including land cover change and land management, has however added a further driver to SOC change, which alters terrestrial carbon pools in much shorter time scales and is likely the dominant driver of SOC change on managed land today. Recent studies identify the anthropogenic SOC debt at around 116 GtC (Sanderman et al.), compared to previous estimates between 60-130 GtC <!--look up --> (Lal, 2006). Other studies have focused more closely on spatially disaggregated changes SOC via advanced digital soil mapping techniques (S-World; Stoorvogel 2, 2017) or better representation of biogeochemical processes within SOC dynamics  (<!-- find microbial study -->). While providing a rough estimate of the order of magnitude of change, these studies lack a detailed consideration of land management, (including agricultural activities?). 
+Human intervention, including land cover change and land management, has however added a further driver to SOC change, which alters terrestrial carbon pools in much shorter time scales and is likely one of the most dominant driver of SOC changes on managed land today. Recent studies identify the anthropogenic SOC debt for the first meter of the soil profile at around 116 GtC (Sanderman et al.), compared to previous estimates between 60-130 GtC <!--look up --> (Lal, 2006). Other studies have focused more closely on spatially disaggregation of SOC changes via advanced digital soil mapping techniques (S-World; Stoorvogel 2, 2017) or better representation of biogeochemical processes within SOC dynamics  (Hararuk, 20XX). While providing a rough estimate of the order of magnitude of change, these studies lack a detailed consideration of land management, especial agricultural activities. 
 
 Field-scale models (ref. Daycent, RothC, Ecosse, C-Tool) are able to capture these land mangement impacts by using detailed information on crop yield levels, fertilizer inputs and various other on-farm activities. However, due to the lack of comprehensive global management data as input to these models, scaling up to the global extent remains a complex challenge.
 
-Our study combines an spatially explicit estimate of agricultural management data on the global level with a robust but light-weight SOC model in order to estimate SOC stocks and stock change factors, as well as organic carbon flow dynamics within the agricultural system. We thereby consider change in SOC caused by historical land cover change as well as of different agricultural mangement practices, including residue recycling, manure amendments, irrigation and tillage. We thereby provide the first global, spatial explicit SOC maps that consider agricultural management.
+Our study combines an spatially explicit estimate of agricultural management data on the global level with a 3-pool SOC model parametrized for global croplands. This allows us to estimate SOC stock change factors, as well as organic carbon flow dynamics within the agricultural system. We thereby consider change in SOC caused by historical land cover change as well as of different agricultural mangement practices, including residue recycling, manure amendments, irrigation, and tillage. We thereby provide the first global, spatially explicit SOC loss maps that consider detailed agricultural management.
 
-<!--  To me, spatially explicit is much more natural than spatial explicit, when its used as an adjective. Google scholar shows me way more results for "spatially explicit" also. -->)
+This paper will first introduce in the methods section the basic concept of SOC dynamics as applied in this study. We continue with a detailed description of the global gridded management data used here, including (crop??) production levels, residue recycling rates, manure amendments, and the adoption of irrigation and tillage practices. Lastly, we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines. 
 
-<!-- "robust but light-weight" why makes it robust?  lightweight? the "heavyness" of the model to me seems not so relevant here, maybe an advantage to be discussed in discussion. I would almost definitely take it out here in intro, and maybe "robust" as well (to me it makes sense to say the model is robust because we did so and so tests, in the discussion) -->
-
-
-This paper will first introduce in the methods section a presentation of SOC dynamics. We continue with a detailed description of the global gridded management data used here, including (crop??) production levels, residue recycling rates, manure amendments, and the adoption of irrigation and tillage practices. Lastly, we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines. 
-In our results section we focus on the SOC dynamics of global croplands by (1) analysing the spatially explicit distribution and depletion of SOC over the last decades <!-- maybe put explicitly which years -->, (2) comparing the climate zone specfic stock changes with default stock change factors from the IPCC Tier 1 approach and (3) comparing global agricultural carbon flows and stocks to contextualize the importance of various management aspects. 
-
-<!-- "basic concept of SOC dynamics" already exists right? So i would say it just presents them, otherwise sounds like you've invented the concept. Otherwise would write something like, "the concept of SOC dynamics as used in this paper" or something like that... -->
-
-<!-- for 3  not clear what is being compared. right now it sounds like comparing flows vs. stocks (within global value) since there is only one global value. Or are you comparing across regions/management practices ? -->
+In our results section we focus on the SOC dynamics of global croplands by (1) analysing the spatially explicit distribution and depletion of SOC from 1975 to 2010, (2) comparing the climate zone specfic stock changes with default stock change factors from the IPCC Tier 1 approach and (3) quantify global agricultural carbon flows and stocks to compare the importance of various management aspects. 
 
 Finally, we will discuss our findings - including their implications for SOC model development - and conclude with an outlook on the ability of SOC management to mitigate climate change and contribute to negative greenhouse gas emissions.
-
-<!-- I would not use the term analyse when already in conclusion -->
-
-
-<!--
-* sanderman
-* WISE
-* SoilGrids
-* Stoorvogel
-* HANPP
-
-* Smith/Powlson
-* Lal
-* Bathjes
--->
