@@ -12,6 +12,9 @@ Big points:
 
 - fertilizer interaction (--> ask LPJmLer again)
 
+- "The Tier 2 method does not simulate C change but simply calculates an annual C stock change from the
+current C stock to the future steady-state soil C stock calculated based on current conditions." Leading to the fact that our total stock results are highly uncertained.
+
 - diaggregation of manure with urban area is leeding to a lot of displaced manure (?) that is cut off
 
 - mismatches between FAO/LUH

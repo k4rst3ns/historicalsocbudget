@@ -1,6 +1,25 @@
 # Results
 
+We present simulation results of the SOC budget of the period from 1975 to 2010 mainly focusing on cropland areas. Detailed total global and regional results of the state of the worlds SOC in comparison to other estimates can be found in the supplement.
 
+
+## SOC distribution and depletion
+Figure 
+
+```{r caption_SOCmaps, echo=FALSE}
+caption <- "(a) ... , (b) ... , (c) ... , (d) ... ."
+```
+
+```{r SOCmaps, out.width = "18cm", fig.cap = caption}
+# All defaults
+knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
+```
+
+
+
+\newpage
+
+## comparison of stock changes factors 
 
 
 ```{r table, echo = FALSE}
@@ -13,7 +32,13 @@ table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
 knitr::kable(table$comparison_table, "latex", digit=2, caption="SCF compared to IPCC Tier 1")
 ```
 
-```{r out.width = "16cm"}
-# All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
-```
+
+\newpage
+
+## global agricultrual carbon flows and stocks
+
+
+
+
+
+

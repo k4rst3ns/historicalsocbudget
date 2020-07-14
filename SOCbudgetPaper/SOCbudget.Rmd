@@ -1,27 +1,35 @@
 ---
-title: Historical Soil Organic Carbon Budget
+title: Management induced changes of soil organic carbon on global croplands 
+       \newline or \newline
+       How management changed soil organic carbon on global croplands
+       \newline or \newline
+       Agricultural soil have lost 13 GtC topsoil carbon
+       \newline or \newline
+       Linking agricultural management data to soil modeleling – a global approach
+       
 journal: "`r rticles::copernicus_journal_abbreviations(journal_name = 'communication')`"
 author:
   - given_name: Kristine
     surname: Karstens
     affiliation: 1
-    email: kristine.karstenst@pik-potsdam.de
+    email: kristine.karstens@pik-potsdam.de
     corresponding: true
   - given_name: Benjamin Leon
     surname: Bodirsky
     affiliation: 1
+  - given_name: Your
+    surname: Name
+    affiliation: 2
   - given_name: Alexander
     surname: Popp
     affiliation: 1
 affiliation:
   - code: 1
     address: Potsdam-Institut of Climate Impacts Research, Potsdam, Germany
+  - code: 2
+    address: Your affiliation 
 abstract: | 
- SOC one of larges c sinks on earth (3 times larger biosphere pool). 
- Agricultural management leads to a depletion of soil organic carbon. However this depletion of soil organic carbon (SOC) pools are so far not well represented in global assessments of historic carbon emissions. 
- While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated. 
- Here we create a spatial explicit data set for crop residue and manure management on cropland based on global historic production (FAOSTAT) and land-use (LUH2) data and combine it with the IPCC Tier 2 approach to create a half degree resolution soil organic carbon budget on mineral soils. We estimate that due to arable farming soils have lost over (?) GtOC of which (??) GtOC have been released within the period 1990-2010. 
- We show that, our results on global scale based on Tier 2 IPCC methodolgy are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models.
+  Soil organic carbon (SOC) is one of larges c stocks on earth (3 times larger biosphere pool). 
 bibliography: SOCbudget.bib
 running:
   title: R Markdown Template for Copernicus
@@ -37,7 +45,7 @@ availability:
   codedata: |
     use this to add a statement when having data sets and software code available
 authorcontribution: |
-  Karstens wrote code and paper build on work of Bodirsky. Bodirsky and Popp revised paper.
+  Karstens wrote code and paper build on work of Bodirsky. Bodirsky, <here_could_be_your_names> and Popp revised paper.
 disclaimer: |
   We like Copernicus.
 acknowledgements: |
@@ -57,13 +65,14 @@ appendix: |
   Regarding figures and tables in appendices, the following two options are possible depending on your general handling of figures and tables in the manuscript environment:
   To rename them correctly to A1, A2, etc., please add the following commands in front of them:
 output:
-  rticles::copernicus_article: default
-  md_document:
-    variant: markdown_github
-  bookdown::word_document2: default
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
     md_extensions: +raw_attribute
+  md_document:
+    variant: markdown_github
+  bookdown::word_document2: default
+  bookdown::pdf_document2: default
+  rticles::copernicus_article: default
 ---
 \newpage
 
