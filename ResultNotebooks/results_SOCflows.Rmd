@@ -12,15 +12,13 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev <- "rev0.6_mrSOC"
+rev       <- "rev0.7_mrSOC"
+outputdir <- "Output/Images"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
-
-SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Landuse.rds")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
 ```
 
@@ -33,7 +31,9 @@ CarbonLitter     <- readRDS("Data/CarbonLitter.rds")
 CarbonManure     <- readRDS("Data/CarbonManure.rds")           
 CarbonResidues   <- readRDS("Data/CarbonResidues.rds")
 CarbonHarvest    <- readRDS("Data/Crop_Harvest.rds")
-SoilCarbon       <- readRDS("Data/SoilCarbon.rds")
+SoilCarbonOut    <- readRDS("Data/SoilCarbon.rds")
+SoilCarbonDecay  <- readRDS("Data/SoilDecay.rds")
+SoilCarbonStSt   <- readRDS("Data/SoilSteadyState.rds")
 
 Landuse          <- readRDS("Data/Landuse.rds")
 LanduseChange    <- readRDS("Data/LanduseChange.rds")
@@ -46,6 +46,107 @@ ResiduesAgDemand <- readRDS("Data/ResiduesAg_FieldBalance.rds")
 
 ```
 
+```{r globals}
+grepSpaceTime     <- function(x){return(dimSums(x[,"y2010","c"],dim=1))}
+
+
+#Agriculture
+kcr        <- findset("kcr")
+kli        <- findset("kli")
+kres       <- findset("kres")
+kExResPast <- setdiff(findset("kall"),c(kres,kli,"pasture","wood","woodfuel","scp","fish"))
+kPrim      <- setdiff(findset("kall"),c(kli,"scp","fish")) 
+
+CropHANPP         <- dimSums(grepSpaceTime(FAOmassbalance[,,kcr][,,c("food","waste","other_util","bioenergy","feed",
+                                                                     "milling","refining","extracting","fermentation","distilling")]), dim=3)
+CropFEED          <- grepSpaceTime(dimSums(FAOmassbalance[,,kExResPast][,,"feed"], dim=3.1))
+CropPRIM          <- CropHANPP-CropFEED
+ResFEED           <- grepSpaceTime(dimSums(FAOmassbalance[,,kres][,,"feed"], dim=3.1))
+ResPRIM           <- dimSums(grepSpaceTime(FAOmassbalance[,,kres][,,c("other_util","bioenergy")]), dim=3)
+
+
+FEED              <- grepSpaceTime(dimSums(FAOmassbalance[,,kPrim][,,"feed"], dim=3.1))
+LivstHANPP        <- dimSums(grepSpaceTime(FAOmassbalance[,,kli][,,c("food","waste","other_util")]), dim=3)
+LivstCropHANPP    <- (CropFEED+ResFEED)/FEED * LivstHANPP
+
+ResidueBiomassTot <- grepSpaceTime(dimSums(ResidueBiomass, dim=3.2))
+ResidueRecycledTot<- grepSpaceTime(dimSums(ResiduesAgDemand[,,"recycle"], dim=3.2))
+
+ManureExcretedTot <- grepSpaceTime(dimSums(ManureExcreted[,,c("stubble_grazing","confinement")], dim=c(3.1,3.2)))
+ManureRecycledTot <- grepSpaceTime(dimSums(ManureRecycled, dim=3.1))
+
+#Soil
+
+### Carbon To
+CarbonTo            <- dimSums(toolConditionalReplace(SoilCarbonOut[,"y2010","carbontransfer"], "<0", 0),dim=c(1,3.3))
+CarbonToEff         <- dimSums(SoilCarbonOut[,"y2010","carbontransfer"], dim=c(1,3.3))
+CarbonToPools       <- dimSums(toolConditionalReplace(SoilCarbonOut[,"y2010","carbontransfer"], "<0", 0),dim=c(1))
+
+####### delete when new output on decay is ready
+# Decay
+
+ActiveDecay        <- mbind(setNames(calcOutput("ActiveDecay",  landtype="crop",   aggregate = FALSE),"crop"),
+                              setNames(calcOutput("ActiveDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
+SlowDecay          <- mbind(setNames(calcOutput("SlowDecay",  landtype="crop",   aggregate = FALSE),"crop"),
+                              setNames(calcOutput("SlowDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
+PassiveDecay       <- mbind(setNames(calcOutput("PassiveDecay", landtype="crop",   aggregate = FALSE),"crop"),
+                              setNames(calcOutput("PassiveDecay", landtype="natveg", aggregate = FALSE),"natveg"))
+
+subpools     <- c("active","slow","passive")
+names        <- as.vector(outer(getNames(Landuse), subpools, paste, sep="."))
+Decay <- new.magpie(getCells(Landuse), getYears(Landuse), names, fill = 0)
+
+Decay[,,"active"]                  <- ActiveDecay
+Decay[,,"slow"]                    <- SlowDecay
+Decay[,,"passive"]                 <- PassiveDecay
+
+rm(ActiveDecay, SlowDecay, PassiveDecay)
+
+#
+####### end delete
+
+DecayCut          <- Decay
+DecayCut[Decay>1] <- 1 
+
+### Carbon In
+f1        <- param[,,"f1"]
+f2_crop   <- param[,,"f2_ft"]
+f2_natveg <- param[,,"f2_nt"]
+f3        <- param[,,"f3"]
+
+# f2 has to be updated with new test runs
+
+MineralizeFracInput <- setCells(mbind(add_dimension(collapseNames(CarbonInput[,,"totalC",invert=TRUE][1,,"res"]), dim=3.1, add = "lu", nm = "crop"),
+                                      add_dimension(collapseNames(CarbonInput[,,"totalC",invert=TRUE][1,,"res"]), dim=3.1, add = "lu", nm = "natveg")), "GLO")
+MineralizeFracInput[,,"metabDOC"]        <- f1
+MineralizeFracInput[,,"crop.strucDOC"]   <- f2_crop
+MineralizeFracInput[,,"natveg.strucDOC"] <- f2_natveg
+MineralizeFracInput[,,"ligninC"]         <- f3
+
+input2lu <- as.data.frame(list(c("res", findset("kli"), "litfall"),
+                            c(rep("crop",6), "natveg")), col.names=c("input","lu"))
+
+
+CarbonInEff       <- collapseNames(dimSums(toolAggregate(CarbonInput[,"y2010",][,,"totalC",invert=TRUE], rel=input2lu, dim=3.1) *
+                                            MineralizeFracInput[,"y2010",] * Landuse[,"y2010",], dim=c(1,3.2)))
+
+CarbonInSource   <- collapseNames(dimSums(CarbonInput[,"y2010",][,,"totalC",invert=TRUE]  * 
+                                            toolAggregate(MineralizeFracInput[,"y2010",] * Landuse[,"y2010",], rel=input2lu, from="lu", to="input", dim=3.1), dim=c(1,3.2)))
+
+CarbonInRaw       <- collapseNames(dimSums(SoilCarbonOut[,"y2010","steadystate"]*DecayCut[,"y2010",]*Landuse[,"y2010",], dim=c(1,3.3)))
+
+### Carbon Out
+
+CarbonOutRaw      <- collapseNames(dimSums(SoilCarbonOut[,"y2010","interstate"]*DecayCut[,"y2010",]*Landuse[,"y2010",], dim=c(1,3.3)))
+CarbonOutEff      <- CarbonOutRaw + CarbonInEff - CarbonInRaw
+
+
+
+### SOC State
+
+SOCstate <- dimSums(SoilCarbonOut[,c("y2009","y2010"),c("actualstate","interstate")]*Landuse[,c("y2009","y2010"),], dim=c(1,3.3))
+
+```
 
 
 ```{r residues}

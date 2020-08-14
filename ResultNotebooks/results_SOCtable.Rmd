@@ -12,12 +12,13 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev <- "rev0.6_mrSOC"
+rev       <- "rev0.7_mrSOC"
+outputdir <- "Output/"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
 SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
 Landuse    <- read.magpie("Data/Landuse.rds")
@@ -30,6 +31,7 @@ library(knitr)
 library(stats)
 library(luplot)
 library(reshape2)
+
 
 koeppen           <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
 getNames(koeppen) <- tolower(getNames(koeppen))
@@ -46,6 +48,8 @@ SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
 CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"]   * Landuse[,,"crop"], dim=1)/
                      dimSums(climateIPCC * SOCDens[,,"natveg"] * Landuse[,,"crop"], dim=1)
 
+getNames(CShare_ipcczone) <- gsub("_", " ", getNames(CShare_ipcczone))
+
 print(collapseNames(CShare_ipcczone[,findset("past"),]))
 
 actualstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"actualstate"])), 
@@ -59,7 +63,7 @@ steadystate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczo
 
 saveRDS(list(naturalstate_table = naturalstate_table,
              actualstate_table  = actualstate_table, 
-             steadystate_table  = steadystate_table), "Output/SFC_climatezone.rds")
+             steadystate_table  = steadystate_table), paste0(outputdir, "SFC_climatezone.rds"))
 
 #knitr::kable(naturalstate_table, "latex",digits=2, label="naturalstate_table")
 #knitr::kable(actualstate_table, "markdown", digits=2)
@@ -84,9 +88,13 @@ CShare_ipcc[,,"IPCC2019.tropical_dry"]    <- "0.92"
 CShare_ipcc[,,"IPCC2019.temperate_moist"] <- "0.69-0.70"
 CShare_ipcc[,,"IPCC2019.temperate_dry"]   <- "0.76-0.77"
 
+getNames(CShare_ipcc) <- gsub("_", " ", getNames(CShare_ipcc))
+
 comparison <- mbind(CShare_ipcc, 
+                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1990","naturalstate"]),"y2010"),
+                                  nm="SOCbudget 1990",add="model"),2),
                     round(add_dimension(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),
-                                  add="SOCbudget",nm="model"),2))
+                                  nm="SOCbudget 2010",add="model"),2))
 
 print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
 
@@ -94,7 +102,23 @@ comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(comparison)),
                             Data1 ~ Data2, value.var="Value", 
                             row.names=levels(as.data.frame(comparison)$Data1)))
 
-saveRDS(list(comparison_table = comparison_table), "Output/SFC_comparison.rds")
+saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"SFC_comparison.rds"))
 
 
+```
+
+```{r kable2image}
+library(kableExtra)
+
+table <- readRDS("Output/SFC_comparison.rds")
+colnames(table[[1]]) <- gsub("_", " ", colnames(table[[1]]))
+colnames(table[[1]])[1] <- "Source"
+save_kable(kable_styling(kable(table$comparison_table, "latex", digit=2), latex_options = c("striped", "scale_down")), 
+         file="Output/Images/TableSCF_comparison.png")
+
+table <- readRDS("Output/SFC_climatezone.rds")
+colnames(table[[1]]) <- gsub("_", " ", colnames(table[[1]]))
+colnames(table[[1]][1]) <- ""
+as_image(kable_styling(kable(table$naturalstate_table[3:10,], "latex", digit=2), latex_options = c("striped", "scale_down")), 
+         width=4, file="Output/Images/TableSCF_timeline.png")
 ```
