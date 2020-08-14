@@ -1,37 +1,42 @@
 # Discussion
 
-Big points:
+- The natural land representation and therefor also SOC initialization is lacking proper parametrization of both decay behaviour and natural input (e.g. nitrogen and lignin content of litterfall). As all results are valued against these potential natural SOC the absolute values and also the changes over time have to be used with caution. Especially in boreal zone and in very dry regions the natural land representation might be far off, due to the focus for the parametrization for cropped areas. 
+The good agreement of the stock change factors $F^{SCF}$ with the Tier 1 default values might serve as a hint that the natural land representation is not totally off. Boreal and very dry zone might be uncropped, leaving the results on SOC changes on cropland untouch from the bad borreal land representation.
 
-- SOC initialization is bad (Task: find a better representation)
 
-- natural land representation is lacking proper  parametrization of natural input (n, lg content of litterfall) (--> ask Christop again)
+- This study as the IPCC guidelines suggested has limited her focus to the first 30 cm of the soil profile, leaving changes in the subsoil unnoticed. Nevertheless studies (see Don on tillage) have shown, the subsoil to be a game changer in evaluating total SOC losses or gains for no-tillage systems. It has been argued that for intensivly tilled soils, subsoil SOC is increasing due to the import of carbon rich topsoil to deeper soil layers. Following these argumentation SOC stocks in croplands might even be underestimated.
 
-- boreal zone and dry regions are not well represented (maybe because of the bad parameterization of the soil model for natural soils)
 
-- As pointed out by Keel (2017), Smith (2019) the results might be highly sensitive to carbon input calculations more precisly to below and above ground residue carbon estimates derived from harvested quantities. It has been questioned, that below ground residues might increase with a fixed root:shot ratio (maybe specifically in high end farming systems (?)). Following this argumentation SOC results shown in this study might especially in high-yielding farming system (europe etc.) overestimate actual SOC stocks.
-
-- fertilizer interaction (--> ask LPJmLer again)
-
-- "The Tier 2 method does not simulate C change but simply calculates an annual C stock change from the
-current C stock to the future steady-state soil C stock calculated based on current conditions." Leading to the fact that our total stock results are highly uncertained.
-
-- diaggregation of manure with urban area is leeding to a lot of displaced manure (?) that is cut off
-
-- mismatches between FAO/LUH
+- As pointed out by Keel (2017), Smith (2019) the results might be highly sensitive to carbon input calculations more precisly to below and above ground residue carbon estimates derived from harvested quantities. It has been questioned, that below ground residues might increase with a fixed root:shot ratio (maybe specifically in high end farming systems (?)). Following this argumentation SOC results shown in this study might especially in high-yielding farming system (europe etc.) overestimate actual SOC stocks. (In general the sensitivity to and the uncertainty of certain parameters might be very high.)
 
 
 
+<!--Tasks: 
+Find better natural land representation and initalization. Using LPJmL values might be complex since the split up into SOC subpools is needed. Getting better parametrization for the CENTURY based approach for decay behaviour and better values for nitrogen and lignin of natural litter fall.  -->
 
-Shortcommings:
+\newpage
 
-- pasture dynamics are neglected and treated as natveg  / Note that manure excreted to pastures is neglected within these analysis, since we focus purely on cropland dynamics.
+Smaller points and shortcommings:
 
-- no tillage adaptaion is neglected on cropland. Pastures are assumed to be not tilled at all (propably at least heavy managed pastures are tilled with some rotation)
+- Fertilizer interaction is not included here by accounting for additional N supply that would alter C:N ratio of the carbon inputs. Tier 2 steady-state method is neglecting fertilizer application, however we would have fertilizer ammounts at hand to include them, if proper representation of fertilizer within the method would be possible to add. 
 
-- irrigated areas are no crop specific and growing periods are not considered (since this is very complex to calculate average growing periods). Crop specific growing periods might be possible using LPJmL data.
+- Pasture dynamics are neglected and treated as natural vegetation, which might be -- looking on pasture degradation due to overgrazing -- oversimplified for some spots, but is inline with assumption on pasture SOC stocks done before (see Tier 1 IPCC). (Note that also manure excreted to pastures is neglected within these analysis, since we focus purely on cropland dynamics.)
+
+- No tillage adaptaion is neglected on cropland due to less common adoption of no tillage and conservation agriculture. Pastures are assumed to be not tilled at all (propably only heavy managed pastures are tilled with some rotation)
+
+- Irrigated areas are not crop specific and irrigation is not restricted to growing periods (since it is very complex to calculate average growing periods). Crop specific growing periods might be possible using LPJmL data.
+
+- flooded rice area are not represented correctly as parameterization does not hold true for flooded conditions.
 
 - Carbon displacement via leaching and erosion is neglected in this study.
 
 - Non-net/Gross land use transitions are not tracked in this study.
 
-- Within cropland we do not track area transitions, but rather look at statistical distributions of the crop functional types. Due to crop rotations and missing data on crop specific distributions, these transitions would be any way rather uncertain.
+- Within cropland we do not track croparea transitions, but rather look at statistical distributions of the crop functional types. Due to crop rotations and missing data on crop specific distributions, these transitions would be any way rather uncertain.
+
+- The disaggregation of manure to uild-up areas (in the case of extensive monograstrics) is leeding to a lot of displaced manure (?) that is cut off
+
+- It is known that there are mismatches between FAO statistics and LUH areas. As far as possibles there were harmonized within this study.
+
+- "The Tier 2 method does not simulate C change but simply calculates an annual C stock change from the
+current C stock to the future steady-state soil C stock calculated based on current conditions." Leading to the fact that our total stock results are highly uncertained.

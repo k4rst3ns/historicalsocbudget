@@ -1,4 +1,5 @@
 \conclusions
 
-The conclusion goes here.
-You can modify the section name with  `\conclusions[modified heading if necessary]`.
+<!-- You can modify the section name with  `\conclusions[modified heading if necessary]`. --> 
+
+Outlook including perspective on mitigation (and soc enhancement in the future).
