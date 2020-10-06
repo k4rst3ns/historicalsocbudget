@@ -12,7 +12,7 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev       <- "rev0.7_mrSOC"
+rev       <- "rev0.72default"
 outputdir <- "Output/Images"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)

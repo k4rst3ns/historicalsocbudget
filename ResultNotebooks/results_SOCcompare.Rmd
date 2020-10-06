@@ -12,16 +12,16 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev       <- "rev0.6_mrSOC"
-outputdir <- "Output/Images"
+rev       <- "rev0.76baseline"
+outputdir <- "Output/"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Landuse.rds")
+SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
 
 ```
 
@@ -37,8 +37,7 @@ iso_SOCStock <- toolCountryFill(toolAggregate(SOCStock, rel=cell2iso, from="cell
 iso2reg      <- toolMappingFile("regional",getConfig("regionmapping"),readcsv = TRUE)
 reg_SOCStock <- toolAggregate(iso_SOCStock, rel=iso2reg, from="CountryCode", to="RegionCode")
 
-print(mbind(dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, dim=c(1,3)),
-            dimSums(dimSums(SoilCarbon[,,"steadystate"], dim=3.3)* Landuse, dim=c(1,3))))
+print(dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, dim=c(1,3)))
 
 ```
 
@@ -48,11 +47,12 @@ Load validation data:
 ```{r Validation Stocks}
 
   LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
-  LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
-  LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
+  #LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
+  #LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
   WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
   GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
   SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
+  LPJmL4  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL4Paper", aggregate="REG+GLO", try=TRUE)
   
 ```
 
@@ -60,17 +60,54 @@ Plot global stocks
 
 ```{r plot glo stocks}
 
-plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red", xlim=c(1951,2017),  ylim=c(400000,1300000))
+plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red", xlim=c(1951,2017),  ylim=c(350000,1300000))
 lines(getYears(LPJ_IPCC, as.integer = TRUE), LPJ_IPCC["GLO",,1], type="l", col="green")
-lines(getYears(LPJ_car, as.integer = TRUE), LPJ_car["GLO",,], type="l", col="darkgreen")
-lines(getYears(LPJ_rev21, as.integer = TRUE), LPJ_rev21["GLO",,2], type="l", col="lightgreen")
+#lines(getYears(LPJ_car, as.integer = TRUE), LPJ_car["GLO",,], type="l", col="darkgreen")
+lines(getYears(LPJmL4, as.integer = TRUE), LPJmL4["GLO",,], type="l", col="lightgreen")
 lines(getYears(WISE, as.integer = TRUE), WISE["GLO",,], type="l", col="brown")
 lines(getYears(SoilGrids, as.integer = TRUE), SoilGrids["GLO",,], type="l", col="blue")
 lines(getYears(GSOC, as.integer = TRUE), GSOC["GLO",,], type="l", col="pink")
 plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red")
 ```
 
+```{r table ipcc scf}
 
+library(knitr)
+library(stats)
+library(luplot)
+library(reshape2)
+
+SOCStock <- mbind(glo_SOCStock, reg_SOCStock)
+glo_SOC  <- mbind(setNames(SOCStock[,"y2010",],"SOC Budget"), 
+                  setNames(LPJmL4[,"y2010",], "LPJmL4Paper"),
+                  setYears(setNames(WISE[,1,],"WISE"), "y2010"),
+                  setYears(setNames(SoilGrids[,1,],"SoilGrids"),"y2010"),
+                  setYears(setNames(GSOC[,1,],"GSOC"),"y2010"))
+
+#print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
+
+comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(glo_SOC/1000)), 
+                           Data1 ~ Region, value.var="Value", 
+                            row.names=levels(as.data.frame(glo_SOC)$Data1)))
+
+saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"gloSOC_comparison.rds"))
+
+
+```
+
+```{r kable2image}
+library(kableExtra)
+
+table <- readRDS("Output/gloSOC_comparison.rds")
+colnames(table[[1]])[1] <- "Model/Database"
+colnames(table[[1]])[5] <- "Global SOC in GtC"
+save_kable(kable_styling(kable(table$comparison_table[c(1,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
+         file="Output/Images/TableSOC_comparison.png")
+
+save_kable(kable_styling(kable(table$comparison_table[setdiff(1:13,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
+         file="Output/Images/TableRegSOC_comparison.png")
+
+```
 
 Plot regional stocks
 

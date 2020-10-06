@@ -12,16 +12,16 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev       <- "rev0.7_mrSOC"
+rev       <- "rev0.76baseline"
 outputdir <- "Output/"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/Baselin", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Landuse.rds")
+SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
 
 ```
 
@@ -42,7 +42,7 @@ climateIPCC       <- climateIPCC[,getYears(SoilCarbon),]
 
 rm(koeppen)
   
-SOCDens           <- dimSums(SoilCarbon[,,c("steadystate","actualstate","naturalstate")], dim=3.3) 
+SOCDens           <- dimSums(SoilCarbon[,,c("actualstate","naturalstate")], dim=3.3) 
 SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
 
 CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"]   * Landuse[,,"crop"], dim=1)/
@@ -58,12 +58,9 @@ actualstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczo
 naturalstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"naturalstate"])), 
                             Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
 
-steadystate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"steadystate"])), 
-                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
 
 saveRDS(list(naturalstate_table = naturalstate_table,
-             actualstate_table  = actualstate_table, 
-             steadystate_table  = steadystate_table), paste0(outputdir, "SFC_climatezone.rds"))
+             actualstate_table  = actualstate_table), paste0(outputdir, "SFC_climatezone.rds"))
 
 #knitr::kable(naturalstate_table, "latex",digits=2, label="naturalstate_table")
 #knitr::kable(actualstate_table, "markdown", digits=2)
@@ -76,30 +73,48 @@ library(stats)
 library(luplot)
 library(reshape2)
 
-CShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),unique(koepp2IPCC$ipcc_reduced), paste, sep="."))
+CShare_ipcc <- IShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),unique(koepp2IPCC$ipcc_reduced), paste, sep="."))
 
-CShare_ipcc[,,"IPCC2006.tropical_moist"]  <- "0.48"
-CShare_ipcc[,,"IPCC2006.tropical_dry"]    <- "0.58-0.64" 
-CShare_ipcc[,,"IPCC2006.temperate_moist"] <- "0.69"
-CShare_ipcc[,,"IPCC2006.temperate_dry"]   <- "0.80"
+CShare_ipcc <- IShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),c("tropical_moist","tropical_dry","temperate_dry","temperate_moist"), paste, sep="."))
 
-CShare_ipcc[,,"IPCC2019.tropical_moist"]  <- "0.83"
-CShare_ipcc[,,"IPCC2019.tropical_dry"]    <- "0.92" 
-CShare_ipcc[,,"IPCC2019.temperate_moist"] <- "0.69-0.70"
-CShare_ipcc[,,"IPCC2019.temperate_dry"]   <- "0.76-0.77"
+CShare_ipcc <- add_dimension(CShare_ipcc, dim=3.2, nm="default", add="subsystem")
+IShare_ipcc <- add_dimension(IShare_ipcc, dim=3.2, nm="low_input", add="subsystem")
+
+CShare_ipcc[,,"IPCC2006.default.tropical_moist"]  <- "0.48"
+CShare_ipcc[,,"IPCC2006.default.tropical_dry"]    <- "0.58-0.64" 
+CShare_ipcc[,,"IPCC2006.default.temperate_moist"] <- "0.69"
+CShare_ipcc[,,"IPCC2006.default.temperate_dry"]   <- "0.80"
+
+CShare_ipcc[,,"IPCC2019.default.tropical_moist"]  <- "0.83"
+CShare_ipcc[,,"IPCC2019.default.tropical_dry"]    <- "0.92" 
+CShare_ipcc[,,"IPCC2019.default.temperate_moist"] <- "0.69-0.70"
+CShare_ipcc[,,"IPCC2019.default.temperate_dry"]   <- "0.76-0.77"
+
+#Low input regime factor
+IShare_ipcc[,,"IPCC2006.low_input.tropical_moist"]  <- "0.44"
+IShare_ipcc[,,"IPCC2006.low_input.tropical_dry"]    <- "0.55-0.61" 
+IShare_ipcc[,,"IPCC2006.low_input.temperate_moist"] <- "0.66"
+IShare_ipcc[,,"IPCC2006.low_input.temperate_dry"]   <- "0.74"
+
+IShare_ipcc[,,"IPCC2019.low_input.tropical_moist"]  <- "0.76"
+IShare_ipcc[,,"IPCC2019.low_input.tropical_dry"]    <- "0.87" 
+IShare_ipcc[,,"IPCC2019.low_input.temperate_moist"] <- "0.66-0.67"
+IShare_ipcc[,,"IPCC2019.low_input.temperate_dry"]   <- "0.70-0.71"
+
 
 getNames(CShare_ipcc) <- gsub("_", " ", getNames(CShare_ipcc))
+getNames(IShare_ipcc) <- gsub("_", " ", getNames(IShare_ipcc))
 
-comparison <- mbind(CShare_ipcc, 
+comparison <- mbind(CShare_ipcc, IShare_ipcc,
                     round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1990","naturalstate"]),"y2010"),
-                                  nm="SOCbudget 1990",add="model"),2),
+                                  nm="SOC budget.1990",add="model.year"),2),
                     round(add_dimension(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),
-                                  nm="SOCbudget 2010",add="model"),2))
+                                  nm="SOC budget.2010",add="model.year"),2))
 
-print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
+#print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
 
 comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(comparison)), 
-                            Data1 ~ Data2, value.var="Value", 
+                           Data1 + Data2 ~ Data3, value.var="Value", 
                             row.names=levels(as.data.frame(comparison)$Data1)))
 
 saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"SFC_comparison.rds"))
@@ -111,8 +126,9 @@ saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"SFC_compari
 library(kableExtra)
 
 table <- readRDS("Output/SFC_comparison.rds")
-colnames(table[[1]]) <- gsub("_", " ", colnames(table[[1]]))
+colnames(table[[1]]) <- gsub("\\.", " ", colnames(table[[1]]))
 colnames(table[[1]])[1] <- "Source"
+colnames(table[[1]])[2] <- "Subsystem/Year"
 save_kable(kable_styling(kable(table$comparison_table, "latex", digit=2), latex_options = c("striped", "scale_down")), 
          file="Output/Images/TableSCF_comparison.png")
 

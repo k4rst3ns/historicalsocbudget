@@ -137,7 +137,7 @@ According to the IPCC guidelines SOC changes can be calculates as the difference
 (\#eq:totalstock)
 \end{equation}
 
-Note that the absolution changes $\Delta SOC$ can be also interpreted as cummulative SOC emissions or as SOC depth of mankind; whereas relative changes $F^{SCF}$ can be denoted as stock change factors as defined within the IPCC guidelines of 2006 [@ipcc_2006_2006].
+Note that the absolution changes $\Delta SOC$ can be also interpreted as the SOC gap due to human cropping activits; whereas relative changes $F^{SCF}$ can be denoted as stock change factors as defined within the IPCC guidelines of 2006 [@ipcc_2006_2006]. Note that the SOC gap is to the negated cummulative SOC emission also refered to as SOC debt (cite Sanderman) of mankind.
 
 ### Initialisation of SOC pools
 
@@ -210,8 +210,7 @@ We use irrigation area shares to modify the water effect on decomposition by wei
 
 ### Tillage {#sec:tillage}
 
-To account for the distribution of tillage of the three tillage types specfied by the IPCC - full tillage, reduced tillage and no tillage -, we assume that all natural land and pastures are not tilled, whereas annual crops are under full and perennials under reduced tillage. This rule is based on the approach of [@porwollik_generating_2018], but neglects the (less common) adoption of no-tillage farming on agricultural land. 
-
+To account for the distribution of tillage to the three different tillage types specfied by the IPCC - full tillage, reduced tillage and no tillage -, we assume that all natural land and pastures are not tilled, whereas as default annual crops are under full and perennials under reduced tillage. Furthermore we assume no tillage in cropland cells specified as no tillage cell based on the historic global gridded tillage data set from Prowollik  [@porwollik_generating_2018]. Porwollik data set is extended by to the period of 1974-2010 by combining country-level data on conservation agriculture (ca) area values from AQUASTAT (FAO, 2016) and LUH2 crop areas together with the methodolgy of Porwollik to identify potential no tillage cells. 
 
 \newpage
 

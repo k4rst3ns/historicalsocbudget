@@ -1,12 +1,11 @@
 # Results
 
-We present simulation results of the SOC budget of the period from 1975 to 2010 mainly focusing on cropland areas. Detailed total global and regional results of the state of the worlds SOC in comparison to other estimates can be found in the supplement.
+We present simulation results of our SOC budget focusing on cropland areas for the year 2010 as well as global trends of SOC stock changes for the period from 1975 to 2010.
 
 ## SOC distribution and depletion
-Figure 
 
 ```{r caption_SOCmaps, echo=FALSE}
-caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland shows high carbon stocks in high yielding areas. (b): The SOC debt is decreasing over time, meaning net SOC gains on global croplands over the last decades (despite ongoing cropland expansion). (c)+(d): Absolute (c) and relative (d) SOC stocks compared to a potential natural state showing different hot spots of SOC dynamics. Whereas the absolute losses might be in temperate dry regions, relative losses are more prominent in tropical moist areas."
+caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland shows high carbon stocks in high yielding areas. (b): The SOC debt is decreasing over time, meaning net SOC gains on global croplands over the last decades. (c)+(d): Absolute (c) and relative (d) SOC stocks compared to a potential natural state showing different hot spots of SOC dynamics. Whereas the absolute losses might be in temperate dry regions, relative losses are more prominent in tropical moist areas."
 ```
 
 ```{r SOCmaps, out.width = "18cm", fig.cap = caption_SOCmaps, echo=FALSE, fig.pos="H"}
@@ -14,9 +13,22 @@ caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland sho
 knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```
 
+In fig. 1(a) we provide the first world map of SOC on croplands considering real world management data on the global scale. Our spatially explicit results moreover show hot spots of SOC losses as well as gains in two different ways: 
+1. Absolute SOC changes (see fig. 1(c)) indicate areas with high importance for the global SOC emissions. The might be driven by huge relative losses or a high natural stock, from which even small deviations could lead to substantial losses.
+2. To attribute SOC losses to insufficient agricultural management relative SOC changes ($F^{SCF}$, see fig. 1(d)) are a helpful tool. They indicate areas with huge difference in carbon inflows or SOC decay compared to natural vegetation, that might be overcome due to improved agricultural pratices.
 
-## global agricultural carbon flows and stocks
+## Agricultural management effects on SOC emissions and cycling
 
+Global cummulative SOC emissions are decreasing (see fig. 1(c)). Fig. 2 reveals the relative impact of management effects by freezing tillage areas as well as carbon inflows from residues or manure at the level of 1975. Our counterfactual scenarios show that the increasing residue carbon input had the biggest overall effect on SOC stocks. Without changes in management regimes especially in residue inflows to the soil, global cummulative SOC emissions would still grow. The strong effect of carbon residue amounts are also visible in the carbon flow diagram for agricultural production for the year 2010 (see fig. 3)
+
+```{r caption_SOCscen, echo=FALSE}
+caption_SOCscen <- "Global SOC gap in GtC for various stylized management counterfactual scenarios compared to the modeled historical baseline."
+```
+
+```{r SOCscen, out.width = "18cm", fig.cap = caption_SOCscen, echo=FALSE, fig.pos="H"}
+# All defaults
+knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
+```
 
 ```{r caption_FlowFig, echo=FALSE}
 caption_FlowFig <- "Global carbon flows (small numbers) and stocks (bold numbers) within the agricultural system for the year 2010 (in MtC): Most important carbon sources on cropland are crop residues. Note the two numbers on carbon inputs to soil denote carbon applied to the field and carbon entering the soil (difference is decomposted before official counting as soil)."
@@ -26,29 +38,6 @@ caption_FlowFig <- "Global carbon flows (small numbers) and stocks (bold numbers
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/OuFlowFig.png")
 ```
-
-
-## comparison of stock changes factors 
-
-```{r caption_SCFtable, echo=FALSE}
-caption_SCFtable <- "$F^{SOC}$ in comparison to IPCC Tier 1 default factors: Stock change factors are in good agreement with the default values of the IPCC in general. For the tropical regions the assumptions changed notablly from the guidelines in 2006 to the update in 2019. leaving our results in very good agreement with the old default assumptions. Default assumption are given under the assumption of medium input systems, which, considering the yield gap in mainly developing regions in the tropics, might be an overestimation and decrease $F^{SOC}$ by additional 5-8 percent. Also: modelled $F^{SOC}$ have increased for all climates over time ."
-```
-
-```{r SCFtable, out.width = "16cm", fig.cap = caption_SCFtable, echo=FALSE, fig.pos="H"}
-# All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/TableSCF_comparison.png")
-```
-
-<!-- ```{r table2, echo = FALSE}
-# table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
-# knitr::kable(table$comparison_table, "latex", digit=2, 
-#              caption="$F^{SOC}$ in comparison to IPCC Tier 1 default factors: Stock change factors are in good agreement with the default values of the IPCC in general. For the tropical regions the assumptions changed notablly from the guidelines in 2006 to the update in 2019. leaving our results in very good agreement with the old default assumptions. Default assumption are given under the assumption of medium input systems, which, considering the yield gap in mainly developing regions in the tropics, might be an overestimation and decrease $F^{SOC}$ by additional 5-8 percent. Also: modelled $F^{SOC}$ have increased for all climates over time .")
-# ```
-# ```{r table, echo=FALSE}
-# table <- readRDS("../ResultNotebooks/Output/SFC_climatezone.rds")
-# knitr::kable(table$naturalstate_table[3:10,], "latex", digit=2, 
-#              caption="S)
-# ``` -->
 
 \newpage
 

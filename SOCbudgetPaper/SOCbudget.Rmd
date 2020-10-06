@@ -45,12 +45,12 @@ disclaimer: |
 acknowledgements: |
   Thanks to the rticles contributors!
 output:
+  rticles::copernicus_article: default
+  md_document:
+    variant: markdown_github
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
     md_extensions: +raw_attribute
-  md_document:
-    variant: markdown_github
-  rticles::copernicus_article: default
   bookdown::word_document2: default
   bookdown::pdf_document2: default
 ---

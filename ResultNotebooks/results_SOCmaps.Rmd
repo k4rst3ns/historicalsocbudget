@@ -11,7 +11,7 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev       <- "rev0.7_mrSOC"
+rev       <- "rev0.76baseline"
 outputdir <- "Output/Images"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
@@ -19,8 +19,9 @@ setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
 #untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie("Data/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Landuse.rds")
+
+SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
 
 ```
 
@@ -48,7 +49,7 @@ Plot cellular maps
 
 
 cropland_dens    <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)
-cropland_dens[cropland_dens==0] <- NA
+cropland_dens[Landuse[,,"crop"]==0] <- NA
 
 cropland_share <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)/dimSums(SoilCarbon[,,"naturalstate"][,,"natveg"], dim=3)
 cropland_share[Landuse[,,"crop"]==0] <- NA
@@ -98,6 +99,7 @@ library(RColorBrewer)
 library(sp)
 library(rworldmap)
 library(oce) 
+library(scales)
 
 legend_size <- 10
 
@@ -106,21 +108,53 @@ world         <- ne_countries(scale = "medium", returnclass = "sf")
 data(coastlineWorld)  
 coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
 
-SOCemis <- ggplot() + geom_line(data= as.data.frame(glo_SOCEmission[,seq(1975,2010,5),])[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
+squish_trans <- function(from, to, factor) {
+  
+  trans <- function(x) {
+    if (any(is.na(x))) return(x)
+    # get indices for the relevant regions
+    isq <- x > from & x < to
+    ito <- x >= to
+    # apply transformation
+    x[isq] <- from + (x[isq] - from)/factor
+    x[ito] <- from + (to - from)/factor + (x[ito] - to)
+    return(x)
+  }
+  
+  inv <- function(x) {
+    if (any(is.na(x))) return(x)
+    # get indices for the relevant regions
+    isq <- x > from & x < from + (to - from)/factor
+    ito <- x >= from + (to - from)/factor
+    # apply transformation
+    x[isq] <- from + (x[isq] - from) * factor
+    x[ito] <- to + (x[ito] - (from + (to - from)/factor))
+    return(x)
+  }
+  # return the transformation
+  return(trans_new("squished", trans, inv))
+}
+
+SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),])[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
   labs( x = "Year", 
-        y = "Global cummulative \nSOC emission in GtC") +
-  scale_x_discrete(breaks=seq(1965,2010,5)) +
-  scale_y_continuous(limits=c(30,40), breaks=seq(30,40,5)) +
+        y = "Global SOC gap\n in GtC") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(trans = squish_trans(-35,0,15),
+                     limits = c(-45,0),
+                     breaks = c(0, -15, -35, -40, -45)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size),
-        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8))
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8)) +
+  annotate(geom="text", label="SOC debt", x=factor(1995), y=-35, size = 3) +
+  annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -39, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
+ 
 
 cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
 
 SOCshare <- ggplot(data = world) + geom_sf() + 
     geom_tile(data = subset(share2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(0,2), colours = cols, 
-                      name = expression("ratio of cropland SOC to potential natural SOC"), 
+                      name = expression(" cropland SOC stock change factor (unitless)"), 
                       breaks=c(0.3,0.6,0.9,1.1,1.4,1.7,2),
                       labels=c("0     0.3","  0.6", "  0.9","  1.1","  1.4","  1.7","> 2"), na.value = "white",
                       guide = guide_legend(
@@ -150,7 +184,7 @@ SOCshare <- ggplot(data = world) + geom_sf() +
 SOCincrease <- ggplot(data = world) + geom_sf() +
     geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(-100,100), colours = cols, 
-                      name = expression("cropland SOC change in tons of carbon per hectar"), 
+                      name = expression("cropland SOC gap in tons of carbon per hectar"), 
                       values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
                       breaks=c(-50,-20,-10,10,20,50,100),
                       labels=c("> -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",

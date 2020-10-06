@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 AUG 2020 12:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  6 OCT 2020 04:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -929,34 +929,30 @@ Package color Info: Redefining color bgcol on input line 2491.
 Package color Info: Redefining color barcol on input line 2492.
 )
 LaTeX Info: Redefining \vec on input line 14.
-(./SOCbudget.aux
-
-LaTeX Warning: Label `eq:totalstock' multiply defined.
-
-)
+(./SOCbudget.aux)
 \openout1 = `SOCbudget.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 81.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 81.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 84.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 84.
 (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 81.
-LaTeX Font Info:    ... okay on input line 81.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 81.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 84.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 ) (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -991,7 +987,7 @@ Package caption Info: hyperref package is loaded.
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box38
-Package hyperref Info: Link coloring OFF on input line 81.
+Package hyperref Info: Link coloring OFF on input line 84.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -999,130 +995,150 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count144
 )
-LaTeX Info: Redefining \ref on input line 81.
-LaTeX Info: Redefining \pageref on input line 81.
-LaTeX Info: Redefining \nameref on input line 81.
+LaTeX Info: Redefining \ref on input line 84.
+LaTeX Info: Redefining \pageref on input line 84.
+LaTeX Info: Redefining \nameref on input line 84.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 120.
-LaTeX Font Info:    Try loading font information for U+msa on input line 120.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 121.
+LaTeX Font Info:    Try loading font information for U+msa on input line 121.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 120.
+LaTeX Font Info:    Try loading font information for U+msb on input line 121.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 120.
-LaTeX Font Info:    Try loading font information for T1+phv on input line 125.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 121.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 145.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 125.
+(Font)              scaled to size 8.54997pt on input line 145.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 145--150
-
- []
-
-[2] [3]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 183.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 278.
 
-Overfull \hbox (16.93658pt too wide) in paragraph at lines 184--196
+Overfull \hbox (16.93658pt too wide) in paragraph at lines 279--291
  []$[]$ 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4] [5] [6] [7]
+[3] [4] [5] [6]
+Overfull \hbox (18.86072pt too wide) in paragraph at lines 452--459
+[]\T1/ptm/m/n/10 Using half-degree yield data from LPJmL ([]Schaphoff et al.[],
+ []2018[]) as well as half-degree crop-land pat-terns (see @ref(sec:landuse))
+ []
 
-Package natbib Warning: Citation `weindl' on page 8 undefined on input line 320
+
+Package natbib Warning: Citation `weindl' on page 7 undefined on input line 484
 .
 
 
-Package natbib Warning: Citation `smil1999' on page 8 undefined on input line 3
-24.
+Package natbib Warning: Citation `smil1999' on page 7 undefined on input line 4
+90.
 
-[8]
+[7]
 
-Package natbib Warning: Citation `weindl' on page 9 undefined on input line 328
+Package natbib Warning: Citation `weindl' on page 8 undefined on input line 505
 .
 
 
-Package natbib Warning: Citation `weindl' on page 9 undefined on input line 340
+Package natbib Warning: Citation `weindl' on page 8 undefined on input line 533
 .
 
 
-Package natbib Warning: Citation `weindl' on page 9 undefined on input line 345
+Package natbib Warning: Citation `weindl' on page 8 undefined on input line 556
 .
 
 
-Package natbib Warning: Citation `ippc_2006_2006' on page 9 undefined on input 
-line 347.
+Package natbib Warning: Citation `ippc_2006_2006' on page 8 undefined on input 
+line 563.
 
-[9] [10] [11]
-<../ResultNotebooks/Output/Images/4panelfigure.png, id=183, 526.8483pt x 325.21
+[8] [9] [10]
+<../ResultNotebooks/Output/Images/4panelfigure.png, id=150, 526.8483pt x 325.21
 5pt>
 File: ../ResultNotebooks/Output/Images/4panelfigure.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/4panelfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/4panelfigure.png  use
-d on input line 388.
+d on input line 646.
 (pdftex.def)             Requested size: 512.1496pt x 316.15787pt.
 
-Overfull \hbox (8.53583pt too wide) in paragraph at lines 388--388
+Overfull \hbox (8.53583pt too wide) in paragraph at lines 646--646
 [][] 
  []
 
-<../ResultNotebooks/Output/Images/OuFlowFig.png, id=184, 550.2375pt x 493.845pt
+[11 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>]
+<../ResultNotebooks/Output/Images/scenario.png, id=158, 526.8483pt x 325.215pt>
+
+File: ../ResultNotebooks/Output/Images/scenario.png Graphic file (type png)
+<use ../ResultNotebooks/Output/Images/scenario.png>
+Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario.png  used on
+ input line 676.
+(pdftex.def)             Requested size: 512.1496pt x 316.15787pt.
+
+Overfull \hbox (8.53583pt too wide) in paragraph at lines 676--676
+[][] 
+ []
+
+<../ResultNotebooks/Output/Images/OuFlowFig.png, id=159, 550.2375pt x 493.845pt
 >
 File: ../ResultNotebooks/Output/Images/OuFlowFig.png Graphic file (type png)
 <use ../ResultNotebooks/Output/Images/OuFlowFig.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/OuFlowFig.png  used o
-n input line 395.
+n input line 680.
 (pdftex.def)             Requested size: 455.24408pt x 408.59514pt.
-[12 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>]
-<../ResultNotebooks/Output/Images/TableSCF_comparison.png, id=196, 1461.46pt x 
-257.96375pt>
+[12 <../ResultNotebooks/Output/Images/scenario.png (PNG copy)>] [13 <../ResultN
+otebooks/Output/Images/OuFlowFig.png>]
+<../ResultNotebooks/Output/Images/TableSCF_comparison.png, id=174, 350.7504pt x
+ 72.7518pt>
 File: ../ResultNotebooks/Output/Images/TableSCF_comparison.png Graphic file (ty
 pe png)
 <use ../ResultNotebooks/Output/Images/TableSCF_comparison.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/TableSCF_comparison.p
-ng  used on input line 402.
-(pdftex.def)             Requested size: 455.24408pt x 80.35367pt.
-[13 <../ResultNotebooks/Output/Images/OuFlowFig.png>] [14 <../ResultNotebooks/O
-utput/Images/TableSCF_comparison.png>] [15] [16] [17] [18] (./SOCbudget.bbl [19
-]
+ng  used on input line 748.
+(pdftex.def)             Requested size: 455.24408pt x 94.43298pt.
+[14]
+<../ResultNotebooks/Output/Images/TableSOC_comparison.png, id=182, 350.7504pt x
+ 143.5764pt>
+File: ../ResultNotebooks/Output/Images/TableSOC_comparison.png Graphic file (ty
+pe png)
+<use ../ResultNotebooks/Output/Images/TableSOC_comparison.png>
+Package pdftex.def Info: ../ResultNotebooks/Output/Images/TableSOC_comparison.p
+ng  used on input line 768.
+(pdftex.def)             Requested size: 227.62204pt x 93.17894pt.
+[15 <../ResultNotebooks/Output/Images/TableSCF_comparison.png> <../ResultNotebo
+oks/Output/Images/TableSOC_comparison.png>] [16] [17] [18] [19] (./SOCbudget.bb
+l [20]
 
 Package lineno Warning: Linenumber reference failed, 
 (lineno)                rerun to get it right.
 
-) [20]
+) [21]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 549.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 549.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 970.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 970.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 549.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 549.
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 549.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 970.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 970.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 970.
  ) 
 Here is how much of TeX's memory you used:
- 10744 strings out of 494847
- 151779 string characters out of 6179080
- 276940 words of memory out of 5000000
- 13752 multiletter control sequences out of 15000+600000
+ 10731 strings out of 494847
+ 151654 string characters out of 6179080
+ 275541 words of memory out of 5000000
+ 13742 multiletter control sequences out of 15000+600000
  44133 words of font info for 72 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 43i,17n,40p,1388b,421s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,17n,40p,647b,421s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -1137,10 +1153,10 @@ hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on SOCbudget.pdf (20 pages, 790672 bytes).
+Output written on SOCbudget.pdf (21 pages, 970637 bytes).
 PDF statistics:
- 351 PDF objects out of 1000 (max. 8388607)
- 306 compressed objects within 4 object streams
- 104 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 332 PDF objects out of 1000 (max. 8388607)
+ 284 compressed objects within 3 object streams
+ 99 named destinations out of 1000 (max. 500000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

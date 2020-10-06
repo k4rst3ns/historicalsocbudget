@@ -1,0 +1,111 @@
+---
+title: "Global SOC scenarios"
+output:
+  md_document:
+    variant: markdown_github
+  html_document:  
+---
+
+```{r load}
+library(mrcommons)
+library(mrvalidation)
+library(mrSOCbudget)
+library(magpiesets)
+
+rev <- "rev0.76baseline"
+
+setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
+setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+
+#revisions   <- c(Baseline="rev0.74baseline", Till="rev0.74tillage_mixedtill", ResRe="rev0.74residue_freeze1975", ManRe="rev0.74manure_freeze1975", Yield="rev0.74yield_freeze1975")
+filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
+
+revisions   <- c(Baseline="rev0.76baseline", Allon="rev0.76allon_freeze1975", Allon2="rev0.76allon2_freeze1975",        ResRe="rev0.76rrecycle_freeze1975",
+                Till="rev0.76tillage_mixedtill", ResSta="rev0.76residue_freeze1975", Yield="rev0.76yield_freeze1975", ManRe="rev0.76manure_freeze1975")
+
+
+# for(item in revisions){
+#    dir.create(path=paste0("Data/",names(which(revisions[]==item))))
+#    untar(paste0(getConfig("outputfolder"),"/",item, "_h12_carbonbudget.tgz"), files=filesNeeded, exdir=paste0("Data/", names(which(revisions[]==item))))#, extras="--keep-newer-files ")
+# }
+
+outputdir <- "Output/Images"
+
+```
+
+Calc global numbers
+
+```{r Carbon Emissions (glo)}
+
+library(ggplot2)
+
+glo_SOCStock <- NULL
+
+for(r in 1:length(revisions)){
+  SoilCarbon <- read.magpie(paste0("Data/",names(revisions[r]),"/SoilCarbon.rds"))
+  Landuse    <- read.magpie(paste0("Data/",names(revisions[r]),"/Landuse.rds"))
+  SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
+  SOCStock        <- toolConditionalReplace(dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2), "is.nan()",0)
+  glo_SOCStock    <- mbind(glo_SOCStock, add_dimension(dimSums(SOCStock, dim=1), dim=3.1, nm=names(revisions[r]), add="scenario")) 
+}
+
+# 
+```
+
+```{r plot Carbon Emissions (glo)}
+
+plot_rev <- c(3,5,6,8)
+
+names(revisions) <- c("Historical Management", 
+                      "Allon",    
+                      "Constant management from 1975",   
+                      "ResRe", 
+                      "Constant tillage area from 1975",
+                      "Constant residue input from 1975",
+                      "Yield", 
+                      "Constant manure application from 1975")
+
+
+
+colr <- c("black","green","red","brown","pink","darkgreen","yellow","blue")
+glo_SOCEmission <- collapseNames(glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
+glo_SOCShare    <- collapseNames( toolConditionalReplace(glo_SOCStock[,,"actualstate"]/glo_SOCStock[,,"naturalstate"], "is.na()",0) )
+
+getNames(glo_SOCEmission) <- names(revisions)
+plot(getYears( glo_SOCEmission, as.integer = TRUE), -glo_SOCEmission[,,1], type="l", xlab="Time", ylab="Global SOC gap in GtC", ylim=c(-45,-35))
+legend("topleft", legend=names(revisions[c(1,plot_rev)]), col=colr[c(1,plot_rev)], lty=1, cex=0.8)
+for(r in plot_rev) lines(getYears(glo_SOCEmission, as.integer = TRUE), -glo_SOCEmission[,,names(revisions[r])], type="l", col=colr[r])
+print(cbind(colr[c(1,plot_rev)], names(revisions[c(1,plot_rev)])))
+print(glo_SOCStock[,,"actualstate"])
+
+#plot(getYears( glo_SOCEmission, as.integer = TRUE), dimSums(Landuse[,,"crop"], dim=1), type="l")
+#plot(getYears( glo_SOCEmission, as.integer = TRUE), dimSums(glo_SOCStock[,,"Baseline.actualstate"], dim=1), type="l")
+
+
+```
+
+
+```{r ggplot}
+
+legend_size <- 10
+
+SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),c(1,plot_rev)]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
+  labs( x = "Year", 
+        y = "Global SOC gap in GtC",
+        color="") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(limits = c(-45,-35),
+                     breaks = c(-36, -38, -40,- 42, -44)) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8))
+
+SOCemis
+
+ggsave(paste0(outputdir,"/scenario.png"), plot=SOCemis)
+
+```
+
+
+
