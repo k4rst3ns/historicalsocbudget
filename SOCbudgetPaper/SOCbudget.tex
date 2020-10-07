@@ -700,7 +700,7 @@ global SOC gap is slowly closing due to improved management.
 According to Sanderman et al.~cummulative SOC emissions since beginning
 of human cropping activities have been at around 37 GtC for the first 30
 cm of the soil with half of it attributed to grazing. It was also
-pointed out that these results might be conservative estimates and low
+pointed out that these results might be conservatively low
 compared to experimental results. Considering the huge uncertainties in modelling SOC on the global scale, 
 our estimate of 37 GtC in 2010 for cropland emissions only still seems consistent with Sanderman et al.~estimates.
 
@@ -737,20 +737,22 @@ to higher input rates.
 \subsection{Modeled management effect in line with default IPCC
 assumptions}
 
-To validated the effect of our modelled SOC stocks and stock changes
+To validate the effect of our modelled SOC stocks and stock changes
 under management, we compare our results to default IPCC stock changes
-factors (cite), which are based on measurement data for croplands (see
+factors (cite) which are based on measurement data for croplands (see
 @ref(tab:SCFtable)).
 
 \begin{figure}[H]
-\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/TableSCF_comparison} \caption{This table shows IPCC 2006 as well as 2019 default (medium input) and low input regimes stock change factors $F_{SCF}$ without other subsystem consideration compared results of this study (SOC budget) for 1990 and 2010.}\label{fig:SCFtable}
+\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/TableSCF_comparison} \caption{This table shows different estimates of stock change factors $F_{SCF}$, defined as the soil carbon stock of managed croplands relative to the counterfactual soil carbon stock of undisturbed natural vegetation. We compare average values for the four IPCC climate zone classifications ... (BB: Your caption has to be self-explaining for people who do not know the rest of your article. All elements have to be defined and explained.)IPCC 2006 as well as 2019 default (medium input) and low input regimes(BB:regimes?) stock change factors  without other subsystem consideration compared results of this study (SOC budget) for 1990 and 2010.}\label{fig:SCFtable}
 \end{figure}
 
-Our climate zone specific, aggregated \(F_{SCF}\) correspond very well
-to the tier 1 estimation of IPCC, 2006 of \(F_{SOC}\). For the tropical
+We also intercompared our stock-change factors \(F_{SCF}\), which describe the ratio between ... . 
+To allow for comparison, we aggregated our stock change factors to the four IPCC climate zones (see table X).
+Our estimates correspond very well to the default stock-change factors used for the tier 1 estimation of IPCC, 2006. For the tropical
 regions the assumptions changed notably from the guidelines in 2006 to
-the update in 2019, leaving our results too low in comparison with IPCC,
-2019. Considering yield gaps in mainly developing regions in the tropics
+the update in 2019 (BB: do you have any indication why they changed so dramatically?), leaving our results too low in comparison with IPCC,
+2019. The development of \(F_{SCF}\) over time in our study shows the substantial impact of changed management.
+Considering yield gaps in mainly developing regions in the tropics
 the default assumption of medium input systems, might be an
 overestimation of actual SOC state. The additional effect of considering
 low inpout regimes in tropical regions can however not explain the full
@@ -763,42 +765,43 @@ is visible by the wide range of global SOC stock estimates (see
 @ref(tab:SOCtable)).
 
 \begin{figure}[H]
-\includegraphics[width=8cm]{../ResultNotebooks/Output/Images/TableSOC_comparison} \caption{Modelled as well as data based estimation for global SOC stock (for 2010) in GtC for the first 30 cm of soil.}\label{fig:SOCtable}
+\includegraphics[width=8cm]{../ResultNotebooks/Output/Images/TableSOC_comparison} \caption{Modelled as well as data based estimation for global SOC stock (for 2010) in GtC for the first 30 cm of soil.(BB: total land or just croplands? All other studies are for 2010?)}\label{fig:SOCtable}
 \end{figure}
 
-The global esimates of SOC stock by this study are on the lower edge
+(BB: do these studies assume landuse? what do they do for urban land?)
+
+The global esimates of SOC stock by this study are on the lower end
 compared to other modelled results or more data driven estimates.
 Looking on regional results (fig.~SX in supplement), our estimates turn
 out to be in good agreement for most regions with the largest deviations
 for boreal areas. Considering that the model was parametrized for
-croplands, these mismatches are not superising, since the temperature
-effects on decomposition is most likly fundamentally different for
-permaforst soils than assumend in this study. To avoid that this bias
+croplands, these mismatches are not superising since the temperature
+effects on decomposition are fundamentally different for
+permaforst soils. To avoid that this bias
 influences our results, our study focusses exclusively on cropland
 soils, excluding most of the boreal zone. Morover, when focussing on SOC
 changes, pristine natural vegetated areas without human land management
 under the same historic climatic conditions cancel out in the
 calculation of SOC emissions.
 
-However the natural land representation that is dominating the total SOC
-stocks of the world and with it also the SOC initialization is lacking
-proper parametrization of nitrogen and lignin content of litterfall.
+Our estimates for total SOC stocks of the world, as well as our SOC initialization are dominated by the representation of natural lands (BB: and pastures?), which are however only estimated in a basic manner. For example, we do not have a differentiated parametrization of nitrogen and lignin content of litterfall.
 This leaves carbon inputs and decay behaviour for natural land rather
-uncertained. As all results are valued against these potential natural
-SOC the absolute values and also the emissions over time have to be used
+uncertain. (delete: As all results are valued against these potential natural
+SOC - BB: the valuation against the natural state is actually making the results more robust. We are only looking at the differences caused by management, not on the absolute states. Make this clear here again (even though you already mention it in the previous paragraph in a differnet context)
+The absolute values of stocks and emissions from land-use change therefore have to be used
 with caution. Especially in less forested areas the natural land
 representation might be off, due to parameterization assumptions of the
 natural litterfall. Nevertheless total SOC stocks are in a reasonable
 range and the stock change factors \(F^{SCF}\) are in good agreement
-with the Tier 1 default values of 2006. In addition we preformed a
-sensitivity analysis for lignin and nitrogen parameterization of natural
-litterfall (see appendix). It shows that the general trend of decreasing
-SOC emissions is not altered even by rather unlikely parameter choices,
-that would overestimate natural SOC stocks strongly and therefor lead to
-high emission in the case of land conversion.
+with the Tier 1 default values of 2006. Moreover, emissions or carbon sinks
+from changed management are not affected from the natural vegetation representation.
+To identify the importance of lignin and nitrogen parameterization of natural
+litterfall, we conducted a sensitivity analysis (see appendix). It shows that the general trend of decreasing
+SOC emissions is not altered even by rather unlikely parameter choices (BB: Why do you look at unlikely parameter choices???).
 
 \subsection{Important short commings --\textgreater{} move to appendix}
 
+(BB: Or include into outlook)
 Smaller points and shortcommings:
 
 -This study as the IPCC guidelines suggested has limited her focus to
