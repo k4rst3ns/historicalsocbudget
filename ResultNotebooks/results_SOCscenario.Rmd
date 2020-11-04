@@ -55,7 +55,7 @@ for(r in 1:length(revisions)){
 
 ```{r plot Carbon Emissions (glo)}
 
-plot_rev <- c(3,5,6,8)
+plot_rev <- c(5,8,6,3)
 
 names(revisions) <- c("Historical Management", 
                       "Allon",    
@@ -88,6 +88,7 @@ print(glo_SOCStock[,,"actualstate"])
 
 ```{r ggplot}
 
+theme_set(theme_bw())
 legend_size <- 10
 
 SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),c(1,plot_rev)]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
@@ -95,11 +96,12 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2
         y = "Global SOC gap in GtC",
         color="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(limits = c(-45,-35),
+  scale_y_continuous(limits = c(-44,-36),
                      breaks = c(-36, -38, -40,- 42, -44)) +
   theme(rect=element_blank(),
-        axis.title.y= element_text(size=legend_size),
-        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8))
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r = 10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size))
 
 SOCemis
 

@@ -111,6 +111,25 @@ save_kable(kable_styling(kable(table$comparison_table[setdiff(1:13,5)], "latex",
 
 Plot regional stocks
 
+```{r point plot reg stock, out.width=800, out.height=600 }
+library(ggplot2)
+
+leg_name <- "Data Source"
+comp <- ggplot(data = as.data.frame(glo_SOC["GLO",,invert=TRUE][,"y2010",]/1000), aes(Year,Value, group=Data1)) + 
+  geom_point(aes(colour=Data1, size=Data1, shape=Data1)) + 
+  facet_wrap(~ Region, scales="free", drop=TRUE) + 
+  scale_size_manual(values=c(4,2,2,2,2)) + 
+  scale_shape_manual(values=c(19,6,2,5,0)) +
+  labs(color  = leg_name, size = leg_name, shape = leg_name) +
+  xlab("") + ylab("SOC (0-30cm) in GtC")
+
+comp
+  
+ggsave(paste0(outputdir,"/comparisonfigure.png"), plot=comp)
+
+```
+
+
 ```{r plot reg stock, out.width="100%", out.height=1000}
 
 library(mip)
@@ -123,11 +142,12 @@ getSets(reg_SOCStock)  <- getSets(WISE)
 hist <- rbind(as.quitte(WISE["GLO",,,invert=TRUE]),
               as.quitte(GSOC["GLO",,,invert=TRUE]),
               as.quitte(SoilGrids["GLO",,,invert=TRUE]),
-              as.quitte(LPJ_rev21["GLO",,,invert=TRUE][,,2]))
+              as.quitte(LPJmL4["GLO",,,invert=TRUE]))
 
 regSOCcompare <- mipLineHistorical(reg_SOCStock, hist, facet.ncol=4, scales="free_y", ylab="SOC (0-30cm) in MtC")
 
 ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid)
+
 ```
 
 ```{r bar plot}

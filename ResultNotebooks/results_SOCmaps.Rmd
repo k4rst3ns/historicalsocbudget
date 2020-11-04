@@ -88,7 +88,7 @@ density2plot  <- merge(as.data.frame(cropland_dens), data.frame(magpie_coord, Ce
 
 
 
-```{r grid plot}
+```{r grid plot, out.height=800 , out.width=1200}
 
 library("ggplot2")
 theme_set(theme_bw())
@@ -144,7 +144,10 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2
                      breaks = c(0, -15, -35, -40, -45)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size),
-        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8)) +
+        axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 10, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size)#,
+        #plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+        ) +
   annotate(geom="text", label="SOC debt", x=factor(1995), y=-35, size = 3) +
   annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -39, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
  
@@ -176,7 +179,8 @@ SOCshare <- ggplot(data = world) + geom_sf() +
           axis.title.y = element_blank(),
           legend.text=element_text(size=legend_size),
           rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
           )  
 
 #geom_map(dat=map.world, map = map.world, aes(map_id=region), fill="NA", color="black") +
@@ -207,7 +211,8 @@ SOCincrease <- ggplot(data = world) + geom_sf() +
           axis.title.y = element_blank(),
           legend.text=element_text(size=legend_size),
           rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
           )
 
 cols <- colorRampPalette(brewer.pal(9, "YlGn"))(8)[2:8]
@@ -238,17 +243,23 @@ SOCdensity <- ggplot(data = world) + geom_sf() +
           axis.title.y = element_blank(),
           legend.text=element_text(size=legend_size),
           rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7))
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
           )
 
 
 
 library(gridExtra)
 library(cowplot)
+SOCdensity
+SOCincrease
+SOCemis
+SOCshare
+
 grid <- plot_grid(SOCdensity, SOCemis, SOCincrease, SOCshare, ncol=2, labels=c("a","b", "c", "d"),
                   label_fontface = "plain", label_size = 10)
 grid
-ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid)
+ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid, width = 20, height = 14, dpi = 300, units = "cm")
 
 ```
 
