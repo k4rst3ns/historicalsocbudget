@@ -12,17 +12,14 @@ library(mrvalidation)
 library(mrSOCbudget)
 library(magpiesets)
 
-rev <- "rev0.76baseline"
+rev <- "rev0.77init_lu"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
 
-#revisions   <- c(Baseline="rev0.74baseline", Till="rev0.74tillage_mixedtill", ResRe="rev0.74residue_freeze1975", ManRe="rev0.74manure_freeze1975", Yield="rev0.74yield_freeze1975")
+revisions   <- c(InitLu="rev0.77init_lu", InitNv="rev0.77init_natveg", InitMix="rev0.77init_mixed")
 filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
-
-revisions   <- c(Baseline="rev0.76baseline", Allon="rev0.76allon_freeze1975", Allon2="rev0.76allon2_freeze1975",        ResRe="rev0.76rrecycle_freeze1975",
-                Till="rev0.76tillage_mixedtill", ResSta="rev0.76residue_freeze1975", Yield="rev0.76yield_freeze1975", ManRe="rev0.76manure_freeze1975")
 
 
 # for(item in revisions){
@@ -55,16 +52,9 @@ for(r in 1:length(revisions)){
 
 ```{r plot Carbon Emissions (glo)}
 
-plot_rev <- c(5,8,6,3)
+plot_rev <- c(2,3)
 
-names(revisions) <- c("Historical Management", 
-                      "Allon",    
-                      "Constant management from 1975",   
-                      "ResRe", 
-                      "Constant tillage area from 1975",
-                      "Constant residue input from 1975",
-                      "Yield", 
-                      "Constant manure application from 1975")
+names(revisions) <- c("steady state of land use","steady state of potential natural vegetation","mean of steady states above")
 
 
 
@@ -94,10 +84,10 @@ legend_size <- 10
 SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,1),c(1,plot_rev)]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
         y = "Global SOC gap in GtC",
-        color="") +
+        color="Initilization of SOC stocks in 1960 by") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(limits = c(-44,-36),
-                     breaks = c(-36, -38, -40,- 42, -44)) +
+  scale_y_continuous(limits = c(-45,-0),
+                     breaks = seq(-45,0,5)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r = 10, b = 0, l = 0, unit = "pt")),
         axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 0, l = 0, unit = "pt")),
@@ -105,7 +95,7 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2
 
 SOCemis
 
-ggsave(paste0(outputdir,"/scenario.png"), plot=SOCemis)
+ggsave(paste0(outputdir,"/scenario_lu.png"), plot=SOCemis)
 
 ```
 

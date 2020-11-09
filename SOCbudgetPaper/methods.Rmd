@@ -1,14 +1,14 @@
 # Method
 
 We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons (management related functions) and github.com/pik-piam/mrSOCbudget (soil dynamic related functions), which are both based on the MADRaT package (package citation?), a framework which aims to improve reproducibility and transparency in data processing.
-In the following chapter we outine the most important relationships and assumptions. Table \@ref(append:subsection2mrfunctions) provides further information on corresponding code within the R packages.
+In the following section we outline the most important relationships and assumptions. Table \@ref(append:subsection2mrfunctions) provides further information on corresponding code within the R packages.
 
 
 ## SOC Stocks and Stock changes following the Tier 2 steady-state method {#sec:carbonbudget}
 
-Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019; short Tier 2 steady-state method) , we estimate soil organic carbon (SOC) stocks and their change over time for cropland on half-degree resolution from 1975 to 2010. We assume the current SOC state converges towards a steady state, which itself is depending on biophysical, climatic and agronomic conditions. Therefore we conduct the following three steps within each yearly timestep: 
+Following the tier 2 approach of the refinement of IPCC guidelines vol. 4 (@ipcc_2019_2019; short Tier 2 steady-state method), we estimate soil organic carbon (SOC) stocks and their change over time for cropland on half-degree resolution from 1975 to 2010. We assume the current SOC state converges towards a steady state, which itself is depending on biophysical, climatic and agronomic conditions. Therefore, we conduct the following three steps within each yearly time-step: 
 (1) We calculate annual land-use (sub-)type-specific steady states and decay rates for SOC stocks, 
-(2) we account for land conversion by transferring SOC from and to an other land-use type representad as natural vegetation,
+(2) we account for land conversion by transferring SOC from and to another land-use type represented as natural vegetation,
 (3) we estimate SOC stocks and changes based on the stocks of the previous time period, the steady state stocks and the decay rate. 
 
 
@@ -19,13 +19,13 @@ In a simple first order kinetic approach the steady-state soil organic carbon st
 SOC^{eq} =\frac{C^{\textrm{in}}}{k} \qquad\forall\quad i,t
 (\#eq:inoutflow)
 \end{equation}
-with $C^{\textrm{in}}$ being carbon inputs to the soil, $k$ denoting the soil organic carbon decay rate; as well as $i$ representing grid cell indices and $t$ years. We use for our calculations the Tier 2 steady-state method, which assumes three soil carbon sub-pools (active, slow and passive) and interactions between them. Annual carbon inflow to each sub-pool and annual decay rates of each sub-pool are the key components to determining steady-state SOC stocks.  
+with $C^{\textrm{in}}$ being carbon inputs to the soil, $k$ denoting the soil organic carbon decay rate; as well as $i$ representing grid cell identifier and $t$ years. We use for our calculations the Tier 2 steady-state method, which assumes three soil carbon sub-pools (active, slow and passive) and interactions between them, following the approach in the Century model (Parton et al, 1988). Annual carbon inflow to each sub-pool and annual decay rates of each sub-pool are the key components to determining steady-state SOC stocks.  
 
 **Carbon Inputs to the Soil**  
 
-We account for different carbon input sources depending on the two land-use types we distinguish: croplands and natural vegetated land as representative for all other land use (see table \@ref(tab:datasourceinputs)). Carbon sources for cropland are recycled crop residues, below ground biomass of crops (for both see \@ref(sec:residues)) and recycled manure (see \@ref(sec:livstmanure)); for natural vegetation litterfall [@schaphoff_lpjml4_2018] is the only source of carbon inflow to the soil.
+We account for different carbon input sources depending on the two land-use types we distinguish: croplands and natural vegetated land as representative for all other land use (see table \@ref(tab:datasourceinputs)). Carbon sources for cropland are recycled crop residues, below ground biomass of crops (for both see \@ref(sec:residues)) and recycled manure (see \@ref(sec:livstmanure)); for natural vegetation litterfall (including fine root turnover) [@schaphoff_lpjml4_2018] is the only source of carbon inflow to the soil.
 
-Following the IPCC carbon accounting methodology, carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content (see @ipcc_2019_2019). For each component the sum of all carbon input sources is allocated to the respective SOC sub-pools via transfer coefficients. This implies that both the amount of carbon as well as its structural composition determine the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
+Following the IPCC carbon accounting methodology, carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content (see @ipcc_2019_2019). For each component the sum of all carbon input sources is allocated to the respective SOC sub-pools via transfer coefficients. This implies that both the amount of carbon and its structural composition determine the effective inflow. Data sources for all considered carbon inputs as well as for lignin and nitrogen content can be found in table \@ref(tab:datasourceinputs).  
 
 
 ```{=latex}
@@ -53,7 +53,7 @@ Following the IPCC carbon accounting methodology, carbon inputs are disaggregate
 
 **SOC decay**  
 
-The sub-pool specific decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that all vary over time (t) and space (i). Following the Tier 2 steady-state method we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to account for spatial variation of decay rates. Thus $k_{sub}$ is given by
+The sub-pool specific decay rates are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that all vary over time (t) and space (i). Following the Tier 2 steady-state method we consider temperature (temp), water (wat), sand fraction (sf) and tillage (till) effects to account for spatial variation of decay rates. Thus, $k_{sub}$ is given by
 
 \begin{equation}
 \begin{aligned}
@@ -65,7 +65,7 @@ The sub-pool specific decay rates are influenced by climatic conditions, biophys
 \end{equation}
 
 
-For cropland we distinguish the effect of different tillage (see \@ref(sec:tillage)) and irrigation (see \@ref(sec:irrigation)) practices on decay rates, whereas for natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as drivers considered for each land-use types are shown in table \@ref(tab:datasourcedecay). To account for variations of decay rates within each grid cell due to different tillage and irrigation regimes, average rates based on area shares are calculated.
+For cropland, we distinguish the effect of different tillage (see \@ref(sec:tillage)) and irrigation (see \@ref(sec:irrigation)) practices on decay rates, whereas for natural vegetation, we assume rainfed and non-tilled conditions. Data sources as well as drivers considered for each land-use types are shown in table \@ref(tab:datasourcedecay). To account for variations of decay rates within each grid cell due to different tillage and irrigation regimes, average rates based on area shares are calculated.
 
 ```{=latex}
 
@@ -116,32 +116,44 @@ SOC_{t} = SOC_{t-1} + (SOC^{eq}_{t} - SOC_{t-1}) \cdot k_{t} \cdot 1\unit{a} \qq
 (\#eq:SOCstate)
 \end{equation}
 
-Reformulating this equation, we obtain a massbalance equation as follows
+Reformulating this equation, we obtain a mass balance equation as follows
 
 \begin{equation}
 SOC_{t} = SOC_{t-1} - \underbrace{SOC_{t-1} \cdot k_{t} \cdot 1\unit{a}}_{\text{outflow}} + \overbrace{SOC^{eq}_{t} \cdot k_{t} \cdot 1\unit{a}}^{\text{input (using equation (1))}}  \qquad \forall\quad lut, sub, i.
 (\#eq:steadystate2budget)
 \end{equation}
 
-The global SOC stock for each time step can than be calculated via
+The global SOC stock for each time step can then be calculated via
 
 \begin{equation}
 SOC_{t} = \sum_{i} \underbrace{\sum_{lut} \overbrace{\sum_{sub} SOC_{lut, sub, t, i}.}^{\text{$SOC_{lut, t, i}$ -- land-use type specific SOC stock within cell}}}_{\text{$SOC_{t, i}$ -- total SOC stock within cell}}
 (\#eq:totalstock)
 \end{equation}
 
-According to the IPCC guidelines SOC changes can be calculates as the difference of two (aufeinander folgenden) years (see Eq. 5.0A in [@ipcc_2019_2019]). This however will also include naturally occured changes due to climatic variance over time. For our study we will define the absolute and relative SOC changes in relation to a potential natural state $SOC_{pnv}$ under the same climatic conditions at time $t$ in grid cell $i$, that is based on the natural vegetation SOC calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes $\Delta SOC$ and relative changes $F^{SCF}$ a thus given by 
+According to the IPCC guidelines SOC changes can be expressed as the difference of two consecutive years (see Eq. 5.0A in [@ipcc_2019_2019]). This however, will also include naturally occurring changes due to climatic variance over time. For our study we defined the absolute and relative SOC changes in relation to a potential natural state $SOC_{pnv}$ under the same climatic conditions at time $t$ in grid cell $i$, that is based on the natural vegetation SOC calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes $\Delta SOC$ and relative changes $F^{SCF}$ a thus given by 
 
 \begin{equation}
 \Delta SOC_{t, i} = SOC_{t, i} - SOC_{pnv, t, i}\quad, \qquad \quad  F^{SCF}_{t, i} = \frac{SOC_{t, i}}{SOC_{pnv, t, i}}.
 (\#eq:totalstock)
 \end{equation}
 
-Note that the absolution changes $\Delta SOC$ can be also interpreted as the SOC gap due to human cropping activits; whereas relative changes $F^{SCF}$ can be denoted as stock change factors as defined within the IPCC guidelines of 2006 [@ipcc_2006_2006]. Note that the SOC gap is to the negated cummulative SOC emission also refered to as SOC debt (cite Sanderman) of mankind.
+Note that the absolution changes $\Delta SOC$ can be also interpreted as the SOC gap due to human cropping activities; whereas relative changes $F^{SCF}$ can be denoted as stock change factors as defined within the IPCC guidelines of 2006 [@ipcc_2006_2006]. Note that the SOC gap is equivalent to the negated cumulative SOC emission ([@pugh_simulated_2015]) also referred to as SOC debt ([@sanderman_soil_2017]) of human land use.
 
-### Initialisation of SOC pools
+### Initialization of SOC pools
 
-To initialize all SOC sub-pools we assume that cropped land as well as natural vegetation are in a steady state for the specific configuration present within the initialization year 1961. We assume after a spin-up period of 15 years reliable results start from 1975 and improve over time, since dependency on the initial conditions will decrease.
+To initialize all SOC sub-pools we assume that cropped land as well as natural vegetation are in a steady state for the specific configuration present within the initialization year 1961. We assume after a spin-up period of 15 years reliable results start from 1975 and improve over time, since dependency on the initial conditions decreases.
+
+
+## SOC Stocks and Stock changes following Tier 1 {#sec:tier1}
+
+Additionally, to the tier 2 approach of the refinement of IPCC guidelines vol. 4 [@ipcc_2019_2019] and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC tier 1 approach of IPCC guidelines vol. 4 (@ipcc_2006_2006, @ipcc_2019_2019). Here, stocks are calculated via stock change factors ($F^{SCF}$) given by the IPCC for the topsoil (0-30 cm) and based on observational data. $F^{SCF}$ are differentiated by different crop, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these. Moreover, $F^{SCF}$ vary for different climatic zones ($c$) specified by the IPCC (see \@ref(append:climatemap)). The actual SOC stocks as thus calculated based on a given reference SOC stock by
+
+\begin{equation}
+SOC^{\text{target}}_{i} = \sum_{c,m} T_{c,i} \cdot SOC^{\text{ref}} \cdot F^{SCF}_{c,m} \qquad\forall\quad t,
+(\#eq:tier1)
+\end{equation}
+
+with $T_{c,i}$ being the translation matrix for grid cells $i$ into corresponding climate zones $c$. For this analysis we use the default $F^{SCF}$ from the Tier 1 method of [@ipcc_2006_2006], and [@ipcc_2019_2019] as a comparison and consistency check for our more detailed budget approach.
 
 \newpage
 
@@ -149,9 +161,9 @@ To initialize all SOC sub-pools we assume that cropped land as well as natural v
 
 We compile country-specific FAO production and cropland statistics [@faostat_faostat_2016] to a harmonized and consistent data set. The data is prepared in 5 year time steps from 1965 to 2010, which, together with the spin up phase, restricts our analysis to time span from 1975 to 2010. For all the following data, if not declared differently, we interpolate values linearly between the time steps and hold them constant before 1965.
 
-### Landuse and Landuse Change {#sec:landuse}
+### Land use and Land-use change {#sec:landuse}
 
-Land-use patterns are based on the Land-Use Harmonization 2 [@Hurtt2020] data set, which we aggregate from quarter degree to half degree resolution. We disaggregate the five different cropland subcategories (c3ann, c3per, c4ann, c4per, c3nfx) of LUH2 into our 17 crop groups, applying the relative shares for each grid cell based on the country and year specific area harvested shares of FAOSTAT data [@faostat_faostat_2016] (see \@ref(append:Tableluh2fao2mag) for more  details on the crop group mapping). Land-use transitions are calculated as net area differences of the land-use data on half-degree.
+Land-use patterns are based on the Land-Use Harmonization 2 [@hurtt_harmonization_2020] data set, which we aggregate from quarter degree to half degree resolution. We disaggregate the five different cropland subcategories (c3ann, c3per, c4ann, c4per, c3nfx) of LUH2 into our 17 crop groups, applying the relative shares for each grid cell based on the country and year specific area harvested shares of FAOSTAT data [@faostat_faostat_2016] (see \@ref(append:Tableluh2fao2mag) for more  details on the crop group mapping). Land-use transitions are calculated as net area differences of the land-use data on half-degree.
 
 ### Crop and Crop Residues Production {#sec:residues}
 
@@ -161,7 +173,7 @@ Using half-degree yield data from LPJmL [@schaphoff_lpjml4_2018] as well as half
 
 **Crop Residue Production**  
 
-Crop residue production and management is based on a revised methodology of [@bodirsky_n2o_2012] and key aspects are explained here given its central role for soil carbon modelling. Starting from harvested crop production ($CP$) estimates and their respective harvested crop area ($CA$), we estimate above-ground ($AGR$) and below-ground ($BGR$) residual biomass using crop group ($cg$) specific harvest indices ($HI$) and root:shoot ratios ($RS$) as follows  
+Crop residue production and management is based on a revised methodology of [@bodirsky_n2o_2012] and key aspects are explained here given its central role for soil carbon modelling. Starting from harvested crop production ($CP$) estimates and their respective harvested crop area ($CA$), we estimate above-ground ($AGR$) and below-ground ($BGR$) residual biomass using crop group ($cg$) specific harvest index values ($HI$) and root:shoot ratios ($RS$) as follows  
 
 \begin{equation}
 \begin{aligned}
@@ -171,16 +183,16 @@ BGR & = (CP + AGR) \cdot RS \qquad                                            & 
 \end{aligned}
 \end{equation}
 
-Following the IPCC guidelines, we split the harvest index into a yield and an area dependend fraction [@ipcc_2006_2006]. Note that deviating from [@bodirsky_n2o_2012] we use harvested instead of physical crop area to account for increased residue biomass due to multiple cropping and decreased amounts on fallow land. 
-We assume that all BGR are recycled to the soil, whereas AGR can be burned or harvested for other purposes such as feeding animals [@weindl], fuel or for material use.  
+Following the IPCC guidelines, we split the harvest index into a yield and an area dependent fraction [@ipcc_2006_2006]. Note that deviating from [@bodirsky_n2o_2012] we use harvested instead of physical crop area to account for increased residue biomass due to multiple cropping and decreased amounts on fallow land. 
+We assume that all BGR are recycled to the soil, whereas AGR can be burned or harvested for other purposes such as feeding animals [@weindl_livestock_2017], fuel or for material use.  
 
 **Burned Residues**  
 
-A fixed share of the AGR is assumed to be burned on field depending on the per-capita income of the country. Following [@smil1999]) we assume 25% burn share for low-income countries according to worldbank definitions ($<\,1000\,\tfrac{USD}{yr\,cap}$), 15% for high-income  ($>\,10000\,\tfrac{USD}{yr\,cap}$) and linearly interpolate shares for all middle-income countries depending on their per-capita income. Depending on the crop group 80–90% of the residue carbon burned on the fields are lost within the combustion process [@ipcc_2006_2006].  
+A fixed share of the AGR is assumed to be burned on field depending on the per-capita income of the country. Following [@smil_nitrogen_1999]) we assume 25% burn share for low-income countries according to World Bank definitions ($<\,1000\,\tfrac{USD}{yr\,cap}$), 15% for high-income  ($>\,10000\,\tfrac{USD}{yr\,cap}$) and linearly interpolate shares for all middle-income countries depending on their per-capita income. Depending on the crop group 80–90% of the residue carbon burned on the fields are lost within the combustion process [@ipcc_2006_2006].  
 
 **Residue Usage**  
 
-We compile out of our 17 crop groups, three residue groups (straw, high-lignin and low-lignin residues) with additional demand for other purposes and one residue with no double use (see \@ref(append:Tablekcr2kres)). Residue feed demand for five different livestock groups is based on country- and residue-group-specific feed baskets (see [@weindl]), taking available AGR biomass as well as livestock productivity into account. We estimate, for low-income countries,  a material-use share for straw residues of 5% and a fuel-share of 10% for all used residues groups in low-income countries. For high-income countries, no withdrawal for material or fuel use is assumend, and middle-income countries use shares are linearly interpolated based on per-capita income. The remaining AGR as well as all BGR are assumend to be recycled to the soil. We limit high recycling shares at $10\tfrac{\unit{tC}}{\unit{ha}}$ to correct for outliers.  
+We compile out of our 17 crop groups, three residue groups (straw, high-lignin and low-lignin residues) with additional demand for other purposes and one residue with no double use (see \@ref(append:Tablekcr2kres)). Residue feed demand for five different livestock groups is based on country- and residue-group-specific feed baskets (see [@weindl_livestock_2017]), taking available AGR biomass as well as livestock productivity into account. We estimate, for low-income countries,  a material-use share for straw residues of 5% and a fuel-share of 10% for all used residues groups in low-income countries. For high-income countries, no withdrawal for material or fuel use is assumed, and middle-income countries use shares are linearly interpolated based on per-capita income. The remaining AGR as well as all BGR are expected to be recycled to the soil. We limit high recycling shares at $10\tfrac{\unit{tC}}{\unit{ha}}$ to correct for outliers.  
 
 **Dry Matter to Carbon Transformation**  
 
@@ -192,35 +204,22 @@ To transform dry matter estimates into carbon, we compiled crop-group and plant 
 We assume that manure is applied at its excretion place, leaving the livestock distribution the driving factor for the spatial pattern of manuring.
 
 **Livestock Distribution**
-To disaggregate country level FAOSTAT livestock production values to the half-degree scale, we use the following rule-based assumptions, drawing from the approach of [@robinson_mapping_2014], and uses feed basket assumptions based on a revised methodology from [@weindl]. We differentiate between ruminant and monogastric systems, as well as extensive and intensive systems.
-For ruminants, we assume that livestock is located where the production of feed occurs. We distingush between grazed pasture, which is converted into livestock products from extensive systems; and all other (crop-based) feeds, which we consider to be consumend in intensive systems.
-For poultry, egg and monogastric meat production we use the per-capita income of the country to divide between intensive and extensive production systems. For low-income countries, we assume extensive production systems. We locate them according to the share of built-up areas based on the idea that these animals are held in subsistence or small-holder farming systems with a high labour per animal ratio. Intensive production associated with higher income countries, is distributed within a country using again share of crop-based feed production,  assuming that feed availability is the most driving factor for livestock location.
+To disaggregate country level FAOSTAT livestock production values to the half-degree scale, we use the following rule-based assumptions, drawing from the approach of [@robinson_mapping_2014], and uses feed basket assumptions based on a revised methodology from [@weindl_livestock_2017]. We differentiate between ruminant and monogastric systems, as well as extensive and intensive systems.
+For ruminants, we assume that livestock is located where the production of feed occurs. We distinguish between grazed pasture, which is converted into livestock products from extensive systems; and all other (crop-based) feeds, which we consider to be consumed in intensive systems.
+For poultry, egg and monogastric meat production we use the per-capita income of the country to divide between intensive and extensive production systems. For low-income countries, we assume extensive production systems. We locate them according to the share of built-up areas based on the idea that these animals are held in subsistence or small-holder farming systems with a high labor per animal ratio. Intensive production associated with higher income countries, is distributed within a country using again share of crop-based feed production,  assuming that feed availability is the most driving factor for livestock location.
 
 **Manure Excretion, Storage and Recycling**
-Manure production and management is based on a revised methodology of [@bodirsky_n2o_2012] and is presented here due to its central role in soil carbon modelling. Based on the gridded livestock distribution we calculate excretions by estimating the nitrogen balance of the livestock system on the basis of comprehensive livestock feed baskets [@weindl], assuming that all nitrogen in protein feed intake, minus the nitrogen in the slaughter mass, is excreted. Carbon in excreted manure is estimated by applying fixed C:N ratios (given by [@ipcc_2019_2019]). 
+Manure production and management is based on a revised methodology of [@bodirsky_n2o_2012] and is presented here due to its central role in soil carbon modelling. Based on the gridded livestock distribution we calculate excretions by estimating the nitrogen balance of the livestock system on the basis of comprehensive livestock feed baskets [@weindl_livestock_2017], assuming that all nitrogen in protein feed intake, minus the nitrogen in the slaughter mass, is excreted. Carbon in excreted manure is estimated by applying fixed C:N ratios (given by [@ipcc_2019_2019]). 
 Depending on the feed system we assume manure to be handled in four different ways:
-All manure orginated from pasture feed intake is excreted directly to pastures and rangelands (pasture grazing), deducting manure collected as fuel. Manure fuel shares are estimated using IPCC default values [@ippc_2006_2006]. 
-Whereas for low-income countries, we adopt a share of 25% of crop residues in feed intake directly consumend and excreted on crop fields (stubble grazing), we do not consider any stubble grazing in high-income countries; middle-income countries see linearly interpolated shares depending on their per-capita income.
+All manure originated from pasture feed intake is excreted directly to pastures and rangelands (pasture grazing), deducting manure collected as fuel. Manure fuel shares are estimated using IPCC default values [@ipcc_2006_2006]. 
+Whereas for low-income countries, we adopt a share of 25% of crop residues in feed intake directly consumed and excreted on crop fields (stubble grazing), we do not consider any stubble grazing in high-income countries; middle-income countries see linearly interpolated shares depending on their per-capita income.
 For all other feed items we assume the manure to be stored in animal waste management systems associated with livestock housing. 
 To estimate the carbon actually recycled to the soil, we account for carbon losses during storage and recycling shares in different animal waste management and grazing systems. Whereas we assume no losses for pasture and stubble grazing, we consider that the manure collected as fuel is not recycled. For manure stored in different animal waste management systems we compiled carbon loss rates partly depending on the nitrogen loss rates as specified in [@bodirsky_n2o_2012] (see \@ref(append:TableclossAWMS)). We limit high application shares at $10\tfrac{\unit{tC}}{\unit{ha}}$ to correct for outliers.
 
 ### Irrigation {#sec:irrigation}
 
-We use irrigation area shares to modify the water effect on decomposition by weighting the irrigated and rainfed water factors based on these shares. The LUH2v2 data set provides irrigated fractions for their cropland subcategories. We apply aggregated area shares, leading to the same impact of irrigation on all of our crop groups. Moreover we assume the irrigation effect to be present for all 12 months of a year in grid cells, that has been marked as irrigated.
+We use irrigation area shares to modify the water effect on decomposition by weighting the irrigated and rainfed water factors based on these shares. The LUH2v2 [@hurtt_harmonization_2020] data set provides irrigated fractions for their cropland subcategories. We apply aggregated area shares, leading to the same impact of irrigation on all of our crop groups. Moreover, we assume the irrigation effect to be present for all 12 months of a year in grid cells, that has been marked as irrigated.
 
 ### Tillage {#sec:tillage}
 
-To account for the distribution of tillage to the three different tillage types specfied by the IPCC - full tillage, reduced tillage and no tillage -, we assume that all natural land and pastures are not tilled, whereas as default annual crops are under full and perennials under reduced tillage. Furthermore we assume no tillage in cropland cells specified as no tillage cell based on the historic global gridded tillage data set from Prowollik  [@porwollik_generating_2018]. Porwollik data set is extended by to the period of 1974-2010 by combining country-level data on conservation agriculture (ca) area values from AQUASTAT (FAO, 2016) and LUH2 crop areas together with the methodolgy of Porwollik to identify potential no tillage cells. 
-
-\newpage
-
-## SOC Stocks and Stock changes following Tier 1 {#sec:tier1}
-
-Additionally to the tier 2 approach of the refinement of IPCC guidelines vol. 4 [@ipcc_2019_2019] and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC tier 1 approach of IPCC guidelines vol. 4 (@ipcc_2006_2006, @ipcc_2019_2019). Here, stocks are calculated via stock change factors (F^{SCF}) given by the IPCC for the topsoil (0-30 cm) and based on observational data. $F^{SCF}$ are differentiated by different crop, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these. Moreover $F^{SCF}$ vary for different climatic zones ($c$) specified by the IPCC (see \@ref(append:climatemap)). The actual SOC stocks as thus calulated based on a given reference SOC stock by
-
-\begin{equation}
-SOC^{\text{target}}_{i} = \sum_{c,m} T_{c,i} \cdot SOC^{\text{ref}} \cdot F^{SCF}_{c,m} \qquad\forall\quad t,
-(\#eq:tier1)
-\end{equation}
-
-with $T_{c,i}$ being the translation matrix for grid cells $i$ into corresponding climate zones $c$. For this analysis we use the default $F^{SCF}$ from the Tier 1 method of [@ipcc_2006_2006], and [@ipcc_2019_2019] as a comparison and constistency check for our more detailed budget approach.
+To account for the distribution of tillage to the three different tillage types specified by the IPCC -- full tillage, reduced tillage and no tillage --, we assume that all natural land and pastures are not tilled, whereas as default annual crops are under full and perennials under reduced tillage. Furthermore, we assume no tillage in cropland cells specified as no tillage cell based on the historic global gridded tillage data set from  [@porwollik_generating_2018]. This data set is extended by to the period of 1974-2010 by combining country-level data on conservation agriculture area values from AQUASTAT (FAO, 2016) and LUH2 crop areas together with the methodology of [@porwollik_generating_2018] to identify potential no tillage cells. 
