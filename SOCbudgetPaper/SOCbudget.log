@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  9 NOV 2020 22:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  9 NOV 2020 22:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -937,11 +937,7 @@ Package color Info: Redefining color bgcol on input line 2491.
 Package color Info: Redefining color barcol on input line 2492.
 )
 LaTeX Info: Redefining \vec on input line 15.
-(./SOCbudget.aux
-
-LaTeX Warning: Label `eq:totalstock' multiply defined.
-
-)
+(./SOCbudget.aux)
 \openout1 = `SOCbudget.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
@@ -1078,46 +1074,46 @@ n input line 391.
 [11 <../ResultNotebooks/Output/Images/scenario.png (PNG copy)>] [12 <../ResultN
 otebooks/Output/Images/OuFlowFig.png>] [13]
 
-LaTeX Warning: Reference `tab:SCFtable' on page 14 undefined on input line 418.
+LaTeX Warning: Reference `tab:SCFtable' on page 14 undefined on input line 419.
 
 
-<../ResultNotebooks/Output/Images/TableSCF_comparison.png, id=259, 350.7504pt x
+<../ResultNotebooks/Output/Images/TableSCF_comparison.png, id=262, 350.7504pt x
  72.7518pt>
 File: ../ResultNotebooks/Output/Images/TableSCF_comparison.png Graphic file (ty
 pe png)
 <use ../ResultNotebooks/Output/Images/TableSCF_comparison.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/TableSCF_comparison.p
-ng  used on input line 421.
+ng  used on input line 422.
 (pdftex.def)             Requested size: 455.24408pt x 94.43298pt.
 
-LaTeX Warning: Reference `tab:SOCtable' on page 14 undefined on input line 431.
+LaTeX Warning: Reference `tab:SOCtable' on page 14 undefined on input line 432.
 
 
-<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=260, 216.5691pt 
+<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=263, 216.5691pt 
 x 289.08pt>
 File: ../ResultNotebooks/Output/Images/glo_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/glo_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/glo_comparisonfigure.
-png  used on input line 434.
+png  used on input line 435.
 (pdftex.def)             Requested size: 227.62204pt x 303.83849pt.
 [14 <../ResultNotebooks/Output/Images/TableSCF_comparison.png>] [15 <../ResultN
 otebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>] [16] [17] [18]
-<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=299, 526.8483pt 
+<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=301, 526.8483pt 
 x 325.215pt>
 File: ../ResultNotebooks/Output/Images/reg_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/reg_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/reg_comparisonfigure.
-png  used on input line 488.
+png  used on input line 489.
 (pdftex.def)             Requested size: 503.61377pt x 310.87292pt.
 [19]
-<../ResultNotebooks/Output/Images/scenario_lu.png, id=312, 526.8483pt x 325.215
+<../ResultNotebooks/Output/Images/scenario_lu.png, id=314, 526.8483pt x 325.215
 pt>
 File: ../ResultNotebooks/Output/Images/scenario_lu.png Graphic file (type png)
 <use ../ResultNotebooks/Output/Images/scenario_lu.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_lu.png  used
- on input line 495.
+ on input line 496.
 (pdftex.def)             Requested size: 503.61377pt x 310.87292pt.
 [20 <../ResultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] [21
  <../ResultNotebooks/Output/Images/scenario_lu.png (PNG copy)>] [22] (./SOCbudg
@@ -1138,24 +1134,21 @@ Package lineno Warning: Linenumber reference failed,
 (lineno)                rerun to get it right.
 
 [24]) [25]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 587.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 587.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 588.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 588.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 587.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 587.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 588.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 588.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 587.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 588.
  ) 
 Here is how much of TeX's memory you used:
- 10838 strings out of 494847
- 154496 string characters out of 6179080
- 281364 words of memory out of 5000000
- 13812 multiletter control sequences out of 15000+600000
+ 10839 strings out of 494847
+ 154510 string characters out of 6179080
+ 281385 words of memory out of 5000000
+ 13813 multiletter control sequences out of 15000+600000
  44133 words of font info for 72 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  43i,17n,40p,1518b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1173,10 +1166,10 @@ hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on SOCbudget.pdf (25 pages, 1384615 bytes).
+Output written on SOCbudget.pdf (25 pages, 1384729 bytes).
 PDF statistics:
- 460 PDF objects out of 1000 (max. 8388607)
- 405 compressed objects within 5 object streams
+ 462 PDF objects out of 1000 (max. 8388607)
+ 407 compressed objects within 5 object streams
  131 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

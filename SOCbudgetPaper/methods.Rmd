@@ -134,7 +134,7 @@ According to the IPCC guidelines SOC changes can be expressed as the difference 
 
 \begin{equation}
 \Delta SOC_{t, i} = SOC_{t, i} - SOC_{pnv, t, i}\quad, \qquad \quad  F^{SCF}_{t, i} = \frac{SOC_{t, i}}{SOC_{pnv, t, i}}.
-(\#eq:totalstock)
+(\#eq:stockdiff)
 \end{equation}
 
 Note that the absolution changes $\Delta SOC$ can be also interpreted as the SOC gap due to human cropping activities; whereas relative changes $F^{SCF}$ can be denoted as stock change factors as defined within the IPCC guidelines of 2006 [@ipcc_2006_2006]. Note that the SOC gap is equivalent to the negated cumulative SOC emission ([@pugh_simulated_2015]) also referred to as SOC debt ([@sanderman_soil_2017]) of human land use.
