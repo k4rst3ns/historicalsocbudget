@@ -22,7 +22,7 @@ affiliation:
   - code: 2
     address: Your affiliation 
 abstract: |
-  Soil organic carbon (SOC) is one of larges carbon stocks on Earth. It is three times larger than the vegetation pool and more than twice as big as the athmospheric pool, when looking into the first meter of the earth soil profile. Human cropping activties led and still lead to a depletion of SOC though, which are so far not well represented in global assessments of historic carbon emissions. While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated on the global scale. Here we create a spatial explicit data set for agricutural management on cropland, especially for crop residue and manure management, based on global historic production (FAOSTAT), and land-use (LUH2) data; and combine it with the IPCC Tier 2 approach to create a half degree resolution SOC stock changes on mineral soils. We estimate that due to arable farming soils have lost over 37 GtOC of which 4 GtOC have been regained within the period 1975-2010. We show that, our results on global scale based on Tier 2 IPCC methodolgy are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the nessessity to incorporated better management data in soil models.
+  Soil organic carbon (SOC) is one of larges carbon stocks on Earth. It is three times larger than the vegetation pool and more than twice as big as the atmospheric pool, when looking into the first meter of the earth soil profile. Human cropping activities led and still lead to a depletion of SOC though, which are so far not well represented in global assessments of historic carbon emissions. While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated on the global scale. Here we create a spatial explicit data set for agricultural management on cropland, especially for crop residue and manure management, based on global historic production (FAOSTAT), and land-use (LUH2) data; and combine it with the IPCC Tier 2 approach to create a half degree resolution SOC stock changes on mineral soils. We estimate that due to arable farming soils have lost over 37 GtOC of which 4 GtOC have been regained within the period 1975--2010. We show that, our results on global scale based on Tier 2 IPCC methodology are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the necessity to incorporated better management data in soil models.
 bibliography: SOCbudget2.bib
 running:
   title: R Markdown Template for Copernicus
@@ -45,12 +45,12 @@ disclaimer: |
 acknowledgements: |
   Thanks to the rticles contributors!
 output:
-  bookdown::word_document2: default
-  md_document:
-    variant: markdown_github
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
     md_extensions: +raw_attribute
+  md_document:
+    variant: markdown_github
+  bookdown::word_document2: default
   rticles::copernicus_article: default
   bookdown::pdf_document2: default
 ---
