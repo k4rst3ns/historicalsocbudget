@@ -9,16 +9,19 @@ pdf_document: default
 ```{r load}
 library(mrcommons)
 library(mrvalidation)
-library(mrSOCbudget)
+library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev0.72default"
+rev <- "rev0.78baseline"
+
 outputdir <- "Output/Images"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/Baseline", extras="--keep-newer-files ")
+
+revfolder <- "Data/Baseline/"
 
 ```
 
@@ -26,23 +29,21 @@ setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
 
 files <- list.files("Data")
 
-CarbonInput      <- readRDS("Data/CarbonInput.rds")
-CarbonLitter     <- readRDS("Data/CarbonLitter.rds")
-CarbonManure     <- readRDS("Data/CarbonManure.rds")           
-CarbonResidues   <- readRDS("Data/CarbonResidues.rds")
-CarbonHarvest    <- readRDS("Data/Crop_Harvest.rds")
-SoilCarbonOut    <- readRDS("Data/SoilCarbon.rds")
-SoilCarbonDecay  <- readRDS("Data/SoilDecay.rds")
-SoilCarbonStSt   <- readRDS("Data/SoilSteadyState.rds")
+CarbonInput      <- readRDS(paste0(revfolder,"CarbonInput.rds"))
+CarbonLitter     <- readRDS(paste0(revfolder,"CarbonLitter.rds"))
+CarbonManure     <- readRDS(paste0(revfolder,"CarbonManure.rds"))          
+CarbonResidues   <- readRDS(paste0(revfolder,"CarbonResidues.rds"))
+CarbonHarvest    <- readRDS(paste0(revfolder,"Crop_Harvest.rds"))
+SoilCarbonOut    <- readRDS(paste0(revfolder,"SoilCarbon.rds"))
 
-Landuse          <- readRDS("Data/Landuse.rds")
-LanduseChange    <- readRDS("Data/LanduseChange.rds")
+Landuse          <- readRDS(paste0(revfolder,"Landuse.rds"))
+LanduseChange    <- readRDS(paste0(revfolder,"LanduseChange.rds"))
 
-FAOmassbalance   <- readRDS("Data/FAOmassbalance_ISO.rds" )
-ManureExcreted   <- readRDS("Data/Manure_excreted.rds")
-ManureRecycled   <- readRDS("Data/Manure_recycled.rds")
-ResidueBiomass   <- readRDS("Data/Residue_Biomass.rds")
-ResiduesAgDemand <- readRDS("Data/ResiduesAg_FieldBalance.rds")
+FAOmassbalance   <- readRDS(paste0(revfolder,"FAOmassbalance_ISO.rds"))
+ManureExcreted   <- readRDS(paste0(revfolder,"Manure_excreted.rds"))
+ManureRecycled   <- readRDS(paste0(revfolder,"Manure_recycled.rds"))
+ResidueBiomass   <- readRDS(paste0(revfolder,"Residue_Biomass.rds"))
+ResiduesAgDemand <- readRDS(paste0(revfolder,"ResiduesAg_FieldBalance.rds"))
 
 ```
 
@@ -91,7 +92,7 @@ SlowDecay          <- mbind(setNames(calcOutput("SlowDecay",  landtype="crop",  
                               setNames(calcOutput("SlowDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
 PassiveDecay       <- mbind(setNames(calcOutput("PassiveDecay", landtype="crop",   aggregate = FALSE),"crop"),
                               setNames(calcOutput("PassiveDecay", landtype="natveg", aggregate = FALSE),"natveg"))
-
+decay <- calcOutput("Decay", aggregate = FALSE)
 subpools     <- c("active","slow","passive")
 names        <- as.vector(outer(getNames(Landuse), subpools, paste, sep="."))
 Decay <- new.magpie(getCells(Landuse), getYears(Landuse), names, fill = 0)
@@ -228,47 +229,5 @@ ResidueFeed    <- dimSums(Balance[,,findset("kres")][,,"feed"][,,"c"], dim=c(1,3
 print(mbind(CropProduction,FeedProduction,ResidueFeed))
 ```
 
-Biomass excreted ist bigger than feed intake via plant harvest and residues taken for feed.
-  
-```{r soc}
-
-  Litter             <- dimSums(calcOutput("CarbonLitter", aggregate=FALSE)[,,"c"]*Landuse[,,"natveg"], dim=1)
-  
-  # Calculate effective input
-  param <- readSource("IPCCSoil", convert=FALSE)
-  param.f1_metab2a          <- setYears(param[,,"f1"], NULL) 
-  # stabilization efficiencies for metabolic decay products entering the active pool
-  param.f3_struc2s          <- setYears(param[,,"f3"], NULL) 
-  # stabilization efficiencies for structural decay products entering the slow pool
-  param.f2_struc2a <- mbind(setNames(setYears(param[,,"f2_ft"], NULL), "crop"),
-                            setNames(setYears(param[,,"f2_nt"], NULL), "natveg"))
-  # stabilization efficiencies for structural decay products entering the active pool (tillage and no tillage specific)
-  
-  
-  cell.input       <- mbind(add_dimension(dimSums(calcOutput("CarbonInput", landtype="crop", aggregate = FALSE),dim=3.2),
-                                          dim=3.1, nm = "crop",   add="landuse"),
-                            add_dimension(collapseNames(calcOutput("CarbonInput", landtype="natveg", aggregate = FALSE)),
-                                          dim=3.1, nm = "natveg", add="landuse"))
-  CarbonInput      <- dimSums(cell.input[,,"totalC"]*Landuse, dim=c(1))
-  
-  CarbonInputEff   <- collapseNames(dimSums((cell.input[,,"metabDOC"] * param.f1_metab2a +
-                                             cell.input[,,"strucDOC"] * param.f2_struc2a +
-                                             cell.input[,,"ligninC"]  * param.f3_struc2s) * Landuse, dim=c(1)))
-  
-
-  CarbonInputTot   <- collapseNames(dimSums(SOC[,,"steadystate"]*SOC[,,"decayrate"]*Landuse, dim=c(1,3.3)))
-  
-  # Load inputs, active steady state stock and decay rate
-
-  SOC                <- calcOutput("SoilCarbon", output="full", aggregate=FALSE)
-  Landuse            <- calcOutput("Landuse",       aggregate=FALSE)
-  LanduseChange      <- calcOutput("LanduseChange", aggregate=FALSE)
-
-  CarbonStocks       <- collapseNames(dimSums(SOC[,,c("steadystate","actualstate")]*Landuse, dim=1))
-  CarbonTransfer     <- dimSums(toolConditionalReplace(SOC[,,"carbontransfer"], "<0", 0),dim=c(1,3.3))
-  CarbonRelease      <- collapseNames(dimSums(SOC[,,"interstate"]*SOC[,,"decayrate"]*Landuse, dim=c(1, 3.3)))
-  
-print(mbind(CarbonTransfer, CarbonRelease))
-```
 
 

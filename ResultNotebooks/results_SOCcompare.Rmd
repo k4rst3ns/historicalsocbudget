@@ -8,20 +8,19 @@ output:
 
 ```{r load}
 library(mrcommons)
-library(mrvalidation)
-library(mrSOCbudget)
+library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev0.76baseline"
-outputdir <- "Output/Images/"
+rev       <- "rev0.11"
+outputdir <- "Output/"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev,"histManagement_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
+SoilCarbon <- read.magpie("Data/histManagement/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/histManagement/Landuse.rds")
 
 ```
 
@@ -34,43 +33,26 @@ SOCStock     <- dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, 
 glo_SOCStock <- dimSums(SOCStock, dim=1) 
 cell2iso     <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
 iso_SOCStock <- toolCountryFill(toolAggregate(SOCStock, rel=cell2iso, from="celliso", to="iso", dim=1), fill=0)
-iso2reg      <- toolMappingFile("regional",getConfig("regionmapping"),readcsv = TRUE)
+iso2reg      <- read.csv2("Data/histManagement/regionmappingH12.csv")
 reg_SOCStock <- toolAggregate(iso_SOCStock, rel=iso2reg, from="CountryCode", to="RegionCode")
-
-print(dimSums(dimSums(SoilCarbon[,,"actualstate"], dim=3.3)* Landuse, dim=c(1,3)))
-
 ```
-
 
 Load validation data:
 
 ```{r Validation Stocks}
 
+library(mrvalidation)
+
   LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
-  #LPJ_rev21  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL_rev21", aggregate="REG+GLO", try=TRUE)
-  #LPJ_car    <- calcOutput("ValidCarbonStocks", datasource = "LPJmLCarbon", aggregate="REG+GLO", try=TRUE)
   WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
   GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
   SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
-  LPJmL4  <- calcOutput("ValidCarbonStocks", datasource = "LPJmL4Paper", aggregate="REG+GLO", try=TRUE)
+  LPJmL4     <- calcOutput("ValidCarbonStocks", datasource = "LPJmL4Paper", aggregate="REG+GLO", try=TRUE)
   
 ```
 
-Plot global stocks
 
-```{r plot glo stocks}
-
-plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red", xlim=c(1951,2017),  ylim=c(350000,1300000))
-lines(getYears(LPJ_IPCC, as.integer = TRUE), LPJ_IPCC["GLO",,1], type="l", col="green")
-#lines(getYears(LPJ_car, as.integer = TRUE), LPJ_car["GLO",,], type="l", col="darkgreen")
-lines(getYears(LPJmL4, as.integer = TRUE), LPJmL4["GLO",,], type="l", col="lightgreen")
-lines(getYears(WISE, as.integer = TRUE), WISE["GLO",,], type="l", col="brown")
-lines(getYears(SoilGrids, as.integer = TRUE), SoilGrids["GLO",,], type="l", col="blue")
-lines(getYears(GSOC, as.integer = TRUE), GSOC["GLO",,], type="l", col="pink")
-plot(c(getYears(glo_SOCStock, as.integer=TRUE)), glo_SOCStock, type="l", col="red")
-```
-
-```{r table ipcc scf}
+```{r table glo soc stocks}
 
 library(knitr)
 library(stats)
@@ -114,6 +96,10 @@ Plot regional stocks
 ```{r point plot reg stock, out.width=800, out.height=600}
 library(ggplot2)
 
+supp.labs <- getNames(glo_SOC["GLO",,invert=TRUE])
+names(supp.labs) <- c("OJ", "VC")
+
+
 leg_name <- "Data Source"
 
 glob <- ggplot(data = as.data.frame(glo_SOC["GLO",,][,"y2010",]/1000), aes(Year,Value, group=Data1)) + 
@@ -146,25 +132,4 @@ library(ggplot2)
 glob
 ggsave(paste0(outputdir,"/glo_comparisonfigure.png"), plot=glob)
 ```
-
-
-```{r plot diff maps, out.width="100%", out.height=1000}
-
-library(luplot)
-library(magpiesets)
-
-
-cellSOCdens   <- (dimSums(dimSums(SoilCarbon[,,"naturalstate"], dim=3.2) * Landuse, dim=c(3))/dimSums(Landuse, dim=c(3)))[,findset("past"),]
-cellSOCdens[is.na(cellSOCdens)] <- 0
-
-cellSoilGrids <- readSource("SoilGrids", subtype="cstock_0_30", convert="onlycorrect")
-cellLPJml     <- calcOutput("LPJmL", version="LPJmL4", climatetype="CRU_4", subtype="soilc_layer", time="raw", selectyears="past", aggregate=FALSE)
-cellLPJml     <- collapseNames(cellLPJml[,,"layer1"]+1/3*cellLPJml[,,"layer2"], collapsedim = c(2,3))
-
-
-
-diffSoilGrids <- cellSOCdens - cellSoilGrids
-diffLPJml     <- cellSOCdens - cellLPJml
-
-luplot::plotmap(diffLPJml[,10,], legend_range = c(-80,80))
-```
+`
