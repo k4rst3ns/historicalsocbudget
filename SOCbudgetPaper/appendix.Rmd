@@ -24,7 +24,7 @@ Litter is coming from LPJmL in carbon units - transformation with 0.44 is done t
 captionregSOCtable <- "Modelled as well as data based estimation for global SOC stock in GtC for the first 30 cm of soil aggregated over all land area. Note that SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010."
 ```
 
-```{r regSOCtable, out.width = "100%", fig.cap = captionregSOCtable, echo=FALSE, fig.pos="H"}
+```{r regSOCtable, out.width = "100%", fig.cap = captionregSOCtable, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/reg_comparisonfigure.png")
 ```
@@ -36,7 +36,7 @@ knitr::include_graphics("../ResultNotebooks/Output/Images/reg_comparisonfigure.p
 captioninitSOC <- "Global SOC gap in GtC for the first 30 cm of soil for different initialization choices."
 ```
 
-```{r initSOC, out.width = "100%", fig.cap = captioninitSOC, echo=FALSE, fig.pos="H"}
+```{r initSOC, out.width = "100%", fig.cap = captioninitSOC, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_lu.png")
 ```

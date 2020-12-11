@@ -8,7 +8,7 @@ We present simulation results of our SOC budget focusing on cropland areas for t
 caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland shows high carbon stocks in high yielding areas. (b): The SOC debt is decreasing over time, meaning net SOC gains on global croplands over the last decades. (c)+(d): Absolute (c) and relative (d) SOC stocks compared to a potential natural state showing different hot spots of SOC dynamics. Whereas the absolute losses might be in temperate dry regions, relative losses are more prominent in tropical moist areas."
 ```
 
-```{r SOCmaps, out.width = "18cm", fig.cap = caption_SOCmaps, echo=FALSE, fig.pos="H"}
+```{r SOCmaps, out.width = "18cm", fig.cap = caption_SOCmaps, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```
@@ -25,7 +25,7 @@ Global cumulative SOC emissions are decreasing (see fig. 1(c)). Fig. 2 reveals t
 caption_SOCscen <- "Global SOC gap in GtC for various stylized management counterfactual scenarios compared to the modeled historical baseline."
 ```
 
-```{r SOCscen, out.width = "18cm", fig.cap = caption_SOCscen, echo=FALSE, fig.pos="H"}
+```{r SOCscen, out.width = "18cm", fig.cap = caption_SOCscen, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
 ```
@@ -34,7 +34,7 @@ knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
 caption_FlowFig <- "Global carbon flows (small numbers) and stocks (bold numbers) within the agricultural system for the year 2010 (in MtC): Most important carbon sources on cropland are crop residues. Note the two numbers on carbon inputs to soil denote carbon applied to the field and carbon entering the soil (difference is decomposed before official counting as soil)."
 ```
 
-```{r FlowFig, out.width = "16cm", fig.cap = caption_FlowFig, echo=FALSE, fig.pos="H"}
+```{r FlowFig, out.width = "16cm", fig.cap = caption_FlowFig, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/OuFlowFig.png")
 ```

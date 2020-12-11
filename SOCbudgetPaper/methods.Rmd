@@ -109,7 +109,7 @@ with $A_{lu}$ being the land-use type specific areas, $AR_{lu}$ and $AE_{lu}$ th
 
 ### Total SOC stocks and stock changes {#sec:totalsoc}
 
-$SOC$ converge towards the calculated steady-state stock $SOC^{\mathrm{eq}$ for each grid cell $i$, each annual time step $t$, each land-use type $lu$ and each sub-pool $sub$ like
+$SOC$ converge towards the calculated steady-state stock $SOC^{\mathrm{eq}}$ for each grid cell $i$, each annual time step $t$, each land-use type $lu$ and each sub-pool $sub$ like
 
 \begin{equation}
 SOC_{i,t,sub,lu} = SOC_{i,t-1,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t-1,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
@@ -172,7 +172,7 @@ To initialize all SOC sub-pools we assume that cropland and natural vegetation a
 ``` -->
 ## SOC stocks and stock changes following Tier 1 {#sec:tier1}
 
-Additionally to the steady-state method [@calvo_buendia_ipcc_2019] and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines ([@eggleston_hs_ipcc_2006], [@calvo_buendia_ipcc_2019]). Here, stocks are calculated via stock change factors ($F^{\mathrm{SCF}}$) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of $F^{\mathrm{SCF}}$ are differentiated by different crops, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these. Moreover, estimates of $F^{\mathrm{SCF}}$ vary for different climatic zones ($c$) specified by the IPCC (see Fig. \@ref(append:climatemap)). The actual $SOC$ stocks are thus calculated based on a given reference stock $SOC^{\mathrm{ref}$ by
+Additionally to the steady-state method [@calvo_buendia_ipcc_2019] and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines ([@eggleston_hs_ipcc_2006], [@calvo_buendia_ipcc_2019]). Here, stocks are calculated via stock change factors ($F^{\mathrm{SCF}}$) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of $F^{\mathrm{SCF}}$ are differentiated by different crops, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these. Moreover, estimates of $F^{\mathrm{SCF}}$ vary for different climatic zones ($c$) specified by the IPCC (see Fig. \@ref(append:climatemap)). The actual $SOC$ stocks are thus calculated based on a given reference stock $SOC^{\mathrm{ref}}$ by
 
 \begin{equation}
 SOC_{i,t} = \sum_{c,m} T_{c,i} \cdot SOC^{\mathrm{ref}}_{i,t} \cdot F^{\mathrm{SCF}}_{c,m}
@@ -244,7 +244,7 @@ To highlight the impact of changing management effects and to assess the sensiti
 
 ### Management scenarios {#sec:scen_management}
 
-To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for the three drivers: (1) In the \textit{constTillage} scenario the adoption of no-tillage practises are neglected (adoption starts in 1975 according to the available data set); (2) the \textit{constResidues} and the \textif{constManure} scenario assume constant input rates from residues resp. manure (in $\tfrac{t}{ha}$) at the level of 1975 onwards. Within the \textit{constResidue} scenario at least three effects overlay each other: (1) yields and with them residue biomass increase due to productivity gains, (2) rates of residue left or returned to fields are raising, and (3) shifts of crop groups change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios.
+To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for the three drivers: (1) In the \textit{constTillage} scenario the adoption of no-tillage practises are neglected (adoption starts in 1975 according to the available data set); (2) the \textit{constResidues} and the \textit{constManure} scenario assume constant input rates from residues resp. manure (in $\tfrac{t}{ha}$) at the level of 1975 onwards. Within the \textit{constResidue} scenario at least three effects overlay each other: (1) yields and with them residue biomass increase due to productivity gains, (2) rates of residue left or returned to fields are raising, and (3) shifts of crop groups change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios.
 
 ### Initialization choice {#sec:scen_initial}
 
@@ -259,7 +259,7 @@ Due to missing information about the litterfall composition, we assume woody pot
 
  \begin{table*}[h]
  \caption{Scenarios for sensitivity analysis on litter parameterization}
- \begin{tabular}{l l l}
+ \begin{tabular}{l l l l}
  \tophline
   Scenario name & plant type & n/c & lg/c \\
   \middlehline
@@ -273,6 +273,6 @@ Due to missing information about the litterfall composition, we assume woody pot
  \bottomhline
  \end{tabular}
  \belowtable{}
- (\#tab:scen_litterpnv)
+ (\#tab:scenlitterpnv)
  \end{table*}
 ```
