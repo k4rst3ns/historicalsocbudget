@@ -2,11 +2,11 @@
 
 ## SOC distribution and depletion
 
-```{r caption_SOCmaps, echo=FALSE}
-caption_SOCmaps <- "(a): Distribution of total global SOC stocks for the first 30 cm on cropland shows high carbon stocks in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state showing different hot spots of SOC dynamics. Whereas absolute losses ($\DeltaSOC$) are often highest in temperate dry regions, relative losses ($F^\mathrm{SCF}$) are often larger in tropical moist areas. (d): The SOC debt between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the last decades. "
+```{r captionSOCmaps, echo=FALSE}
+captionSOCmaps <- "(a): Distribution of total global SOC stocks for the first 30 cm on cropland shows high carbon stocks in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state showing different hot spots of SOC dynamics. Whereas absolute losses $\\Delta SOC$ are often highest in temperate dry regions, relative losses $F^\\mathrm{SCF}$ are often larger in tropical moist areas. (d): The SOC debt between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the last decades. "
 ```
 
-```{r SOCmaps, out.width = "18cm", fig.cap = caption_SOCmaps, echo=FALSE, fig.pos="h"}
+```{r SOCmaps, out.width = "18cm", fig.cap = captionSOCmaps, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```
@@ -23,24 +23,24 @@ Focusing of the temporal dimension of SOC stock changes (see Fig. \@ref(fig:SOCm
 Figure \@ref(fig:SOCscen)(a) reveals the relative impact of management effects by keeping carbon inflows from crop residue returning or manure application constant at the level of 1975 and neglecting the adoption of no-tillage practices. Without changes in management regimes, especially in C inflows from crop residues to the soil, global SOC debt on cropland would be increase at a rate of $0.1\unit{GtC yr^{-1}}$. The constResidue scenario dominates the effect and is only single-off scenario that still losses SOC compared to natural vegetation at a rate of $0.06\unit{GtC yr^{-1}}$. Whereas both the constManure and constTillage scenarios, show only small deviations from the historical values (sequestration rate of $0.09\unit{GtC yr^{-1}}$ for both), the effect of no-tillage gets stronger till 2010. 
 The strong impact of almost doubling C inputs from crop residue biomass over a period of 35 years is visible in Fig. \@ref(fig:SOCscen)(b) as well.
 
-```{r caption_SOCscen, echo=FALSE}
-caption_SOCscen <- "(a) Global $\Delta SOC$ in GtC for different scenarios deviating from historical argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes."
+```{r captionSOCscen, echo=FALSE}
+captionSOCscen <- "(a) Global $\\Delta SOC$ in GtC for different scenarios deviating from historical argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes."
 ```
 
-```{r SOCscen, out.width = "18cm", fig.cap = caption_SOCscen, echo=FALSE, fig.pos="h"}
+```{r SOCscen, out.width = "18cm", fig.cap = captionSOCscen, echo=FALSE, fig.pos="h"}
 # All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
+knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_horiz.png")
 ```
 
 The results of the sensitivity analysis concerning the initialization of SOC stocks at the beginning of the spin-up phase are shown in Fig. \@ref(fig:SOcinit). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The $\Delta SOC$ estimation almost halves (from ~26 GtC to ~14 GtC) as well as the decrease in of $\Delta SOC$ for over the last 35 years (from ~4 GtC to ~2.5 GtC) for the Inital-natveg scenario.
 
-```{r caption_SOCinit, echo=FALSE}
-caption_SOCinit <- "Global $\Delta SOC$ for different SOC initialization choices in the start year 1901."
+```{r captionSOCinit, echo=FALSE}
+captionSOCinit <- "Global $\\Delta SOC$ for different SOC initialization choices in the start year 1901."
 ```
 
-```{r SOCinit, out.width = "18cm", fig.cap = caption_SOCinit, echo=FALSE, fig.pos="H"}
+```{r SOCinit, out.width = "18cm", fig.cap = captionSOCinit, echo=FALSE, fig.pos="H"}
 # All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
+knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_init.png")
 ```
  Figure \@ref(fig:)
 
@@ -55,7 +55,7 @@ caption_FlowFig <- "Global carbon flows (at arrows) and SOC stocks (in boxes) wi
 
 ```{r FlowFig, out.width = "16cm", fig.cap = caption_FlowFig, echo=FALSE, fig.pos="h"}
 # All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/OuFlowFig.png")
+knitr::include_graphics("../ResultNotebooks/Output/Images/CarbonBudget.png")
 ```
 
 <!-- ```{r table2, echo = FALSE}
