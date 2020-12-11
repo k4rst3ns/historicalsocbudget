@@ -1,11 +1,9 @@
 # Results
 
-We present simulation results of our SOC budget focusing on cropland areas for the year 2010 as well as global trends of SOC stock changes for the period from 1975 to 2010.
-
 ## SOC distribution and depletion
 
 ```{r caption_SOCmaps, echo=FALSE}
-caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland shows high carbon stocks in high yielding areas. (b): The SOC debt is decreasing over time, meaning net SOC gains on global croplands over the last decades. (c)+(d): Absolute (c) and relative (d) SOC stocks compared to a potential natural state showing different hot spots of SOC dynamics. Whereas the absolute losses might be in temperate dry regions, relative losses are more prominent in tropical moist areas."
+caption_SOCmaps <- "(a): Distribution of total global SOC stocks for the first 30 cm on cropland shows high carbon stocks in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state showing different hot spots of SOC dynamics. Whereas absolute losses ($\DeltaSOC$) are often highest in temperate dry regions, relative losses ($F^\mathrm{SCF}$) are often larger in tropical moist areas. (d): The SOC debt between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the last decades. "
 ```
 
 ```{r SOCmaps, out.width = "18cm", fig.cap = caption_SOCmaps, echo=FALSE, fig.pos="h"}
@@ -13,16 +11,20 @@ caption_SOCmaps <- "(a): Distribution of total global SOC stocks on cropland sho
 knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```
 
-In fig. 1(a) we provide the first world map of SOC on croplands considering real world management data on the global scale. Our spatially explicit results moreover show hot spots of SOC losses as well as gains in two different ways: 
-1. Absolute SOC changes (see fig. 1(c)) indicate areas with high importance for the global SOC emissions. The might be driven by huge relative losses or a high natural stock, from which even small deviations could lead to substantial losses.
-2. To attribute SOC losses to insufficient agricultural management relative SOC changes ($F^{SCF}$, see fig. 1(d)) are a helpful tool. They indicate areas with huge difference in carbon inflows or SOC decay compared to natural vegetation, that might be overcome due to improved agricultural practices.
+In Fig. \@ref(fig:SOCmaps)(a) we provide the first world map of SOC stocks for the first 30 cm on croplands considering historic management data at the global scale for the year 2010. Values ranging between well over $100\unit{t ha^{-1}}$ in northern temperate croplands, to less than $5\unit{t ha^{-1}}$ for arid and semiarid croplands. 
+Our spatially explicit results show hot spots of SOC losses and gains compared to SOC under potential natural vegetation in two different ways: 
+1. Absolute SOC changes $\Delta SOC$ (see Fig. \@ref(fig:SOCmaps)(b)) indicate areas with high importance for the global SOC losses. The might be driven by large relative changes (e.g. in Central Africa) or a high natural stock, from which even small relative deviations could lead to substantial absolute losses (e.g. North-east Asia). In contrast, large net gains of SOC happen primarily in developed countries of the North according to our results. 
+2. Relative SOC changes measured as stock changes factors $F^{SCF}$ (see Fig. \@ref(fig:SOCmaps)(c)) are a helpful tool, to measure the impact of human cropping activities. They indicate areas with large difference in carbon inflows or SOC decay compared to natural vegetation, that may hold potential to be overcome due to improved agricultural practices. Large parts of tropical croplands seem to suffer from low stock changes factors, meaning high relative SOC losses and maybe indicating SOC degradation. Conversely, not only temperate croplands of Central Europe, Japan and western areas of the USA have improved, but presumably irrigated croplands at the border to dry, unsuitable areas worldwide as well.
 
-## Agricultural management effects on SOC emissions and cycling
+Focusing of the temporal dimension of SOC stock changes (see Fig. \@ref(fig:SOCmaps)(c)), global SOC debt has decreased around 15% over the last couple of decades to $22\unit{GtC}$. This leads to a sequestration rate of $0.11\unit{GtC yr^{-1}}$ and considering our estimate of the global SOC stock of $675\unit{GtC}$ in 2010 to $0.2$ per mille per year. 
 
-Global cumulative SOC emissions are decreasing (see fig. 1(c)). Fig. 2 reveals the relative impact of management effects by freezing tillage areas as well as carbon inflows from residues or manure at the level of 1975. Our counterfactual scenarios show that the increasing residue carbon input had the biggest overall effect on SOC stocks. Without changes in management regimes especially in residue inflows to the soil, global cumulative SOC emissions would still grow. The strong effect of carbon residue amounts are also visible in the carbon flow diagram for agricultural production for the year 2010 (see fig. 3)
+## Agricultural management effects on SOC debt
+
+Figure \@ref(fig:SOCscen)(a) reveals the relative impact of management effects by keeping carbon inflows from crop residue returning or manure application constant at the level of 1975 and neglecting the adoption of no-tillage practices. Without changes in management regimes, especially in C inflows from crop residues to the soil, global SOC debt on cropland would be increase at a rate of $0.1\unit{GtC yr^{-1}}$. The constResidue scenario dominates the effect and is only single-off scenario that still losses SOC compared to natural vegetation at a rate of $0.06\unit{GtC yr^{-1}}$. Whereas both the constManure and constTillage scenarios, show only small deviations from the historical values (sequestration rate of $0.09\unit{GtC yr^{-1}}$ for both), the effect of no-tillage gets stronger till 2010. 
+The strong impact of almost doubling C inputs from crop residue biomass over a period of 35 years is visible in Fig. \@ref(fig:SOCscen)(b) as well.
 
 ```{r caption_SOCscen, echo=FALSE}
-caption_SOCscen <- "Global SOC gap in GtC for various stylized management counterfactual scenarios compared to the modeled historical baseline."
+caption_SOCscen <- "(a) Global $\Delta SOC$ in GtC for different scenarios deviating from historical argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes."
 ```
 
 ```{r SOCscen, out.width = "18cm", fig.cap = caption_SOCscen, echo=FALSE, fig.pos="h"}
@@ -30,8 +32,25 @@ caption_SOCscen <- "Global SOC gap in GtC for various stylized management counte
 knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
 ```
 
+The results of the sensitivity analysis concerning the initialization of SOC stocks at the beginning of the spin-up phase are shown in Fig. \@ref(fig:SOcinit). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The $\Delta SOC$ estimation almost halves (from ~26 GtC to ~14 GtC) as well as the decrease in of $\Delta SOC$ for over the last 35 years (from ~4 GtC to ~2.5 GtC) for the Inital-natveg scenario.
+
+```{r caption_SOCinit, echo=FALSE}
+caption_SOCinit <- "Global $\Delta SOC$ for different SOC initialization choices in the start year 1901."
+```
+
+```{r SOCinit, out.width = "18cm", fig.cap = caption_SOCinit, echo=FALSE, fig.pos="H"}
+# All defaults
+knitr::include_graphics("../ResultNotebooks/Output/Images/scenario.png")
+```
+ Figure \@ref(fig:)
+
+
+## Carbon flows in the agricultural system
+
+Figure \@ref(fig:FlowFig) illustrates the carbon flows within the agricultural production system on cropland for the year 2010. 
+
 ```{r caption_FlowFig, echo=FALSE}
-caption_FlowFig <- "Global carbon flows (small numbers) and stocks (bold numbers) within the agricultural system for the year 2010 (in MtC): Most important carbon sources on cropland are crop residues. Note the two numbers on carbon inputs to soil denote carbon applied to the field and carbon entering the soil (difference is decomposed before official counting as soil)."
+caption_FlowFig <- "Global carbon flows (at arrows) and SOC stocks (in boxes) within the agricultural system for the year 2010 (in MtC): Most important carbon sources on cropland are crop residues."
 ```
 
 ```{r FlowFig, out.width = "16cm", fig.cap = caption_FlowFig, echo=FALSE, fig.pos="h"}
@@ -39,5 +58,14 @@ caption_FlowFig <- "Global carbon flows (small numbers) and stocks (bold numbers
 knitr::include_graphics("../ResultNotebooks/Output/Images/OuFlowFig.png")
 ```
 
-\newpage
+<!-- ```{r table2, echo = FALSE}
+# table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
+# knitr::kable(table$comparison_table, "latex", digit=2, 
+#              caption="$F^{SOC}$ in comparison to IPCC Tier 1 default factors: Stock change factors are in good agreement with the default values of the IPCC in general. For the tropical regions the assumptions changed notablly from the guidelines in 2006 to the update in 2019. leaving our results in very good agreement with the old default assumptions. Default assumption are given under the assumption of medium input systems, which, considering the yield gap in mainly developing regions in the tropics, might be an overestimation and decrease $F^{SOC}$ by additional 5-8 percent. Also: modelled $F^{SOC}$ have increased for all climates over time .")
+# ```
+# ```{r table, echo=FALSE}
+# table <- readRDS("../ResultNotebooks/Output/SFC_climatezone.rds")
+# knitr::kable(table$naturalstate_table[3:10,], "latex", digit=2, 
+#              caption="S)
+# ``` -->
 
