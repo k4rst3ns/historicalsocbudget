@@ -1,21 +1,12 @@
+
+
 # Appendix
 
-## table on method subsections to functions within R packages {#append:subsection2mrfunctions}
-
-
-## table on mapping LUH2FAO2MAG {#append:Tableluh2fao2mag}
-
-
-## kcr2kres mapping {#append:Tablekcr2kres}
-
+## map on climate zone used for SCF {#append:climatemap}
 
 ## carbon 2 dry matter {#append:Tablec2dm}
-Litter is coming from LPJmL in carbon units - transformation with 0.44 is done twice reverting the effect of the transformation 
 
 ## closs in AWMS - Table {#append:TableclossAWMS}
-
-
-## map on climate zone used for SCF {#append:climatemap}
 
 
 ## regional SOC stock in GtC from different sources {#append:regcompare}
@@ -29,32 +20,17 @@ captionregSOCtable <- "Modelled as well as data based estimation for global SOC 
 knitr::include_graphics("../ResultNotebooks/Output/Images/reg_comparisonfigure.png")
 ```
 
+with 
+Canada, Australia and New Zealand: CAZ; 
+China: CHA; 
+European Union: EUR; 
+India: IND; 
+Japan: JPN; 
+Latin America: LAM;
+Middle East and north Africa: MEA; 
+non-EU member states: NEU;
+other Asia: OAS; reforming countries: REF; Sub-Saharan Africa:
+SSA; United States: USA.
 
-## global SOC gap in GtC for different initialization choices {#append:initcompare}
+## global SOC debt in GtC for various litter parameterizations {#append:senslitterpnv}
 
-```{r captioninitSOC, echo=FALSE}
-captioninitSOC <- "Global SOC gap in GtC for the first 30 cm of soil for different initialization choices."
-```
-
-```{r initSOC, out.width = "100%", fig.cap = captioninitSOC, echo=FALSE, fig.pos="H"}
-# All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_lu.png")
-```
-
-## more short comings
-
-- Fertilizer interaction is not included here by accounting for additional N supply that would alter C:N ratio of the carbon inputs. Tier 2 steady-state method is neglecting fertilizer application, however we would have fertilizer amounts at hand to include them, if proper representation of fertilizer within the method would be possible to add.
-
-- Pasture dynamics are neglected and treated as natural vegetation, which might be -- looking on pasture degradation due to overgrazing -- oversimplified for some spots, but is inline with assumption on pasture SOC stocks done before (see Tier 1 IPCC). (Note that also manure excreted to as well as tillage on pastures are neglected within this analysis, since we focus purely on cropland dynamics.)
-
-- Irrigated areas are not crop specific and irrigation is not restricted to growing periods (since it is very complex to calculate average growing periods). Crop specific growing periods might be possible using LPJmL data.
-
-- Flooded rice area are not represented correctly as parametrization does not hold true for flooded conditions.
-
-- Non-net/Gross land use transitions are not tracked in this study.
-
-- Within cropland we do not track croparea transitions, but rather look at statistical distributions of the crop functional types. Due to crop rotations and missing data on crop specific distributions, these transitions would be any way rather uncertain.
-
-- The disaggregation of manure to build-up areas (in the case of extensive monogastrics) is leading to a lot of displaced manure (?) that is cut off
-
-- It is known that there are mismatches between FAO statistics and LUH areas. As far as possibles there were harmonized within this study.
