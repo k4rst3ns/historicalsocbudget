@@ -10,19 +10,47 @@ author:
   - given_name: Benjamin Leon
     surname: Bodirsky
     affiliation: 1
-  - given_name: Your
-    surname: Name
+  - given_name: Jan Philipp
+    surname: Dietrich
+    affiliation: 1 
+  - given_name: Marta
+    surname: Dondini
     affiliation: 2
+  - given_name: Jens
+    surname: Heinke
+    affiliation: 1
+  - given_name: Matthias
+    surname: Kuhnert
+    affiliation: 2
+  - given_name: Christoph
+    surname: Müller
+    affiliation: 1 
+  - given_name: Susanne
+    surname: Rolinski
+    affiliation: 1
+  - given_name: Pete
+    surname: Smith
+    affiliation: 2
+  - given_name: Isabelle
+    surname: Weindl
+    affiliation: 1    
+  - given_name: Hermann
+    surname: Lotze-Campen
+    affiliation: 1
   - given_name: Alexander
     surname: Popp
     affiliation: 1
 affiliation:
   - code: 1
-    address: Potsdam-Institut of Climate Impacts Research, Potsdam, Germany
+    address: Potsdam Institute for Climate Impact Research (PIK), Member of the Leibniz Association, P.O. Box 60 12 03, 14412 Potsdam, Germany
   - code: 2
-    address: Your affiliation 
+    address: Institute of Biological & Environmental Sciences, University of Aberdeen, Aberdeen, UK
+  - code: 3
+    address: Humboldt-Universität zu Berlin, Department of Agricultural Economics, Unter den Linden 6, 10099 Berlin, Germany
+    
 abstract: |
-  Soil organic carbon (SOC) is one of larges carbon stocks on Earth. It is three times larger than the vegetation pool and more than twice as big as the atmospheric pool, when looking into the first meter of the earth soil profile. Human cropping activities led and still lead to a depletion of SOC though, which are so far not well represented in global assessments of historic carbon emissions. While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated on the global scale. Here we create a spatial explicit data set for agricultural management on cropland, especially for crop residue and manure management, based on global historic production (FAOSTAT), and land-use (LUH2) data; and combine it with the IPCC Tier 2 approach to create a half degree resolution SOC stock changes on mineral soils. We estimate that due to arable farming soils have lost over 37 GtOC of which 4 GtOC have been regained within the period 1975--2010. We show that, our results on global scale based on Tier 2 IPCC methodology are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the necessity to incorporated better management data in soil models.
+  Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. It is three times larger than the vegetation carbon pool and more than twice as big as the atmospheric carbon pool, when looking into the first meter of the Earth's soil profile. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with the IPCC Tier 2 steady-state soil model to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have around 26 GtC relative to a counterfactual natural state in 1975. Yet, within the period 1975--2010 this SOC debt has been decreasing again by a net quantity of 4 Gt SOC, which can be mainly traced back to an increased input of C in crop residues due to higher crop productivity. We also find that SOC is very sensitive to management decisions such as residue returning indicating the necessity to incorporate better management data in soil model simulations.
+
 bibliography: SOCbudget2.bib
 running:
   title: R Markdown Template for Copernicus
@@ -36,14 +64,17 @@ copyrightstatement: |
   The author's copyright for this publication is transferred to institution/company.
 availability:
   codedata: |
-    Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/. Data used for the output can be found under <something-with-zenodo>.  
+  We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons (management related functions),  github.com/pik-piam/mrsoil (soil dynamic related functions) and  github.com/pik-piam/mrvalidation (validation data), which are both based on the MADRaT package (github.com/pik-piam/madrat), a framework which aims to improve reproducibility and transparency in data processing. Model results are accessable under (zenode_link). Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
 authorcontribution: |
-  Karstens wrote code and paper build on work of Bodirsky (and <here_could_be_your_names>). 
-  Bodirsky, <here_could_be_your_names> and Popp revised paper.
+  KK wrote code and paper build on work of BLB, IW. 
+  JPD revised and improved the model code. 
+  BB, CM, MK, IW, JH, SR, MD, SM, HLC, AP revised paper.
 disclaimer: |
   We like Copernicus.
 acknowledgements: |
-  Thanks to the rticles contributors!
+  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors. 
+appendix: |
+  
 output:
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
@@ -75,6 +106,7 @@ output:
 ```{r child = 'conclusion.Rmd'}
 ```
 \newpage
+
 
 ```{r child = 'appendix.Rmd'}
 ```
