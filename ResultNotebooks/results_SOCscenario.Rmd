@@ -26,12 +26,13 @@ scenarios    <- c("histManagement","constManagement-1975", "constTillage-mixedti
                  "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
                  "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
 
-# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
+# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"), 
+#       exdir="Data/histManagement", extras="--keep-newer-files ")
 # 
-for(item in scenarios[10:11]){
-   untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
-   files=filesNeeded, exdir=paste0("Data/", item), extras="--keep-newer-files ")
-}
+# for(item in scenarios){
+#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+#    files=filesNeeded, exdir=paste0("Data/", item), extras="--keep-newer-files ")
+# }
 
 outputdir <- "Output/"
 
@@ -64,6 +65,7 @@ saveRDS(mbind(add_dimension(collapseNames(glo_SOCStock[,,"actualstate"]), dim=3.
 ```{r Carbon inputs (glo)}
 
 CarbonInput  <- read.magpie(paste0("Data/histManagement/CarbonInput.rds"))
+Landuse      <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
 glo_SOCInput <- collapseNames(dimSums(CarbonInput[,,"totalC"] * Landuse, dim=c(1)))
 
 ci2plot <- c('Above Ground Residues'="ag.crop",          
@@ -82,7 +84,7 @@ glo_SOCInput <- toolAggregate(glo_SOCInput, rel=data.frame(from=ci2plot,to=names
 
 ```{r Plot Management Scenarios}
 
-readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))
+glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
 
 manage_scen <-  c(histManagement   = "histManagement",
                   constTillage     = "constTillage-mixedtill", 
@@ -105,7 +107,7 @@ breaks <- c(-22, -24,- 26, -28, -30)
 
 hSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
-        y = "Global SOC debt\n in GtC",
+        y = expression(paste('Global \u0394SOC in GtC')),
         color="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous(limits=limits, breaks=breaks) +
@@ -136,7 +138,7 @@ hSOCinput <- ggplot(data= as.data.frame(glo_SOCInput[,seq(1975,2010,1),c(3:4,2,1
 
 vSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1974,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
-        y = "Global SOC debt in GtC",
+        y = expression(paste('Global \u0394SOC in GtC')),
         color="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous(limits = limits,
@@ -176,7 +178,6 @@ vgrid <- plot_grid(plot_grid(vSOCemis  + theme(legend.position = "none") ,
                              label_fontface = "plain", label_size = 10, align="v"),
                    align="h")
                    
-
 hgrid
 vgrid
 
@@ -214,7 +215,7 @@ breaks <- c(-10, -15,- 20, -25, -30)
 initSOCemis <- ggplot() + geom_path(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),]), 
                                     aes(x = Year, y = Value, group=interaction(Data1,Data2), linetype=Data1, color=Data2)) +
   labs( x = "Year", 
-        y = "Global SOC debt\n in GtC",
+        y = expression(paste('Global \u0394SOC in GtC')),
         color    ="Initalitzation",
         linetype ="Management") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
@@ -261,7 +262,7 @@ breaks <- c(-18, -22, -26, -30)
 litterSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),litter_scen]), 
                                     aes(x = Year, y = Value, group=Data1, color=Data1, size=Data1)) +
   labs( x = "Year", 
-        y = "Global SOC debt\n in GtC",
+        y = expression(paste('Global \u0394SOC in GtC')),
         color="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous(limits=limits, breaks=breaks) +

@@ -103,11 +103,11 @@ density2plot  <- merge(as.data.frame(cropland_dens), data.frame(magpie_coord, Ce
 
 ```{r grid plot, out.height=800 , out.width=1200}
 
-library("ggplot2")
+library(ggplot2)
 theme_set(theme_bw())
-library("sf")
-library("rnaturalearth")
-library("rnaturalearthdata")
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
 library(RColorBrewer)
 library(sp)
 library(rworldmap)
@@ -150,7 +150,7 @@ squish_trans <- function(from, to, factor) {
 
 SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),])[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
   labs( x = "Year", 
-        y = "Global SOC loss\n in GtC") +
+        y = expression(paste('Global \u0394SOC in GtC'))) +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous(trans = squish_trans(-18,0,10),
                      limits = c(-28,0),
@@ -161,7 +161,7 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2
         axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size)#,
         #plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
         ) +
-  annotate(geom="text", label="SOC debt", size=14, x=factor(1995), y=-20, size = 3) +
+  annotate(geom="text", label="SOC debt", x=factor(1995), y=-20, size = 3) +
   annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -24, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
  
 
@@ -170,7 +170,7 @@ cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
 SOCshare <- ggplot(data = world) + geom_sf() + 
     geom_tile(data = subset(share2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(0,2), colours = cols, 
-                      name = expression(" cropland SOC stock change factor (unitless)"), 
+                      name = expression("cropland SOC stock change factor (unitless)"), 
                       breaks=c(0.3,0.6,0.9,1.1,1.4,1.7,2),
                       labels=c("0     0.3","  0.6", "  0.9","  1.1","  1.4","  1.7","> 2"), na.value = "white",
                       guide = guide_legend(
@@ -201,7 +201,7 @@ SOCshare <- ggplot(data = world) + geom_sf() +
 SOCincrease <- ggplot(data = world) + geom_sf() +
     geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(-100,100), colours = cols, 
-                      name = expression("cropland SOC gap in tons of carbon per hectare"), 
+                      name = expression(paste('croplands \u0394SOC in tons of carbon per hectare')), 
                       values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
                       breaks=c(-50,-20,-10,10,20,50,100),
                       labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
@@ -269,7 +269,7 @@ SOCincrease
 SOCemis
 SOCshare
 
-grid <- plot_grid(SOCdensity, SOCemis, SOCincrease, SOCshare, ncol=2, labels=c("(a)","(b)", "(c)", "(d)"),
+grid <- plot_grid(SOCdensity,SOCincrease, SOCshare, SOCemis,  ncol=2, labels=c("(a)","(b)", "(c)", "(d)"),
                   label_fontface = "plain", label_size = 10)
 grid
 ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid, width = 20, height = 14, dpi = 300, units = "cm")
