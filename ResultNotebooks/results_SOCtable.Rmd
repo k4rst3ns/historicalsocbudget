@@ -12,16 +12,13 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev0.11"
+rev       <- "rev16"
 outputdir <- "Output/"
 
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
 #untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))[,1975:2010,]
-Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))[,1975:2010,]
+SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
 
 ```
 
@@ -31,15 +28,8 @@ library(knitr)
 library(stats)
 library(reshape2)
 
-years             <- intersect(findset("past"), getYears(SoilCarbon))
-
-### calculating climate mask
-koeppen           <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )[,years,]
-koepp2IPCC        <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
-getNames(koeppen)         <- tolower(getNames(koeppen))
-koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
-climateIPCC       <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
-rm(koeppen)
+years             <- findset("past")
+climateIPCC       <- readRDS("Data/histManagement/IPCC_reduced.rds")
   
 ### calculating stock change factors
 SOCDens           <- dimSums(SoilCarbon[,years,c("actualstate","naturalstate")], dim=3.3) 
@@ -53,15 +43,21 @@ getNames(CShare_ipcczone) <- gsub("_", " ", getNames(CShare_ipcczone))
 SCF_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,years,"naturalstate"])), 
                              Year ~ Data1, value.var="Value", row.names=years), row.names = "Year")
 saveRDS(list(SCF_table = SCF_table), paste0(outputdir, "SFC_climatezone.rds"))
- 
-knitr::kable(SCF_table, "latex",digits=2, label="naturalstate_table")
 
 ```
 
 ```{r plot climte map}
 
-magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
-climate2plot <- dimSums(climateIPCC*new.magpie("GLO",NULL,getNames(climateIPCC),c(1:4)), dim=3)
+climateIPCCr       <- readRDS("Data/histManagement/IPCC_reduced.rds")
+climateIPCC        <- readRDS("Data/histManagement/IPCC.rds")
+
+getNames(climateIPCC) <- c( "W-Temp Moist","W-Temp Dry","C-Temp Moist","C-Temp Dry","Polar Moist","Polar Dry","Boreal Moist",
+                            "Boreal Dry","Tropical Montane","Tropical Wet","Tropical Moist", "Tropical Dry")
+
+climateIPCC <- climateIPCC[,,c(5,7,3,1,6,8,4,2,9,11,10,12)]
+
+magpie_coord <- toolGetMapping("magpie_coord.rda", type="cell")
+climate2plot <- dimSums(climateIPCC*new.magpie("GLO",NULL,getNames(climateIPCC),c(1:12)), dim=3)
 climate2plot <- merge(as.data.frame(climate2plot), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
 
 library("ggplot2")
@@ -82,14 +78,19 @@ world         <- ne_countries(scale = "medium", returnclass = "sf")
 data(coastlineWorld)  
 coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
 
-cols          <- colorRampPalette(brewer.pal(4, "RdYlBu"))(4)
+blucols          <- brewer.pal(9, "Blues")[2:5]
+viocols          <- brewer.pal(9, "Purples")[6:9]
+redcols          <- brewer.pal(9, "Reds")[6:8]
+orgcols          <- brewer.pal(9, "Oranges")[3]
+cols <- c(blucols,viocols,redcols,orgcols)
+
 
 ClimateZones <- ggplot(data = world) + geom_sf() +
-    geom_tile(data = subset(climate2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = factor(Value))) +
-    scale_fill_manual(name = expression("climate zones"), 
+    geom_tile(data = subset(climate2plot, select=c("lon","lat","Value")), aes(x = lon, y = lat, fill = factor(Value))) +
+    scale_fill_manual(name = "", 
                       values = cols, na.value = "white",
-                      breaks= c(1,2,3,4),
-                      labels = gsub("_", " ", getNames(climateIPCC)),
+                      breaks= c(1,2,3,4,5,6,7,8,9,10,11,12),
+                      labels = getNames(climateIPCC),
                       guide = guide_legend(
                         title.theme=element_text(size=legend_size),
                         direction = "horizontal",
@@ -104,6 +105,7 @@ ClimateZones <- ggplot(data = world) + geom_sf() +
                         keyheight = 0.5,
                         keywidth  = 2
                       )) +
+   scale_color_manual(values=cols) +
     theme(legend.position="bottom",
           axis.title.x = element_blank(), 
           axis.title.y = element_blank(),
@@ -111,9 +113,9 @@ ClimateZones <- ggplot(data = world) + geom_sf() +
           rect=element_blank(),
           panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
           plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
-          )
+          ) + guides(fill=guide_legend(nrow=2,byrow=FALSE))
 ClimateZones 
-ggsave(paste0(outputdir,"/climatezones.png"), plot=ClimateZones , width = 10, height = 7, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"/Images/climatezones.png"), plot=ClimateZones , width = 20, height = 14, dpi = 300, units = "cm")
 ```
 
 
@@ -130,7 +132,7 @@ library(luplot)
 library(reshape2)
 
 MShare_ipcc <- LShare_ipcc <-  HShare_ipcc <- new.magpie("GLO",NULL,outer(c("IPCC2006","IPCC2019"),
-                                                                          unique(koepp2IPCC$ipcc_reduced), paste, sep="."))
+                                                                          getNames(climateIPCC), paste, sep="."))
 
 MShare_ipcc <- add_dimension(MShare_ipcc, dim=3.2, nm="medium.invariant", add="input.year")
 LShare_ipcc <- add_dimension(LShare_ipcc, dim=3.2, nm="low.invariant",    add="input.year")

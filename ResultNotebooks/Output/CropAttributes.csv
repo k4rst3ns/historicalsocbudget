@@ -1,0 +1,29 @@
+,,Harvested Organs,,,Above-ground Residues,,,Below-ground Residues,,Allometric coefficients,,
+Crop code,Crop Types,nr/dm,wm/dm,c/dm,nr/dm,wm/dm,c/dm,nr/dm,c/dm,HI^area,HI^prod,RS
+tece,Temperate cereals,0.0217,1.14,0.42,0.0074,1.11,0.42,0.0098,0.38,0.58,1.36,0.24
+maiz,Maize,0.016,1.14,0.42,0.0088,1.18,0.42,0.007,0.38,0.61,1.03,0.22
+trce,Tropical cereals,0.0163,1.14,0.42,0.007,1.18,0.42,0.006,0.38,0.79,1.06,0.22
+rice_pro,Rice,0.0128,1.15,0.42,0.007,1.11,0.42,0.009,0.38,2.46,0.95,0.16
+soybean,Soybean,0.0629,1.13,0.42,0.008,1.11,0.42,0.008,0.38,1.35,0.93,0.19
+rapeseed,Other oil crops (incl rapeseed),0.0334,1.08,0.42,0.0081,1.11,0.42,0.0081,0.38,0,1.86,0.22
+groundnut,Groundnuts,0.0299,1.06,0.42,0.0224,1.11,0.42,0.008,0.38,1.54,1.07,0.19
+sunflower,Sunflower,0.0216,1.08,0.42,0.008,1.11,0.42,0.008,0.38,0,1.86,0.22
+oilpalm,Oilpalms,0.0027,1.01,0.49,0.0052,1.11,0.48,0.0053,0.47,0,1.86,0.24
+puls_pro,Pulses,0.0421,1.1,0.42,0.0105,1.16,0.42,0.008,0.38,0.79,0.89,0.19
+potato,Potatoes,0.0144,4.55,0.42,0.0133,6.67,0.42,0.014,0.38,1.06,0.1,0.2
+cassav_sp,Tropical roots,0.0053,2.95,0.42,0.0101,6.67,0.42,0.014,0.38,0,0.85,0.2
+sugr_cane,Sugar beet,0.0024,3.7,0.42,0.008,3.82,0.42,0.008,0.38,0,0.67,0.07
+sugr_beet,Sugar beet,0.0056,4.17,0.42,0.0176,5,0.42,0.014,0.38,0,0.54,0.2
+others,Fruits Vegetables Nuts,0.0267,5.49,0.42,0.0081,1.88,0.42,0.007,0.38,0,0.39,0.22
+foddr,Forage,0.0201,4.29,0.42,0.0192,4.1,0.42,0.0141,0.38,0,0.28,0.45
+cottn_pro,Cotton seed,0.0365,1.09,0.42,0.0093,1.18,0.42,0.007,0.38,0,1.48,0.13
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+nr/dm,nitrogen to dry matter ratio,,,,,,,,,,,
+wm/dm,wet matter to dry matter ratio,,,,,,,,,,,
+c/dm,carbon to dry matter ratio,,,,,,,,,,,
+HI^area,harvest index per area,,,,,,,,,,,
+HI^prod,harvest index per production,,,,,,,,,,,
+RS,root:shoot ratio,,,,,,,,,,,

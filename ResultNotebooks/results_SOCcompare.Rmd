@@ -7,17 +7,10 @@ output:
 ---
 
 ```{r load}
-library(mrcommons)
-library(mrsoil)
-library(magpiesets)
+library(magclass)
+library(madrat)
 
-rev       <- "rev0.11"
 outputdir <- "Output/"
-
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev,"histManagement_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
 SoilCarbon <- read.magpie("Data/histManagement/SoilCarbon.rds")
 Landuse    <- read.magpie("Data/histManagement/Landuse.rds")
@@ -31,42 +24,30 @@ Calculate global carbon stocks
 
 SoilCarbon[,,c("naturalstate.crop")] <- SoilCarbon[,,c("naturalstate.natveg")]
 SOCStock     <- dimSums(dimSums(SoilCarbon[,,c("naturalstate","actualstate")], dim=3.3)* Landuse, dim=3.2)
-glo_SOCStock <- dimSums(SOCStock, dim=1) 
-cell2iso     <- toolGetMapping("CountryToCellMapping.csv", type = "cell")
-iso_SOCStock <- toolCountryFill(toolAggregate(SOCStock, rel=cell2iso, from="celliso", to="iso", dim=1), fill=0)
-iso2reg      <- read.csv2("Data/histManagement/regionmappingH12.csv")
-reg_SOCStock <- toolAggregate(iso_SOCStock, rel=iso2reg, from="CountryCode", to="RegionCode")
-```
-
-Load validation data:
-
-```{r Validation Stocks}
-
-library(mrvalidation)
-
-  LPJ_IPCC   <- calcOutput("ValidCarbonStocks", datasource = "LPJ_IPCC2006", aggregate="REG+GLO", try=TRUE)
-  WISE       <- calcOutput("ValidCarbonStocks", datasource = "WISE", aggregate="REG+GLO", try=TRUE)
-  GSOC       <- calcOutput("ValidCarbonStocks", datasource = "GSOC", aggregate="REG+GLO", try=TRUE)
-  SoilGrids  <- calcOutput("ValidCarbonStocks", datasource = "SoilGrids", aggregate="REG+GLO", try=TRUE)
-  LPJmL4     <- calcOutput("ValidCarbonStocks", datasource = "LPJmL4Paper", aggregate="REG+GLO", try=TRUE)
-  
+cell2reg     <- read.csv("Data/histManagement/ClimateZoneMapping.csv")
+reg_SOCStock <- toolAggregate(SOCStock, rel=cell2reg, from="cell", to="IPCC")
 ```
 
 
 ```{r table glo soc stocks}
 
+  WISE       <- readRDS("Data/histManagement/WISE.rds")
+  GSOC       <- readRDS("Data/histManagement/GSOC.rds")
+  SoilGrids  <- readRDS("Data/histManagement/SoilGrids.rds")
+  LPJmL4     <- readRDS("Data/histManagement/LPJmL4.rds")
+
 library(knitr)
 library(stats)
-library(luplot)
 library(reshape2)
 
-SOCStock <- mbind(glo_SOCStock, reg_SOCStock)
-glo_SOC  <- mbind(setNames(SOCStock[,"y2010","actualstate"],"This Study"),
+SOCStock <- reg_SOCStock
+reg_SOC  <- mbind(setNames(SOCStock[,"y2010","actualstate"],"This Study"),
                   setNames(SOCStock[,"y2010","naturalstate"],"This Study (PNV)"),
                   setNames(LPJmL4[,"y2010",], "LPJmL4Paper"),
                   setYears(setNames(WISE[,1,],"WISE"), "y2010"),
                   setYears(setNames(SoilGrids[,1,],"SoilGrids"),"y2010"),
                   setYears(setNames(GSOC[,1,],"GSOC"),"y2010"))
+glo_SOC <- mbind(setCells(dimSums(reg_SOC, dim=1),"GLO"), reg_SOC)
 
 #print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
 
@@ -74,22 +55,24 @@ comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(glo_SOC/1000))
                            Data1 ~ Region, value.var="Value", 
                             row.names=levels(as.data.frame(glo_SOC)$Data1)))
 
-saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"gloSOC_comparison.rds"))
+comparison_table$Year <- "2010"
+
+saveRDS(object = comparison_table, paste0(outputdir,"gloSOC_comparison.rds"))
 
 
 ```
 
 ```{r kable2image}
-library(kableExtra)
-
-table <- readRDS("Output/gloSOC_comparison.rds")
-colnames(table[[1]])[1] <- "Model/Database"
-colnames(table[[1]])[5] <- "Global SOC in GtC"
-save_kable(kable_styling(kable(table$comparison_table[c(1,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
-         file="Output/Images/TableSOC_comparison.png")
-
-save_kable(kable_styling(kable(table$comparison_table[setdiff(1:13,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
-         file="Output/Images/TableRegSOC_comparison.png")
+# library(kableExtra)
+# 
+# table <- readRDS("Output/gloSOC_comparison.rds")
+# colnames(table)[1] <- "Model/Database"
+# colnames(table)[6] <- "Global SOC in GtC"
+# save_kable(kable_styling(kable(table$comparison_table[c(1,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
+#          file="Output/Images/TableSOC_comparison.png")
+# 
+# save_kable(kable_styling(kable(table$comparison_table[setdiff(1:13,5)], "latex", digit=2), latex_options = c("striped", "scale_down")), 
+#          file="Output/Images/TableRegSOC_comparison.png")
 
 ```
 
@@ -98,32 +81,45 @@ Plot regional stocks
 ```{r point plot reg stock, out.width=800, out.height=600}
 library(ggplot2)
 
-supp.labs <- getNames(glo_SOC["GLO",,invert=TRUE])
-names(supp.labs) <- c("OJ", "VC")
+table    <- readRDS("Output/gloSOC_comparison.rds")
+leg_name <- ""
 
+names(table) <- c("Data1","Boreal Dry", "Boreal Moist", "C-Temp Dry", "C-Temp Moist","GLO","Polar Dry", "Polar Moist",
+                  "Tropical Dry", "Tropical Moist", "Tropical Montane", "Tropical Wet", "W-Temp Dry", "W-Temp Moist", "Year")
+table        <- table[,c(1,15,6,7,8,2,3,4,5,13,14,9,10,11,12)]
 
-leg_name <- "Data Source"
+cols   <- c("#000000", "#E69F00", "#56B4E9", "#009E73", 
+                       "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[c(7,3,1,4,6,8)]
 
-glob <- ggplot(data = as.data.frame(glo_SOC["GLO",,][,"y2010",]/1000), aes(Year,Value, group=Data1)) + 
+glob <- ggplot(data = melt(subset(table, select =c(Data1, GLO, Year))), aes(x=Year,y=value, group=Data1)) + 
   geom_point(aes(colour=Data1, size=Data1, shape=Data1)) + 
-  scale_size_manual(values=c(4,2,2,2,2)) + 
-  scale_shape_manual(values=c(19,6,2,5,0)) +
+  scale_size_manual(values=c(4,2,2,2,2,2)) + 
+  scale_shape_manual(values=c(19,16,6,2,5,0)) +
+  scale_color_manual(values = cols) +
   labs(color  = leg_name, size = leg_name, shape = leg_name) +
-  xlab("") + ylab("SOC (0-30cm) in GtC")
+  xlab("") + ylab("SOC (0-30cm) in GtC") +
+  theme(axis.ticks.x=element_blank(),
+        axis.text.x=element_blank(), 
+        legend.position="right") + guides(fill=guide_legend(ncol=1,byrow=TRUE))
+        #legend.position="bottom") + guides(fill=guide_legend(nrow=2,byrow=TRUE))
 
-comp <- ggplot(data = as.data.frame(glo_SOC["GLO",,invert=TRUE][,"y2010",]/1000), aes(Year,Value, group=Data1)) + 
+
+comp <- ggplot(data = melt(subset(table, select=-GLO)), aes(x=Year,y=value, group=Data1)) + 
   geom_point(aes(colour=Data1, size=Data1, shape=Data1)) + 
-  facet_wrap(~ Region, scales="free", drop=TRUE) + 
-  scale_size_manual(values=c(4,2,2,2,2)) + 
-  scale_shape_manual(values=c(19,6,2,5,0)) +
+  facet_wrap(~ variable, scales="free", drop=TRUE, labeller = label_wrap_gen(width=8)) + 
+  scale_size_manual(values=c(4,2,2,2,2,2)) + 
+  scale_shape_manual(values=c(19,16,6,2,5,0)) +
+  scale_color_manual(values = cols) +
   labs(color  = leg_name, size = leg_name, shape = leg_name) +
-  xlab("") + ylab("SOC (0-30cm) in GtC")
+  xlab("") + ylab("SOC (0-30cm) in GtC") +
+  theme(axis.ticks.x=element_blank(),
+        axis.text.x=element_blank())
 
 glob
 comp
 
-ggsave(paste0(outputdir,"/glo_comparisonfigure.png"), plot=glob, height=6, width=3, units="cm")
-ggsave(paste0(outputdir,"/reg_comparisonfigure.png"), plot=comp)
+ggsave(paste0(outputdir,"/Images/glo_comparisonfigure.png"), plot=glob, height=8, width=8, units="cm", dpi = 300)
+ggsave(paste0(outputdir,"/Images/reg_comparisonfigure.png"), plot=comp, height=10, width=14, units="cm", dpi = 300)
 
 ```
 

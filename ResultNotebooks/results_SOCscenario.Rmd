@@ -12,21 +12,17 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev <- "rev0.11"
-
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-
-filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
-
-scenarios    <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
+rev         <- "rev16"
+scenarios   <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
                   "constManagement2-1975", "constResrate-1975", "constYield-1975",
                  "Initial-natveg", "Initial-natveg_constManagement-1975", "Initial-natveg_constManagement2-1975", 
                  "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
                  "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
 
-# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"), 
+# filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
+# setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+# 
+# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
 #       exdir="Data/histManagement", extras="--keep-newer-files ")
 # 
 # for(item in scenarios){
@@ -38,7 +34,6 @@ outputdir <- "Output/"
 
 ```
 
-Calc global numbers
 
 ```{r Load data and calc globals}
 
