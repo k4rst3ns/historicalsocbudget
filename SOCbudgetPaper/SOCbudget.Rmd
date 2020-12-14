@@ -10,9 +10,12 @@ author:
   - given_name: Benjamin Leon
     surname: Bodirsky
     affiliation: 1
+    email: bodirsky@pik-potsdam.de
+    orcid: https://orcid.org/0000-0002-8242-6712
   - given_name: Jan Philipp
     surname: Dietrich
     affiliation: 1 
+    orcid: https://orcid.org/0000-0002-4309-6431
   - given_name: Marta
     surname: Dondini
     affiliation: 2
@@ -25,6 +28,7 @@ author:
   - given_name: Christoph
     surname: Müller
     affiliation: 1 
+    orcid: https://orcid.org/0000-0002-9491-3550
   - given_name: Susanne
     surname: Rolinski
     affiliation: 1
@@ -33,7 +37,8 @@ author:
     affiliation: 2
   - given_name: Isabelle
     surname: Weindl
-    affiliation: 1    
+    affiliation: 1
+    orcid: https://orcid.org/0000-0002-7651-6930    
   - given_name: Hermann
     surname: Lotze-Campen
     affiliation: 1
@@ -47,8 +52,10 @@ affiliation:
     address: Institute of Biological & Environmental Sciences, University of Aberdeen, Aberdeen, UK
   - code: 3
     address: Humboldt-Universität zu Berlin, Department of Agricultural Economics, Unter den Linden 6, 10099 Berlin, Germany
+    
 abstract: |
-  Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. It is three times larger than the vegetation carbon pool and more than twice as big as the atmospheric carbon pool, when looking into the first meter of the Earth's soil profile. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with the IPCC Tier 2 steady-state soil model to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have around 26 GtC relative to a counterfactual natural state in 1975. Yet, within the period 1975--2010 this SOC debt has been decreasing again by a net quantity of 4 Gt SOC, which can be mainly traced back to an increased input of C in crop residues due to higher crop productivity. We also find that SOC is very sensitive to management decisions such as residue returning indicating the necessity to incorporate better management data in soil model simulations.
+  Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. It is three times larger than the vegetation carbon pool and more than twice as big as the atmospheric carbon pool, when looking into the first meter of the Earth's soil profile. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with the IPCC Tier 2 steady-state soil model to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around 26 GtC relative to a counterfactual natural state in 1975. Yet, within the period 1975--2010 this SOC debt has been decreasing again by a net quantity of 4 Gt SOC, which can be mainly traced back to an increased input of C in crop residues due to higher crop productivity. We also find that SOC is very sensitive to management decisions such as residue returning indicating the necessity to incorporate better management data in soil model simulations.
+
 bibliography: SOCbudget.bib
 running:
   title: R Markdown Template for Copernicus
@@ -61,16 +68,15 @@ algorithms: true
 copyrightstatement: |
   The author's copyright for this publication is transferred to institution/company.
 availability:
-  codedata: |
-   We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons (management related functions), github.com/pik-piam/mrsoil (soil dynamic related functions) and  github.com/pik-piam/mrvalidation (validation data), which are both based on the MADRaT package (github.com/pik-piam/madrat), a framework which aims to improve reproducibility and transparency in data processing. Model results are accessable under (zenode_link). Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
+ codedata: |
+  We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons (management related functions),  github.com/pik-piam/mrsoil (soil dynamic related functions) and  github.com/pik-piam/mrvalidation (validation data), which are both based on the MADRaT package (github.com/pik-piam/madrat), a framework which aims to improve reproducibility and transparency in data processing. Model results are accessible under (zenode_link). Software code for paper and result preparation can be found under www.github.com/k4rst3ns/historicalsocmanegement (zenodo_link).
 authorcontribution: |
-  KK wrote code and paper build on work of BLB, IW. 
-  JPD revised and improved the model code. 
-  BB, CM, MK, IW, JH, SR, MD, SM, HLC, AP revised paper.
-disclaimer: |
-  We like Copernicus.
+  KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM, and  MK, JS, SR and IW. All authors discussed the results and commented on the manuscript.
+  
 acknowledgements: |
   Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors. 
+appendix: |
+  
 output:
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
