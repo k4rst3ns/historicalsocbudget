@@ -73,7 +73,8 @@ authorcontribution: |
   KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback. All authors discussed the results and commented on the manuscript.
   
 acknowledgements: |
-  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors. 
+  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors as well. The authors thank for the data provided by FAOSTAT and LUH2v2. The work of Kristine Karstens was funded by the DFG Priority Program “Climate Engineering: Risks, Challenges, Opportunities?” (SPP 1689) and specifically the CEMICS2 project (grant no. ED78/3-2). The research leading to these results has received funding from the European Union’s Horizon 2020 research and innovation program under grant agreement no. 776479 (COACCH) and . This work was also supported by    funded by the German Federal Ministry of Education and Research (BMBF).
+  
 appendix: |
 
   \section{Figures and tables in appendices}

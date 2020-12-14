@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 06:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 21:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1077,14 +1077,14 @@ File: ../ResultNotebooks/Output/Images/scenario_init.png Graphic file (type png
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_init.png  us
 ed on input line 452.
 (pdftex.def)             Requested size: 284.52756pt x 170.57239pt.
-<../ResultNotebooks/Output/Images/CarbonBudget.png, id=405, 680.81625pt x 736.1
-1375pt>
+<../ResultNotebooks/Output/Images/CarbonBudget.png, id=405, 680.81625pt x 647.9
+6625pt>
 File: ../ResultNotebooks/Output/Images/CarbonBudget.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/CarbonBudget.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/CarbonBudget.png  use
 d on input line 461.
-(pdftex.def)             Requested size: 455.24408pt x 492.21646pt.
+(pdftex.def)             Requested size: 455.24408pt x 433.27495pt.
 [14 <../ResultNotebooks/Output/Images/scenario_horiz.png (PNG copy)>] [15 <../R
 esultNotebooks/Output/Images/scenario_init.png (PNG copy)>] [16 <../ResultNoteb
 ooks/Output/Images/CarbonBudget.png>] [17] [18]
@@ -1237,7 +1237,7 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (28 pages, 2061891 bytes).
+Output written on SOCbudget.pdf (28 pages, 2054836 bytes).
 PDF statistics:
  771 PDF objects out of 1000 (max. 8388607)
  705 compressed objects within 8 object streams
