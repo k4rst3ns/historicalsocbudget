@@ -112,7 +112,7 @@ TotalSOCBudget    <- mbind(TotalSOCBudget,
                            setNames(CropBiomassTot, "crop_prod"))
 
 LivstCropLoss     <- CropFEED - ManureExcretedTot - LivstCropHANPP 
-CropPRIMLoss      <- CropPRIM + ResPRIM + LivstCropHANPP - dimSums(grepSpaceTimeC(FAOmassbalance[,,c(kcr,kli,kres)][,,"other_util"]), dim=3) # only material use is not re-emitted
+CropPRIMLoss      <- CropPRIM + ResPRIM + LivstCropHANPP # assume verything gets re-emitted at the end
 
 TotalSOCBudget    <- mbind(TotalSOCBudget,
                            setNames(LivstCropLoss, "livst_loss"),
@@ -158,7 +158,7 @@ SOCLoss           <- SOCPrev - SOCtot[,,"crop"] + SOCtransfer + SOCIn
 TotalSOCBudget    <- mbind(TotalSOCBudget,
                            setNames(SOCLoss, "soc_decay"))
 
-write.magpie(TotalSOCBudget, paste0(outputdir,"TotalSOCBudget.cs3"))
+write.csv(as.data.frame(TotalSOCBudget), paste0(outputdir,"TotalSOCBudget.csv"))
 
 ```
 

@@ -34,11 +34,11 @@
      inkscape:measure-end="0,0"
      inkscape:measure-start="0,0"
      showgrid="true"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      inkscape:document-units="mm"
-     inkscape:cy="388.26965"
-     inkscape:cx="136.21571"
-     inkscape:zoom="2.6109973"
+     inkscape:cy="768.93195"
+     inkscape:cx="239.48535"
+     inkscape:zoom="0.99890431"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -1084,16 +1084,6 @@
            sodipodi:nodetypes="csscccsccsscccsccsscccsccsscccsccsscccscccsccssccsscccsccsscccsccsscccsccssccsscccsccsscccsccsscccsccsscccsccsscccscccsccsscccscccscccscccscccscccsccsscccsccsscccsccsscccsccsscccsccsscccsccsscccsccssccsscccsccssccsscccsccsscccsccsscccsccsscccsccsscccsccsscccsccsscccsccsscccsccsscccscccsccsscccscccscccscccscccscccsccsscccsccsscccccscccccccccccccccccscsccccsscsccscsscccsscccsccccsccccsccccccccccccccccccccccccccsccccccccsccssccscscs" />
       </g>
     </clipPath>
-    <filter
-       id="filter30352"
-       style="color-interpolation-filters:sRGB"
-       inkscape:collect="always">
-      <feBlend
-         id="feBlend30354"
-         in2="BackgroundImage"
-         mode="lighten"
-         inkscape:collect="always" />
-    </filter>
     <marker
        inkscape:stockid="TriangleOutSJQ"
        orient="auto"
@@ -1181,7 +1171,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1201,36 +1191,26 @@
            height="1022.8423"
            width="296.77609"
            id="rect29851" /></flowRegion><flowPara
-         id="flowPara29853" /></flowRoot>    <flowRoot
-       transform="matrix(0.26458333,0,0,0.26458333,0,1.0583333)"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:Symbola;-inkscape-font-specification:Symbola;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter30352)"
-       id="flowRoot29855"
-       xml:space="preserve"><flowRegion
-         id="flowRegion29857"><rect
-           y="49.984631"
-           x="41.410618"
-           height="1127.7491"
-           width="858.58014"
-           id="rect29859" /></flowRegion><flowPara
-         id="flowPara29861" /></flowRoot>    <path
+         id="flowPara29853" /></flowRoot>    <path
        inkscape:connector-curvature="0"
        id="path29740"
-       d="m 126.42608,182.81679 -5.60994,0.0678 V 49.671906"
+       d="m 128.54275,182.81679 12.38172,0.0678 V 49.671906"
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:3.99999976;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLC)"
        sodipodi:nodetypes="ccc" />
     <path
        inkscape:connector-curvature="0"
        id="crop_prod"
-       d="M 86.739426,48.690573 C 86.306969,76.679367 86.306969,76.679367 86.306969,76.679367"
+       d="M 86.739426,47.366793 86.306969,92.025202"
        style="display:inline;opacity:0.95;fill:#eaa361;fill-opacity:1;stroke:#61a8e6;stroke-width:4.02899981;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLCL)"
-       inkscape:label="#crop_prod" />
+       inkscape:label="#crop_prod"
+       sodipodi:nodetypes="cc" />
     <path
        inkscape:label="#SOC_decompose"
        inkscape:transform-center-y="1.3639205"
        inkscape:transform-center-x="10.416346"
        inkscape:connector-curvature="0"
        id="SOC_decompose"
-       d="m 150.41297,237.86877 35.55634,-0.0237 0.18536,-188.615113"
+       d="m 150.41297,237.86877 43.49384,-0.0237 0.18536,-188.615113"
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:3.92575812;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:0.95294118;marker-mid:none;marker-end:url(#TriangleOutSJQ-5-0-06X)"
        sodipodi:nodetypes="ccc"
        inkscape:export-xdpi="264"
@@ -1250,7 +1230,7 @@
        style="display:inline;opacity:0.95" />
     <path
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLC)"
-       d="m 29.579705,78.778042 c 0,-28.923842 0,-28.923842 0,-28.923842"
+       d="m 48.517851,77.7647 c 0,-28.923842 0,-28.923842 0,-28.923842"
        id="humandemand_loss"
        inkscape:connector-curvature="0" />
     <path
@@ -1267,13 +1247,13 @@
     <path
        sodipodi:nodetypes="ccc"
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:4;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLC)"
-       d="m 68.223682,182.81878 -6.572801,0.0655 V 50.040661"
+       d="m 68.223682,182.81878 -33.031134,0.0655 V 50.040661"
        id="path29736"
        inkscape:connector-curvature="0" />
     <path
        inkscape:connector-curvature="0"
        id="path29738"
-       d="m 154.01527,182.28711 -9.7095,0.0683 V 49.472614"
+       d="m 154.01527,182.28711 26.803,0.0683 V 49.472614"
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:4;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLC)"
        sodipodi:nodetypes="ccc" />
     <path
@@ -1689,7 +1669,7 @@
        inkscape:transform-center-x="-0.40402915"
        inkscape:connector-curvature="0"
        id="crop_humandemand"
-       d="m 75.337782,104.68128 -31.758606,-0.0212"
+       d="m 75.337782,100.44792 -13.766939,-0.0212"
        style="display:inline;opacity:0.95;fill:none;stroke:#d45500;stroke-width:3.88703203;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-mid:none;marker-end:url(#TriangleOutSJQ-5-3)"
        sodipodi:nodetypes="cc"
        inkscape:export-xdpi="264"
@@ -1788,7 +1768,7 @@
     </g>
     <g
        id="humandemand"
-       transform="matrix(0.38200936,0,0,0.38200936,-58.307666,127.9485)"
+       transform="matrix(0.30065754,0,0,0.30065754,-23.025521,116.5558)"
        inkscape:export-xdpi="264"
        inkscape:export-ydpi="264"
        inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"
@@ -2015,7 +1995,7 @@
        inkscape:export-xdpi="264"
        sodipodi:nodetypes="ccc"
        style="display:inline;opacity:0.95;fill:none;stroke:#d45500;stroke-width:3.89532351;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-mid:none;marker-end:url(#TriangleOutSJQ-5-0-0)"
-       d="M 107.58384,101.3376 107.54151,90.738748 43.609356,90.435956"
+       d="M 107.58384,101.3376 107.54151,89.151248 61.601023,88.848456"
        id="ag_humandemand2"
        inkscape:connector-curvature="0"
        inkscape:transform-center-x="-4.4565423"
@@ -2060,44 +2040,30 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="50.270832"
-       y="80.570862"
-       id="v_livst_humandemand"
-       inkscape:export-xdpi="264"
-       inkscape:export-ydpi="264"
-       inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"><tspan
-         sodipodi:role="line"
-         id="tspan1440"
-         x="50.270832"
-         y="80.570862"
-         style="stroke-width:0.26458332">47</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="47.095829"
-       y="97.768784"
+       x="62.464783"
+       y="96.383949"
        id="v_ag_humandemand"
        inkscape:export-xdpi="264"
        inkscape:export-ydpi="264"
        inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"><tspan
          sodipodi:role="line"
          id="tspan1444"
-         x="47.095829"
-         y="97.768784"
+         x="62.464783"
+         y="96.383949"
          style="stroke-width:0.26458332">112</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="43.391663"
-       y="112.05627"
+       x="58.737511"
+       y="107.82295"
        id="v_crop_humandemand"
        inkscape:export-xdpi="264"
        inkscape:export-ydpi="264"
        inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"><tspan
          sodipodi:role="line"
          id="tspan1448"
-         x="43.391663"
-         y="112.05627"
+         x="58.737511"
+         y="107.82295"
          style="stroke-width:0.26458332">1032</tspan></text>
     <text
        xml:space="preserve"
@@ -2290,8 +2256,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="46.244003"
-       y="-189.54843"
+       x="47.064205"
+       y="-187.97458"
        id="v_SOC_decompose"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729967"
@@ -2302,8 +2268,8 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6"
-         x="46.244003"
-         y="-189.54843"
+         x="47.064205"
+         y="-187.97458"
          style="stroke-width:0.26458332">840</tspan></text>
     <text
        xml:space="preserve"
@@ -2359,12 +2325,26 @@
        inkscape:transform-center-x="-4.6148144"
        inkscape:connector-curvature="0"
        id="livst_humandemand"
-       d="M 149.58775,99.37944 149.54391,83.744261 43.547125,83.231621"
+       d="m 149.58775,99.37944 -0.0438,-20.397679 -88.005118,-0.51264"
        style="display:inline;opacity:1;fill:none;stroke:#d45500;stroke-width:3.95194054;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;marker-mid:none;marker-end:url(#TriangleOutSJQ-3-6-5-6)"
        sodipodi:nodetypes="ccc"
        inkscape:export-xdpi="264"
        inkscape:export-ydpi="264"
        inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="64.254951"
+       y="85.84024"
+       id="v_livst_humandemand"
+       inkscape:export-xdpi="264"
+       inkscape:export-ydpi="264"
+       inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"><tspan
+         sodipodi:role="line"
+         id="tspan1440"
+         x="64.254951"
+         y="85.84024"
+         style="stroke-width:0.26458332">47</tspan></text>
     <path
        inkscape:connector-curvature="0"
        id="path29520"
@@ -2554,8 +2534,8 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="-62.694721"
-       y="94.523216"
+       x="-62.68615"
+       y="95.052895"
        id="v_ag_prod-8"
        transform="rotate(-89.072814)"
        inkscape:transform-center-x="-3.1729905"
@@ -2566,14 +2546,14 @@
        inkscape:label="#v_ag_prod"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-5-4-4"
-         x="-62.694721"
-         y="94.523216"
+         x="-62.68615"
+         y="95.052895"
          style="stroke-width:0.26458332">4764</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="49.472225"
-       y="-32.908943"
+       x="48.951164"
+       y="-42.111778"
        id="v_SOC_decompose-2"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729929"
@@ -2584,14 +2564,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-3"
-         x="49.472225"
-         y="-32.908943"
-         style="stroke-width:0.26458332">840</tspan></text>
+         x="48.951164"
+         y="-42.111778"
+         style="stroke-width:0.26458332">1191</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="49.166996"
-       y="-64.455978"
+       x="49.94738"
+       y="-28.760443"
        id="v_SOC_decompose-1"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729914"
@@ -2602,14 +2582,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-8"
-         x="49.166996"
-         y="-64.455978"
+         x="49.94738"
+         y="-28.760443"
          style="stroke-width:0.26458332">471</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="48.199032"
-       y="-107.89884"
+       x="48.207596"
+       y="-107.36974"
        id="v_SOC_decompose-7"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729852"
@@ -2620,14 +2600,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-4"
-         x="48.199032"
-         y="-107.89884"
+         x="48.207596"
+         y="-107.36974"
          style="stroke-width:0.26458332">325</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="47.81321"
-       y="-124.21038"
+       x="47.650494"
+       y="-134.26326"
        id="v_SOC_decompose-16"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729903"
@@ -2638,14 +2618,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-38"
-         x="47.81321"
-         y="-124.21038"
+         x="47.650494"
+         y="-134.26326"
          style="stroke-width:0.26458332">718</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="47.524689"
-       y="-138.64824"
+       x="46.946613"
+       y="-174.36267"
        id="v_SOC_decompose-5"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729871"
@@ -2656,14 +2636,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-5"
-         x="47.524689"
-         y="-138.64824"
+         x="46.946613"
+         y="-174.36267"
          style="stroke-width:0.26458332">233</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="47.091431"
-       y="-150.58003"
+       x="47.099995"
+       y="-150.05093"
        id="v_SOC_decompose-0"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1729991"
@@ -2674,14 +2654,14 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-1"
-         x="47.091431"
-         y="-150.58003"
+         x="47.099995"
+         y="-150.05093"
          style="stroke-width:0.26458332">114</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="47.1007"
-       y="-172.06358"
+       x="47.254852"
+       y="-162.53981"
        id="v_SOC_decompose-26"
        transform="rotate(90.927186)"
        inkscape:transform-center-x="3.1730023"
@@ -2692,8 +2672,8 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-48"
-         x="47.1007"
-         y="-172.06358"
+         x="47.254852"
+         y="-162.53981"
          style="stroke-width:0.26458332">238</tspan></text>
     <text
        xml:space="preserve"
@@ -3485,7 +3465,7 @@
          height="1049.4075"
          x="-180.77383"
          y="-5.0188403" /></flowRegion><flowPara
-       id="flowPara1125"></flowPara></flowRoot>  <flowRoot
+       id="flowPara1125" /></flowRoot>  <flowRoot
      xml:space="preserve"
      id="flowRoot1127"
      style="fill:black;fill-opacity:1;stroke:none;font-family:Ubuntu;font-style:normal;font-weight:normal;font-size:16px;line-height:1.25;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:'Ubuntu, Normal';font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal"><flowRegion
@@ -3495,4 +3475,4 @@
          height="998.85205"
          x="-263.50085"
          y="36.344666" /></flowRegion><flowPara
-       id="flowPara1133"></flowPara></flowRoot></svg>
+       id="flowPara1133" /></flowRoot></svg>
