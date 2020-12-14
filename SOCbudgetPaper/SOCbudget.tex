@@ -191,24 +191,24 @@ Carbon inputs for cropland are below- and above-ground residues left or returned
 
   \begin{table*}[h]
   \caption{Type and data sources for carbon inputs and parameterization to different land-use types }
-  \begin{tabular}{p{0.15\textwidth} p{0.20\textwidth} p{0.25\textwidth} p{0.40\textwidth}}
+  \begin{tabular}{p{0.15\textwidth} p{0.20\textwidth} p{0.20\textwidth} p{0.35\textwidth}}
   \tophline
   \textbf{land-use types}   & \textbf{source of carbon inputs} & \textbf{data source} & \textbf{nitrogen and lignin content} \\
   \middlehline
-  \multirow{3}{*}{Cropland} & above-ground residues & \multirow{3}{*}{\begin{minipage}[t]{1\columnwidth}\raggedright
+  \multirow{3}{*}{Cropland} & above-ground residues, & \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
                                                                       \cite{faostat_faostat_2016}, \\
-                                                                      \cite{schaphoff_lpjml4_2018} (LPJmL),\\
+                                                                      \cite{schaphoff_lpjml4_2018},\\
                                                                       \cite{weindl_livestock_2017} \end{minipage}} & 
-                                                      \multirow{3}{*}{\begin{minipage}[t]{1\columnwidth}\raggedright
-                                                                      LG:C generic values according to Table 5.5B\\
-                                                                      in \cite{calvo_buendia_ipcc_2019},\\
-                                                                      crop-type specific N:C-ratios from
-                                                                      \cite{bodirsky_mrcommons_2020}\end{minipage}} \\
-                            & below-ground residues &  &  \\
+                                                      \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
+                                                                      LG:C generic values according to Table 5.5B,\\
+                                                                      5.5C in \cite{calvo_buendia_ipcc_2019},\\
+                                                                      crop-specific N:C from \cite{bodirsky_n2o_2012}
+                                                                      \end{minipage}} \\
+                            & below-ground residues, &  &  \\
                             & manure                &  &  \\ 
                             \hline
-  Natural vegetation        & annual litterfall &  \cite{schaphoff_lpjml4_2018} (LPJmL) 
-                            & \begin{minipage}[t]{0.28\columnwidth}\raggedright\strut 
+  Natural vegetation        & annual litterfall &  \cite{schaphoff_lpjml4_2018}
+                            & \begin{minipage}[t]{0.35\columnwidth}\raggedright\strut 
                                 \cite{calvo_buendia_ipcc_2019} (CENTURY parameterization) \strut \end{minipage}\tabularnewline
  \bottomhline
  \end{tabular}
@@ -386,17 +386,17 @@ To highlight the impact of changing management effects and to assess the sensiti
 \hypertarget{sec:scen_management}{%
 \subsubsection{Management scenarios}\label{sec:scen_management}}
 
-To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for these three drivers: In the \textit{constTillage} scenario the adoption of no-tillage practices are neglected (adoption starts in 1974 according to the available data set). The \textit{constResidues} and the \textit{constManure} scenario assume constant input rates from residues resp. manure (in \(\tfrac{t}{ha}\)) at the level of 1975 onwards. Within the \textit{constResidue} scenario at different effects overlay each other: yields and with them residue biomass increase due to productivity gains; rates of residue left or returned to fields are raising; and shifts of cropping pattern change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios \textit{constTillage}, \textit{constResidues} and \textit{constManure}.
+To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for these three drivers: In the \textit{constTillage} scenario the adoption of no-tillage practices are neglected (adoption starts in 1974 according to the available data set). The \textit{constResidues} and the \textit{constManure} scenario assume constant input rates from residues resp. manure (in \(\unit{t ha^{-1}}\)) at the level of 1975 onwards. Within the \textit{constResidue} scenario at different effects overlay each other: yields and with them residue biomass increase due to productivity gains; rates of residue left or returned to fields are raising; and shifts of cropping pattern change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios \textit{constTillage}, \textit{constResidues} and \textit{constManure}.
 
 \hypertarget{sec:scen_initial}{%
 \subsubsection{Initialization choice}\label{sec:scen_initial}}
 
-As outlined in Sect. \ref{sec:initsoc} we assume landuse-type specific steady-state SOC stocks for the start year 1901 followed by a long spin-up period of 74 years ((\textit{Initial-lu})). As some SOC compartments decay over very long timescales, the initialisation setting might strongly effect the overall outcome of SOC stocks and changes. Thus we conduct counterfactual scenario \textit{Initial-natveg}, initializing the start year with the steady-state SOC under potential natural vegetation for all land-use types. We additionally combined the \textit{Initial-natveg} scenario with the (\textit{constManagement} scenario.
+As outlined in Sect. \ref{sec:initsoc} we assume landuse-type specific steady-state SOC stocks for the start year 1901 followed by a long spin-up period of 74 years (\textit{Initial-lu}). As some SOC compartments decay over very long timescales, the initialisation setting might strongly effect the overall outcome of SOC stocks and changes. Thus we conduct counterfactual scenario \textit{Initial-natveg}, initializing the start year with the steady-state SOC under potential natural vegetation for all land-use types. We additionally combined the \textit{Initial-natveg} scenario with the \textit{constManagement} scenario.
 
 \hypertarget{sec:scenlitterpnv}{%
 \subsubsection{Parameterization of natural litter fall}\label{sec:scenlitterpnv}}
 
-Due to missing information about the litterfall composition, we assume woody potential natural vegetation for the lignin-to-carbon (short LG:C) and nitrogen-to-carbon (short N:C) ratios for all land under natural vegetation. This is however a strong simplification. Therefore, we test the sensitivity of the model for other natural vegetation parameterizations. Perennial grasses (scenario name \textit{LitterPNV-PerennialGrasses}) are given by the IPCC guidelines (\citep{calvo_buendia_ipcc_2019}), but for woody biomass we used the CENTURY configuration file (\citep{century_model_2000}) for trees as parameterization were not given. Whereas LG:C ratios ranges between \(0.09-0.35\) with an average of \(0.24\) (default value) for different tree compartments and different tree types, N:C ratios range between \(0.001-0.05\) with an average of \(0.015\) (default value). We decided to average over all tree compartments and tree types equally for the default values, since we have no data available on tree type distribution and tree compartment composition. We test however a range of different plant types as specified in Table \ref{tab:scenlitterpnv}.
+Due to missing information about the litterfall composition, we assume woody potential natural vegetation for the lignin-to-carbon (short LG:C) and nitrogen-to-carbon (short N:C) ratios for all land under natural vegetation. This is however a strong simplification. Therefore, we test the sensitivity of the model for other natural vegetation parameterizations. Perennial grasses are given by the IPCC guidelines \citep{calvo_buendia_ipcc_2019}, but for woody biomass we used the CENTURY configuration file (\citep{century_model_2000}) for trees as parameterization were not given. Whereas LG:C ratios ranges between \(0.09-0.35\) with an average of \(0.24\) (default value) for different tree compartments and different tree types, N:C ratios range between \(0.001-0.05\) with an average of \(0.015\) (default value). We decided to average over all tree compartments and tree types equally for the default values, since we have no data available on tree type distribution and tree compartment composition. We test however a range of different plant types as specified in Table \ref{tab:scenlitterpnv}.
 
  \begin{table*}[h]
  \caption{Scenarios for sensitivity analysis on litter parameterization}
@@ -466,7 +466,7 @@ Figure \ref{fig:FlowFig} illustrates the carbon flows within the agricultural pr
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-This study shows that spatially explicit and time-variant historical agricultural management data changes estimations of states and trends of global SOC and SOC debt considerably compared to the often used constant management assumptions. This result remains robust to variations of central model parameters and variations in the initialization of SOC stocks. While land cover change has depleted SOC stocks and increased the SOC debt, our analysis points out that the high increases in agricultural productivity may have even led to a net reduction of the SOC debt since 1975.
+This study shows that spatially explicit and time-variant historical agricultural management data changes estimations of states and trends of global SOC and SOC debt (\(\Delta SOC\)) considerably compared to the often used constant management assumptions. This result remains robust to variations of central model parameters and variations in the initialization of SOC stocks. While land cover change has depleted SOC stocks and increased the SOC debt, our analysis points out that the high increases in agricultural productivity may have even led to a net reduction of the SOC debt since 1975.
 
 \hypertarget{soc-debt-and-soc-drivers-in-literature}{%
 \subsection{SOC debt and SOC drivers in literature}\label{soc-debt-and-soc-drivers-in-literature}}
@@ -475,7 +475,7 @@ The evaluation of SOC stock gains and losses, is complex and has several dimensi
 
 According to \citep{sanderman_soil_2017}, the SOC debt since the beginning of human cropping activities has been at around 37 GtC for the first 30 cm of the soil with half of it attributed to SOC depletion on grasslands. Our estimate of 22 GtC in 2010 for cropland debt is higher as \citep{sanderman_soil_2017} estimations. However, there are large uncertainties in modeling SOC at the global scale, and \citep{sanderman_soil_2017} pointed out that their results might be conservatively low compared to experimental results. This suggests that our results are within a plausible range.
 
-Furthermore, \citep{sanderman_soil_2017} modeled historical trends based on agricultural land expansion without considering SOC variations due to time-variant agricultural management. \citep{pugh_simulated_2015} considered management effects like tillage and residue returning in a static way, but neither changes over time nor alignment to observed historical data like yield-levels or no-tillage areas were taken into account. Their study moreover concludes that crop productivity-gains (increasing yield levels by 18\% in their simulations) do not lead to a~substantial decline in SOC debt (less than 1\% change). Historic productivity increases were, however, notably larger. Despite large spatial heterogeneity aggregate yield increase rates are often estimate well above 50\% (\citep{pellegrini_crop_2018}, \citep{ray_recent_2012}, \citep{rudel_agricultural_2009}).
+Furthermore, \citep{sanderman_soil_2017} modeled historical trends based on agricultural land expansion without considering SOC variations due to time-variant agricultural management. \citep{pugh_simulated_2015} considered management effects like tillage and residue returning in a static way, but neither changes over time nor alignment to observed historical data like yield-levels or no-tillage areas were taken into account. Their study moreover concludes that crop productivity-gains (increasing yield levels by 18\% in their simulations) do not lead to a substantial decline in SOC debt (less than 1\% change). Historic productivity increases were, however, notably larger. Despite large spatial heterogeneity aggregate yield increase rates are often estimate well above 50\% (\citep{pellegrini_crop_2018}, \citep{ray_recent_2012}, \citep{rudel_agricultural_2009}).
 
 Our study for the first time uses a dynamic management dataset as driver for SOC dynamics. We show that the moderate global cropland expansion of around 11\% between 1974 and 2010 and the resulting depletion of SOC stocks in converted cropland has been outweighed by improvements in agricultural productivity and practices. This is in contrast to \citep{pugh_simulated_2015} findings of only small effects due to improved practices.
 
@@ -497,7 +497,7 @@ Moreover, the exclusive focus on croplands ignores LUC emission on other land-us
 To validate our modeled SOC stocks and stock changes under management, we compare our results to default IPCC stock changes factors of 2006 (\citep{eggleston_ipcc_2006} and their refinements in 2019 \citep{calvo_buendia_ipcc_2019}). Both estimates are based on measurement data for croplands (see Table \ref{tab:SCFglo}). To allow for comparison, we aggregate our stock change factors to the four IPCC climate zones (Fig. \ref{fig:CLIMzone}).
 
 \% latex table generated in R 3.6.3 by xtable 1.8-4 package
-\% Mon Dec 14 05:34:22 2020
+\% Mon Dec 14 06:14:28 2020
 
 \begin{table}[ht]
 \centering

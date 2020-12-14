@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 05:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 06:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1022,18 +1022,8 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 193.
 
-Overfull \hbox (377.71033pt too wide) in paragraph at lines 201--201
+Overfull \hbox (75.54668pt too wide) in paragraph at lines 201--201
 []|[]| 
- []
-
-
-Overfull \hbox (302.17134pt too wide) in paragraph at lines 206--207
-[]|[]| 
- []
-
-
-Overfull \hbox (47.9923pt too wide) in paragraph at lines 194--216
- []$[]$ 
  []
 
 
@@ -1247,7 +1237,7 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (28 pages, 2062223 bytes).
+Output written on SOCbudget.pdf (28 pages, 2061891 bytes).
 PDF statistics:
  771 PDF objects out of 1000 (max. 8388607)
  705 compressed objects within 8 object streams
