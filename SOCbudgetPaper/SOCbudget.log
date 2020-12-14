@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 03:22
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  13 DEC 2020 16:18
->>>>>>> backup2
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 03:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1022,16 +1018,7 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 8.54997pt on input line 135.
 [1
 
-<<<<<<< HEAD
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
-=======
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-
-Package natbib Warning: Citation `mrcommons_2020' on page 4 undefined on input 
-line 167.
-
-[4]
->>>>>>> backup2
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 193.
 
@@ -1066,11 +1053,7 @@ nput line 399.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [11]
-<<<<<<< HEAD
 <../ResultNotebooks/Output/Images/4panelfigure.png, id=371, 569.0058pt x 398.20
-=======
-<../ResultNotebooks/Output/Images/4panelfigure.png, id=368, 569.0058pt x 398.20
->>>>>>> backup2
 77pt>
 File: ../ResultNotebooks/Output/Images/4panelfigure.png Graphic file (type png)
 
@@ -1087,11 +1070,7 @@ Overfull \hbox (8.53583pt too wide) in paragraph at lines 429--429
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [12]
-<<<<<<< HEAD
 <../ResultNotebooks/Output/Images/scenario_horiz.png, id=393, 426.6339pt x 284.
-=======
-<../ResultNotebooks/Output/Images/scenario_horiz.png, id=390, 426.6339pt x 284.
->>>>>>> backup2
 5029pt>
 File: ../ResultNotebooks/Output/Images/scenario_horiz.png Graphic file (type pn
 g)
@@ -1100,11 +1079,7 @@ Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_horiz.png  u
 sed on input line 446.
 (pdftex.def)             Requested size: 398.33858pt x 265.63551pt.
 [13 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>]
-<<<<<<< HEAD
 <../ResultNotebooks/Output/Images/scenario_init.png, id=403, 284.5029pt x 170.5
-=======
-<../ResultNotebooks/Output/Images/scenario_init.png, id=400, 284.5029pt x 170.5
->>>>>>> backup2
 572pt>
 File: ../ResultNotebooks/Output/Images/scenario_init.png Graphic file (type png
 )
@@ -1112,11 +1087,7 @@ File: ../ResultNotebooks/Output/Images/scenario_init.png Graphic file (type png
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_init.png  us
 ed on input line 452.
 (pdftex.def)             Requested size: 284.52756pt x 170.57239pt.
-<<<<<<< HEAD
 <../ResultNotebooks/Output/Images/CarbonBudget.png, id=405, 755.27625pt x 736.1
-=======
-<../ResultNotebooks/Output/Images/CarbonBudget.png, id=402, 755.27625pt x 736.1
->>>>>>> backup2
 1375pt>
 File: ../ResultNotebooks/Output/Images/CarbonBudget.png Graphic file (type png)
 
@@ -1124,141 +1095,84 @@ File: ../ResultNotebooks/Output/Images/CarbonBudget.png Graphic file (type png)
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/CarbonBudget.png  use
 d on input line 461.
 (pdftex.def)             Requested size: 455.24408pt x 443.7047pt.
-[14 <../ResultNotebooks/Output/Images/scenario_horiz.png (PNG copy)>] [15 <../R
-esultNotebooks/Output/Images/scenario_init.png (PNG copy)>] [16 <../ResultNoteb
-ooks/Output/Images/CarbonBudget.png>] [17]
+[14 <../ResultNotebooks/Output/Images/scenario_horiz.png (PNG copy)>]
 
-<<<<<<< HEAD
-LaTeX Warning: Reference `tab:SCFglo' on page 18 undefined on input line 497.
+Package natbib Warning: Citation `pellegrini_crop_2018' on page 15 undefined on
+ input line 478.
 
-[18]
-<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=523, 227.4096pt 
-=======
-LaTeX Warning: Reference `tab:SCFglo' on page 18 undefined on input line 502.
 
-[18]
-<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=510, 227.4096pt 
->>>>>>> backup2
-x 227.4096pt>
+Package natbib Warning: Citation `rudel_agricultural_2009' on page 15 undefined
+ on input line 478.
+
+[15 <../ResultNotebooks/Output/Images/scenario_init.png (PNG copy)>] [16 <../Re
+sultNotebooks/Output/Images/CarbonBudget.png>] [17] [18]
+<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=518, 284.5029pt 
+x 113.7048pt>
 File: ../ResultNotebooks/Output/Images/glo_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/glo_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/glo_comparisonfigure.
-<<<<<<< HEAD
-png  used on input line 532.
-(pdftex.def)             Requested size: 227.62204pt x 227.62418pt.
+png  used on input line 533.
+(pdftex.def)             Requested size: 227.62204pt x 90.97089pt.
 [19 <../ResultNotebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>] [20
 ]
-
-Package natbib Warning: Citation `karstens_mrcommons_2020' on page 21 undefined
- on input line 561.
+Overfull \hbox (97.13971pt too wide) in paragraph at lines 562--562
+\T1/ptm/m/n/9 Model re-sults are ac-cess-able un-der (zen-ode_link). Soft-ware 
+code for pa-per and re-sult prepar-tion can be found un-der www.github.com/k4rs
+t3ns/historicalsocmanegement. 
+ []
 
 [21]
-<../ResultNotebooks/Output/Images/climatezones.png, id=561, 569.0058pt x 398.20
+<../ResultNotebooks/Output/Images/climatezones.png, id=558, 569.0058pt x 398.20
 77pt>
 File: ../ResultNotebooks/Output/Images/climatezones.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/climatezones.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/climatezones.png  use
-d on input line 575.
+d on input line 576.
 (pdftex.def)             Requested size: 369.88582pt x 258.85623pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 612--612
-=======
-png  used on input line 537.
-(pdftex.def)             Requested size: 227.62204pt x 227.62418pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[19] [20 <../ResultNotebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>
-]
-
-Package natbib Warning: Citation `karstens_mrcommons_2020' on page 21 undefined
- on input line 555.
-
-<../ResultNotebooks/Output/Images/climatezones.png, id=536, 569.0058pt x 398.20
-77pt>
-File: ../ResultNotebooks/Output/Images/climatezones.png Graphic file (type png)
-
-<use ../ResultNotebooks/Output/Images/climatezones.png>
-Package pdftex.def Info: ../ResultNotebooks/Output/Images/climatezones.png  use
-d on input line 569.
-(pdftex.def)             Requested size: 369.88582pt x 258.85623pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 606--606
->>>>>>> backup2
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
 
  []
 
 
-<<<<<<< HEAD
-Overfull \hbox (241.92384pt too wide) in paragraph at lines 583--620
-=======
-Overfull \hbox (241.92384pt too wide) in paragraph at lines 577--614
->>>>>>> backup2
+Overfull \hbox (241.92384pt too wide) in paragraph at lines 584--621
  []$[]$ 
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<<<<<<< HEAD
-<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=570, 398.2077pt 
-=======
-<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=545, 398.2077pt 
->>>>>>> backup2
-x 284.5029pt>
+<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=567, 426.6339pt 
+x 255.8358pt>
 File: ../ResultNotebooks/Output/Images/reg_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/reg_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/reg_comparisonfigure.
-<<<<<<< HEAD
-png  used on input line 625.
-(pdftex.def)             Requested size: 455.24408pt x 325.26567pt.
-<../ResultNotebooks/Output/Images/scenario_litter.png, id=573, 511.9125pt x 170
-=======
-png  used on input line 619.
-(pdftex.def)             Requested size: 455.24408pt x 325.26567pt.
-<../ResultNotebooks/Output/Images/scenario_litter.png, id=548, 511.9125pt x 170
->>>>>>> backup2
+png  used on input line 626.
+(pdftex.def)             Requested size: 455.24408pt x 272.99599pt.
+<../ResultNotebooks/Output/Images/scenario_litter.png, id=570, 511.9125pt x 170
 .5572pt>
 File: ../ResultNotebooks/Output/Images/scenario_litter.png Graphic file (type p
 ng)
 <use ../ResultNotebooks/Output/Images/scenario_litter.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_litter.png  
-<<<<<<< HEAD
-used on input line 631.
+used on input line 632.
 (pdftex.def)             Requested size: 455.24408pt x 151.6757pt.
 
 Package natbib Warning: Citation `century_model_2000' on page 22 undefined on i
-nput line 632.
+nput line 633.
 
 
-Underfull \hbox (badness 1789) in paragraph at lines 632--632
-=======
-used on input line 625.
-(pdftex.def)             Requested size: 455.24408pt x 151.6757pt.
-
-Package natbib Warning: Citation `century_model_2000' on page 21 undefined on i
-nput line 626.
-
-
-Underfull \hbox (badness 1789) in paragraph at lines 626--626
->>>>>>> backup2
+Underfull \hbox (badness 1789) in paragraph at lines 633--633
 []\T1/ptm/b/n/9 Figure A3. \T1/ptm/m/n/9 Global $\OT1/cmr/m/n/9 ^^A\OML/cmm/m/i
 t/9 SOC$ \T1/ptm/m/n/9 for dif-fer-ent lit-ter pa-ram-e-ter-i-za-tion choices: 
 Whereas peren-nial grasses (sce-nario name \T1/ptm/m/it/9 LitterPNV-
  []
 
-<<<<<<< HEAD
-[22 <../ResultNotebooks/Output/Images/climatezones.png (PNG copy)>] [23 <../Res
-ultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] (./SOCbudget.b
-bl [24]
-=======
-[21 <../ResultNotebooks/Output/Images/climatezones.png (PNG copy)>] [22 <../Res
-ultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] [23] (./SOCbud
-get.bbl [24 <../ResultNotebooks/Output/Images/scenario_litter.png (PNG copy)>]
->>>>>>> backup2
+[22 <../ResultNotebooks/Output/Images/climatezones.png (PNG copy)>] (./SOCbudge
+t.bbl [23]
 Underfull \hbox (badness 6978) in paragraph at lines 11--14
 []\T1/ptm/m/n/9 Batjes, N.: To-tal Car-bon and Ni-tro-gen in the Soils of the W
 orld, Eu-ro-pean Jour-nal of Soil Sci-ence, 47, 151--163,
@@ -1270,113 +1184,64 @@ Underfull \hbox (badness 4132) in paragraph at lines 30--35
 -ski, S., Scheif-fele, L., Schmitz, C., and Lotze-Campen, H.:
  []
 
-<<<<<<< HEAD
-[25 <../ResultNotebooks/Output/Images/scenario_litter.png (PNG copy)>] [26]
+[24 <../ResultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] [25
+ <../ResultNotebooks/Output/Images/scenario_litter.png (PNG copy)>] [26]
 Underfull \hbox (badness 1189) in paragraph at lines 227--231
-=======
-[25]
-Underfull \hbox (badness 1189) in paragraph at lines 234--238
->>>>>>> backup2
 []\T1/ptm/m/n/9 Keel, S. G., Leifeld, J., Mayer, J., Taghizadeh-Toosi, A., and 
 Ole-sen, J. E.: Large Un-cer-tainty in Soil Car-bon Mod-elling Re-
  []
 
-<<<<<<< HEAD
 
 Underfull \hbox (badness 5161) in paragraph at lines 233--236
-=======
-[26]
-Underfull \hbox (badness 5161) in paragraph at lines 240--243
->>>>>>> backup2
 []\T1/ptm/m/n/9 Lal, R.: World Crop-land Soils as a Source or Sink for At-mo-sp
 heric Car-bon, vol. 71, pp. 145--191, Aca-demic Press,
  []
 
-<<<<<<< HEAD
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 363--365
-=======
-
-Underfull \hbox (badness 10000) in paragraph at lines 349--351
->>>>>>> backup2
+Underfull \hbox (badness 10000) in paragraph at lines 348--350
 []\T1/ptm/m/n/9 Smil, V.: Ni-tro-gen in Crop Pro-duc-tion: An Ac-count of Globa
 l Flows, Global Bio-geo-chem-i-cal Cy-cles, 13, 647--662,
  []
 
-<<<<<<< HEAD
-[28]
-Underfull \hbox (badness 3601) in paragraph at lines 409--413
-=======
-[27]
-Underfull \hbox (badness 3601) in paragraph at lines 395--399
->>>>>>> backup2
+
+Underfull \hbox (badness 3601) in paragraph at lines 394--398
 []\T1/ptm/m/n/9 Waha, K., Di-et-rich, J. P., Port-mann, F. T., Siebert, S., Tho
 rn-ton, P. K., Bon-deau, A., and Her-rero, M.: Mul-ti-ple Crop-
  []
 
 
-<<<<<<< HEAD
-Underfull \hbox (badness 1259) in paragraph at lines 409--413
-=======
-Underfull \hbox (badness 1259) in paragraph at lines 395--399
->>>>>>> backup2
+Underfull \hbox (badness 1259) in paragraph at lines 394--398
 \T1/ptm/m/n/9 ping Sys-tems of the World and the Po-ten-tial for In-creas-ing C
 rop-ping In-ten-sity, Global En-vi-ron-men-tal Change, 64, 102131,
  []
 
-<<<<<<< HEAD
-) [29]
-
-Package natbib Warning: There were undefined citations.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 689.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 689.
-(./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 689.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 689.
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 689.
- ) 
-Here is how much of TeX's memory you used:
- 11065 strings out of 494847
- 159298 string characters out of 6179080
- 297197 words of memory out of 5000000
- 13991 multiletter control sequences out of 15000+600000
- 52460 words of font info for 85 fonts, out of 8000000 for 9000
- 59 hyphenation exceptions out of 8191
- 43i,17n,40p,1593b,581s stack positions out of 5000i,500n,10000p,200000b,80000s
-=======
 ) [28]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 686.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 686.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 690.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 690.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 686.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 686.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 690.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 690.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 686.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 690.
  ) 
 Here is how much of TeX's memory you used:
- 11061 strings out of 494847
- 159183 string characters out of 6179080
- 297072 words of memory out of 5000000
- 13987 multiletter control sequences out of 15000+600000
+ 11057 strings out of 494847
+ 159083 string characters out of 6179080
+ 297663 words of memory out of 5000000
+ 13986 multiletter control sequences out of 15000+600000
  52460 words of font info for 85 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 43i,17n,40p,1588b,571s stack positions out of 5000i,500n,10000p,200000b,80000s
->>>>>>> backup2
+ 43i,17n,40p,1593b,565s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-<<<<<<< HEAD
 public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
@@ -1390,28 +1255,10 @@ ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type
 1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (29 pages, 2049732 bytes).
+Output written on SOCbudget.pdf (28 pages, 2000310 bytes).
 PDF statistics:
- 773 PDF objects out of 1000 (max. 8388607)
- 706 compressed objects within 8 object streams
-=======
-public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
-/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (28 pages, 2037340 bytes).
-PDF statistics:
- 746 PDF objects out of 1000 (max. 8388607)
- 682 compressed objects within 7 object streams
->>>>>>> backup2
- 169 named destinations out of 1000 (max. 500000)
+ 762 PDF objects out of 1000 (max. 8388607)
+ 697 compressed objects within 7 object streams
+ 166 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

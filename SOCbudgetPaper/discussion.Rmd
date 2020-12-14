@@ -32,7 +32,7 @@ To validate our modeled SOC stocks and stock changes under management, we compar
 ```{r SCFglo, echo=FALSE, results = 'asis'}
 table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
 library(xtable)
-print(xtable(table$comparison_table, digit=2, comment=FALSE, label="#tab:SCFglo", 
+print(xtable(table$comparison_table, digit=2, comment=FALSE, label="tab:SCFglo", 
               caption="$F^{\\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors: Stock change factors are in good agreement with the default values of the IPCC in general. For the tropical regions the assumptions changed notablly from the guidelines in 2006 to the update in 2019. leaving our results in very good agreement with the old default assumptions. Default assumption are given under the assumption of medium input systems, which, considering the yield gap in mainly developing regions in the tropics, might be an overestimation and decrease $F^{\\mathrm{SCF}}$ by additional 5-8 percent. Also modelled $F^{SOC}$ have increased for all climates over time."))
 ```
 

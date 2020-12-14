@@ -201,7 +201,7 @@ SOCshare <- ggplot(data = world) + geom_sf() +
 SOCincrease <- ggplot(data = world) + geom_sf() +
     geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(-100,100), colours = cols, 
-                      name = expression(paste('croplands \u0394SOC in tons of carbon per hectare')), 
+                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare')), 
                       values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
                       breaks=c(-50,-20,-10,10,20,50,100),
                       labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
