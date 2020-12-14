@@ -192,7 +192,7 @@ Land-use transitions are calculated as net area differences of the land-use data
 
 ### Crop and crop residues production {#sec:residues}
 
-Crop production patterns are compiled crop group specific using half-degree yield data from LPJmL [@schaphoff_lpjml4_2018] as well as half-degree cropland patterns (see Sect. \@ref(sec:landuse)). We calibrate cellular yields with a country-level calibration factor for each crop group to meet historical FAOSTAT production [@faostat_faostat_2016]. By using physical cropland areas in combination with harvested areas, we account for multiple cropping systems as well as for fallow land. 
+Crop production patterns are compiled crop group specific using half-degree yield data from LPJmL [@schaphoff_lpjml4_2018] as well as half-degree cropland patterns (see Sect. \@ref(sec:landuse)). We calibrate cellular yields with a country-level calibration factor for each crop group to meet historic FAOSTAT production [@faostat_faostat_2016]. By using physical cropland areas in combination with harvested areas, we account for multiple cropping systems as well as for fallow land. 
 
 Crop residue production and management is based on a revised methodology of [@bodirsky_n2o_2012] and key aspects are explained here given its central role for soil carbon modeling. Starting from harvested crop production ($CP$) estimates and their respective harvested crop area ($CA$), we estimate above-ground ($AGR$) and below-ground ($BGR$) residual biomass using crop group ($cg$) specific harvest index values ($HI$) and root:shoot ratios ($RS$) as follows  
 
