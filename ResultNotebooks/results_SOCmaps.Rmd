@@ -8,20 +8,33 @@ output:
 ```{r load}
 library(mrcommons)
 library(mrvalidation)
-library(mrSOCbudget)
+library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev0.76baseline"
-outputdir <- "Output/Images"
+rev <- "rev0.11"
 
 setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
 setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
 setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
 
+filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
 
-SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
+scenarios    <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
+                  "constManagement2-1975", "constResrate-1975", "constYield-1975",
+                 "Initial-natveg", "Initial-natveg_constManangement-1975", "Initial-natveg_constManangement2-1975", 
+                 "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
+                 "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
+
+# for(item in scenarios){
+#    dir.create(path=paste0("Data/",paste0(rev,item)))
+#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+#    files=filesNeeded, exdir=paste0("Data/", paste0(rev,item)), extras="--keep-newer-files ")
+# }
+
+outputdir <- "Output/Images"
+
+SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
 
 ```
 
@@ -35,9 +48,9 @@ SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
 SOCStock        <- dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2)
 glo_SOCStock    <- dimSums(SOCStock, dim=1) 
 glo_SOCEmission <- (glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
-plot(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCEmission/1000, type="l", xlab="Time", ylab="Global SOC Debt in GtC")
-plot(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCStock[,,"actualstate"])
-lines(getYears(glo_SOCEmission, as.integer = TRUE),glo_SOCStock[,,"naturalstate"])
+
+SoilCarbon <- SoilCarbon[,findset("past"),]
+Landuse    <- Landuse[,findset("past"),]
   
 ```
 
@@ -90,11 +103,11 @@ density2plot  <- merge(as.data.frame(cropland_dens), data.frame(magpie_coord, Ce
 
 ```{r grid plot, out.height=800 , out.width=1200}
 
-library("ggplot2")
+library(ggplot2)
 theme_set(theme_bw())
-library("sf")
-library("rnaturalearth")
-library("rnaturalearthdata")
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
 library(RColorBrewer)
 library(sp)
 library(rworldmap)
@@ -137,19 +150,19 @@ squish_trans <- function(from, to, factor) {
 
 SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),])[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
   labs( x = "Year", 
-        y = "Global SOC gap\n in GtC") +
+        y = expression(paste('Global \u0394SOC in GtC'))) +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(trans = squish_trans(-35,0,15),
-                     limits = c(-45,0),
-                     breaks = c(0, -15, -35, -40, -45)) +
+  scale_y_continuous(trans = squish_trans(-18,0,10),
+                     limits = c(-28,0),
+                     breaks = c(0, -20, -22, -24, -26, -28)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size),
         axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 10, l = 0, unit = "pt")),
         axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size)#,
         #plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
         ) +
-  annotate(geom="text", label="SOC debt", x=factor(1995), y=-35, size = 3) +
-  annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -39, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
+  annotate(geom="text", label="SOC debt", x=factor(1995), y=-20, size = 3) +
+  annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -24, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
  
 
 cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
@@ -157,7 +170,7 @@ cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
 SOCshare <- ggplot(data = world) + geom_sf() + 
     geom_tile(data = subset(share2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(0,2), colours = cols, 
-                      name = expression(" cropland SOC stock change factor (unitless)"), 
+                      name = expression("cropland SOC stock change factor (unitless)"), 
                       breaks=c(0.3,0.6,0.9,1.1,1.4,1.7,2),
                       labels=c("0     0.3","  0.6", "  0.9","  1.1","  1.4","  1.7","> 2"), na.value = "white",
                       guide = guide_legend(
@@ -188,10 +201,10 @@ SOCshare <- ggplot(data = world) + geom_sf() +
 SOCincrease <- ggplot(data = world) + geom_sf() +
     geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(-100,100), colours = cols, 
-                      name = expression("cropland SOC gap in tons of carbon per hectar"), 
+                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare')), 
                       values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
                       breaks=c(-50,-20,-10,10,20,50,100),
-                      labels=c("> -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
                       guide = guide_legend(
                         title.theme=element_text(size=legend_size),
                         direction = "horizontal",
@@ -220,7 +233,7 @@ cols <- colorRampPalette(brewer.pal(9, "YlGn"))(8)[2:8]
 SOCdensity <- ggplot(data = world) + geom_sf() +
     geom_tile(data = subset(density2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
     scale_fill_stepsn(limits=c(0,150), colours = cols, 
-                      name = expression("cropland SOC in tons of carbon per hectar"), 
+                      name = expression("cropland SOC in tons of carbon per hectare"), 
                       values=c(0,5,10,20,40,70,100,150)/150,
                       breaks=c(5,10,20,40,70,100,150),
                       labels=c("0     5","  10","  20","  40","  70","  100"," >150"), na.value = "white",
@@ -256,7 +269,7 @@ SOCincrease
 SOCemis
 SOCshare
 
-grid <- plot_grid(SOCdensity, SOCemis, SOCincrease, SOCshare, ncol=2, labels=c("a","b", "c", "d"),
+grid <- plot_grid(SOCdensity,SOCincrease, SOCshare, SOCemis,  ncol=2, labels=c("(a)","(b)", "(c)", "(d)"),
                   label_fontface = "plain", label_size = 10)
 grid
 ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid, width = 20, height = 14, dpi = 300, units = "cm")

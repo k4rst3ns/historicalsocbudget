@@ -7,48 +7,42 @@ pdf_document: default
 ---
 
 ```{r load}
-library(mrcommons)
-library(mrvalidation)
-library(mrSOCbudget)
+library(magclass)
+library(madrat)
 library(magpiesets)
 
-rev       <- "rev0.72default"
 outputdir <- "Output/Images"
-
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data", extras="--keep-newer-files ")
+revfolder <- "Data/histManagement/"
 
 ```
 
 ```{r load data}
 
-files <- list.files("Data")
+year  <- "y2010"
+years <- c(paste0("y",as.numeric(substring("y2010",2))-1), year)
 
-CarbonInput      <- readRDS("Data/CarbonInput.rds")
-CarbonLitter     <- readRDS("Data/CarbonLitter.rds")
-CarbonManure     <- readRDS("Data/CarbonManure.rds")           
-CarbonResidues   <- readRDS("Data/CarbonResidues.rds")
-CarbonHarvest    <- readRDS("Data/Crop_Harvest.rds")
-SoilCarbonOut    <- readRDS("Data/SoilCarbon.rds")
-SoilCarbonDecay  <- readRDS("Data/SoilDecay.rds")
-SoilCarbonStSt   <- readRDS("Data/SoilSteadyState.rds")
+CarbonInput      <- readRDS(paste0(revfolder,"CarbonInput.rds"))[,year,]
+CarbonLitter     <- readRDS(paste0(revfolder,"CarbonLitter.rds"))[,year,]
+CarbonManure     <- readRDS(paste0(revfolder,"CarbonManure.rds"))[,year,]          
+CarbonResidues   <- readRDS(paste0(revfolder,"CarbonResidues.rds"))[,year,]
+CarbonHarvest    <- readRDS(paste0(revfolder,"Crop_Harvest.rds"))[,year,]
+CarbonVegetation <- readRDS(paste0(revfolder,"CarbonVegetation.rds"))[,years,]
+SoilCarbonOut    <- readRDS(paste0(revfolder,"SoilCarbon.rds"))[,years,]
+CarbonInflow      <- readRDS(paste0(revfolder,"CarbonInflow.rds"))[,years,]
 
-Landuse          <- readRDS("Data/Landuse.rds")
-LanduseChange    <- readRDS("Data/LanduseChange.rds")
+Landuse          <- readRDS(paste0(revfolder,"Landuse.rds"))[,years,]
+LanduseChange    <- readRDS(paste0(revfolder,"LanduseChange.rds"))[,years,]
 
-FAOmassbalance   <- readRDS("Data/FAOmassbalance_ISO.rds" )
-ManureExcreted   <- readRDS("Data/Manure_excreted.rds")
-ManureRecycled   <- readRDS("Data/Manure_recycled.rds")
-ResidueBiomass   <- readRDS("Data/Residue_Biomass.rds")
-ResiduesAgDemand <- readRDS("Data/ResiduesAg_FieldBalance.rds")
+FAOmassbalance   <- readRDS(paste0(revfolder,"FAOmassbalance_ISO.rds"))[,year,"c"]
+ManureExcreted   <- readRDS(paste0(revfolder,"Manure_excreted.rds"))[,year,"c"]
+ManureRecycled   <- readRDS(paste0(revfolder,"Manure_recycled.rds"))[,year,"c"]
+ResidueBiomass   <- readRDS(paste0(revfolder,"Residue_Biomass.rds"))[,year,"c"]
+ResiduesAgDemand <- readRDS(paste0(revfolder,"ResiduesAg_FieldBalance.rds"))[,year,"c"]
 
-```
+grepSpaceTimeC    <- function(x){return(collapseNames(dimSums(x[,year,"c"],dim=1)))}
+grepSpaceTime     <- function(x){return(collapseNames(dimSums(x[,year,],dim=1)))}
 
-```{r globals}
-grepSpaceTime     <- function(x){return(dimSums(x[,"y2010","c"],dim=1))}
-
+TotalSOCBudget    <- NULL 
 
 #Agriculture
 kcr        <- findset("kcr")
@@ -57,31 +51,93 @@ kres       <- findset("kres")
 kExResPast <- setdiff(findset("kall"),c(kres,kli,"pasture","wood","woodfuel","scp","fish"))
 kPrim      <- setdiff(findset("kall"),c(kli,"scp","fish")) 
 
-CropHANPP         <- dimSums(grepSpaceTime(FAOmassbalance[,,kcr][,,c("food","waste","other_util","bioenergy","feed",
+
+CropHANPP         <- dimSums(grepSpaceTimeC(FAOmassbalance[,,kcr][,,c("food","waste","other_util","bioenergy","feed",
                                                                      "milling","refining","extracting","fermentation","distilling")]), dim=3)
-CropFEED          <- grepSpaceTime(dimSums(FAOmassbalance[,,kExResPast][,,"feed"], dim=3.1))
+
+CropFEED          <- grepSpaceTimeC(dimSums(FAOmassbalance[,,kExResPast][,,"feed"], dim=3.1))
 CropPRIM          <- CropHANPP-CropFEED
-ResFEED           <- grepSpaceTime(dimSums(FAOmassbalance[,,kres][,,"feed"], dim=3.1))
-ResPRIM           <- dimSums(grepSpaceTime(FAOmassbalance[,,kres][,,c("other_util","bioenergy")]), dim=3)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(CropFEED, "crop_feedintake"),
+                           setNames(CropPRIM, "crop_humandemand"))
 
 
-FEED              <- grepSpaceTime(dimSums(FAOmassbalance[,,kPrim][,,"feed"], dim=3.1))
-LivstHANPP        <- dimSums(grepSpaceTime(FAOmassbalance[,,kli][,,c("food","waste","other_util")]), dim=3)
+ResFEED           <- grepSpaceTimeC(dimSums(FAOmassbalance[,,kres][,,"feed"], dim=3.1))
+ResPRIM           <- dimSums(grepSpaceTimeC(FAOmassbalance[,,kres][,,c("other_util","bioenergy")]), dim=3)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(ResFEED, "ag_feedintake"),
+                           setNames(ResPRIM, "ag_humandemand"))
+
+FEED              <- grepSpaceTimeC(dimSums(FAOmassbalance[,,kPrim][,,"feed"], dim=3.1))
+LivstHANPP        <- dimSums(grepSpaceTimeC(FAOmassbalance[,,kli][,,c("food","waste","other_util")]), dim=3)
 LivstCropHANPP    <- (CropFEED+ResFEED)/FEED * LivstHANPP
 
-ResidueBiomassTot <- grepSpaceTime(dimSums(ResidueBiomass, dim=3.2))
-ResidueRecycledTot<- grepSpaceTime(dimSums(ResiduesAgDemand[,,"recycle"], dim=3.2))
 
-ManureExcretedTot <- grepSpaceTime(dimSums(ManureExcreted[,,c("stubble_grazing","confinement")], dim=c(3.1,3.2)))
-ManureRecycledTot <- grepSpaceTime(dimSums(ManureRecycled, dim=3.1))
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(LivstCropHANPP, "livst_humandemand"))
 
-#Soil
+ResidueBiomassTot <- grepSpaceTimeC(dimSums(ResidueBiomass, dim=3.2))
+ResidueRecycledTot<- grepSpaceTimeC(dimSums(ResiduesAgDemand[,,"recycle"], dim=3.2))
+ResidueLossTot    <- ResidueBiomassTot[,,"ag"] - ResidueRecycledTot - ResFEED - ResPRIM
+
+ResidueInput      <- grepSpaceTimeC(Landuse[,2,"crop"]* CarbonResidues)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(ResidueBiomassTot[,,c("ag","bg")], c("ag_prod","bg_prod")),
+                           #setNames(ResidueRecycledTot, "ag_recycle"),
+                           #setNames(ResidueBiomassTot[,,"bg"], "bg_recycle"),
+                           setNames(ResidueInput[,,c("ag","bg")], c("ag_recycle","bg_recycle")),
+                           setNames(ResidueLossTot, "ag_loss"))
+
+
+ManureExcretedTot <- grepSpaceTimeC(dimSums(ManureExcreted[,,c("stubble_grazing","confinement")], dim=c(3.1,3.2)))
+#ManureRecycledTot <- grepSpaceTimeC(dimSums(ManureRecycled, dim=3.1))
+ManureInput       <- dimSums(grepSpaceTimeC(Landuse[,2,"crop"]* CarbonManure), dim=3.1)
+ManureLossTot     <- ManureExcretedTot - ManureInput
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(ManureExcretedTot, "manure_prod"),
+                           setNames(ManureInput, "manure_recycle"),
+                           setNames(ManureLossTot    , "manure_loss"))
+
+LitterRecycleTot  <- grepSpaceTimeC(CarbonLitter)
+
+CropBiomassTot    <- dimSums(ResidueBiomassTot, dim=3) + dimSums(grepSpaceTimeC(FAOmassbalance[,,kcr][,,"production"]),dim=3)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(CropBiomassTot, "crop_prod"))
+
+LivstCropLoss     <- CropFEED - ManureExcretedTot - LivstCropHANPP 
+CropPRIMLoss      <- CropPRIM + ResPRIM + LivstCropHANPP - dimSums(grepSpaceTimeC(FAOmassbalance[,,c(kcr,kli,kres)][,,"other_util"]), dim=3) # only material use is not re-emitted
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(LivstCropLoss, "livst_loss"),
+                           setNames(CropPRIMLoss,  "humandemand_loss"))
+
 
 ### Carbon To
-CarbonTo            <- dimSums(toolConditionalReplace(SoilCarbonOut[,"y2010","carbontransfer"], "<0", 0),dim=c(1,3.3))
-CarbonToEff         <- dimSums(SoilCarbonOut[,"y2010","carbontransfer"], dim=c(1,3.3))
-CarbonToPools       <- dimSums(toolConditionalReplace(SoilCarbonOut[,"y2010","carbontransfer"], "<0", 0),dim=c(1))
+CarbonTo            <- dimSums(grepSpaceTime(toolConditionalReplace(SoilCarbonOut[,,"carbontransfer"], "<0", 0)), dim=c(3.2))
+CarbonToEff         <- dimSums(grepSpaceTime(SoilCarbonOut[,,"carbontransfer"]), dim=c(3.2))
 
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(CarbonTo[,,"natveg"], "to_natveg"),
+                           setNames(CarbonTo[,,"crop"],   "from_natveg"))
+
+SOCsub            <- grepSpaceTime(SoilCarbonOut[,,"actualstate"]*Landuse)
+SOCtot            <- dimSums(SOCsub, dim=3.2)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(SOCsub[,,"natveg"], gsub("\\.","_",getNames(SOCsub))),
+                           SOCtot)
+
+CarbonIn          <- grepSpaceTime(SteadyState[,,"alpha_in"]*Landuse)
+
+
+```
+
+```{r}
 ####### delete when new output on decay is ready
 # Decay
 
@@ -91,7 +147,7 @@ SlowDecay          <- mbind(setNames(calcOutput("SlowDecay",  landtype="crop",  
                               setNames(calcOutput("SlowDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
 PassiveDecay       <- mbind(setNames(calcOutput("PassiveDecay", landtype="crop",   aggregate = FALSE),"crop"),
                               setNames(calcOutput("PassiveDecay", landtype="natveg", aggregate = FALSE),"natveg"))
-
+decay <- calcOutput("Decay", aggregate = FALSE)
 subpools     <- c("active","slow","passive")
 names        <- as.vector(outer(getNames(Landuse), subpools, paste, sep="."))
 Decay <- new.magpie(getCells(Landuse), getYears(Landuse), names, fill = 0)
@@ -147,128 +203,3 @@ CarbonOutEff      <- CarbonOutRaw + CarbonInEff - CarbonInRaw
 SOCstate <- dimSums(SoilCarbonOut[,c("y2009","y2010"),c("actualstate","interstate")]*Landuse[,c("y2009","y2010"),], dim=c(1,3.3))
 
 ```
-
-
-```{r residues}
-
-### Residues
-  # originally from moinput
-  ResidueDemand       <- dimSums(collapseNames(calcOutput("ResFieldBalancePast", cellular=TRUE, products = "kres", aggregate = FALSE)[,,"c"]), dim=1)
-  ResidueRecyclingAg  <- ResidueDemand[,,"recycle"]
-  ResidueRecyclingBg  <- dimSums(calcOutput("ResBiomass", cellular=TRUE, aggregate = FALSE)[,,"bg"][,,c("c")], dim=c(1,3))
-  ResiduesMoinput     <- dimSums(ResidueRecyclingAg, dim=3) + ResidueRecyclingBg
-  
-  # Residues with cut of overflow
-  ResiduesDensities   <- calcOutput("CarbonResidues", aggregate=FALSE)[,,"c"]
-  Landuse             <- calcOutput("Landuse", aggregate=FALSE)
-  ResiduesSOCbudget   <- dimSums(Landuse[,getYears(ResiduesDensities),"crop"]*ResiduesDensities, dim=c(1,3))
-
-  print(mbind(ResiduesMoinput, ResiduesSOCbudget, ResiduesSOCbudget/ResiduesMoinput))
-
-  # Corrected Residues shares for different plant parts  
-  RatioPlantParts     <- mbind(ResidueRecyclingAg, setNames(ResidueRecyclingBg, "res_roots"))/(dimSums(ResidueRecyclingAg, dim=3)+ResidueRecyclingBg)
-  
-  ResiduesCorrected   <- collapseNames(RatioPlantParts * ResiduesSOCbudget)
-  
-  # total residues and residue demands
-  
-  ResidueBg     <- ResidueRecyclingBg
-  ResidueAg     <- dimSums(calcOutput("ResBiomass", cellular=TRUE, aggregate = FALSE)[,,"ag"][,,c("c")], dim=c(1,3))
-  ResidueTotal  <- ResidueAg + ResidueBg 
-  
-```
-  
-Quite a lot of residues get lost, due to cutting extreme values in the later years.
-Cutting algorithm, cuts everything bigger the 95%-percentile.
-How we deal with that? 
-* Should we do a yearly extrem value cutting?
-* Should we investigate that deeper?
-* Should we leave it like this?
-
-
-
-```{r manure}
-
-### Manure
-  # originally from moinput
-  ManureApplication   <- calcOutput("ManureRecyclingCroplandPast", products = "kli", cellular = TRUE, aggregate = FALSE)[,,"c"]
-  ManureGrazing       <- calcOutput("Excretion", cellular = TRUE, attributes = "npkc", aggregate = FALSE)[,,"stubble_grazing"][,,"c"]
-  ManureMoinput       <- collapseNames(dimSums(ManureApplication, dim=1) + dimSums(ManureGrazing, dim=1))
- 
-  # Manure with cut of overflow
-  ManureDensities     <- calcOutput("CarbonManure", aggregate=FALSE)[,,"c"]
-  Landuse             <- calcOutput("Landuse", aggregate=FALSE)
-  ManureSOCbudget     <- dimSums(Landuse[,getYears(ManureDensities),"crop"]*ManureDensities, dim=1)
- 
-  print(mbind(dimSums(ManureMoinput, dim=3), dimSums(ManureSOCbudget, dim=3), dimSums(ManureSOCbudget, dim=3)/dimSums(ManureMoinput, dim=3)))
-  
-  ManureCorrected     <- ManureSOCbudget
-  
-  ManureExcreted      <- dimSums(calcOutput("Excretion", cellular = TRUE, attributes = "npkc", aggregate = FALSE)[,,"c"][,,c("confinement","stubble_grazing")], dim=c(1,3.3))
-  
-  print(mbind(dimSums(ManureExcreted, dim=3), dimSums(ManureMoinput, dim=3), dimSums(ManureCorrected, dim=3)))
-  print(quantile(ManureApplication+ManureGrazing, probs=seq(0,1,0.02)))
-  range(ManureApplication+ManureGrazing)
-```
-  
-Same problem here. Manure share is going down.
-
-
-
-
-```{r production}
-
-#Production     <- collapseNames(calcOutput("Production", products="kcr", cellular=TRUE, attributes="dm", irrigation=FALSE, aggregate = FALSE))
-Balance        <- calcOutput("FAOmassbalance", aggregate=FALSE)
-
-CropProduction <- dimSums(Balance[,,findset("kcr")][,,"production"][,,"c"], dim=c(1,3))
-FeedProduction <- dimSums(Balance[,,c("pasture",findset("kap"),findset("kres"),"scp"), invert=TRUE][,,"feed"][,,"c"], dim=c(1,3))
-ResidueFeed    <- dimSums(Balance[,,findset("kres")][,,"feed"][,,"c"], dim=c(1,3))
-
-print(mbind(CropProduction,FeedProduction,ResidueFeed))
-```
-
-Biomass excreted ist bigger than feed intake via plant harvest and residues taken for feed.
-  
-```{r soc}
-
-  Litter             <- dimSums(calcOutput("CarbonLitter", aggregate=FALSE)[,,"c"]*Landuse[,,"natveg"], dim=1)
-  
-  # Calculate effective input
-  param <- readSource("IPCCSoil", convert=FALSE)
-  param.f1_metab2a          <- setYears(param[,,"f1"], NULL) 
-  # stabilization efficiencies for metabolic decay products entering the active pool
-  param.f3_struc2s          <- setYears(param[,,"f3"], NULL) 
-  # stabilization efficiencies for structural decay products entering the slow pool
-  param.f2_struc2a <- mbind(setNames(setYears(param[,,"f2_ft"], NULL), "crop"),
-                            setNames(setYears(param[,,"f2_nt"], NULL), "natveg"))
-  # stabilization efficiencies for structural decay products entering the active pool (tillage and no tillage specific)
-  
-  
-  cell.input       <- mbind(add_dimension(dimSums(calcOutput("CarbonInput", landtype="crop", aggregate = FALSE),dim=3.2),
-                                          dim=3.1, nm = "crop",   add="landuse"),
-                            add_dimension(collapseNames(calcOutput("CarbonInput", landtype="natveg", aggregate = FALSE)),
-                                          dim=3.1, nm = "natveg", add="landuse"))
-  CarbonInput      <- dimSums(cell.input[,,"totalC"]*Landuse, dim=c(1))
-  
-  CarbonInputEff   <- collapseNames(dimSums((cell.input[,,"metabDOC"] * param.f1_metab2a +
-                                             cell.input[,,"strucDOC"] * param.f2_struc2a +
-                                             cell.input[,,"ligninC"]  * param.f3_struc2s) * Landuse, dim=c(1)))
-  
-
-  CarbonInputTot   <- collapseNames(dimSums(SOC[,,"steadystate"]*SOC[,,"decayrate"]*Landuse, dim=c(1,3.3)))
-  
-  # Load inputs, active steady state stock and decay rate
-
-  SOC                <- calcOutput("SoilCarbon", output="full", aggregate=FALSE)
-  Landuse            <- calcOutput("Landuse",       aggregate=FALSE)
-  LanduseChange      <- calcOutput("LanduseChange", aggregate=FALSE)
-
-  CarbonStocks       <- collapseNames(dimSums(SOC[,,c("steadystate","actualstate")]*Landuse, dim=1))
-  CarbonTransfer     <- dimSums(toolConditionalReplace(SOC[,,"carbontransfer"], "<0", 0),dim=c(1,3.3))
-  CarbonRelease      <- collapseNames(dimSums(SOC[,,"interstate"]*SOC[,,"decayrate"]*Landuse, dim=c(1, 3.3)))
-  
-print(mbind(CarbonTransfer, CarbonRelease))
-```
-
-

@@ -9,105 +9,298 @@ output:
 ```{r load}
 library(mrcommons)
 library(mrvalidation)
-library(mrSOCbudget)
+library(mrsoil)
 library(magpiesets)
 
-rev <- "rev0.76baseline"
+rev         <- "rev16"
+scenarios   <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
+                  "constManagement2-1975", "constResrate-1975", "constYield-1975",
+                 "Initial-natveg", "Initial-natveg_constManagement-1975", "Initial-natveg_constManagement2-1975", 
+                 "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
+                 "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
 
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-
-#revisions   <- c(Baseline="rev0.74baseline", Till="rev0.74tillage_mixedtill", ResRe="rev0.74residue_freeze1975", ManRe="rev0.74manure_freeze1975", Yield="rev0.74yield_freeze1975")
-filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
-
-revisions   <- c(Baseline="rev0.76baseline", Allon="rev0.76allon_freeze1975", Allon2="rev0.76allon2_freeze1975",        ResRe="rev0.76rrecycle_freeze1975",
-                Till="rev0.76tillage_mixedtill", ResSta="rev0.76residue_freeze1975", Yield="rev0.76yield_freeze1975", ManRe="rev0.76manure_freeze1975")
-
-
-# for(item in revisions){
-#    dir.create(path=paste0("Data/",names(which(revisions[]==item))))
-#    untar(paste0(getConfig("outputfolder"),"/",item, "_h12_carbonbudget.tgz"), files=filesNeeded, exdir=paste0("Data/", names(which(revisions[]==item))))#, extras="--keep-newer-files ")
+# filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
+# setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+# 
+# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
+#       exdir="Data/histManagement", extras="--keep-newer-files ")
+# 
+# for(item in scenarios){
+#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+#    files=filesNeeded, exdir=paste0("Data/", item), extras="--keep-newer-files ")
 # }
 
-outputdir <- "Output/Images"
+outputdir <- "Output/"
 
 ```
 
-Calc global numbers
 
-```{r Carbon Emissions (glo)}
-
-library(ggplot2)
+```{r Load data and calc globals}
 
 glo_SOCStock <- NULL
 
-for(r in 1:length(revisions)){
-  SoilCarbon <- read.magpie(paste0("Data/",names(revisions[r]),"/SoilCarbon.rds"))
-  Landuse    <- read.magpie(paste0("Data/",names(revisions[r]),"/Landuse.rds"))
+for(scen in scenarios){
+  SoilCarbon <- read.magpie(paste0("Data/", scen, "/SoilCarbon.rds"))
+  Landuse    <- read.magpie(paste0("Data/", scen, "/Landuse.rds"))
   SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
   SOCStock        <- toolConditionalReplace(dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2), "is.nan()",0)
-  glo_SOCStock    <- mbind(glo_SOCStock, add_dimension(dimSums(SOCStock, dim=1), dim=3.1, nm=names(revisions[r]), add="scenario")) 
+  glo_SOCStock    <- mbind(glo_SOCStock, add_dimension(dimSums(SOCStock, dim=1), 
+                                                       dim=3.1, nm=scen, add="scenario")) 
 }
 
-# 
+glo_SOCDebt  <- collapseNames(glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
+glo_SOCShare <- collapseNames(toolConditionalReplace(glo_SOCStock[,,"actualstate"]/glo_SOCStock[,,"naturalstate"], "is.na()",0) )
+
+saveRDS(mbind(add_dimension(collapseNames(glo_SOCStock[,,"actualstate"]), dim=3.1, add="type", nm="stock"),
+              add_dimension(              glo_SOCDebt,                    dim=3.1, add="type", nm="debt"),
+              add_dimension(              glo_SOCShare,                   dim=3.1, add="type", nm="share")), 
+        paste0(outputdir, "glo_SOCscenarions.rds"))
 ```
 
-```{r plot Carbon Emissions (glo)}
+```{r Carbon inputs (glo)}
 
-plot_rev <- c(5,8,6,3)
+CarbonInput  <- read.magpie(paste0("Data/histManagement/CarbonInput.rds"))
+Landuse      <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
+glo_SOCInput <- collapseNames(dimSums(CarbonInput[,,"totalC"] * Landuse, dim=c(1)))/collapseNames(dimSums(Landuse, dim=c(1)))
 
-names(revisions) <- c("Historical Management", 
-                      "Allon",    
-                      "Constant management from 1975",   
-                      "ResRe", 
-                      "Constant tillage area from 1975",
-                      "Constant residue input from 1975",
-                      "Yield", 
-                      "Constant manure application from 1975")
+ci2plot <- c('Above Ground Residues'="ag.crop",          
+             'Below Ground Residues'="bg.crop",          
+             'Manure from Monogastrics'="livst_chick.crop",
+             'Manure from Monogastrics'="livst_egg.crop",
+             'Manure from Monogastrics'="livst_pig.crop",
+             'Manure from Ruminants'="livst_milk.crop",  
+             'Manure from Ruminants'="livst_rum.crop",   
+             'Natural Litterfall and Fine Roots'="litfall.natveg")
 
-
-
-colr <- c("black","green","red","brown","pink","darkgreen","yellow","blue")
-glo_SOCEmission <- collapseNames(glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
-glo_SOCShare    <- collapseNames( toolConditionalReplace(glo_SOCStock[,,"actualstate"]/glo_SOCStock[,,"naturalstate"], "is.na()",0) )
-
-getNames(glo_SOCEmission) <- names(revisions)
-plot(getYears( glo_SOCEmission, as.integer = TRUE), -glo_SOCEmission[,,1], type="l", xlab="Time", ylab="Global SOC gap in GtC", ylim=c(-45,-35))
-legend("topleft", legend=names(revisions[c(1,plot_rev)]), col=colr[c(1,plot_rev)], lty=1, cex=0.8)
-for(r in plot_rev) lines(getYears(glo_SOCEmission, as.integer = TRUE), -glo_SOCEmission[,,names(revisions[r])], type="l", col=colr[r])
-print(cbind(colr[c(1,plot_rev)], names(revisions[c(1,plot_rev)])))
-print(glo_SOCStock[,,"actualstate"])
-
-#plot(getYears( glo_SOCEmission, as.integer = TRUE), dimSums(Landuse[,,"crop"], dim=1), type="l")
-#plot(getYears( glo_SOCEmission, as.integer = TRUE), dimSums(glo_SOCStock[,,"Baseline.actualstate"], dim=1), type="l")
-
+glo_SOCInput <- toolAggregate(glo_SOCInput, rel=data.frame(from=ci2plot,to=names(ci2plot)), from="from", to="to", dim=3)
 
 ```
 
 
-```{r ggplot}
+```{r Plot Management Scenarios}
+
+glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
+
+manage_scen <-  c(histManagement   = "histManagement",
+                  constTillage     = "constTillage-mixedtill", 
+                  constManure      = "constManure-1975",
+                  constResidues    = "constResidues-1975", 
+                  constManagement  = "constManagement-1975")
+
+library(ggplot2)
+library(scales)
+library(gridExtra)
+library(cowplot)
 
 theme_set(theme_bw())
 legend_size <- 10
+scen_cols   <- c("#648FFF","#785EF0","#DC267F","#FE6100","#FFB000")[5:1]
+input_cols  <- scen_cols[1:4]
 
-SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,1),c(1,plot_rev)]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
+limits <- c(-30,-21)
+breaks <- c(-22, -24,- 26, -28, -30)
+
+hSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
-        y = "Global SOC gap in GtC",
+        y = expression(paste('Global \u0394SOC in GtC')),
         color="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(limits = c(-44,-36),
-                     breaks = c(-36, -38, -40,- 42, -44)) +
+  scale_y_continuous(limits=limits, breaks=breaks) +
+  scale_color_manual(values=scen_cols, labels = names(manage_scen)) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.position="bottom", legend.direction="vertical",
+        legend.margin=margin(-10,-10,0,0),
+        legend.box.margin=margin(-10,-10,0,0))
+
+hSOCinput <- ggplot(data= as.data.frame(glo_SOCInput[,seq(1975,2010,1),c(3:4,2,1)]),  aes(x = Year, y = Value, group=Data1, fill=Data1)) + geom_area() +
+  labs( x = "Year", 
+        y = "SOC input in tC per ha\n (global average)",
+        fill="") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous() +
+  scale_fill_manual(values=input_cols) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.position="bottom", 
+        legend.direction="vertical",
+        legend.margin=margin(-10,-10,0,0),
+        legend.box.margin=margin(-10,-10,0,0))
+
+vSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1974,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
+  labs( x = "Year", 
+        y = expression(paste('Global \u0394SOC in GtC')),
+        color="") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(limits = limits,
+                     breaks = breaks) +
+  scale_color_manual(values=scen_cols, labels = names(manage_scen)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r = 10, b = 0, l = 0, unit = "pt")),
         axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 0, l = 0, unit = "pt")),
-        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size))
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.position="right", legend.direction="vertical")
 
-SOCemis
+vSOCinput <- ggplot(data= as.data.frame(glo_SOCInput[,seq(1975,2010,1),c(3:4,2,1)]),  aes(x = Year, y = Value, group=Data1, fill=Data1)) + geom_area() +
+  labs( x = "Year", 
+        y = "SOC input in tC per ha\n (global average)",
+        fill="") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous() +
+  scale_fill_manual(values=input_cols) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r = 10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size), legend.direction="vertical")
 
-ggsave(paste0(outputdir,"/scenario.png"), plot=SOCemis)
+hSOCemis
+hSOCinput
+vSOCemis
+vSOCinput
+
+
+hgrid <- plot_grid(hSOCemis, hSOCinput, ncol=2, labels=c("(a)","(b)"),
+                  label_fontface = "plain", label_size = 10, align="hv")
+
+vgrid <- plot_grid(plot_grid(vSOCemis  + theme(legend.position = "none") , 
+                             vSOCinput + theme(legend.position = "none"), ncol=1, labels=c("(a)","(b)"),
+                             label_fontface = "plain", label_size = 10, align="v", axis="tblr"),
+                   plot_grid(get_legend(vSOCemis), get_legend(vSOCinput), ncol=1,
+                             label_fontface = "plain", label_size = 10, align="v"),
+                   align="h")
+                   
+hgrid
+vgrid
+
+ggsave(paste0(outputdir,"Images/scenario_horiz.png"), plot=hgrid, width = 15, height = 10, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"Images/scenario_verti.png"), plot=vgrid, width = 12, height = 15, dpi = 300, units = "cm")
 
 ```
 
 
+```{r Plot Initialization Scenarios}
 
+glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
+
+init_scen   <-  c(`histManagement.Initial-natveg`  = "Initial-natveg", 
+                  `constManagement.Initial-natveg` = "Initial-natveg_constManagement-1975",
+                  `histManagement.Initial-lu`      = "histManagement", 
+                  `constManagement.Initial-lu`     = "constManagement-1975")
+
+glo_SOCDebt <- glo_SOCDebt[,,init_scen]
+getNames(glo_SOCDebt) <- names(init_scen)
+
+library(ggplot2)
+library(scales)
+library(gridExtra)
+library(cowplot)
+
+theme_set(theme_bw())
+legend_size <- 10
+scen_cols   <- c("#785EF0","#FE6100","#FFB000")
+input_cols  <- scen_cols[1:4]
+
+limits <- c(-30,-10)
+breaks <- c(-10, -15,- 20, -25, -30)
+
+initSOCemis <- ggplot() + geom_path(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),]), 
+                                    aes(x = Year, y = Value, group=interaction(Data1,Data2), linetype=Data1, color=Data2)) +
+  labs( x = "Year", 
+        y = expression(paste('Global \u0394SOC in GtC')),
+        color    ="Initalitzation",
+        linetype ="Management") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(limits=limits, breaks=breaks) +
+  scale_color_manual(values=c(scen_cols)[1:2], labels = unique(gsub("(.*)\\.(.*)","\\2", names(init_scen)))) +
+  scale_linetype_manual(values=c(1,2), labels=unique(gsub("(.*)\\.(.*)","\\1", names(init_scen)))) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.position="right", legend.direction="vertical")
+
+initSOCemis
+
+ggsave(paste0(outputdir,"Images/scenario_init.png"), plot= initSOCemis, width = 10, height = 6, dpi = 300, units = "cm")
+```
+
+```{r Plot Litter param Scenarios, out.height="6cm", out.width="18cm"}
+
+glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
+glo_SOCStock <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"stock"])
+
+litter_scen <-  c(`LitterPNV-Mean` = "histManagement",
+                  `LitterPNV-grass`= "LitterPNV-PerennialGrasses", 
+                  `LitterPNV-AASS` = "LitterPNV-AASS", 
+                  `LitterPNV-BRCF` = "LitterPNV-BRCF", 
+                  `LitterPNV-MTCF` = "LitterPNV-MTCF", 
+                  `LitterPNV-BLEAF`= "LitterPNV-BLEAF",  
+                  `LitterPNV-TREF` = "LitterPNV-TREF")
+
+library(ggplot2)
+library(scales)
+library(gridExtra)
+library(cowplot)
+
+theme_set(theme_bw())
+legend_size <- 10
+scen_cols   <- c("#648FFF","#785EF0","#DC267F","#FE6100","#FFB000")[5:1]
+input_cols  <- scen_cols[1:4]
+
+limits <- c(-30,-18)
+breaks <- c(-18, -22, -26, -30)
+
+litterSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),litter_scen]), 
+                                    aes(x = Year, y = Value, group=Data1, color=Data1, size=Data1)) +
+  labs( x = "Year", 
+        y = expression(paste('Global \u0394SOC in GtC')),
+        color="") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(limits=limits, breaks=breaks) +
+  scale_color_manual(values=c("red", scen_cols, "blue"), labels = names(litter_scen)) +
+  scale_size_manual(values=c(1,rep(0.5, length(litter_scen)-1)), labels = names(litter_scen)) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.position = "none")
+
+litterSOCemis
+
+limits <- c(625,705)
+breaks <- c(635, 655, 675, 695)
+
+litterSOCstock <- ggplot() + geom_line(data= as.data.frame(glo_SOCStock[,seq(1975,2010,1),litter_scen]/1000), 
+                                    aes(x = Year, y = Value, group=Data1, color=Data1, size=Data1)) +
+  labs( x = "Year", 
+        y = "Global SOC stock\n in GtC",
+        color="Litter parameterization",
+        size="Litter parameterization") +
+  scale_x_discrete(breaks=seq(1975,2010,5)) +
+  scale_y_continuous(limits=limits, breaks=breaks) +
+  scale_color_manual(values=c("red", scen_cols, "blue"), labels = names(litter_scen)) +
+  scale_size_manual(values=c(1,rep(0.5, length(litter_scen)-1)), labels = names(litter_scen)) +
+  theme(rect=element_blank(),
+        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+        legend.direction="vertical",
+        legend.margin=margin(-10,-10,0,0),
+        legend.box.margin=margin(-10,-10,0,0)) +
+  guides(color=guide_legend(), size = guide_legend())
+
+litterSOCstock
+
+littergrid <- plot_grid(litterSOCemis, litterSOCstock + theme(legend.position = "none"), get_legend(litterSOCstock),
+                                  ncol=3, labels=c("(a)","(b)"), axis = "l",
+                                  label_fontface = "plain", label_size = 10, align="v")
+littergrid
+
+
+ggsave(paste0(outputdir,"Images/scenario_litter.png"), plot=littergrid, width = 18, height = 6, dpi = 300, units = "cm")
+
+```

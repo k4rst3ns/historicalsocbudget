@@ -10,20 +10,52 @@ author:
   - given_name: Benjamin Leon
     surname: Bodirsky
     affiliation: 1
-  - given_name: Your
-    surname: Name
+    email: bodirsky@pik-potsdam.de
+    orcid: https://orcid.org/0000-0002-8242-6712
+  - given_name: Jan Philipp
+    surname: Dietrich
+    affiliation: 1 
+    orcid: https://orcid.org/0000-0002-4309-6431
+  - given_name: Marta
+    surname: Dondini
     affiliation: 2
+  - given_name: Jens
+    surname: Heinke
+    affiliation: 1
+  - given_name: Matthias
+    surname: Kuhnert
+    affiliation: 2
+  - given_name: Christoph
+    surname: Müller
+    affiliation: 1 
+    orcid: https://orcid.org/0000-0002-9491-3550
+  - given_name: Susanne
+    surname: Rolinski
+    affiliation: 1
+  - given_name: Pete
+    surname: Smith
+    affiliation: 2
+  - given_name: Isabelle
+    surname: Weindl
+    affiliation: 1
+    orcid: https://orcid.org/0000-0002-7651-6930
+  - given_name: Hermann
+    surname: Lotze-Campen
+    affiliation: 1
   - given_name: Alexander
     surname: Popp
     affiliation: 1
 affiliation:
   - code: 1
-    address: Potsdam-Institut of Climate Impacts Research, Potsdam, Germany
+    address: Potsdam Institute for Climate Impact Research (PIK), Member of the Leibniz Association, P.O. Box 60 12 03, 14412 Potsdam, Germany
   - code: 2
-    address: Your affiliation 
+    address: Institute of Biological & Environmental Sciences, University of Aberdeen, Aberdeen, UK
+  - code: 3
+    address: Humboldt-Universität zu Berlin, Department of Agricultural Economics, Unter den Linden 6, 10099 Berlin, Germany
 abstract: |
-  Soil organic carbon (SOC) is one of larges carbon stocks on Earth. It is three times larger than the vegetation pool and more than twice as big as the atmospheric pool, when looking into the first meter of the earth soil profile. Human cropping activities led and still lead to a depletion of SOC though, which are so far not well represented in global assessments of historic carbon emissions. While SOC models often represent well the biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated on the global scale. Here we create a spatial explicit data set for agricultural management on cropland, especially for crop residue and manure management, based on global historic production (FAOSTAT), and land-use (LUH2) data; and combine it with the IPCC Tier 2 approach to create a half degree resolution SOC stock changes on mineral soils. We estimate that due to arable farming soils have lost over 37 GtOC of which 4 GtOC have been regained within the period 1975--2010. We show that, our results on global scale based on Tier 2 IPCC methodology are in good agreement with Tier 1 default assumptions. We also find that SOC is very sensitive to management decision such as residue recycling indicating the necessity to incorporated better management data in soil models.
-bibliography: SOCbudget2.bib
+  Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. It is three times larger than the vegetation carbon pool and more than twice as big as the atmospheric carbon pool, when looking into the first meter of the Earth's soil profile. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with the IPCC Tier 2 steady-state soil model to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around 26 GtC relative to a counterfactual natural state in 1975. Yet, within the period 1975--2010 this SOC debt has been decreasing again by a net quantity of 4 Gt SOC, which can be mainly traced back to an increased input of C in crop residues due to higher crop productivity. We also find that SOC is very sensitive to management decisions such as residue returning indicating the necessity to incorporate better management data in soil model simulations.
+
+bibliography: SOCbudget.bib
 running:
   title: R Markdown Template for Copernicus
   author: Nüst et al.
@@ -36,14 +68,90 @@ copyrightstatement: |
   The author's copyright for this publication is transferred to institution/company.
 availability:
   codedata: |
-    Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/. Data used for the output can be found under <something-with-zenodo>.  
+   We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons \cite{bodirsky_mrcommons_2020} for the management related functions, github.com/pik-piam/mrsoil \cite{karstens_mrsoil_2020} for soil dynamic related functions and  github.com/pik-piam/mrvalidation \cite{bodirsky_mrvalidation_2020} for validation data. All libraries are based on the MADRaT package at github.com/pik-piam/madrat \cite{dietrich_madrat_2020}, a framework which aims to improve reproducibility and transparency in data processing. Model results are accessable under (zenode_link). Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
 authorcontribution: |
-  Karstens wrote code and paper build on work of Bodirsky (and <here_could_be_your_names>). 
-  Bodirsky, <here_could_be_your_names> and Popp revised paper.
-disclaimer: |
-  We like Copernicus.
+  KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback. All authors discussed the results and commented on the manuscript.
+  
 acknowledgements: |
-  Thanks to the rticles contributors!
+  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors. 
+appendix: |
+
+  \section{Figures and tables in appendices}
+
+  \subsection{Methods}
+
+    ```{=latex}
+  \begin{figure}
+    \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones} 
+    \caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \cite{eggleston_ipcc_2006} and has been reimplented by \cite{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
+    \label{fig:CLIMzone}
+  \end{figure}
+  ```
+  
+  ```{=latex}
+  \begin{table*}[h]
+  \caption{Parameterization of harvested organs and their corresponding residues parts as well as allometric coefficients: This table is mainly based on \cite{bodirsky_n2o_2012} together with simple carbon to dry matter assumptions. Allometric coefficients are used as descriped in \cite{eggleston_ipcc_2006} with HI\textsuperscript{prod} being slope\textsubscript{(T)}, HI\textsuperscript{area} intercept\textsubscript{(T)} and RS R\textsubscript{BG-BIO}.
+  }
+  \begin{tabular}{lllllllllllll}
+  \tophline
+
+           &                                 & \multicolumn{3}{l}{Harvested Organs} & \multicolumn{3}{l}{Above-ground Residues} & \multicolumn{2}{l}{Below-ground Residues} & \multicolumn{3}{l}{Allometric coefficients}                \\
+  Crop code  & Crop Type                       & nr/dm       & wm/dm      & c/dm      & nr/dm         & wm/dm        & c/dm       & nr/dm                & c/dm               & HI\textsuperscript{area} & HI\textsuperscript{prod} & RS   \\
+   \middlehline
+  tece       & Temperate cereals               & 0.0217      & 1.14       & 0.42      & 0.0074        & 1.11         & 0.42       & 0.0098               & 0.38               & 0.58                     & 1.36                     & 0.24 \\
+  maiz       & Maize                           & 0.016       & 1.14       & 0.42      & 0.0088        & 1.18         & 0.42       & 0.007                & 0.38               & 0.61                     & 1.03                     & 0.22 \\
+  trce       & Tropical cereals                & 0.0163      & 1.14       & 0.42      & 0.007         & 1.18         & 0.42       & 0.006                & 0.38               & 0.79                     & 1.06                     & 0.22 \\
+  rice\_pro  & Rice                            & 0.0128      & 1.15       & 0.42      & 0.007         & 1.11         & 0.42       & 0.009                & 0.38               & 2.46                     & 0.95                     & 0.16 \\
+  soybean    & Soybean                         & 0.0629      & 1.13       & 0.42      & 0.008         & 1.11         & 0.42       & 0.008                & 0.38               & 1.35                     & 0.93                     & 0.19 \\
+  rapeseed   & Other oil crops (incl rapeseed) & 0.0334      & 1.08       & 0.42      & 0.0081        & 1.11         & 0.42       & 0.0081               & 0.38               & 0                        & 1.86                     & 0.22 \\
+  groundnut  & Groundnuts                      & 0.0299      & 1.06       & 0.42      & 0.0224        & 1.11         & 0.42       & 0.008                & 0.38               & 1.54                     & 1.07                     & 0.19 \\
+  sunflower  & Sunflower                       & 0.0216      & 1.08       & 0.42      & 0.008         & 1.11         & 0.42       & 0.008                & 0.38               & 0                        & 1.86                     & 0.22 \\
+  oilpalm    & Oilpalms                        & 0.0027      & 1.01       & 0.49      & 0.0052        & 1.11         & 0.48       & 0.0053               & 0.47               & 0                        & 1.86                     & 0.24 \\
+  puls\_pro  & Pulses                          & 0.0421      & 1.1        & 0.42      & 0.0105        & 1.16         & 0.42       & 0.008                & 0.38               & 0.79                     & 0.89                     & 0.19 \\
+  potato     & Potatoes                        & 0.0144      & 4.55       & 0.42      & 0.0133        & 6.67         & 0.42       & 0.014                & 0.38               & 1.06                     & 0.1                      & 0.2  \\
+  cassav\_sp & Tropical roots                  & 0.0053      & 2.95       & 0.42      & 0.0101        & 6.67         & 0.42       & 0.014                & 0.38               & 0                        & 0.85                     & 0.2  \\
+  sugr\_cane & Sugar beet                      & 0.0024      & 3.7        & 0.42      & 0.008         & 3.82         & 0.42       & 0.008                & 0.38               & 0                        & 0.67                     & 0.07 \\
+  sugr\_beet & Sugar beet                      & 0.0056      & 4.17       & 0.42      & 0.0176        & 5            & 0.42       & 0.014                & 0.38               & 0                        & 0.54                     & 0.2  \\
+  others     & Fruits, Vegetables, Nuts          & 0.0267      & 5.49       & 0.42      & 0.0081        & 1.88         & 0.42       & 0.007                & 0.38               & 0                        & 0.39                     & 0.22 \\
+  foddr      & Forage                          & 0.0201      & 4.29       & 0.42      & 0.0192        & 4.1          & 0.42       & 0.0141               & 0.38               & 0                        & 0.28                     & 0.45 \\
+  cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42      & 0.0093        & 1.18         & 0.42       & 0.007                & 0.38               & 0                        & 1.48                     & 0.13 \\
+  \bottomhline
+           &                 & \multicolumn{8}{l}{
+                                             \begin{minipage}[t]{0.50\columnwidth}
+                                                        nr/dm -- nitrogen to dry matter ratio\\
+                                                        wm/dm -- wet matter to dry matter ratio\\
+                                                        c/dm  -- carbon to dry matter ratio\\
+                                                        \end{minipage}} &
+                                                                          \multicolumn{3}{l}{
+                                                                              \begin{minipage}[t]{0.50\columnwidth}
+                                                                                          HI\textsuperscript{area} -- harvest index per area\\
+                                                                                          HI\textsuperscript{prod} -- harvest index per production\\
+                                                                                          RS -- root:shoot ratio \end{minipage}} 
+  \end{tabular}
+  (\#tab:c2dm)
+  \end{table*}
+  ```
+
+  <!-- closs in AWMS - Table {#append:TableclossAWMS} -->
+
+  \subsection{Discussion}
+
+    ```{=latex}
+  \begin{figure}
+    \includegraphics[width=16cm]{../ResultNotebooks/Output/Images/reg_comparisonfigure} 
+    \caption{Modelled as well as data based estimation for climate zone specific SOC stock in GtC for the first 30 cm of soil aggregated over all land area: SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010. PNV denotes the potential natural vegetation state without considering human cropping activities, calculated as reference stock within our model. We use the climate zone specification of the IPCC \cite{eggleston_ipcc_2006}.}
+    \label{fig:SOCreg}
+  \end{figure}
+  ```
+
+    ```{=latex}
+  \begin{figure}
+    \includegraphics[width=16cm]{../ResultNotebooks/Output/Images/scenario_litter} 
+    \caption{Global $\Delta SOC$ for different litter parameterization choices: Whereas perennial grasses (scenario name \textit{LitterPNV-PerennialGrasses}) are given by the IPCC guidelines (\cite{calvo_buendia_ipcc_2019}), we used CENTURY configuration file for woody biomass parameterization (see tree.100 in \cite{century_model_2000}. \textit{LitterPNV-CenturyAverage}) forms the baseline parameterization as used within the study and is calculated as the average over all tree compartments and tree types equally. Litter parameterization has the ability to change global SOC stocks and SOC debt, but is robust concerning trends and sequestration rates.}
+    \label{fig:SOClitter}
+  \end{figure}
+  ```
+  
 output:
   bookdown::pdf_book:
     base_format: rticles::copernicus_article # for using bookdown features like \@ref()
@@ -74,10 +182,5 @@ output:
 
 ```{r child = 'conclusion.Rmd'}
 ```
-\newpage
-
-```{r child = 'appendix.Rmd'}
-```
-\newpage
 
 

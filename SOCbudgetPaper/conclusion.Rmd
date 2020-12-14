@@ -1,5 +1,16 @@
 \conclusions
 
-<!-- You can modify the section name with  `\conclusions[modified heading if necessary]`. --> 
+Our global SOC model is able to estimate spatially explicit SOC stocks, SOC debts and stock change factor considering agricultural management. It is -- to our knowledge -- the first study that quantifies the impact of time-variant and spatially explicit historical agricultural management on global SOC stocks.
 
-Outlook including perspective on mitigation (and soc enhancement in the future).
+With the extraction of C at harvest and little efforts to increase cropland SOC, these stocks are depleted in comparison to natural vegetation SOC stocks in most regions. The reduction of further deforestation for cropland expansion thus need to be stopped quickly. 
+
+However, our results also indicate that the changes in cropland management have led to increased SOC stocks in global cropland soils as a continuous trend since 1975. Even more, this trend of improved management on existing croplands more than overcompensates the depletion of SOC stocks on newly converted soils. The finding of this recovery of cropland SOC stocks challenges the assumption that cropland soils are a CO~2~ source. Under the assumption that cropland management is static in time, as typically assumed in other studies on cropland SOC stocks, we also find that cropland soils are a source of CO~2~, building trust in our method. 
+
+The estimated increase in cropland SOC is caused by changing agricultural management. The largest contribution to these dynamics comes from increased carbon inputs to soils from crop residues. Crop residue management can still be improved from the SOC perspective, e.g. by reducing shares of residue burning or further improvements in agricultural productivity. Similarly, other carbon-accumulating practices, such as the application of cover crops need to be included in studies of cropland SOC dynamics, if data on these practices become available.
+
+Our findings on sequestration rates are, however, still more than an order of magnitude lower than promoted by the 4 per mille initiative. We conclude, that while crop productivity gains, lead to co-benefits for SOC stocks, they are not enough to help meeting ambitious climate mitigation targets. Soil sequestration techniques in areas with low stock change factors still might focus on closing yield gaps, whereas other SOC conserving technologies (e.g. conservation agriculture, biochar application and agroforestry) and the avoidance of further deforestation need to be considered elsewhere.
+
+Reduced or avoided deforestation would not only reduce SOC losses on newly converted land, it would likely also require further productivity improvements in existing croplands to meet -- and thereby usually further reduce the SOC debt on croplands.
+
+Our results clearly demonstrate that agricultural management aspects need to be explicitly considered in global carbon assessments and models. That also implies, that we need better monitoring of agricultural practices to create this data, but also better accessibility of existing data. Our data-set and the MADRaT tool constitute a starting point for building comprehensive data sets on agricultural management aspects. 
+

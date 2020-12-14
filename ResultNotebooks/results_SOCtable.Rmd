@@ -9,19 +9,16 @@ output:
 ```{r load}
 library(mrcommons)
 library(mrvalidation)
-library(mrSOCbudget)
+library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev0.76baseline"
+rev       <- "rev16"
 outputdir <- "Output/"
 
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/Baselin", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie("Data/Baseline/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
+SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
 
 ```
 
@@ -29,42 +26,103 @@ Landuse    <- read.magpie("Data/Baseline/Landuse.rds")
 
 library(knitr)
 library(stats)
-library(luplot)
 library(reshape2)
 
-
-koeppen           <- readSource("Koeppen", subtype="cellular", convert="onlycorrect" )
-getNames(koeppen) <- tolower(getNames(koeppen))
-koepp2IPCC        <- toolGetMapping("mapping_koeppen_ipcc.csv", type = "sectoral")
-koepp2IPCC$koeppen_geiger <- tolower(koepp2IPCC$koeppen_geiger)
-climateIPCC       <- toolAggregate(koeppen, rel=koepp2IPCC, from="koeppen_geiger", to="ipcc_reduced", dim=3)
-climateIPCC       <- climateIPCC[,getYears(SoilCarbon),]
-
-rm(koeppen)
+years             <- findset("past")
+climateIPCC       <- readRDS("Data/histManagement/IPCC_reduced.rds")
   
-SOCDens           <- dimSums(SoilCarbon[,,c("actualstate","naturalstate")], dim=3.3) 
+### calculating stock change factors
+SOCDens           <- dimSums(SoilCarbon[,years,c("actualstate","naturalstate")], dim=3.3) 
 SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
 
-CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"]   * Landuse[,,"crop"], dim=1)/
-                     dimSums(climateIPCC * SOCDens[,,"natveg"] * Landuse[,,"crop"], dim=1)
+CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"][,,"actualstate"]   * Landuse[,years,"crop"], dim=1)/
+                     dimSums(climateIPCC * SOCDens[,,"natveg"][,,"naturalstate"] * Landuse[,years,"crop"], dim=1)
 
 getNames(CShare_ipcczone) <- gsub("_", " ", getNames(CShare_ipcczone))
+ 
+SCF_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,years,"naturalstate"])), 
+                             Year ~ Data1, value.var="Value", row.names=years), row.names = "Year")
+saveRDS(list(SCF_table = SCF_table), paste0(outputdir, "SFC_climatezone.rds"))
 
-print(collapseNames(CShare_ipcczone[,findset("past"),]))
-
-actualstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"actualstate"])), 
-                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
-
-naturalstate_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,findset("past"),"naturalstate"])), 
-                            Year ~ Data1, value.var="Value", row.names=findset("past")), row.names = "Year")
-
-
-saveRDS(list(naturalstate_table = naturalstate_table,
-             actualstate_table  = actualstate_table), paste0(outputdir, "SFC_climatezone.rds"))
-
-#knitr::kable(naturalstate_table, "latex",digits=2, label="naturalstate_table")
-#knitr::kable(actualstate_table, "markdown", digits=2)
 ```
+
+```{r plot climte map}
+
+climateIPCCr       <- readRDS("Data/histManagement/IPCC_reduced.rds")
+climateIPCC        <- readRDS("Data/histManagement/IPCC.rds")
+
+getNames(climateIPCC) <- c( "W-Temp Moist","W-Temp Dry","C-Temp Moist","C-Temp Dry","Polar Moist","Polar Dry","Boreal Moist",
+                            "Boreal Dry","Tropical Montane","Tropical Wet","Tropical Moist", "Tropical Dry")
+
+climateIPCC <- climateIPCC[,,c(5,7,3,1,6,8,4,2,9,11,10,12)]
+
+magpie_coord <- toolGetMapping("magpie_coord.rda", type="cell")
+climate2plot <- dimSums(climateIPCC*new.magpie("GLO",NULL,getNames(climateIPCC),c(1:12)), dim=3)
+climate2plot <- merge(as.data.frame(climate2plot), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+library("ggplot2")
+theme_set(theme_bw())
+library("sf")
+library("rnaturalearth")
+library("rnaturalearthdata")
+library(RColorBrewer)
+library(sp)
+library(rworldmap)
+library(oce) 
+library(scales)
+
+legend_size <- 10
+
+map.world <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+blucols          <- brewer.pal(9, "Blues")[2:5]
+viocols          <- brewer.pal(9, "Purples")[6:9]
+redcols          <- brewer.pal(9, "Reds")[6:8]
+orgcols          <- brewer.pal(9, "Oranges")[3]
+cols <- c(blucols,viocols,redcols,orgcols)
+
+
+ClimateZones <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(climate2plot, select=c("lon","lat","Value")), aes(x = lon, y = lat, fill = factor(Value))) +
+    scale_fill_manual(name = "", 
+                      values = cols, na.value = "white",
+                      breaks= c(1,2,3,4,5,6,7,8,9,10,11,12),
+                      labels = getNames(climateIPCC),
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+   scale_color_manual(values=cols) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          ) + guides(fill=guide_legend(nrow=2,byrow=FALSE))
+ClimateZones 
+ggsave(paste0(outputdir,"/Images/climatezones.png"), plot=ClimateZones , width = 20, height = 14, dpi = 300, units = "cm")
+```
+
+
+
+
+
+
 
 ```{r table ipcc scf}
 
@@ -73,49 +131,62 @@ library(stats)
 library(luplot)
 library(reshape2)
 
-CShare_ipcc <- IShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),unique(koepp2IPCC$ipcc_reduced), paste, sep="."))
+MShare_ipcc <- LShare_ipcc <-  HShare_ipcc <- new.magpie("GLO",NULL,outer(c("IPCC2006","IPCC2019"),
+                                                                          getNames(climateIPCC), paste, sep="."))
 
-CShare_ipcc <- IShare_ipcc <- new.magpie("GLO","y2010",outer(c("IPCC2006","IPCC2019"),c("tropical_moist","tropical_dry","temperate_dry","temperate_moist"), paste, sep="."))
+MShare_ipcc <- add_dimension(MShare_ipcc, dim=3.2, nm="medium.invariant", add="input.year")
+LShare_ipcc <- add_dimension(LShare_ipcc, dim=3.2, nm="low.invariant",    add="input.year")
+HShare_ipcc <- add_dimension(HShare_ipcc, dim=3.2, nm="high.invariant",   add="input.year")
 
-CShare_ipcc <- add_dimension(CShare_ipcc, dim=3.2, nm="default", add="subsystem")
-IShare_ipcc <- add_dimension(IShare_ipcc, dim=3.2, nm="low_input", add="subsystem")
+MShare_ipcc[,,"IPCC2006.medium"][,,"tropical_moist"]  <- "0.48"
+MShare_ipcc[,,"IPCC2006.medium"][,,"tropical_dry"]    <- "0.58--0.64" 
+MShare_ipcc[,,"IPCC2006.medium"][,,"temperate_moist"] <- "0.69"
+MShare_ipcc[,,"IPCC2006.medium"][,,"temperate_dry"]   <- "0.80"
 
-CShare_ipcc[,,"IPCC2006.default.tropical_moist"]  <- "0.48"
-CShare_ipcc[,,"IPCC2006.default.tropical_dry"]    <- "0.58-0.64" 
-CShare_ipcc[,,"IPCC2006.default.temperate_moist"] <- "0.69"
-CShare_ipcc[,,"IPCC2006.default.temperate_dry"]   <- "0.80"
-
-CShare_ipcc[,,"IPCC2019.default.tropical_moist"]  <- "0.83"
-CShare_ipcc[,,"IPCC2019.default.tropical_dry"]    <- "0.92" 
-CShare_ipcc[,,"IPCC2019.default.temperate_moist"] <- "0.69-0.70"
-CShare_ipcc[,,"IPCC2019.default.temperate_dry"]   <- "0.76-0.77"
+MShare_ipcc[,,"IPCC2019.medium"][,,"tropical_moist"]  <- "0.83"
+MShare_ipcc[,,"IPCC2019.medium"][,,"tropical_dry"]    <- "0.92" 
+MShare_ipcc[,,"IPCC2019.medium"][,,"temperate_moist"] <- "0.69--0.70"
+MShare_ipcc[,,"IPCC2019.medium"][,,"temperate_dry"]   <- "0.76--0.77"
 
 #Low input regime factor
-IShare_ipcc[,,"IPCC2006.low_input.tropical_moist"]  <- "0.44"
-IShare_ipcc[,,"IPCC2006.low_input.tropical_dry"]    <- "0.55-0.61" 
-IShare_ipcc[,,"IPCC2006.low_input.temperate_moist"] <- "0.66"
-IShare_ipcc[,,"IPCC2006.low_input.temperate_dry"]   <- "0.74"
+LShare_ipcc[,,"IPCC2006.low"][,,"tropical_moist"]  <- "0.44"
+LShare_ipcc[,,"IPCC2006.low"][,,"tropical_dry"]    <- "0.55--0.61" 
+LShare_ipcc[,,"IPCC2006.low"][,,"temperate_moist"] <- "0.66"
+LShare_ipcc[,,"IPCC2006.low"][,,"temperate_dry"]   <- "0.74"
 
-IShare_ipcc[,,"IPCC2019.low_input.tropical_moist"]  <- "0.76"
-IShare_ipcc[,,"IPCC2019.low_input.tropical_dry"]    <- "0.87" 
-IShare_ipcc[,,"IPCC2019.low_input.temperate_moist"] <- "0.66-0.67"
-IShare_ipcc[,,"IPCC2019.low_input.temperate_dry"]   <- "0.70-0.71"
+LShare_ipcc[,,"IPCC2019.low"][,,"tropical_moist"]  <- "0.76"
+LShare_ipcc[,,"IPCC2019.low"][,,"tropical_dry"]    <- "0.87" 
+LShare_ipcc[,,"IPCC2019.low"][,,"temperate_moist"] <- "0.66--0.67"
+LShare_ipcc[,,"IPCC2019.low"][,,"temperate_dry"]   <- "0.70--0.71"
 
+#High input regime factor
+HShare_ipcc[,,"IPCC2006.high"][,,"tropical_moist"]  <- "0.53"
+HShare_ipcc[,,"IPCC2006.high"][,,"tropical_dry"]    <- "0.60--0.67" 
+HShare_ipcc[,,"IPCC2006.high"][,,"temperate_moist"] <- "0.77"
+HShare_ipcc[,,"IPCC2006.high"][,,"temperate_dry"]   <- "0.83"
 
+HShare_ipcc[,,"IPCC2019.high"][,,"tropical_moist"]  <- "0.92"
+HShare_ipcc[,,"IPCC2019.high"][,,"tropical_dry"]    <- "0.96" 
+HShare_ipcc[,,"IPCC2019.high"][,,"temperate_moist"] <- "0.77--0.78"
+HShare_ipcc[,,"IPCC2019.high"][,,"temperate_dry"]   <- "0.79--0.80"
+
+CShare_ipcc <- mbind(LShare_ipcc,MShare_ipcc,HShare_ipcc)
 getNames(CShare_ipcc) <- gsub("_", " ", getNames(CShare_ipcc))
-getNames(IShare_ipcc) <- gsub("_", " ", getNames(IShare_ipcc))
 
-comparison <- mbind(CShare_ipcc, IShare_ipcc,
-                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1990","naturalstate"]),"y2010"),
-                                  nm="SOC budget.1990",add="model.year"),2),
-                    round(add_dimension(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),
-                                  nm="SOC budget.2010",add="model.year"),2))
+comparison <- mbind(CShare_ipcc, 
+                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1990","naturalstate"]),NULL),
+                                  nm="This Study.hist.1990",add="model.input.year"),2),
+                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),NULL),
+                                  nm="This Study.hist.2010",add="model.input.year"),2))
 
 #print(dimOrder(comparison[,,sort(getNames(comparison,dim=1))], c(2,1)))
 
 comparison_table  <- data.frame(dcast(as.data.frame(collapseNames(comparison)), 
-                           Data1 + Data2 ~ Data3, value.var="Value", 
+                           Data1 + Data2 + Data3 ~ Data4, value.var="Value", 
                             row.names=levels(as.data.frame(comparison)$Data1)))
+
+colnames(comparison_table) <- gsub("\\.", " ", colnames(comparison_table))
+colnames(comparison_table)[1:3] <- c("Source", "Input", "Year")
 
 saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"SFC_comparison.rds"))
 
@@ -125,16 +196,12 @@ saveRDS(list(comparison_table = comparison_table), paste0(outputdir,"SFC_compari
 ```{r kable2image}
 library(kableExtra)
 
-table <- readRDS("Output/SFC_comparison.rds")
-colnames(table[[1]]) <- gsub("\\.", " ", colnames(table[[1]]))
-colnames(table[[1]])[1] <- "Source"
-colnames(table[[1]])[2] <- "Subsystem/Year"
-save_kable(kable_styling(kable(table$comparison_table, "latex", digit=2), latex_options = c("striped", "scale_down")), 
-         file="Output/Images/TableSCF_comparison.png")
+getwd()
+table <- readRDS(paste0(outputdir,"/SFC_comparison.rds"))   
 
-table <- readRDS("Output/SFC_climatezone.rds")
-colnames(table[[1]]) <- gsub("_", " ", colnames(table[[1]]))
-colnames(table[[1]][1]) <- ""
-as_image(kable_styling(kable(table$naturalstate_table[3:10,], "latex", digit=2), latex_options = c("striped", "scale_down")), 
-         width=4, file="Output/Images/TableSCF_timeline.png")
+save  <- kbl(table$comparison_table, latex = T, digit=2)%>%
+            kable_styling(latex_options = c("scale_down","striped"), full_width = F)%>%
+              row_spec(7:8, bold=TRUE)
+
+save_kable(save, file="Output/Images/TableSCF_comparison.png")
 ```
