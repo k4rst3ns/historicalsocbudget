@@ -4,7 +4,7 @@ journal: "`r rticles::copernicus_journal_abbreviations(journal_name = 'communica
 author:
   - given_name: Kristine
     surname: Karstens
-    affiliation: 1
+    affiliation: {1,3}
     email: kristine.karstens@pik-potsdam.de
     orcid: https://orcid.org/0000-0002-5860-9789
     corresponding: true
@@ -36,6 +36,7 @@ author:
   - given_name: Pete
     surname: Smith
     affiliation: 2
+    orcid: https://orcid.org/0000-0002-3784-1124
   - given_name: Isabelle
     surname: Weindl
     affiliation: 1
@@ -69,12 +70,12 @@ copyrightstatement: |
   The author's copyright for this publication is transferred to institution/company.
 availability:
   codedata: |
-   We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons \cite{bodirsky_mrcommons_2020} for the management related functions, github.com/pik-piam/mrsoil \cite{karstens_mrsoil_2020} for soil dynamic related functions and  github.com/pik-piam/mrvalidation \cite{bodirsky_mrvalidation_2020} for validation data. All libraries are based on the MADRaT package at github.com/pik-piam/madrat \cite{dietrich_madrat_2020}, a framework which aims to improve reproducibility and transparency in data processing. Model results are accessable under (zenode_link). Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
+   We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons \cite{bodirsky_mrcommons_2020} for the management related functions, github.com/pik-piam/mrsoil \cite{karstens_mrsoil_2020} for soil dynamic related functions and  github.com/pik-piam/mrvalidation \cite{bodirsky_mrvalidation_2020} for validation data. All libraries are based on the MADRaT package at github.com/pik-piam/madrat \cite{dietrich_madrat_2020}, a framework which aims to improve reproducibility and transparency in data processing. Model results including C input data are accessable under https://doi.org/10.5281/zenodo.4320663. Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
 authorcontribution: |
-  KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback. All authors discussed the results and commented on the manuscript.
+  KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback to outline of the study. All authors discussed the results and commented on the manuscript.
   
 acknowledgements: |
-  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Thanks to the rticles contributors as well. The authors thank for the data provided by FAOSTAT and LUH2v2. The work of Kristine Karstens was funded by the DFG Priority Program “Climate Engineering: Risks, Challenges, Opportunities?” (SPP 1689) and specifically the CEMICS2 project (grant no. ED78/3-2). The research leading to these results has received funding from the European Union’s Horizon 2020 research and innovation program under grant agreement no. 776479 (COACCH) and . This work was also supported by    funded by the German Federal Ministry of Education and Research (BMBF).
+  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Additional thanks to the rticles contributors for providing a R Markdown template. The authors thank for the data provided by FAOSTAT and LUH2v2. The work of KK was funded by the DFG Priority Program “Climate Engineering: Risks, Challenges, Opportunities?” (SPP 1689) and specifically the CEMICS2 project (grant no. ED78/3-2). The research leading to these results has received funding for BLB from the European Union’s Horizon 2020 research and innovation program under grant agreement no. 776479 (COACCH) and  no. 821010 (CASCADES). The work of SR, JS and IW was also supported by CLIMASTEPPE (01DJ8012), EXIMO (01LP1903D) and FOCUS (031B0787B) funded by the German Federal Ministry of Education and Research (BMBF). The input of PS, MK and MD contributes to the Soils-R-GGREAT project (NE/P019455/1) and CIRCASA (EU H2020; grant agreement no. 774378).
   
 appendix: |
 

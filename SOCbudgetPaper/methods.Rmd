@@ -35,11 +35,11 @@ Carbon inputs for cropland are below- and above-ground residues left or returned
     \middlehline
     \multirow{3}{*}{Cropland} & above-ground residues, & \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
                                                                         \cite{faostat_faostat_2016}, \\
-                                                                        \cite{schaphoff_lpjml4_2018},\\
+                                                                        LPJmL4 \cite{schaphoff_lpjml4_2018},\\
                                                                         \cite{weindl_livestock_2017} \end{minipage}} & 
                                                         \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
                                                                         LG:C generic values according to Table 5.5B,\\
-                                                                        5.5C in \cite{calvo_buendia_ipcc_2019},\\
+                                                                        5.5C in IPCC \cite{calvo_buendia_ipcc_2019},\\
                                                                         crop-specific N:C from \cite{bodirsky_n2o_2012}
                                                                         \end{minipage}} \\
                               & below-ground residues, &  &  \\
@@ -47,7 +47,8 @@ Carbon inputs for cropland are below- and above-ground residues left or returned
                               \hline
     Natural vegetation        & annual litterfall &  \cite{schaphoff_lpjml4_2018}
                               & \begin{minipage}[t]{0.35\columnwidth}\raggedright\strut 
-                                  \cite{calvo_buendia_ipcc_2019} (CENTURY parameterization) \strut \end{minipage}\tabularnewline
+                                  IPCC \cite{calvo_buendia_ipcc_2019} and\\ 
+                                  CENTURY (\cite{century_model_2000}) \strut \end{minipage}\tabularnewline
    \bottomhline
    \end{tabular}
    \label{tab:datasourceinputs}
@@ -227,7 +228,7 @@ Depending on the feed system we assume manure to be handled in four different wa
 All manure originated from pasture feed intake is excreted directly on pastures and rangelands (pasture grazing), deducting manure collected as fuel.
 Whereas for low-income countries, we adopt a share of 25% of crop residues in feed intake directly consumed and excreted on crop fields (stubble grazing), we do not consider any stubble grazing in high-income countries; middle-income countries see linearly interpolated shares depending on their per-capita income.
 For all other feed items, we assume the manure to be stored in animal waste management systems associated with livestock housing. 
-To estimate the carbon actually returned to the soil, we account for carbon losses during storage, where return shares depend on different animal waste management and grazing systems. Whereas we assume no losses for pasture and stubble grazing, we consider that the manure collected as fuel is not returned to the fields. For manure stored in different animal waste management systems we compiled carbon loss rates depending on the different systems and the associated nitrogen loss rates as specified in [@bodirsky_n2o_2012] (see Sect. \@ref(append:TableclossAWMS) for more details). We limit high application shares at $10\unit{tC\,ha}^{-1}$ to correct for outliers.
+To estimate the carbon actually returned to the soil, we account for carbon losses during storage, where return shares depend on different animal waste management and grazing systems. Whereas we assume no losses for pasture and stubble grazing, we consider that the manure collected as fuel is not returned to the fields. For manure stored in different animal waste management systems we compiled carbon loss rates (see calcClossConfinement.R in [@bodirsky_mrcommons_2020] for more details) depending on the different systems and the associated nitrogen loss rates as specified in [@bodirsky_n2o_2012]. We limit high application shares at $10\unit{tC\,ha}^{-1}$ to correct for outliers.
 
 ### Irrigation {#sec:irrigation}
 

@@ -1,11 +1,11 @@
 # Results
 
-Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in [@karstens_socbudgetdata_2020]. In the following, the most important results (see [@karstens_socbudgetpost_2020] for post-processing script) are summarized.
+Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in [@karstens_model_2020]. In the following, the most important results (see [@karstens_result_2020] for post-processing script) are summarized.
 
 ## SOC distribution and depletion
 
 ```{r captionSOCmaps, echo=FALSE}
-captionSOCmaps <- "(a): Distribution of total global SOC stocks for the first 30 cm on cropland shows high carbon stocks in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state showing different hot spots of SOC dynamics. Whereas absolute losses $\\Delta SOC$ are often highest in temperate dry regions, relative losses $F^\\mathrm{SCF}$ are often larger in tropical moist areas. (d): $\\Delta SOC$ between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the the period 1975--2010. "
+captionSOCmaps <- "(a): Distribution of total global SOC stocks for the first 30 cm on cropland:  Carbon stocks are large in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state identify different hotspots of SOC dynamics. Whereas absolute losses $\\Delta SOC$ are often highest in temperate dry regions, relative losses $F^\\mathrm{SCF}$ are often larger in tropical moist areas. (d): $\\Delta SOC$ between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the the period 1975--2010. "
 ```
 
 ```{r SOCmaps, out.width = "18cm", fig.cap = captionSOCmaps, echo=FALSE, fig.pos="h"}
@@ -40,7 +40,7 @@ We analyze the relative impact of individual management aspects by comparing the
 The strong impact of almost doubling C inputs from crop residue biomass over a period of 35 years on agricultural SOC stocks is shown in Fig. \@ref(fig:SOCscen)(b).
 
 ```{r captionSOCscen, echo=FALSE}
-captionSOCscen <- "(a) Global $\\Delta SOC$ in GtC for different scenarios deviating from historic argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes."
+captionSOCscen <- "(a) Global $\\Delta SOC$ in GtC for different management scenarios: The stylized scenarios devate from historic argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes."
 ```
 
 ```{r SOCscen, out.width="14cm", fig.cap = captionSOCscen, echo=FALSE}
@@ -48,7 +48,7 @@ captionSOCscen <- "(a) Global $\\Delta SOC$ in GtC for different scenarios devia
 knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_horiz.png")
 ```
 
-Our sensitivity analysis shows that the management impact is robust to the initialization of SOC stocks at the beginning of the spin-up phase (Fig. \@ref(fig:SOcinit)). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The $\Delta SOC$ estimation almost halves (from ~26 GtC to ~14 GtC), as does the decrease in $\Delta SOC$ for the period of 1975--2010 (from ~4 GtC to ~2.5 GtC) for the Inital-natveg scenario.
+Our sensitivity analysis shows that the management impact is robust to the initialization of SOC stocks at the beginning of the spin-up phase (Fig. \@ref(fig:SOCinit)). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The $\Delta SOC$ estimation almost halves (from ~26 GtC to ~14 GtC), as does the decrease in $\Delta SOC$ for the period of 1975--2010 (from ~4 GtC to ~2.5 GtC) for the Inital-natveg scenario.
 
 ```{r captionSOCinit, echo=FALSE}
 captionSOCinit <- "Global $\\Delta SOC$ for different SOC initialization choices in the start year 1901: Starting the spin-up phase with natural steady-state SOC under vegetation without any human cropping activities (Initial-natveg) lead to a smaller $\\Delta SOC$ in 1975 and a less steeper increase till 2010, as compared to initialzing with steady-state SOC stocks under historic land-use."

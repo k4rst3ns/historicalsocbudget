@@ -234,7 +234,7 @@ glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))
 glo_SOCStock <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"stock"])
 
 litter_scen <-  c(`LitterPNV-Mean` = "histManagement",
-                  `LitterPNV-grass`= "LitterPNV-PerennialGrasses", 
+                  `LitterPNV-Grass`= "LitterPNV-PerennialGrasses", 
                   `LitterPNV-AASS` = "LitterPNV-AASS", 
                   `LitterPNV-BRCF` = "LitterPNV-BRCF", 
                   `LitterPNV-MTCF` = "LitterPNV-MTCF", 

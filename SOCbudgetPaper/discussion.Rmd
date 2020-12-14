@@ -47,7 +47,7 @@ With regard to the time trend, our study shows the substantial impact of changin
 The world's SOC stock and its changes are highly uncertain, which is seen in the wide range of global SOC stock estimates for the first 30 cm of the soil profile ([@batjes_harmonized_2016], [@hengl_soilgrids250m_2017], [@fao_global_2018], [@schaphoff_lpjml4_2018-1]) in Table \@ref(fig:SOCglo)).
 
 ```{r captionSOCglo, echo=FALSE}
-captionSOCglo <- "Modeled as well as data based estimation for global SOC stock in GtC for the first 30 cm of soil aggregated over all land area. Note that SoilGrids, GSOC and WISE do not consider land-use as well as changes over time and rely on soil profile data gather over a long period of time. This makes it hard to pinpoint a specific year for these SOC estimations. In this context they will be compared to modeled data from LPJmL4 for potential natural vegetation and this study for the year 2010."
+captionSOCglo <- "Modeled as well as data based estimation for global SOC stock in GtC for the first 30 cm of soil aggregated over all land area: Note that SoilGrids, GSOC and WISE do not consider land-use as well as changes over time and rely on soil profile data gather over a long period of time. This makes it hard to pinpoint a specific year for these SOC estimations. In this context they will be compared to modeled data from LPJmL4 for potential natural vegetation and this study for the year 2010."
 ```
 
 ```{r SOCglo, out.width = "8cm", fig.cap = captionSOCglo, echo=FALSE, fig.pos="h"}
