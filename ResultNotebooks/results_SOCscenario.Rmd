@@ -61,7 +61,7 @@ saveRDS(mbind(add_dimension(collapseNames(glo_SOCStock[,,"actualstate"]), dim=3.
 
 CarbonInput  <- read.magpie(paste0("Data/histManagement/CarbonInput.rds"))
 Landuse      <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
-glo_SOCInput <- collapseNames(dimSums(CarbonInput[,,"totalC"] * Landuse, dim=c(1)))
+glo_SOCInput <- collapseNames(dimSums(CarbonInput[,,"totalC"] * Landuse, dim=c(1)))/collapseNames(dimSums(Landuse, dim=c(1)))
 
 ci2plot <- c('Above Ground Residues'="ag.crop",          
              'Below Ground Residues'="bg.crop",          
@@ -117,7 +117,7 @@ hSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010
 
 hSOCinput <- ggplot(data= as.data.frame(glo_SOCInput[,seq(1975,2010,1),c(3:4,2,1)]),  aes(x = Year, y = Value, group=Data1, fill=Data1)) + geom_area() +
   labs( x = "Year", 
-        y = "Global SOC input\n in GtC",
+        y = "SOC input in tC per ha\n (global average)",
         fill="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous() +
@@ -147,7 +147,7 @@ vSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1974,2010
 
 vSOCinput <- ggplot(data= as.data.frame(glo_SOCInput[,seq(1975,2010,1),c(3:4,2,1)]),  aes(x = Year, y = Value, group=Data1, fill=Data1)) + geom_area() +
   labs( x = "Year", 
-        y = "Global SOC inputs in GtC",
+        y = "SOC input in tC per ha\n (global average)",
         fill="") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous() +
