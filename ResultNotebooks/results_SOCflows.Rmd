@@ -11,7 +11,7 @@ library(magclass)
 library(madrat)
 library(magpiesets)
 
-outputdir <- "Output/Images"
+outputdir <- "Output/"
 revfolder <- "Data/histManagement/"
 
 ```
@@ -28,7 +28,9 @@ CarbonResidues   <- readRDS(paste0(revfolder,"CarbonResidues.rds"))[,year,]
 CarbonHarvest    <- readRDS(paste0(revfolder,"Crop_Harvest.rds"))[,year,]
 CarbonVegetation <- readRDS(paste0(revfolder,"CarbonVegetation.rds"))[,years,]
 SoilCarbonOut    <- readRDS(paste0(revfolder,"SoilCarbon.rds"))[,years,]
-CarbonInflow      <- readRDS(paste0(revfolder,"CarbonInflow.rds"))[,years,]
+CarbonInflow     <- readRDS(paste0(revfolder,"CarbonInflow.rds"))[,years,]
+CarbonDecay      <- readRDS(paste0(revfolder,"Decay.rds"))[,year,]
+
 
 Landuse          <- readRDS(paste0(revfolder,"Landuse.rds"))[,years,]
 LanduseChange    <- readRDS(paste0(revfolder,"LanduseChange.rds"))[,years,]
@@ -129,37 +131,39 @@ SOCsub            <- grepSpaceTime(SoilCarbonOut[,,"actualstate"]*Landuse)
 SOCtot            <- dimSums(SOCsub, dim=3.2)
 
 TotalSOCBudget    <- mbind(TotalSOCBudget,
-                           setNames(SOCsub[,,"natveg"], gsub("\\.","_",getNames(SOCsub))),
-                           SOCtot)
+                           setNames(SOCsub, gsub("\\.","_", getNames(SOCsub))),
+                           setNames(SOCtot, paste0("soc_", getNames(SOCtot))))
 
-CarbonIn          <- grepSpaceTime(SteadyState[,,"alpha_in"]*Landuse)
+CarbonIn          <- grepSpaceTime(CarbonInflow[,,"crop"]*Landuse[,,"crop"])
+CarbonIn          <- mbind(CarbonIn[,,"ag"],CarbonIn[,,"bg"],
+                           add_dimension(dimSums(
+                             CarbonIn[,,c("livst_chick","livst_egg","livst_milk","livst_pig","livst_rum")], dim=3.1),
+                              add="subpool", nm="manure"))
 
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(CarbonIn, gsub("\\.","_", getNames(CarbonIn))))
+CarbonInTot       <- dimSums(CarbonIn, dim=3.2)
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(ManureInput - CarbonInTot[,,"manure"], "manure_decay"),
+                           setNames(ResidueInput[,,"ag"] - CarbonInTot[,,"ag"], "ag_decay"),
+                           setNames(ResidueInput[,,"bg"] - CarbonInTot[,,"bg"], "bg_decay"))
+
+SOCIn             <- dimSums(CarbonInTot, dim=3)
+SOCtransfer       <- CarbonToEff[,,"crop"] 
+SOCPrev           <- dimSums(grepSpaceTime(setYears(
+                       SoilCarbonOut[,1,"actualstate"][,,"crop"]*Landuse[,1,"crop"], year)), dim=3)
+SOCLoss           <- SOCPrev - SOCtot[,,"crop"] + SOCtransfer + SOCIn 
+
+TotalSOCBudget    <- mbind(TotalSOCBudget,
+                           setNames(SOCLoss, "soc_decay"))
+
+write.magpie(TotalSOCBudget, paste0(outputdir,"TotalSOCBudget.cs3"))
 
 ```
 
 ```{r}
-####### delete when new output on decay is ready
-# Decay
 
-ActiveDecay        <- mbind(setNames(calcOutput("ActiveDecay",  landtype="crop",   aggregate = FALSE),"crop"),
-                              setNames(calcOutput("ActiveDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
-SlowDecay          <- mbind(setNames(calcOutput("SlowDecay",  landtype="crop",   aggregate = FALSE),"crop"),
-                              setNames(calcOutput("SlowDecay",  landtype="natveg", aggregate = FALSE),"natveg"))
-PassiveDecay       <- mbind(setNames(calcOutput("PassiveDecay", landtype="crop",   aggregate = FALSE),"crop"),
-                              setNames(calcOutput("PassiveDecay", landtype="natveg", aggregate = FALSE),"natveg"))
-decay <- calcOutput("Decay", aggregate = FALSE)
-subpools     <- c("active","slow","passive")
-names        <- as.vector(outer(getNames(Landuse), subpools, paste, sep="."))
-Decay <- new.magpie(getCells(Landuse), getYears(Landuse), names, fill = 0)
-
-Decay[,,"active"]                  <- ActiveDecay
-Decay[,,"slow"]                    <- SlowDecay
-Decay[,,"passive"]                 <- PassiveDecay
-
-rm(ActiveDecay, SlowDecay, PassiveDecay)
-
-#
-####### end delete
 
 DecayCut          <- Decay
 DecayCut[Decay>1] <- 1 

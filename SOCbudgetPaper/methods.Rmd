@@ -112,7 +112,7 @@ with $A_{lu}$ being the land-use type specific areas, $AR_{lu}$ and $AE_{lu}$ th
 $SOC$ converge towards the calculated steady-state stock $SOC^{\mathrm{eq}}$ for each grid cell $i$, each annual time step $t$, each land-use type $lu$ and each sub-pool $sub$ like
 
 \begin{equation}
-SOC_{i,t,sub,lu} = SOC_{i,t-1,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t-1,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
+SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t^*,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
 (\#eq:SOCstate)
 \end{equation}
 
@@ -120,7 +120,7 @@ Note that the decay rates have to be multiplied by one year ($1a$) to form a dim
 Reformulating this equation, we obtain a mass balance equation as follows
 
 \begin{equation}
-SOC_{i,t,sub,lu} = SOC_{i,t-1,sub,lu} - \underbrace{SOC_{i,t-1,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}_{\text{outflow}} + \overbrace{SOC^{\mathrm{eq}}_{i,t,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}^{\text{input (using equation (1))}}.
+SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} - \underbrace{SOC_{i,t^*,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}_{\text{outflow}} + \overbrace{SOC^{\mathrm{eq}}_{i,t,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}^{\text{input (using equation (1))}}.
 (\#eq:steadystate2budget)
 \end{equation}
 

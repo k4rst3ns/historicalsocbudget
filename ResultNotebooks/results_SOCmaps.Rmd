@@ -6,16 +6,11 @@ output:
 ---
 
 ```{r load}
-library(mrcommons)
-library(mrvalidation)
-library(mrsoil)
+library(magclass)
+library(madrat)
 library(magpiesets)
 
-rev <- "rev0.11"
-
-setConfig(cachefolder  = paste0("/home/kristine/mnt/rd3mod/inputdata/cache/", rev), forcecache = TRUE)
-setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+rev <- "rev16"
 
 filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
 
@@ -42,24 +37,14 @@ Calc global numbers
 
 ```{r Carbon Emissions (glo)}
 
-library(ggplot2)
+library(reshape2)
+
+years <- seq(1975,2010,1)
 
 SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
-SOCStock        <- dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2)
+SOCStock        <- dimSums(dimSums(SoilCarbon[,years,][,,"state",pmatch=TRUE], dim=3.3)* Landuse[,years,], dim=3.2)
 glo_SOCStock    <- dimSums(SOCStock, dim=1) 
 glo_SOCEmission <- (glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
-
-SoilCarbon <- SoilCarbon[,findset("past"),]
-Landuse    <- Landuse[,findset("past"),]
-  
-```
-
-
-Plot cellular maps
-
-
-```{r plot density maps}
-
 
 cropland_dens    <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)
 cropland_dens[Landuse[,,"crop"]==0] <- NA
@@ -74,28 +59,6 @@ magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
 share2plot    <- merge(as.data.frame(cropland_share), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
 increase2plot <- merge(as.data.frame(cropland_increase), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
 density2plot  <- merge(as.data.frame(cropland_dens), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
-
-
-# png(paste0(outputdir,"CDens_2010.png"), width = 1280, height = 720, res = 108)
-# luplot::plotmap2(cropland_dens[,"y2010",], legend_range = c(0,300), lowcol = cols[1], midcol = cols[4], highcol = cols[7], ncol=7, legend_discrete = TRUE)
-# dev.off()
-# 
-# # png(paste0(outputdir,"CShare_1965.png"),width = 1280, height = 720, res = 108)
-# # luplot::plotmap(cropland_share[,"y1965",], legend_range = c(0,2), legend_colours = cols, main="C_share on Cropland 1965")
-# # dev.off()
-# 
-# png(paste0(outputdir,"CShare_2010.png"), width = 1280, height = 720, res = 108)
-# luplot::plotmap(cropland_share[,"y2010",], legend_range = c(0,2), legend_colours = cols, main="Stock Change Factor on Cropland 2010")
-# dev.off()
-# 
-# # png(paste0(outputdir,"CIncrease_1965.png"),width = 1280, height = 720, res = 108)
-# # luplot::plotmap(cropland_increase[,"y1965",], legend_range = c(-80,80), legend_colours = cols, main="Absoulte C change on Cropland 1965")
-# # dev.off()
-# 
-# png(paste0(outputdir,"CIncrease_2010.png"),width = 1280, height = 720, res = 108)
-# luplot::plotmap(cropland_increase[,"y2010",], legend_range = c(-80,80), legend_colours = cols, legend_title = "tC/ha", main="Absoulte C change on Cropland 2010")
-# dev.off()
-
 
 ```
 
@@ -148,7 +111,7 @@ squish_trans <- function(from, to, factor) {
   return(trans_new("squished", trans, inv))
 }
 
-SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission[,seq(1975,2010,5),])[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
+SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission)[,c(3,6)],  aes(x = Year, y = Value, group=1)) +
   labs( x = "Year", 
         y = expression(paste('Global \u0394SOC in GtC'))) +
   scale_x_discrete(breaks=seq(1975,2010,5)) +

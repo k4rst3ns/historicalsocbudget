@@ -272,7 +272,7 @@ with \(A_{lu}\) being the land-use type specific areas, \(AR_{lu}\) and \(AE_{lu
 \(SOC\) converge towards the calculated steady-state stock \(SOC^{\mathrm{eq}}\) for each grid cell \(i\), each annual time step \(t\), each land-use type \(lu\) and each sub-pool \(sub\) like
 
 \begin{equation}
-SOC_{i,t,sub,lu} = SOC_{i,t-1,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t-1,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
+SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t^*,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
 \label{eq:SOCstate}
 \end{equation}
 
@@ -280,7 +280,7 @@ Note that the decay rates have to be multiplied by one year (\(1a\)) to form a d
 Reformulating this equation, we obtain a mass balance equation as follows
 
 \begin{equation}
-SOC_{i,t,sub,lu} = SOC_{i,t-1,sub,lu} - \underbrace{SOC_{i,t-1,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}_{\text{outflow}} + \overbrace{SOC^{\mathrm{eq}}_{i,t,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}^{\text{input (using equation (1))}}.
+SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} - \underbrace{SOC_{i,t^*,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}_{\text{outflow}} + \overbrace{SOC^{\mathrm{eq}}_{i,t,sub,lu} \cdot k_{i,t,sub,lu} \cdot 1\unit{a}}^{\text{input (using equation (1))}}.
 \label{eq:steadystate2budget}
 \end{equation}
 
@@ -497,7 +497,7 @@ Moreover, the exclusive focus on croplands ignores LUC emission on other land-us
 To validate our modeled SOC stocks and stock changes under management, we compare our results to default IPCC stock changes factors of 2006 (\citep{eggleston_ipcc_2006} and their refinements in 2019 \citep{calvo_buendia_ipcc_2019}). Both estimates are based on measurement data for croplands (see Table \ref{tab:SCFglo}). To allow for comparison, we aggregate our stock change factors to the four IPCC climate zones (Fig. \ref{fig:CLIMzone}).
 
 \% latex table generated in R 3.6.3 by xtable 1.8-4 package
-\% Mon Dec 14 03:39:00 2020
+\% Mon Dec 14 05:34:22 2020
 
 \begin{table}[ht]
 \centering
