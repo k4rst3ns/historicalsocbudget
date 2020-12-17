@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  14 DEC 2020 23:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  17 DEC 2020 22:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1034,7 +1034,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [11]
-<../ResultNotebooks/Output/Images/4panelfigure.png, id=386, 569.0058pt x 398.20
+<../ResultNotebooks/Output/Images/4panelfigure.png, id=358, 569.0058pt x 398.20
 77pt>
 File: ../ResultNotebooks/Output/Images/4panelfigure.png Graphic file (type png)
 
@@ -1050,94 +1050,92 @@ Overfull \hbox (8.53583pt too wide) in paragraph at lines 432--432
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12] [13 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>]
-<../ResultNotebooks/Output/Images/CarbonBudget.png, id=412, 680.81625pt x 647.9
+[12]
+<../ResultNotebooks/Output/Images/CarbonBudget.png, id=375, 680.81625pt x 647.9
 6625pt>
 File: ../ResultNotebooks/Output/Images/CarbonBudget.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/CarbonBudget.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/CarbonBudget.png  use
-d on input line 448.
+d on input line 446.
 (pdftex.def)             Requested size: 455.24408pt x 433.27495pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<../ResultNotebooks/Output/Images/scenario_horiz.png, id=416, 426.6339pt x 284.
+[13 <../ResultNotebooks/Output/Images/4panelfigure.png (PNG copy)>] [14 <../Res
+ultNotebooks/Output/Images/CarbonBudget.png>]
+<../ResultNotebooks/Output/Images/scenario_horiz.png, id=393, 426.6339pt x 284.
 5029pt>
 File: ../ResultNotebooks/Output/Images/scenario_horiz.png Graphic file (type pn
 g)
 <use ../ResultNotebooks/Output/Images/scenario_horiz.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_horiz.png  u
-sed on input line 458.
+sed on input line 455.
 (pdftex.def)             Requested size: 398.33858pt x 265.63551pt.
-<../ResultNotebooks/Output/Images/scenario_init.png, id=418, 284.5029pt x 170.5
+[15 <../ResultNotebooks/Output/Images/scenario_horiz.png (PNG copy)>]
+<../ResultNotebooks/Output/Images/scenario_init.png, id=403, 284.5029pt x 170.5
 572pt>
 File: ../ResultNotebooks/Output/Images/scenario_init.png Graphic file (type png
 )
 <use ../ResultNotebooks/Output/Images/scenario_init.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_init.png  us
-ed on input line 464.
+ed on input line 462.
 (pdftex.def)             Requested size: 284.52756pt x 170.57239pt.
-[14] [15 <../ResultNotebooks/Output/Images/CarbonBudget.png>] [16 <../ResultNot
-ebooks/Output/Images/scenario_horiz.png (PNG copy)>] [17 <../ResultNotebooks/Ou
-tput/Images/scenario_init.png (PNG copy)>] [18] [19]
-<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=549, 284.5029pt 
+[16 <../ResultNotebooks/Output/Images/scenario_init.png (PNG copy)>] [17] [18] 
+[19]
+<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=508, 284.5029pt 
 x 113.7048pt>
 File: ../ResultNotebooks/Output/Images/glo_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/glo_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/glo_comparisonfigure.
-png  used on input line 540.
+png  used on input line 537.
 (pdftex.def)             Requested size: 227.62204pt x 90.97089pt.
 [20 <../ResultNotebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>] [21
 ]
-<../ResultNotebooks/Output/Images/climatezones.png, id=604, 569.0058pt x 398.20
+<../ResultNotebooks/Output/Images/climatezones.png, id=566, 569.0058pt x 398.20
 77pt>
 File: ../ResultNotebooks/Output/Images/climatezones.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/climatezones.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/climatezones.png  use
-d on input line 583.
+d on input line 580.
 (pdftex.def)             Requested size: 369.88582pt x 258.85623pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 620--620
+Underfull \hbox (badness 10000) in paragraph at lines 617--617
 
  []
 
 
-Overfull \hbox (241.92384pt too wide) in paragraph at lines 591--628
- []$[]$ 
- []
+LaTeX Warning: Float too large for page by 5.69054pt on input line 625.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=613, 426.6339pt 
+<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=575, 426.6339pt 
 x 255.8358pt>
 File: ../ResultNotebooks/Output/Images/reg_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/reg_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/reg_comparisonfigure.
-png  used on input line 633.
+png  used on input line 630.
 (pdftex.def)             Requested size: 455.24408pt x 272.99599pt.
-<../ResultNotebooks/Output/Images/scenario_litter.png, id=616, 511.9125pt x 170
+[22 <../ResultNotebooks/Output/Images/climatezones.png (PNG copy)>] [23]
+<../ResultNotebooks/Output/Images/scenario_litter.png, id=593, 511.9125pt x 170
 .5572pt>
 File: ../ResultNotebooks/Output/Images/scenario_litter.png Graphic file (type p
 ng)
 <use ../ResultNotebooks/Output/Images/scenario_litter.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_litter.png  
-used on input line 639.
+used on input line 636.
 (pdftex.def)             Requested size: 455.24408pt x 151.6757pt.
 
-Underfull \hbox (badness 1789) in paragraph at lines 640--640
+Underfull \hbox (badness 1789) in paragraph at lines 637--637
 []\T1/ptm/b/n/9 Figure A3. \T1/ptm/m/n/9 Global $\OT1/cmr/m/n/9 ^^A\OML/cmm/m/i
 t/9 SOC$ \T1/ptm/m/n/9 for dif-fer-ent lit-ter pa-ram-e-ter-i-za-tion choices: 
 Whereas peren-nial grasses (sce-nario name \T1/ptm/m/it/9 LitterPNV-
  []
 
-[22 <../ResultNotebooks/Output/Images/climatezones.png (PNG copy)>] [23] [24 <.
-./ResultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] (./SOCbud
-get.bbl [25 <../ResultNotebooks/Output/Images/scenario_litter.png (PNG copy)>]
+[24 <../ResultNotebooks/Output/Images/reg_comparisonfigure.png (PNG copy)>] (./
+SOCbudget.bbl [25 <../ResultNotebooks/Output/Images/scenario_litter.png (PNG co
+py)>]
 Underfull \hbox (badness 6978) in paragraph at lines 17--20
 []\T1/ptm/m/n/9 Batjes, N.: To-tal Car-bon and Ni-tro-gen in the Soils of the W
 orld, Eu-ro-pean Jour-nal of Soil Sci-ence, 47, 151--163,
@@ -1204,18 +1202,18 @@ rop-ping In-ten-sity, Global En-vi-ron-men-tal Change, 64, 102131,
  []
 
 ) [30]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 697.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 697.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 694.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 694.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 697.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 697.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 697.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 694.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 694.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 694.
  ) 
 Here is how much of TeX's memory you used:
- 11089 strings out of 494847
- 160251 string characters out of 6179080
- 299242 words of memory out of 5000000
- 14012 multiletter control sequences out of 15000+600000
+ 11091 strings out of 494847
+ 160266 string characters out of 6179080
+ 298294 words of memory out of 5000000
+ 14014 multiletter control sequences out of 15000+600000
  49703 words of font info for 76 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  43i,17n,40p,1557b,599s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1235,10 +1233,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (30 pages, 2047256 bytes).
+Output written on SOCbudget.pdf (30 pages, 2042521 bytes).
 PDF statistics:
- 834 PDF objects out of 1000 (max. 8388607)
- 768 compressed objects within 8 object streams
+ 796 PDF objects out of 1000 (max. 8388607)
+ 730 compressed objects within 8 object streams
  181 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

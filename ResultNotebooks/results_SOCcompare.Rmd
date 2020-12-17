@@ -43,7 +43,7 @@ library(reshape2)
 SOCStock <- reg_SOCStock
 reg_SOC  <- mbind(setNames(SOCStock[,"y2010","actualstate"],"This Study"),
                   setNames(SOCStock[,"y2010","naturalstate"],"This Study (PNV)"),
-                  setNames(LPJmL4[,"y2010",], "LPJmL4Paper"),
+                  setNames(LPJmL4[,"y2010",], "LPJmL4"),
                   setYears(setNames(WISE[,1,],"WISE"), "y2010"),
                   setYears(setNames(SoilGrids[,1,],"SoilGrids"),"y2010"),
                   setYears(setNames(GSOC[,1,],"GSOC"),"y2010"))
