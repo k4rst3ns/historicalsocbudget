@@ -57,7 +57,9 @@ captionSOCinit <- "Global $\\Delta SOC$ for different SOC initialization choices
 knitr::include_graphics("../ResultNotebooks/Output/Images/scenario_init.png")
 ```
 
+
 Our sensitivity analysis shows that the management impact is robust to the initialization of SOC stocks at the beginning of the spin-up phase (Fig. \@ref(fig:SOCinit)). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The $\Delta SOC$ estimation almost halves (from ~26 GtC to ~14 GtC), as does the decrease in $\Delta SOC$ for the period of 1975--2010 (from ~4 GtC to ~2.5 GtC) for the Inital-natveg scenario.
+
  
 Global SOC stocks range between 645--700 GtC for different parameterization of the natural litterfall, whereas $\Delta SOC$ vary  19-24 GtC for the year 2010 (see Fig. \@ref(fig:SOClitter). The increase of $\Delta SOC$ during the period of 1975--2010 is independent of the parameterization choice at ~4 GtC. 
 

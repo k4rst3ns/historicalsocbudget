@@ -66,8 +66,8 @@ competinginterests: |
 # OPTIONAL:
 algorithms: true
 # See https://publications.copernicus.org/for_authors/licence_and_copyright.html, normally used for transferring the copyright, if needed.
-copyrightstatement: |
-  The author's copyright for this publication is transferred to institution/company.
+# copyrightstatement: |
+#   The author's copyright for this publication is transferred to Potsdam Institute for Climate Impact Research (PIK).
 availability:
   codedata: |
    We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons \citep{bodirsky_mrcommons_2020} for the management related functions, github.com/pik-piam/mrsoil \citep{karstens_mrsoil_2020} for soil dynamic related functions and  github.com/pik-piam/mrvalidation \citep{bodirsky_mrvalidation_2020} for validation data. All libraries are based on the MADRaT package at github.com/pik-piam/madrat \citep{dietrich_madrat_2020}, a framework which aims to improve reproducibility and transparency in data processing. Model results including C input data are accessable under https://doi.org/10.5281/zenodo.4320663 \citep{karstens_model_2020}. Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
