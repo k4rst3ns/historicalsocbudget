@@ -4,6 +4,7 @@ output:
   md_document:
     variant: markdown_github
   html_document:  
+    pdf_document: default
 ---
 
 ```{r load}
@@ -12,23 +13,23 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev         <- "rev16"
+rev         <- "rev19"
 scenarios   <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
                   "constManagement2-1975", "constResrate-1975", "constYield-1975",
                  "Initial-natveg", "Initial-natveg_constManagement-1975", "Initial-natveg_constManagement2-1975", 
                  "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
                  "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
 
-# filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
-# setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
-# 
-# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
-#       exdir="Data/histManagement", extras="--keep-newer-files ")
-# 
-# for(item in scenarios){
-#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
-#    files=filesNeeded, exdir=paste0("Data/", item), extras="--keep-newer-files ")
-# }
+filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+
+untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
+      exdir=paste0("Data/",rev,"histManagement"), extras="--keep-newer-files ")
+
+for(item in scenarios){
+   untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+   files=filesNeeded, exdir=paste0("Data/", rev, item), extras="--keep-newer-files ")
+}
 
 outputdir <- "Output/"
 
@@ -40,8 +41,8 @@ outputdir <- "Output/"
 glo_SOCStock <- NULL
 
 for(scen in scenarios){
-  SoilCarbon <- read.magpie(paste0("Data/", scen, "/SoilCarbon.rds"))
-  Landuse    <- read.magpie(paste0("Data/", scen, "/Landuse.rds"))
+  SoilCarbon <- read.magpie(paste0("Data/", rev, scen, "/SoilCarbon.rds"))
+  Landuse    <- read.magpie(paste0("Data/", rev, scen, "/Landuse.rds"))
   SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
   SOCStock        <- toolConditionalReplace(dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2), "is.nan()",0)
   glo_SOCStock    <- mbind(glo_SOCStock, add_dimension(dimSums(SOCStock, dim=1), 
@@ -97,8 +98,8 @@ legend_size <- 10
 scen_cols   <- c("#648FFF","#785EF0","#DC267F","#FE6100","#FFB000")[5:1]
 input_cols  <- scen_cols[1:4]
 
-limits <- c(-30,-21)
-breaks <- c(-22, -24,- 26, -28, -30)
+limits <- c(-48,-42)
+breaks <- c(-42, -44,- 46, -48)
 
 hSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
@@ -204,8 +205,8 @@ legend_size <- 10
 scen_cols   <- c("#785EF0","#FE6100","#FFB000")
 input_cols  <- scen_cols[1:4]
 
-limits <- c(-30,-10)
-breaks <- c(-10, -15,- 20, -25, -30)
+limits <- c(-50,-20)
+breaks <- c(-20, -30,- 40, -50)
 
 initSOCemis <- ggplot() + geom_path(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),]), 
                                     aes(x = Year, y = Value, group=interaction(Data1,Data2), linetype=Data1, color=Data2)) +
@@ -251,8 +252,8 @@ legend_size <- 10
 scen_cols   <- c("#648FFF","#785EF0","#DC267F","#FE6100","#FFB000")[5:1]
 input_cols  <- scen_cols[1:4]
 
-limits <- c(-30,-18)
-breaks <- c(-18, -22, -26, -30)
+limits <- c(-48,-40)
+breaks <- c(-40, -42, -44, -46, -48)
 
 litterSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),litter_scen]), 
                                     aes(x = Year, y = Value, group=Data1, color=Data1, size=Data1)) +

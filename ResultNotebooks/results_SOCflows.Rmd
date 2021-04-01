@@ -111,7 +111,7 @@ CropBiomassTot    <- dimSums(ResidueBiomassTot, dim=3) + dimSums(grepSpaceTimeC(
 TotalSOCBudget    <- mbind(TotalSOCBudget,
                            setNames(CropBiomassTot, "crop_prod"))
 
-LivstCropLoss     <- CropFEED - ManureExcretedTot - LivstCropHANPP 
+LivstCropLoss     <- CropFEED + ResFEED - ManureExcretedTot - LivstCropHANPP 
 CropPRIMLoss      <- CropPRIM + ResPRIM + LivstCropHANPP # assume verything gets re-emitted at the end
 
 TotalSOCBudget    <- mbind(TotalSOCBudget,

@@ -12,14 +12,13 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev16"
+scenarios <- c("rev19histManagement","rev18histManagement_ResAllom_2021_02_01")
 outputdir <- "Output/"
 
 #untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))
-Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
-
+SoilCarbon <- read.magpie(paste0("Data/",scenarios[2],"/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/",scenarios[2],"/Landuse.rds"))
 ```
 
 ```{r table scf climatezones}
@@ -132,7 +131,7 @@ library(luplot)
 library(reshape2)
 
 MShare_ipcc <- LShare_ipcc <-  HShare_ipcc <- new.magpie("GLO",NULL,outer(c("IPCC2006","IPCC2019"),
-                                                                          getNames(climateIPCC), paste, sep="."))
+                                                                          getNames(climateIPCCr), paste, sep="."))
 
 MShare_ipcc <- add_dimension(MShare_ipcc, dim=3.2, nm="medium.invariant", add="input.year")
 LShare_ipcc <- add_dimension(LShare_ipcc, dim=3.2, nm="low.invariant",    add="input.year")

@@ -10,26 +10,27 @@ library(magclass)
 library(madrat)
 library(magpiesets)
 
-rev <- "rev16"
+rev <- "rev19"
+setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
 
 filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
 
-scenarios    <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
-                  "constManagement2-1975", "constResrate-1975", "constYield-1975",
-                 "Initial-natveg", "Initial-natveg_constManangement-1975", "Initial-natveg_constManangement2-1975", 
-                 "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
-                 "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
+scenarios    <- c("histManagement")#,"constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
+                  #"constManagement2-1975", "constResrate-1975", "constYield-1975",
+                 #"Initial-natveg", "Initial-natveg_constManangement-1975", "Initial-natveg_constManangement2-1975", 
+                 #"LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
+                 #"LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
 
-# for(item in scenarios){
-#    dir.create(path=paste0("Data/",paste0(rev,item)))
-#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
-#    files=filesNeeded, exdir=paste0("Data/", paste0(rev,item)), extras="--keep-newer-files ")
-# }
+for(item in scenarios){
+   dir.create(path=paste0("Data/",paste0(rev,item)))
+   untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+   files=filesNeeded, exdir=paste0("Data/", paste0(rev,item)), extras="--keep-newer-files ")
+}
 
 outputdir <- "Output/Images"
 
-SoilCarbon <- read.magpie(paste0("Data/histManagement/SoilCarbon.rds"))
-Landuse    <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
+SoilCarbon <- read.magpie(paste0("Data/",rev,scenarios[1],"/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/",rev,scenarios[1],"/Landuse.rds"))
 
 ```
 
@@ -115,9 +116,10 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission)[,c(3,6)], 
   labs( x = "Year", 
         y = expression(paste('Global \u0394SOC in GtC'))) +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(trans = squish_trans(-18,0,10),
-                     limits = c(-28,0),
-                     breaks = c(0, -20, -22, -24, -26, -28)) +
+  scale_y_continuous(trans = squish_trans(-42,0,10),
+                     limits = c(-46,0),
+                     breaks = c(0, -42, -43, -44, -45, -46),
+                     minor_breaks = seq(-2,-42,-2)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size),
         axis.title.x= element_text(size=legend_size, margin = margin(t = 10, r = 0, b = 10, l = 0, unit = "pt")),
@@ -236,6 +238,10 @@ grid <- plot_grid(SOCdensity,SOCincrease, SOCshare, SOCemis,  ncol=2, labels=c("
                   label_fontface = "plain", label_size = 10)
 grid
 ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid, width = 20, height = 14, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"/SOCshare.png"),    plot=SOCshare,    width = 10, height = 7, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"/SOCincrease.png"), plot=SOCincrease, width = 10, height = 7, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"/SOCdensity.png"),  plot=SOCdensity,  width = 10, height = 7, dpi = 300, units = "cm")
+ggsave(paste0(outputdir,"/SOCemis.png"),     plot=SOCemis,     width = 10, height = 7, dpi = 300, units = "cm")
 
 ```
 

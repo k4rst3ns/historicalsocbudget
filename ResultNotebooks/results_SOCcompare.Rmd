@@ -12,8 +12,8 @@ library(madrat)
 
 outputdir <- "Output/"
 
-SoilCarbon <- read.magpie("Data/histManagement/SoilCarbon.rds")
-Landuse    <- read.magpie("Data/histManagement/Landuse.rds")
+SoilCarbon <- read.magpie("Data/rev19histManagement/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/rev19histManagement/Landuse.rds")
 
 ```
 
