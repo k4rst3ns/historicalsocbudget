@@ -1,0 +1,556 @@
+---
+title: "SOC budget analysis in comparsion"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  bookdown::pdf_document2: default
+   keep_md: true
+---
+
+```{r load}
+library(magclass)
+library(madrat)
+
+outputdir <- "Output/Images/"
+
+SoilCarbon <- read.magpie("Data/rev26histManagement/SoilCarbon.rds")
+Landuse    <- read.magpie("Data/rev26histManagement/Landuse.rds")
+
+```
+
+
+Calculate global carbon stocks
+
+```{r Carbon Stock (cell iso reg glo)}
+
+
+cropshare       <- toolConditionalReplace(Landuse[,,"crop"]/dimSums(Landuse, dim=3), "is.na()", 0)
+SOCStock_natveg <- dimSums(SoilCarbon[,,c("naturalstate.natveg")], dim=3)
+SOCStock_lu     <- dimSums(SoilCarbon[,,c("actualstate")]*Landuse, dim=3)/dimSums(Landuse, dim=3)
+
+SOCStock_natveg[cropshare<=0.05] <- NA
+SOCStock_lu[    cropshare<=0.05] <- NA
+
+```
+
+
+```{r load soc validation stocks}
+
+  library(mrvalidation)
+
+  setConfig(cachefolder  = "/home/kristine/mnt/rd3mod/inputdata/cache/rev26/", forcecache = TRUE)
+  setConfig(sourcefolder = "/home/kristine/mnt/rd3mod/inputdata/sources/")
+  setConfig(mappingfolder = "/home/kristine/mnt/rd3mod/inputdata/mappings/")
+
+  SoilGrids2   <- readRDS("Data/additional/SoilGrids2.rds")
+  LPJmL4_CRU   <- toolCoord2Isocell(readRDS("Data/additional/LPJmL4_CRU.rds"))
+  LPJmL4_soilc <- readSource("LPJmL_new", subtype="LPJmL4_for_MAgPIE_84a69edd:CRU4:historical:soilc_layer", convert="onlycorrect")*0.01
+  LPJmL4_soilc <- toolCoord2Isocell(LPJmL4_soilc)
+  LPJmL4_soilc <- setNames(LPJmL4_soilc[,,"layer1"] + 1/3*LPJmL4_soilc[,,"layer2"], "layer_0-30")
+  LPJmL4_soilc <- LPJmL4_soilc[,getYears(Landuse),]
+  LPJmL4_CRU   <- LPJmL4_CRU[,getYears(Landuse),]
+  
+  cells      <- getCells(LPJmL4_soilc)
+
+  LPJmL4_soilc[   cropshare     <=0.05] <- NA
+  LPJmL4_CRU[     cropshare     <=0.05] <- NA
+  SoilGrids[cropshare[,"y2010",]<=0.05] <- NA
+  
+```
+
+```{r correation plot soilc, fig.height=7.5, fig.width=6}
+
+regToCell <- toolGetMapping("clustermap_rev4.51+mrmagpie10_c200_h12.rds",type="regional")
+regions   <- levels(regToCell$region)
+climate   <- read.csv("Data/additional/ClimateZoneMapping.csv")
+climate$N <- as.integer(substring(climate$cell,5))
+climate   <- climate[order(climate$N),]
+
+
+# climate
+library(RColorBrewer)
+library(scales)
+blucols          <- brewer.pal(9, "Blues")[2:5]
+viocols          <- brewer.pal(9, "Purples")[6:9]
+redcols          <- brewer.pal(9, "Reds")[6:8]
+orgcols          <- brewer.pal(9, "Oranges")[3]
+cols <- c(blucols[4], viocols[1], redcols[1], orgcols[1])
+paired <- brewer.pal(12, "Paired")
+
+years <- seq(1975, 2010, 5)
+
+climates <- unique(climate$IPCC_reduced)
+
+layout(matrix(c(1,2,3,4,5,5), ncol=2, byrow=TRUE), 
+       heights = c(0.38, 0.42, 0.2), widths =  c(0.52,0.48))
+
+xlabel <- c("", "", "LPJmL4 (t/ha)", "LPJmL4 (t/ha)")
+ylabel <- c("This Study (t/ha)", "", "This Study (t/ha)", "")
+
+layout.show(n=5)
+
+mar <- list(c(2,4,1,1),
+            c(2,2,1,1),
+            c(4,4,1,1),
+            c(4,2,1,1))
+
+for(i in 1:length(climates)){
+  
+  icells <- as.array(climate$cell[climate$IPCC_reduced==climates[i]])
+  par(mar = mar[[i]])
+  lim <- quantile(c(LPJmL4_soilc[icells,years,],SOCStock_natveg[icells,years,]), na.rm = TRUE, probs = 0.999)
+  #lim <- max(LPJmL4[icells,years,],SOCStock_natveg[icells,years,], na.rm = TRUE)
+  
+  plot(LPJmL4_soilc[icells,years,],SOCStock_natveg[icells,years,], asp = 1, 
+       xlab = xlabel[i], ylab = ylabel[i],
+       col = "white", pch = ".",
+       xlim = c(0, lim), ylim = c(0, lim))
+  
+  for(r in 1:length(regions)){
+   
+    rcells <- intersect(icells,as.array(regToCell$cell[regToCell$region==rev(regions)[r]]))
+  
+    points(LPJmL4_soilc[rcells,years,],SOCStock_natveg[rcells,years,],
+       col = alpha(paired[r], 0.2), pch = ".")
+    
+  }
+  
+  lines(c(0,lim), c(0,lim), col="grey")
+  lines(c(0,lim/2), c(0,lim), col="grey", lty = 2)
+  text(0, lim, paste0("cor=",round(cor(LPJmL4_soilc[icells,years,],SOCStock_natveg[icells,years,], 
+                                 use = "complete.obs"),2)), adj = c(0,1))
+  text(lim/3, lim, paste0("r²=",round(cor(LPJmL4_soilc[icells,years,],SOCStock_natveg[icells,years,], 
+                                       use = "complete.obs")^2, 2)), adj = c(0,1))
+  text(lim*2/3, lim, paste0("EF=",round(qualV::EF(as.array(LPJmL4_soilc[icells,years,][!is.na(LPJmL4_soilc[icells,years,])]),
+                                             as.array(SOCStock_natveg[icells,years,][!is.na(SOCStock_natveg[icells,years,])])),
+                                             2)), adj = c(0,1))
+  text(lim/2, 0, paste0("Climate zone: ", gsub("_", " ", climates[i])))
+}
+
+plot(1, type = "n", axes=F, xlab="", ylab="") # Create empty plot
+legend("top", horiz = TRUE, legend = rev(regions), col = paired, pch=16, bty ="n")
+dev.copy(png, paste0(outputdir, "scatterCompareLPJmL_pnv.png"), width=1200, height=1500, res=250)
+dev.off()
+
+library(ggplot2)
+theme_set(theme_bw())
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(RColorBrewer)
+library(sp)
+library(rworldmap)
+library(oce) 
+library(scales)
+
+legend_size <- 10
+year        <- 2010
+
+map.world     <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+cropland_diff <- collapseNames(SOCStock_natveg[,year,] - LPJmL4_soilc[,year,])
+diff2plot     <- merge(as.data.frame(cropland_diff), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)[7:1]
+
+SOCdiff <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(diff2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression(paste('natural \u0394SOC in tons of carbon per hectare (this study - LPJmL)')), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+SOCdiff
+```
+```{r correation plot CRU, fig.height=7.5, fig.width=6}
+
+regToCell <- toolGetMapping("clustermap_rev4.51+mrmagpie10_c200_h12.rds",type="regional")
+regions   <- levels(regToCell$region)
+climate   <- read.csv("Data/additional/ClimateZoneMapping.csv")
+climate$N <- as.integer(substring(climate$cell,5))
+climate   <- climate[order(climate$N),]
+
+
+# climate
+library(RColorBrewer)
+library(scales)
+blucols          <- brewer.pal(9, "Blues")[2:5]
+viocols          <- brewer.pal(9, "Purples")[6:9]
+redcols          <- brewer.pal(9, "Reds")[6:8]
+orgcols          <- brewer.pal(9, "Oranges")[3]
+cols <- c(blucols[4], viocols[1], redcols[1], orgcols[1])
+paired <- brewer.pal(12, "Paired")
+
+years <- seq(1975, 2010, 5)
+
+climates <- unique(climate$IPCC_reduced)
+
+layout(matrix(c(1,2,3,4,5,5), ncol=2, byrow=TRUE), 
+       heights = c(0.38, 0.42, 0.2), widths =  c(0.52,0.48))
+
+xlabel <- c("", "", "LPJmL4 (t/ha)", "LPJmL4 (t/ha)")
+ylabel <- c("This Study (t/ha)", "", "This Study (t/ha)", "")
+
+layout.show(n=5)
+
+mar <- list(c(2,4,1,1),
+            c(2,2,1,1),
+            c(4,4,1,1),
+            c(4,2,1,1))
+
+for(i in 1:length(climates)){
+  
+  icells <- as.array(climate$cell[climate$IPCC_reduced==climates[i]])
+  par(mar = mar[[i]])
+  lim <- quantile(c(LPJmL4_CRU[icells,years,],SOCStock_natveg[icells,years,]), na.rm = TRUE, probs = 0.999)
+  #lim <- max(LPJmL4[icells,years,],SOCStock_natveg[icells,years,], na.rm = TRUE)
+  
+  plot(LPJmL4_CRU[icells,years,],SOCStock_natveg[icells,years,], asp = 1, 
+       xlab = xlabel[i], ylab = ylabel[i],
+       col = "white", pch = ".",
+       xlim = c(0, lim), ylim = c(0, lim))
+  
+  for(r in 1:length(regions)){
+   
+    rcells <- intersect(icells,as.array(regToCell$cell[regToCell$region==rev(regions)[r]]))
+  
+    points(LPJmL4_CRU[rcells,years,],SOCStock_natveg[rcells,years,],
+       col = alpha(paired[r], 0.2), pch = ".")
+    
+  }
+  
+  lines(c(0,lim), c(0,lim), col="grey")
+  lines(c(0,lim/2), c(0,lim), col="grey", lty = 2)
+  text(0, lim, paste0("cor=",round(cor(LPJmL4_CRU[icells,years,],SOCStock_natveg[icells,years,], 
+                                 use = "complete.obs"),2)), adj = c(0,1))
+  text(lim/2, 0, paste0("Climate zone: ", gsub("_", " ", climates[i])))
+}
+
+plot(1, type = "n", axes=F, xlab="", ylab="") # Create empty plot
+legend("top", horiz = TRUE, legend = rev(regions), col = paired, pch=16, bty ="n")
+dev.copy(png, paste0(outputdir, "scatterCompareLPJmLCRU_pnv.png"), width=1200, height=1500, res=250)
+dev.off()
+
+legend_size <- 10
+year        <- 2010
+
+map.world     <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+cropland_diff <- collapseNames(SOCStock_natveg[,year,] - LPJmL4_CRU[,year,])
+diff2plot     <- merge(as.data.frame(cropland_diff), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)[7:1]
+
+SOCdiff <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(diff2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression(paste('natural \u0394SOC in tons of carbon per hectare (this study - LPJmL)')), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+SOCdiff
+
+```
+```{r corr measures}
+
+
+# corr <- new.magpie(getCells(SOCStock_natveg), 1, names = c("r", "r²", "EF", "GRI", "RMSE", "meanbias","sdratio"), fill = NA)
+# 
+# for (j in getCells(SOCStock_natveg))
+#   {
+#   
+#   corr[j,,"r"]    <- cor(LPJmL4_CRU[j,years,],SOCStock_natveg[j,years,])
+#   corr[j,,"r²"]   <- cor(LPJmL4_CRU[j,years,],SOCStock_natveg[j,years,])^2
+#   corr[j,,"EF"]   <- EF(LPJmL4_CRU[j,years,], SOCStock_natveg[j,years,])
+#   corr[j,,"GRI"]  <- GRI(LPJmL4_CRU[j,years,] ,SOCStock_natveg[j,years,])
+#   corr[j,,"RMSE"] <- RMSE(LPJmL4_CRU[j,years,], SOCStock_natveg[j,years,])
+#   print(j)
+# }
+# 
+#   corr[,,"meanbias"] <- apply(SOCStock_natveg[,years,], 1, mean) - apply(LPJmL4_CRU[,years,], 1, mean)
+#   corr[,,"sdratio"]  <-  apply(SOCStock_natveg[,years,], 1, sd)  /apply(LPJmL4_CRU[,years,], 1, sd)
+# 
+# write.magpie(corr, "corr.rds") 
+
+luplot::plotmap(corr[,,"meanbias"], legend_range = c(-30,30))
+luplot::plotmap(corr[,,"sdratio"], legend_range = c(0,2))
+luplot::plotmap(corr[,,"r"], legend_range = c(-1,1))
+```
+
+
+```{r correation plot soilgrids, fig.height=7.5, fig.width=6}
+
+regToCell <- toolGetMapping("clustermap_rev4.51+mrmagpie10_c200_h12.rds",type="regional")
+regions   <- levels(regToCell$region)
+climate   <- read.csv("Data/additional/ClimateZoneMapping.csv")
+climate$N <- as.integer(substring(climate$cell,5))
+climate   <- climate[order(climate$N),]
+
+
+# climate
+library(RColorBrewer)
+library(scales)
+blucols          <- brewer.pal(9, "Blues")[2:5]
+viocols          <- brewer.pal(9, "Purples")[6:9]
+redcols          <- brewer.pal(9, "Reds")[6:8]
+orgcols          <- brewer.pal(9, "Oranges")[3]
+cols <- c(blucols[4], viocols[1], redcols[1], orgcols[1])
+paired <- brewer.pal(12, "Paired")
+
+years <- seq(1975, 2010, 5)
+
+climates <- unique(climate$IPCC_reduced)
+
+layout(matrix(c(1,2,3,4,5,5), ncol=2, byrow=TRUE), 
+       heights = c(0.38, 0.42, 0.2), widths =  c(0.52,0.48))
+
+xlabel <- c("", "", "SoilGrids (t/ha) (timeless)", "SoilGrids (t/ha) (timeless)")
+ylabel <- c("This Study (t/ha)", "", "This Study (t/ha)", "")
+
+layout.show(n=5)
+
+mar <- list(c(2,4,1,1),
+            c(2,2,1,1),
+            c(4,4,1,1),
+            c(4,2,1,1))
+
+for(i in 1:length(climates)){
+  
+  icells <- as.array(climate$cell[climate$IPCC_reduced==climates[i]])
+  par(mar = mar[[i]])
+  lim <- quantile(c(SoilGrids[icells,,],SOCStock_natveg[icells,years,]), na.rm = TRUE, probs = 0.999)
+  #lim <- max(SoilGrids[icells,,],SOCStock_natveg[icells,years,], na.rm = TRUE)
+  
+  
+  plot(rep(SoilGrids[icells,,],8),SOCStock_lu[icells,years,], asp = 1, 
+       xlab = xlabel[i], ylab = ylabel[i],
+       col = "white", pch = ".",
+       xlim = c(0, lim), ylim = c(0, lim))
+  
+  for(r in 1:length(regions)){
+   
+    rcells <- intersect(icells,as.array(regToCell$cell[regToCell$region==rev(regions)[r]]))
+  
+    points(rep(SoilGrids[rcells,,],8),SOCStock_lu[rcells,years,],
+       col = alpha(paired[r], 0.2), pch = ".")
+    
+  }
+  
+  lines(c(0,lim), c(0,lim), col="grey")
+  text(0, lim, paste0("cor=",round(cor(rep(SoilGrids[icells,,],8),SOCStock_lu[icells,years,], 
+                                 use = "complete.obs"),2)), adj = c(0,1))
+  text(lim/2, 0, paste0("Climate zone: ", gsub("_", " ", climates[i])))
+}
+
+plot(1, type = "n", axes=F, xlab="", ylab="") # Create empty plot
+legend("top", horiz = TRUE, legend = rev(regions), col = paired, pch=16, bty ="n")
+
+dev.copy(png, paste0(outputdir, "scatterCompareSoilGrids_crop.png"), width=1200, height=1500, res=250)
+dev.off()
+
+```
+
+```{r map2010}
+
+legend_size <- 10
+year        <- 2010
+
+map.world     <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+#magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+load("/home/kristine/WORK/R libraries/mrcommons/R/sysdata.rda")
+cropland_diff <- collapseNames(SOCStock_natveg[,year,] - setYears(SoilGrids2[,1,], NULL))
+diff2plot     <- merge(as.data.frame(cropland_diff), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)[7:1]
+
+SOCdiff2010 <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(diff2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare  (this study - SoilGrid2)')), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+SOCdiff2010
+
+```
+
+```{r mapmean}
+legend_size <- 10
+year        <- 2010
+
+map.world     <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+#magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+load("/home/kristine/WORK/R libraries/mrcommons/R/sysdata.rda")
+cropland_diff <- collapseNames(magpply(SOCStock_natveg[,years,], mean, 1) - setYears(SoilGrids2[,1,], NULL))
+diff2plot     <- merge(as.data.frame(cropland_diff), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)[7:1]
+
+SOCdiffmean <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(diff2plot, Year=="0", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare  (this study - SoilGrid2)')), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+SOCdiffmean
+SOCdiff2010
+SOCdiff_LPJvsSG2
+```
+```{r mapLPJsoilGrids}
+legend_size <- 10
+year        <- 2010
+
+map.world     <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)  
+coastline.world <- data.frame(longitude=coastlineWorld[["longitude"]],latitude=coastlineWorld[["latitude"]]) 
+
+#magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
+load("/home/kristine/WORK/R libraries/mrcommons/R/sysdata.rda")
+cropland_diff <- collapseNames(magpply(LPJmL4_CRU[,years,], mean, 1) - setYears(SoilGrids2[,1,], NULL))
+diff2plot     <- merge(as.data.frame(cropland_diff), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)[7:1]
+
+SOCdiff_LPJvsSG2 <- ggplot(data = world) + geom_sf() +
+    geom_tile(data = subset(diff2plot, Year=="0", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
+                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare  (this study - SoilGrid2)')), 
+                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
+                      breaks=c(-50,-20,-10,10,20,50,100),
+                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
+                      guide = guide_legend(
+                        title.theme=element_text(size=legend_size),
+                        direction = "horizontal",
+                        title.position = 'top',
+                        # I shift the labels around, the should be placed 
+                        # exactly at the right end of each legend key
+                        title.hjust = 0.5,
+                        label.hjust = 1,
+                        nrow = 1,
+                        byrow = F,
+                        label.position = "bottom",
+                        keyheight = 0.5,
+                        keywidth  = 2
+                      )) +
+    theme(legend.position="bottom",
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(),
+          legend.text=element_text(size=legend_size),
+          rect=element_blank(),
+          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
+          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+SOCdiff_LPJvsSG2
+```

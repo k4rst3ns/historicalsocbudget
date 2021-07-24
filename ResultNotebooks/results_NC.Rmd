@@ -1,0 +1,162 @@
+---
+  title: "Global N release binding"
+output:
+  md_document:
+  variant: markdown_github
+---
+  
+```{r load}
+library(mrcommons)
+library(mrvalidation)
+library(mrsoil)
+library(magpiesets)
+
+rev       <- "rev19"
+outputdir <- "Output/"
+
+#filesNeeded  <- c("SoilCarbon.rds","Landuse.rds","LanduseChange.rds")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "histManagement_ResAllom_2021_01_12_h12_carbonbudget.tgz"), files=filesNeeded, exdir="Data/histManagement_ResAllom", extras="--keep-newer-files ")
+
+# SoilCarbon    <- read.magpie(paste0("Data/histManagement_ResAllom/SoilCarbon.rds"))
+# Landuse       <- read.magpie(paste0("Data/histManagement_ResAllom/Landuse.rds"))
+# LanduseChange <- read.magpie(paste0("Data/histManagement_ResAllom/LanduseChange.rds"))
+
+
+SoilCarbon    <- read.magpie(paste0("Data/rev19histManagement/SoilCarbon.rds"))
+Landuse       <- read.magpie(paste0("Data/rev19histManagement/Landuse.rds"))
+LanduseChange <- read.magpie(paste0("Data/rev19histManagement/LanduseChange.rds"))
+
+
+```
+
+Calc global numbers
+
+```{r Carbon Emissions (glo)}
+
+SoilCarbon        <- dimSums(SoilCarbon, dim="subpool")
+
+
+# Carbon lost at Cropland staying Cropland
+
+years     <- getYears(SoilCarbon, as.integer = TRUE)
+#years     <- years[-1]
+
+StayingCropland <- (SoilCarbon[,tail(years,-1),"actualstate.crop"]-setYears(SoilCarbon[,head(years,-1),"actualstate.crop"], head(years,-1)+1))*(Landuse[,tail(years,-1),"crop"]-LanduseChange[,tail(years,-1),"expansion.crop"])
+
+
+# Carbon lost at newly comverted Cropland
+
+NewlyConverted <- (SoilCarbon[,tail(years,-1),"actualstate.crop"]-setYears(SoilCarbon[,head(years,-1),"actualstate.natveg"], head(years,-1)+1))*(LanduseChange[,tail(years,-1),"expansion.crop"])
+
+
+StayingCropland_gain <- StayingCropland_loss <- StayingCropland
+StayingCropland_gain[StayingCropland<0] <- 0
+StayingCropland_loss[StayingCropland>0] <- 0
+
+NewlyConverted_gain <- NewlyConverted_loss <- NewlyConverted
+NewlyConverted_gain[NewlyConverted<0] <- 0
+NewlyConverted_loss[NewlyConverted>0] <- 0
+
+NetChange <- NetChange_gain <- NetChange_loss <- NewlyConverted + StayingCropland
+NetChange_gain[NetChange<0] <- 0
+NetChange_loss[NetChange>0] <- 0
+
+
+diffs <- mbind(setNames(NetChange,      "tot.net"),
+               setNames(NetChange_gain, "tot.gain"),
+               setNames(NetChange_loss, "tot.loss"),
+               setNames(StayingCropland,      "stay.net"),
+               setNames(StayingCropland_gain, "stay.gain"),
+               setNames(StayingCropland_loss, "stay.loss"),
+               setNames(NewlyConverted,       "conv.net"),
+               setNames(NewlyConverted_gain,  "conv.gain"),
+               setNames(NewlyConverted_loss,  "conv.loss")
+               )
+
+
+iso2cell <- toolGetMapping("CountryToCellMapping.csv", type="cell")
+diffsIso <- toolAggregate(diffs, rel=iso2cell, from="celliso", to="iso", dim=1)
+                        
+NChange <- dimSums(diffs, dim=1)/15
+NChangeIso <- diffsIso/15
+
+print(NChange)
+print(NChangeIso[,"y2010",])
+write.magpie(NChangeIso,"Output/NChange.csv")
+write.magpie(NChange,"Output/NChangeGlo.csv")
+
+```
+
+
+```{r som}
+
+SOM  <- read.magpie("Data/additional/SOM.nc")
+SOM2 <- read.magpie("Data/additional/SOM2.nc")
+
+years    <- getYears(SOM, as.integer = TRUE)
+getCells(SOM) <- getCells(SOM2) <- getCells(Landuse)
+getNames(SOM, dim=1) <- getNames(SOM2, dim=1) <- c("crop", "natveg")
+
+SOC  <- mbind(add_dimension(collapseNames(toolConditionalReplace(SOM[,, "soilc"]/Landuse,"is.na()", 0)), dim=3.1, add="model", nm="som"), 
+              add_dimension(collapseNames(toolConditionalReplace(SOM2[,,"soilc"]/Landuse,"is.na()", 0)), dim=3.1, add="model", nm="som2"))
+
+StayingCroplandSOM <- collapseNames((SOC[,tail(years,-1),"crop"]-setYears(SOC[,head(years,-1),"crop"],head(years,-1)+1))*
+  (Landuse[,tail(years,-1),"crop"]-LanduseChange[,tail(years,-1),"expansion.crop"]))
+
+# Carbon lost at newly converted Cropland
+
+NewlyConvertedSOM <- collapseNames((SOC[,tail(years,-1),"crop"]-setYears(SOC[,head(years,-1),"natveg"],head(years,-1)+1))*
+  (LanduseChange[,tail(years,-1),"expansion.crop"]))
+
+StayingCroplandSOM_gain <- StayingCroplandSOM_loss <- StayingCroplandSOM
+StayingCroplandSOM_gain[StayingCroplandSOM<0] <- 0
+StayingCroplandSOM_loss[StayingCroplandSOM>0] <- 0
+
+NewlyConvertedSOM_gain <- NewlyConvertedSOM_loss <- NewlyConvertedSOM
+NewlyConvertedSOM_gain[NewlyConvertedSOM<0] <- 0
+NewlyConvertedSOM_loss[NewlyConvertedSOM>0] <- 0
+
+NetChangeSOM <- NetChangeSOM_gain <- NetChangeSOM_loss <- NewlyConvertedSOM + StayingCroplandSOM
+NetChangeSOM_gain[NetChangeSOM<0] <- 0
+NetChangeSOM_loss[NetChangeSOM>0] <- 0
+
+diffsom <- mbind(add_dimension(NetChangeSOM, dim=3.2, add="land.mode", nm="tot.net"),
+                 add_dimension(NetChangeSOM_gain, dim=3.2, add="land.mode", nm="tot.gain"),
+                 add_dimension(NetChangeSOM_loss, dim=3.2, add="land.mode", nm="tot.loss"),
+                 add_dimension(StayingCroplandSOM,      dim=3.2, add="land.mode", nm="stay.net"),
+                 add_dimension(StayingCroplandSOM_gain, dim=3.2, add="land.mode", nm="stay.gain"),
+                 add_dimension(StayingCroplandSOM_loss, dim=3.2, add="land.mode", nm="stay.loss"),
+                 add_dimension(NewlyConvertedSOM,       dim=3.2, add="land.mode", nm="conv.net"),
+                 add_dimension(NewlyConvertedSOM_gain,  dim=3.2, add="land.mode", nm="conv.gain"),
+                 add_dimension(NewlyConvertedSOM_loss,  dim=3.2, add="land.mode", nm="conv.loss")
+)
+
+
+iso2cell <- toolGetMapping("CountryToCellMapping.csv", type="cell")
+diffsomIso <- toolAggregate(diffsom, rel=iso2cell, from="celliso", to="iso", dim=1)
+                        
+NChangeSOM <- dimSums(diffsom, dim=1)/15
+NChangeSOMIso <- diffsomIso/15
+
+print(NChangeSOM)
+print(NChangeSOMIso[,"y2010",])
+
+                        
+NChangeALL    <- mbind(NChangeSOM, add_dimension(NChange, dim=3.1, add="model", nm="mrsoil"))
+NChangeIsoALL <- mbind(NChangeSOMIso, add_dimension(NChangeIso, dim=3.1, add="model", nm="mrsoil"))
+
+
+write.magpie(NChangeSOMIso,"Output/NChangeALL.csv")
+write.magpie(NChangeSOM,"Output/NChangeALLGlo.csv")
+
+SOMloss <- dimSums(-SOM[,,"delta_soilc"][,,"crop"]/15, dim=1)
+
+
+```
+
+
+
+
+
+
+

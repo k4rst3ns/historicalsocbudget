@@ -12,13 +12,13 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-scenarios <- c("rev19histManagement","rev18histManagement_ResAllom_2021_02_01")
+scenarios <- c("rev26histManagement") #,"rev18histManagement_ResAllom_2021_02_01")
 outputdir <- "Output/"
 
 #untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-SoilCarbon <- read.magpie(paste0("Data/",scenarios[2],"/SoilCarbon.rds"))
-Landuse    <- read.magpie(paste0("Data/",scenarios[2],"/Landuse.rds"))
+SoilCarbon <- read.magpie(paste0("Data/",scenarios[1],"/SoilCarbon.rds"))
+Landuse    <- read.magpie(paste0("Data/",scenarios[1],"/Landuse.rds"))
 ```
 
 ```{r table scf climatezones}
@@ -28,14 +28,19 @@ library(stats)
 library(reshape2)
 
 years             <- findset("past")
-climateIPCC       <- readRDS("Data/histManagement/IPCC_reduced.rds")
+climateIPCCr      <- readRDS("Data/rev26histManagement/IPCC_reduced.rds")
+
   
-### calculating stock change factors
+### calculating stock change factors cropand weighted
 SOCDens           <- dimSums(SoilCarbon[,years,c("actualstate","naturalstate")], dim=3.3) 
 SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
 
-CShare_ipcczone   <- dimSums(climateIPCC * SOCDens[,,"crop"][,,"actualstate"]   * Landuse[,years,"crop"], dim=1)/
-                     dimSums(climateIPCC * SOCDens[,,"natveg"][,,"naturalstate"] * Landuse[,years,"crop"], dim=1)
+CShare_ipcczone   <- dimSums(climateIPCCr * SOCDens[,,"crop"][,,"actualstate"]   * Landuse[,years,"crop"], dim=1)/
+                     dimSums(climateIPCCr * SOCDens[,,"natveg"][,,"naturalstate"] * Landuse[,years,"crop"], dim=1)
+
+# CShare_ipcczone   <- dimSums(climateIPCCr * toolConditionalReplace(SOCDens[,,"crop"][,,"actualstate"]/SOCDens[,,"natveg"][,,"naturalstate"],
+#                                                                  c("is.na()", "is.nan()", "is.infinite()",">3"), c(1,1,1,5)) * Landuse[,years,"crop"], dim=1)/
+#                     dimSums(climateIPCCr * Landuse[,years,"crop"], dim=1)
 
 getNames(CShare_ipcczone) <- gsub("_", " ", getNames(CShare_ipcczone))
  
@@ -47,8 +52,8 @@ saveRDS(list(SCF_table = SCF_table), paste0(outputdir, "SFC_climatezone.rds"))
 
 ```{r plot climte map}
 
-climateIPCCr       <- readRDS("Data/histManagement/IPCC_reduced.rds")
-climateIPCC        <- readRDS("Data/histManagement/IPCC.rds")
+climateIPCCr       <- readRDS("Data/rev26histManagement/IPCC_reduced.rds")
+climateIPCC        <- readRDS("Data/rev26histManagement/IPCC.rds")
 
 getNames(climateIPCC) <- c( "W-Temp Moist","W-Temp Dry","C-Temp Moist","C-Temp Dry","Polar Moist","Polar Dry","Boreal Moist",
                             "Boreal Dry","Tropical Montane","Tropical Wet","Tropical Moist", "Tropical Dry")
@@ -203,4 +208,5 @@ save  <- kbl(table$comparison_table, latex = T, digit=2)%>%
               row_spec(7:8, bold=TRUE)
 
 save_kable(save, file="Output/Images/TableSCF_comparison.png")
+table
 ```

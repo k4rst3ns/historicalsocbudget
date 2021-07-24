@@ -13,23 +13,19 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev         <- "rev19"
-scenarios   <- c("histManagement","constManagement-1975", "constTillage-mixedtill", "constResidues-1975", "constManure-1975",
-                  "constManagement2-1975", "constResrate-1975", "constYield-1975",
-                 "Initial-natveg", "Initial-natveg_constManagement-1975", "Initial-natveg_constManagement2-1975", 
-                 "LitterPNV-PerennialGrasses", "LitterPNV-AASS", "LitterPNV-BRCF", 
-                 "LitterPNV-MTCF", "LitterPNV-BLEAF",  "LitterPNV-TREF")
+rev         <- "rev26"
+scenarios   <- c("rev26histManagement", "rev26constManagement", "rev26constManagement2", "rev26constManagement_constClimate", "rev26constManagement2_constClimate", "rev26constManure", "rev26constResidues", "rev26constResrate", "rev26constTillage", "rev26constYield", "rev26Initial-1901_constManagement", "rev26Initial-1901_constManagement2", "rev26Initial-1901", "rev26Initial-0_constManagement", "rev26Initial-0_constManagement2", "rev26Initial-0")
 
-filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+# filesNeeded  <- c("SoilCarbon.rds","Landuse.rds")
+# setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+# 
+# untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
+#       exdir=paste0("Data/",rev,"histManagement"), extras="--keep-newer-files ")
 
-untar(paste0(getConfig("outputfolder"),"/", rev, "histManagement_h12_carbonbudget.tgz"),
-      exdir=paste0("Data/",rev,"histManagement"), extras="--keep-newer-files ")
-
-for(item in scenarios){
-   untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
-   files=filesNeeded, exdir=paste0("Data/", rev, item), extras="--keep-newer-files ")
-}
+# for(item in scenarios){
+#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+#    files=filesNeeded, exdir=paste0("Data/", rev, item), extras="--keep-newer-files ")
+# }
 
 outputdir <- "Output/"
 
@@ -41,8 +37,8 @@ outputdir <- "Output/"
 glo_SOCStock <- NULL
 
 for(scen in scenarios){
-  SoilCarbon <- read.magpie(paste0("Data/", rev, scen, "/SoilCarbon.rds"))
-  Landuse    <- read.magpie(paste0("Data/", rev, scen, "/Landuse.rds"))
+  SoilCarbon <- read.magpie(paste0("Data/", scen, "/SoilCarbon.rds"))
+  Landuse    <- read.magpie(paste0("Data/", scen, "/Landuse.rds"))
   SoilCarbon[,,"naturalstate.crop"] <- SoilCarbon[,,"naturalstate.natveg"]
   SOCStock        <- toolConditionalReplace(dimSums(dimSums(SoilCarbon[,,"state",pmatch=TRUE], dim=3.3)* Landuse, dim=3.2), "is.nan()",0)
   glo_SOCStock    <- mbind(glo_SOCStock, add_dimension(dimSums(SOCStock, dim=1), 
@@ -60,8 +56,8 @@ saveRDS(mbind(add_dimension(collapseNames(glo_SOCStock[,,"actualstate"]), dim=3.
 
 ```{r Carbon inputs (glo)}
 
-CarbonInput  <- read.magpie(paste0("Data/histManagement/CarbonInput.rds"))
-Landuse      <- read.magpie(paste0("Data/histManagement/Landuse.rds"))
+CarbonInput  <- read.magpie(paste0("Data/rev26histManagement/CarbonInput.rds"))
+Landuse      <- read.magpie(paste0("Data/rev26histManagement/Landuse.rds"))
 glo_SOCInput <- collapseNames(dimSums(CarbonInput[,,"totalC"] * Landuse, dim=c(1)))/collapseNames(dimSums(Landuse, dim=c(1)))
 
 ci2plot <- c('above-ground residues'="ag.crop",          
@@ -71,7 +67,8 @@ ci2plot <- c('above-ground residues'="ag.crop",
              'manure from monogastrics'="livst_pig.crop",
              'manure from ruminants'="livst_milk.crop",  
              'manure from ruminants'="livst_rum.crop",   
-             'natural litterfall and fine roots'="litfall.natveg")
+             'natural litterfall wood fraction'="wood.natveg",
+             'natural litterfall leaf fraction'="leaf.natveg")
 
 glo_SOCInput <- toolAggregate(glo_SOCInput, rel=data.frame(from=ci2plot,to=names(ci2plot)), from="from", to="to", dim=3)
 
@@ -82,11 +79,12 @@ glo_SOCInput <- toolAggregate(glo_SOCInput, rel=data.frame(from=ci2plot,to=names
 
 glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
 
-manage_scen <-  c(histManagement   = "histManagement",
-                  constTillage     = "constTillage-mixedtill", 
-                  constManure      = "constManure-1975",
-                  constResidues    = "constResidues-1975", 
-                  constManagement  = "constManagement-1975")
+manage_scen <-  c(histManagement   = "rev26histManagement",
+                  constTillage     = "rev26constTillage", 
+                  constManure      = "rev26constManure",
+                  constResidues    = "rev26constResidues", 
+                  constManagement  = "rev26constManagement")#,
+                  #constManagementNoCC = "rev26constManagement_constClimate")
 
 library(ggplot2)
 library(scales)
@@ -98,8 +96,8 @@ legend_size <- 10
 scen_cols   <- c("#648FFF","#785EF0","#DC267F","#FE6100","#FFB000")[5:1]
 input_cols  <- scen_cols[1:4]
 
-limits <- c(-48,-42)
-breaks <- c(-42, -44,- 46, -48)
+limits <- c(-40,-32)
+breaks <- c(-32, -34,- 36, -38, -40)
 
 hSOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),manage_scen]),  aes(x = Year, y = Value, group=Data1, color=Data1)) +
   labs( x = "Year", 
@@ -187,10 +185,12 @@ ggsave(paste0(outputdir,"Images/scenario_verti.png"), plot=vgrid, width = 12, he
 
 glo_SOCDebt <- collapseNames(readRDS(paste0(outputdir, "glo_SOCscenarions.rds"))[,,"debt"])
 
-init_scen   <-  c(`histManagement.Initial-natveg`  = "Initial-natveg", 
-                  `constManagement.Initial-natveg` = "Initial-natveg_constManagement-1975",
-                  `histManagement.Initial-lu`      = "histManagement", 
-                  `constManagement.Initial-lu`     = "constManagement-1975")
+init_scen   <-  c(`histManagement.Initial-natveg`          = "rev26Initial-1901", 
+                  `constManagement.Initial-natveg`         = "rev26Initial-1901_constManagement",
+                  `histManagement.Initial-eq`              = "rev26Initial-0", 
+                  `constManagement.Initial-eq`             = "rev26Initial-0_constManagement",
+                  `histManagement.Initial-spinup1530`      = "rev26histManagement", 
+                  `constManagement.Initial-spinup1530`     = "rev26constManagement")
 
 glo_SOCDebt <- glo_SOCDebt[,,init_scen]
 getNames(glo_SOCDebt) <- names(init_scen)
@@ -202,11 +202,11 @@ library(cowplot)
 
 theme_set(theme_bw())
 legend_size <- 10
-scen_cols   <- c("#785EF0","#FE6100","#FFB000")
+scen_cols   <- c("#648FFF","#785EF0","#DC267F")
 input_cols  <- scen_cols[1:4]
 
-limits <- c(-50,-20)
-breaks <- c(-20, -30,- 40, -50)
+limits <- c(-55,-25)
+breaks <- c( -30,-40,-50 )
 
 initSOCemis <- ggplot() + geom_path(data= as.data.frame(-glo_SOCDebt[,seq(1975,2010,1),]), 
                                     aes(x = Year, y = Value, group=interaction(Data1,Data2), linetype=Data1, color=Data2)) +
@@ -216,7 +216,7 @@ initSOCemis <- ggplot() + geom_path(data= as.data.frame(-glo_SOCDebt[,seq(1975,2
         linetype ="Management") +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
   scale_y_continuous(limits=limits, breaks=breaks) +
-  scale_color_manual(values=c(scen_cols)[1:2], labels = unique(gsub("(.*)\\.(.*)","\\2", names(init_scen)))) +
+  scale_color_manual(values=c(scen_cols)[1:3], labels = unique(gsub("(.*)\\.(.*)","\\2", names(init_scen)))) +
   scale_linetype_manual(values=c(1,2), labels=unique(gsub("(.*)\\.(.*)","\\1", names(init_scen)))) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
