@@ -1,0 +1,39 @@
+From: Comparison of uncertainties in land-use change fluxes from bookkeeping model parameterisation, Ana Bastos (2021):
+* Fluxes from land-use change and management are one of the most uncertain and least constrained components of the global carbon cycle (Bastos et al., 2020; Friedlingstein et al., 2019; Houghton, 2020). Several sources of uncertainty in FLUC have been previously analysed, such as the choice of gross vs. net LUC transitions (Bayer et al., 2017; Fuchs et al., 2015; Gasser et al., 2020; Wilkenskjeld et al., 2014), the definitions and terminology used (Grassi et al., 2018; Pongratz et al., 2014) or the management processes considered (Arneth et al., 2017; Pugh et al., 2015
+* The rules for allocation of displaced carbon to different pools have the strongest effect on average FLUC, as well as their variability, followed by C density parameters.
+
+
+
+A global view of shifting cultivation: Recent, current, and future extent:
+-> use to talk about gross to net changes in LUC
+
+
+Soil carbon sequestration simulated in CMIP6-LUMIP models: implications for climatic mitigation
+-> Maybe calculate soil carbon sequrestration for 1970 - 2010 and compare?
+-> 0.11 ± 0.31‰ yr−1 
+
+Global patterns and controls of soil organic carbon dynamics as simulated by multiple terrestrial biosphere models: Current status and future directions
+
+
+
+
+Historical carbon dioxide emissions caused by land-use changes are possibly larger than assumed
+-> importance of cropland management - very low??? (compaed to switching cultivations) ???
+-> but general accounting for correct harvest proportion seems important (also looking onoskar!)
+
+Input-driven versus turnover-driven controls of simulated changes in soil carbon due to land-use change
+-> Input driven wins!!!!
+-> Furthermore, our model does not represent the increase in crop productivity associated with fertilizer and manure application. However, increased crop productivity may not necessarily translate to higher litter inputs to the soils as most of the NPP is removed by crop harvesting. In addition, some studies show that in some regions the application of nitrogen fertilizers enhances decomposition and this effect counteracts the effect of added litter inputs associated with enhanced productivity (e.g. Russell et al 2009). As the relative share of the simulated input-driven and turnover-driven changes will be influenced by the inclusion of the missing processes, the results shown in our study may not represent the total LUC effects.
+
+
+Relevance of methodological choices for accounting of land use change carbon fluxes
+-> uses the same idea of not tracking fields individually
+
+
+Reducing Uncertainties of Future Global Soil Carbon Responses to Climate and Land Use Change With Emergent Constraint
+Soil organic carbon change (ΔSOC)iscontrolled by input from plants (litter and exudates), by lateralfluxes (e.g., erosion of particulate organicmatter and dissolved organic matter runoff) and by the rate of soil organic matter decomposition(Carvalhais et al., 2014; Todd‐Brown et al., 2013; Wu et al., 2018; Yan et al., 2014). These processes areaffected by climate and land use change (LUC). LUC over the last century was dominated by the conversionof forests and natural grasslands to cropland and pasture. During this process, SOC inputs are reducedbecause most of agricultural net primary productivity (NPP) is lower than that of natural systems (KolbySmith et al., 2014; Neumann & Smith, 2018) and because only the nonharvested fraction of agriculturalNPP is returned to SOC (Haberl et al., 2007; Krausmann et al., 2008).
+
+
+Soil carbon storage controlled by interactions between geochemistry and climate
+The respiration data show that soils with high SOCStock generally respired CO2 at lower rates per unit C during a 50-day incubation than soils with low SOC contents
+->Si fraction matters!!! (perciitation just a bit, temperature very less)
