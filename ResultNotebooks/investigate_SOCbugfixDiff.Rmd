@@ -5,8 +5,6 @@ date: "June 8, 2021"
 output: pdf_document
 rmarkdown::pdf_document:
   fig_caption: yes
-  includes:
-    in_header: myHeader.tex
 ---
 
 In the following we will provide an update on some of our main results in comparison to the version of our initial draft to help the reader understand the implication of our changes. The following major corrections and improvements have been made, that let to substantial changes (next to smaller improvements):
