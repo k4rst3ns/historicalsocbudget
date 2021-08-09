@@ -99,7 +99,7 @@ For natural vegetation, we assume rainfed and non-tilled conditions, whereas for
 
 ### SOC transfer between land-use types {#sec:carbontransfer}
 
-We calculate $SOC$ stocks based on the area shares of land-use types ($lu$) within our grid cells ($i$). If land is converted from one land-use type $lu=\{crop,natveg\}$ into the other $!lu=\{natveg,crop\}$, a respective share of the $SOC$ is reallocated. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{t^*}$ via 
+We calculate $SOC$ stocks based on the area shares of land-use types ($lu$) within our grid cells ($i$). If land is converted from one land-use type $lu=\{crop,natveg\}$ into the other $!lu=\{natveg,crop\}$, a respective share of the $SOC$ is reallocated within our budget. As we do not distinguish between freshly converted and old cropland (see \@ref(fig:lutransitions)), we update the average SOC stock per area within this modeling step. We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{t^*}$ via 
 
 \begin{equation}
 SOC_{i,t^*,sub,lu} = SOC_{i,t-1,sub,lu} - \frac{SOC_{i,t-1,sub,lu}}{A_{i,t-1,lu}} \cdot  AR_{i,t,lu} + \frac{SOC_{i,t-1,sub,!lu}}{A_{i,t-1,!lu}} \cdot  AE_{i,t,lu}
@@ -143,7 +143,15 @@ Note that the absolute changes $\Delta SOC$ can be also interpreted as the SOC d
 
 ### Initialization of SOC pools {#sec:initsoc}
 
-To initialize all SOC sub-pools we assume that cropland and natural vegetation are in a land-use type specific steady state for the initialization year 1901. While land-use, climate and litter input information are available from 1901, agricultural management data on residue and manure inputs are held constant at the level of 1965. After a spin-up period of 64 years (1901-1965) with constant agricultural input data, we run the model for additional 10 years with historic input data and start analyzing results from 1975 onwards. Irrigation areas are part of the land-use data set and therefore dynamic from 1901 on, whereas data on no-tillage area is only available after 1974. 
+We initialize our SOC sub-pools using a three-step approach, since input data availability is limited for climate and litter (from 1901) as well as for agricultural management data (from 1965):
+
+Firstly, to account for the impacts of legacy fluxes from land-use changes long before the time horizon of interest, we account for land-use change from 1510. We repeat climate and subsequently also litter input data from 1901-1930 to simulate a constant climate for this first initializing period. Agricultural management data is hold constant at the level of 1965. In 1510 we assume all SOC pools to be in natural steady-state, implicating that all land-use change emissions prior to that time, are redistributed to 1510. Due to this long first spin-up period we suppose that the effect of this late accounting and appertaining delayed legacy fluxes can be neglected in 1901. This approaches follows others studies looking on effects of land-use change and management (cite LPJmL (which?)).   
+
+Secondly, to account for the impact of a changing climate, we account not only for land-use change, but also for historical climate and consequently natural litter inputs to the soil, from 1901 to 1965 still considering constant agricultural input data.
+
+Thirdly, we run the model for additional 10 years with historic dynamic input data and start analyzing results from 1975 onward. This is in line with IPCC method suggestion to have a 5-20 year spin-up period. 
+
+Irrigation areas are part of the water effect associated with the climate data set and therefore dynamic from 1901 on, whereas data on no-tillage areas is only available after 1974. 
 
 <!-- backup
 ```{=latex}
