@@ -10,8 +10,7 @@ library(magclass)
 library(madrat)
 library(magpiesets)
 
-rev <- "rev26"
-setConfig(outputfolder = "/home/kristine/mnt/rd3mod/inputdata/output/")
+rev <- "rev30"
 
 filesNeeded <- c("SoilCarbon.rds","Landuse.rds")
 
@@ -23,8 +22,8 @@ scenarios    <- c("histManagement")#,"constManagement-1975", "constTillage-mixed
 
 # for(item in scenarios){
 #    dir.create(path=paste0("Data/",paste0(rev,item)))
-#    untar(paste0(getConfig("outputfolder"),"/", paste0(rev,item), "_h12_carbonbudget.tgz"),
-#    files=filesNeeded, exdir=paste0("Data/", paste0(rev,item)), extras="--keep-newer-files ")
+#    untar(paste0("Data/", paste0(rev,item), "_h12_carbonbudget.tgz"),
+#    exdir=paste0("Data/", paste0(rev,item)), extras="--keep-newer-files ") # files=filesNeeded,
 # }
 
 outputdir <- "Output/Images"
@@ -33,8 +32,6 @@ SoilCarbon <- read.magpie(paste0("Data/",rev,scenarios[1],"/SoilCarbon.rds"))
 Landuse    <- read.magpie(paste0("Data/",rev,scenarios[1],"/Landuse.rds"))
 
 ```
-
-Calc global numbers
 
 ```{r Carbon Emissions (glo)}
 
@@ -48,13 +45,13 @@ glo_SOCStock    <- dimSums(SOCStock, dim=1)
 glo_SOCEmission <- (glo_SOCStock[,,"naturalstate"] - glo_SOCStock[,,"actualstate"])/1000
 
 cropland_dens    <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)
-cropland_dens[Landuse[,,"crop"]==0] <- NA
+cropland_dens[Landuse[,,"crop"] <= 0.001] <- NA
 
-cropland_share <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)/dimSums(SoilCarbon[,,"naturalstate"][,,"natveg"], dim=3)
-cropland_share[Landuse[,,"crop"]==0] <- NA
+cropland_share <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)/(dimSums(SoilCarbon[,,"naturalstate"][,,"natveg"], dim=3) + 1e-8)
+cropland_share[Landuse[,,"crop"] <= 0.001] <- NA
 
 cropland_increase <- dimSums(SoilCarbon[,,"actualstate"][,,"crop"], dim=3)-dimSums(SoilCarbon[,,"actualstate"][,,"natveg"], dim=3) 
-cropland_increase[Landuse[,,"crop"]==0] <- NA
+cropland_increase[Landuse[,,"crop"] <= 0.001] <- NA
 
 magpie_coord  <- toolGetMapping("magpie_coord.rda", type="cell")
 share2plot    <- merge(as.data.frame(cropland_share), data.frame(magpie_coord, Cell=c(1:59199)), by="Cell")
@@ -116,9 +113,9 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission)[,c(3,6)], 
   labs( x = "Year", 
         y = expression(paste('Global \u0394SOC in GtC'))) +
   scale_x_discrete(breaks=seq(1975,2010,5)) +
-  scale_y_continuous(trans = squish_trans(-32,0,10),
-                     limits = c(-38,0),
-                     breaks = c(0, -32, -33, -34, -35, -36, -37, -38),
+  scale_y_continuous(trans = squish_trans(-34,0,10),
+                     limits = c(-40,0),
+                     breaks = c(0, -34, -35, -36, -37, -38, -39, -40),
                      minor_breaks = seq(-1,-29,-2)) +
   theme(rect=element_blank(),
         axis.title.y= element_text(size=legend_size),
@@ -127,114 +124,84 @@ SOCemis <- ggplot() + geom_line(data= as.data.frame(-glo_SOCEmission)[,c(3,6)], 
         #plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
         ) +
   annotate(geom="text", label="SOC debt", x=factor(1995), y=-20, size = 3) +
-  annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -34, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
+  annotate("segment", x = factor(1990), xend = factor(1990), y = 0, yend = -36, arrow=arrow(end="both", type="closed", length=unit(0.1, "inches")))
  
 
-cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(7)
 
-SOCshare <- ggplot(data = world) + geom_sf() + 
-    geom_tile(data = subset(share2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
-    scale_fill_stepsn(limits=c(0,2), colours = cols, 
-                      name = expression("cropland SOC stock change factor (unitless)"), 
-                      breaks=c(0.3,0.6,0.9,1.1,1.4,1.7,2),
-                      labels=c("0     0.3","  0.6", "  0.9","  1.1","  1.4","  1.7","> 2"), na.value = "white",
-                      guide = guide_legend(
-                        title.theme=element_text(size=legend_size),
-                        direction = "horizontal",
+SOCplotmap   <- function(data, name, cols, limits, values = NULL, breaks, labels) {
+  
+  out <- ggplot(data = world) + geom_sf() + 
+    geom_tile(data = subset(data, Year == "2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
+    scale_fill_stepsn(limits   = limits, 
+                      colours  = cols, 
+                      name     = name,
+                      values   = values,
+                      breaks   = breaks,
+                      labels   = labels, 
+                      na.value = "white",
+                      guide    = guide_legend(
+                        title.theme    = element_text(size=legend_size),
+                        direction      = "horizontal",
                         title.position = 'top',
                         # I shift the labels around, the should be placed 
                         # exactly at the right end of each legend key
-                        title.hjust = 0.5,
-                        label.hjust = 1,
-                        nrow = 1,
-                        byrow = F,
+                        title.hjust    = 0.5,
+                        label.hjust    = 1,
+                        nrow           = 1,
+                        byrow          = F,
                         label.position = "bottom",
-                        keyheight = 0.5,
-                        keywidth  = 2
+                        keyheight      = 0.5,
+                        keywidth       = 2
                       )) +
-    theme(legend.position="bottom",
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank(),
-          legend.text=element_text(size=legend_size),
-          rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
-          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+    theme(legend.position = "bottom",
+          axis.title.x     = element_blank(), 
+          axis.title.y     = element_blank(),
+          legend.text      = element_text(size = legend_size),
+          rect             = element_blank(),
+          panel.background = element_rect(fill = "#F8F8FF", size = c(0.7,0.7)),
+          plot.margin      = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
           )  
+  
+    return(out)
+}
 
-#geom_map(dat=map.world, map = map.world, aes(map_id=region), fill="NA", color="black") +
+cols        <- colorRampPalette(brewer.pal(11, "RdYlBu"))(11)[c(1:6,7,9,11)]
+SOCshare    <- SOCplotmap( data     = share2plot,
+                            limits   = c(0,2),
+                            cols     = cols,
+                            name     = expression("cropland SOC stock change factor (unitless)"),
+                            values   = c(0,0.2,0.4,0.6,0.8,1.0,1.2,2)/2,
+                            breaks   = c(0.2,0.4,0.6,0.8,1.0,1.2,2),
+                            labels   = c("< 0.2","0.4", "0.6","0.8","1.0","1.2","> 1.2"))
 
-SOCincrease <- ggplot(data = world) + geom_sf() +
-    geom_tile(data = subset(increase2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
-    scale_fill_stepsn(limits=c(-100,100), colours = cols, 
-                      name = expression(paste('cropland \u0394SOC in tons of carbon per hectare')), 
-                      values=(c(-100,-50,-20,-10,10,20,50,100)+100)/200,
-                      breaks=c(-50,-20,-10,10,20,50,100),
-                      labels=c("< -100    -50", "  -20","  -10","  10","  20","  50"," > 100"), na.value = "white",
-                      guide = guide_legend(
-                        title.theme=element_text(size=legend_size),
-                        direction = "horizontal",
-                        title.position = 'top',
-                        # I shift the labels around, the should be placed 
-                        # exactly at the right end of each legend key
-                        title.hjust = 0.5,
-                        label.hjust = 1,
-                        nrow = 1,
-                        byrow = F,
-                        label.position = "bottom",
-                        keyheight = 0.5,
-                        keywidth  = 2
-                      )) +
-    theme(legend.position="bottom",
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank(),
-          legend.text=element_text(size=legend_size),
-          rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
-          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
-          )
+SOCincrease <- SOCplotmap( data     = increase2plot,
+                            limits   = c(-100, 100),
+                            cols     = cols,
+                            name     = expression(paste('cropland \u0394SOC in tons of carbon per hectare')),
+                            values   = (c(-100, -40, -30, -20, -10, 0, 10, 100)+100)/200,
+                            breaks   =  c(-40, -30, -20, -10, 0, 10, 100),
+                            labels   = c("< -40", "        -30","        -20","      -10 ","     0","    10","> 10"))
+
 
 cols <- colorRampPalette(brewer.pal(9, "YlGn"))(8)[2:8]
-
-SOCdensity <- ggplot(data = world) + geom_sf() +
-    geom_tile(data = subset(density2plot, Year=="2010", c("lon","lat","Value")), aes(x = lon, y = lat, fill = Value)) +
-    scale_fill_stepsn(limits=c(0,150), colours = cols, 
-                      name = expression("cropland SOC in tons of carbon per hectare"), 
-                      values=c(0,5,10,20,40,70,100,150)/150,
-                      breaks=c(5,10,20,40,70,100,150),
-                      labels=c("0     5","  10","  20","  40","  70","  100"," >150"), na.value = "white",
-                      guide = guide_legend(
-                        title.theme=element_text(size=legend_size),
-                        direction = "horizontal",
-                        title.position = 'top',
-                        # I shift the labels around, the should be placed 
-                        # exactly at the right end of each legend key
-                        title.hjust = 0.5,
-                        label.hjust = 1,
-                        nrow = 1,
-                        byrow = F,
-                        label.position = "bottom",
-                        keyheight = 0.5,
-                        keywidth  = 2
-                      )) +
-    theme(legend.position="bottom",
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank(),
-          legend.text=element_text(size=legend_size),
-          rect=element_blank(),
-          panel.background=element_rect(fill="#F8F8FF", size=c(0.7,0.7)),
-          plot.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
-          )
+SOCdensity  <- SOCplotmap( data     = density2plot,
+                            limits   = c(0, 150), 
+                            cols     = cols, 
+                            name     = expression("cropland SOC in tons of carbon per hectare"), 
+                            values   = c(0, 5, 10, 20, 40, 70, 100, 150) / 150,
+                            breaks   = c(5, 10, 20, 40, 70, 100, 150),
+                            labels   = c("0     5","  10","  20","  40","  70","  100"," >150"))
 
 
 
 library(gridExtra)
 library(cowplot)
-SOCdensity
-SOCincrease
 SOCemis
+SOCincrease
+SOCdensity
 SOCshare
 
-grid <- plot_grid(SOCdensity,SOCincrease, SOCshare, SOCemis,  ncol=2, labels=c("(a)","(b)", "(c)", "(d)"),
+grid <- plot_grid(SOCemis,SOCdensity,SOCincrease, SOCshare,  ncol=2, labels=c("(a)","(b)", "(c)", "(d)"),
                   label_fontface = "plain", label_size = 10)
 grid
 ggsave(paste0(outputdir,"/4panelfigure.png"), plot=grid, width = 20, height = 14, dpi = 300, units = "cm")

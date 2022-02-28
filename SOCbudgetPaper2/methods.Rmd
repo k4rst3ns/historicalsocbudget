@@ -1,12 +1,12 @@
 # Methods
 
-In Sect. \@ref(sec:carbonbudget) we introduce the basic concept of SOC dynamics as applied in this study and explained in more detail in the refinement of the IPCC guidelines vol. 4 Chapter 5 on "Cropland" [@ogle_cropland_in_ipcc_2019]. We additionally describe how we configured and extended the Tier 2 modeling approach [for model code see @karstens_mrsoil_2020]. In Sect. \@ref(sec:tier1) we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines [@eggleston_ipcc_2006; @calvo_buendia_ipcc_2019]. 
+In Sect. \@ref(sec:carbonbudget) we introduce the basic concept of SOC dynamics as applied in this study and explained in more detail in the refinement of the IPCC guidelines vol. 4 Chapter 5 on Cropland [@ogle_cropland_in_ipcc_2019]. We additionally describe how we configured and extended the Tier 2 modeling approach [for model code see @karstens_mrsoil_2020]. In Sect. \@ref(sec:tier1) we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines [@eggleston_ipcc_2006; @calvo_buendia_ipcc_2019]. 
 Section \@ref(sec:agrimanagement) provides a detailed description of the global, gridded management data used to drive the model, including crop production levels, residue input rates, manure amendments, and the adoption of irrigation and tillage practices [for model code see @bodirsky_mrcommons_2020]. In Sect. \@ref(sec:scenarios) we define the management scenarios used to analyze the role of different management aspects in historical cropland SOC dynamics.
 
 
 ## SOC stocks and stock changes following the Tier 2 modeling approach {#sec:carbonbudget}
 
-Following the Tier 2 modeling approach of the refinement of the IPCC guidelines vol. 4 Chapter 5 on "Cropland" [@ogle_cropland_in_ipcc_2019]; referred to as \textit{Tier 2 modeling approach} in the following), we estimate SOC stocks and their change over time for cropland at half-degree resolution from 1975 to 2010. We restrict our analysis to the first 0-30 cm of the soil profile. Moreover, we assume the current SOC state converges towards a steady state, which itself depends on biophysical, climatic and agronomic conditions.
+Following the Tier 2 modeling approach of the refinement of the IPCC guidelines vol. 4 Chapter 5 on Cropland [@ogle_cropland_in_ipcc_2019]; referred to as \textit{Tier 2 modeling approach} in the following), we estimate SOC stocks and their change over time for cropland at half-degree resolution from 1975 to 2010. We restrict our analysis to the first 0-30 cm of the soil profile. Moreover, we assume the current $SOC$ state converges towards a steady state, which itself depends on biophysical, climatic and agronomic conditions.
 Therefore, we take the following three steps for each year of our simulation period: 
 (1) We calculate annual land-use type-specific steady states and decay rates for $SOC$ stocks (Sect. \@ref(sec:steadystates)); 
 (2) we account for land conversion by transferring $SOC$ from and to natural vegetation (Sect. \@ref(sec:carbontransfer)),
@@ -107,7 +107,7 @@ For natural vegetation, we assume rainfed and non-tilled conditions, whereas for
 
 ```{r captionLUtrans, echo=FALSE, include=FALSE}
 captionLUtrans <- "Scheme of land-use transition representation. 
-Given an initial land-use pattern (as in this example 2 ha land under natural vegetation and 1 ha of cropland), there are separate $SOC$ stocks for natural vegetation and cropland. While in this example we assume $SOC$ under natural vegetation to be in steady state, the cropland $SOC$ stock approaches its steady state without having reached it yet (a). Upon cropland expansion (in this example half of the natural vegetation is cleared to be used as cropland), $SOC$ stocks on cropland increase due to a transfer of land from natural vegetation (b). Separately accounting for SOC dynamics on newly converted and existing cropland (c) leads to the same overall SOC dynamics as if SOC stocks are averaged (d), due to the linearity of Eq. \\ref{eq:SOCstate} and the cropland-age independend decay rates (see Eq. \\ref{eq:decayrates})"
+Given an initial land-use pattern (as in this example 2 ha land under natural vegetation and 1 ha of cropland), there are separate SOC stocks for natural vegetation and cropland. While in this example we assume SOC under natural vegetation to be in steady state, the cropland SOC stock approaches its steady state without having reached it yet (a). Upon cropland expansion (in this example half of the natural vegetation is cleared to be used as cropland), SOC stocks on cropland increase due to a transfer of land from natural vegetation (b). Separately accounting for SOC dynamics on newly converted and existing cropland (c) leads to the same overall SOC dynamics as if SOC stocks are averaged (d), due to the linearity of Eq. \ref{eq:SOCstate} and the cropland-age independend decay rates (see Eq. \ref{eq:decayrates})"
 ```
 
 ```{r LUtrans, out.width = "8cm", fig.cap = captionLUtrans, echo=FALSE, fig.pos="h"}
@@ -115,7 +115,7 @@ Given an initial land-use pattern (as in this example 2 ha land under natural ve
 knitr::include_graphics("../ResultNotebooks/Output/Images/LUtransitions.png")
 ```
 
-We calculate SOC stocks based on the area shares of land-use types $lu$ within our grid cells $i$. If land is converted from one land-use type $lu=\{crop,natveg\}$ into the other $!lu=\{natveg,crop\}$, a respective share of the SOC is reallocated within our budget. We do not distinguish between newly converted and existing cropland, but can work with the average carbon content as the relative decay of SOC is proportional to the SOC stock (see \@ref(fig:LUtrans)). We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{t^*}$ via 
+We calculate $SOC$ stocks based on the area shares of land-use types $lu$ within our grid cells $i$. If land is converted from one land-use type $lu=\{crop,natveg\}$ into the other $!lu=\{natveg,crop\}$, a respective share of the $SOC$ is reallocated within our budget. We do not distinguish between newly converted and existing cropland, but can work with the average carbon content as the relative decay of SOC is proportional to the SOC stock (see \@ref(fig:LUtrans)). We account for land conversion at the beginning of each time step $t$ by calculating a preliminary stock $SOC_{t^*}$ via 
 
 \begin{equation}
 SOC_{i,t^*,sub,lu} = SOC_{i,t-1,sub,lu} - \frac{SOC_{i,t-1,sub,lu}}{A_{i,t-1,lu}} \cdot  AR_{i,t,lu} + \frac{SOC_{i,t-1,sub,!lu}}{A_{i,t-1,!lu}} \cdot  AE_{i,t,lu}
@@ -126,7 +126,7 @@ with $A_{lu}$ being the land-use type specific areas, $AR_{lu}$ the area reducti
 
 ### Total SOC stocks and stock changes {#sec:totalsoc}
 
-SOC converges towards the calculated steady-state stock $SOC^{\mathrm{eq}}$ for each grid cell $i$, each annual time step $t$, each land-use type $lu$ and each sub-pool $sub$ like
+$SOC$ converges towards the calculated steady-state stock $SOC^{\mathrm{eq}}$ for each grid cell $i$, each annual time step $t$, each land-use type $lu$ and each sub-pool $sub$ like
 
 \begin{equation}
 SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t^*,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
@@ -144,11 +144,11 @@ SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} - \underbrace{SOC_{i,t^*,sub,lu} \cdot k_{
 The global $SOC$ stock for each time step $t$ can then be calculated via
 
 \begin{equation}
-SOC_{t} = \sum_{i} \underbrace{\sum_{lu} \overbrace{\sum_{sub} SOC_{i,t,sub,lu}}^{\text{$SOC_{i,t,lu}$ -- land-use type specific $SOC$ stock within cell}}}_{\text{$SOC_{i,t}$ -- total $SOC$ stock within cell}}.
+SOC_{t} = \sum_{i} \underbrace{\sum_{lu} \overbrace{\sum_{sub} SOC_{i,t,sub,lu}}^{\text{$SOC_{i,t,lu}$ -- land-use type specific SOC stock within cell}}}_{\text{$SOC_{i,t}$ -- total SOC stock within cell}}.
 (\#eq:totalstock)
 \end{equation}
 
-According to the IPCC guidelines $SOC$ changes can be expressed as the difference of two consecutive years [see Eq. 5.0A in @ogle_cropland_in_ipcc_2019]. This, however, will also include naturally occurring changes due to climatic variation over time. For our study, we define the absolute and relative $SOC$ changes in relation to a potential natural state $SOC^{\mathrm{pnv}}$ under the same climatic conditions in grid cell $i$ at time $t$, that is based on the natural vegetation $SOC$ calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes $\Delta SOC$ and relative changes $F^{\mathrm{SCF}}$ are thus given by 
+According to the IPCC guidelines $SOC$ changes can be expressed as the difference of two consecutive years [see Eq. 5.0A in @ogle_cropland_in_ipcc_2019]. This, however, will also include naturally occurring changes due to climatic variation over time. For our study, we define the absolute and relative SOC changes in relation to a potential natural state $SOC^{\mathrm{pnv}}$ under the same climatic conditions in grid cell $i$ at time $t$, that is based on the natural vegetation $SOC$ calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes $\Delta SOC$ and relative changes $F^{\mathrm{SCF}}$ are thus given by 
 
 \begin{equation}
 \Delta SOC_{i,t} = SOC_{i,t} - SOC^{\mathrm{pnv}}_{i,t}\qquad \text{and} \qquad  F^{\mathrm{SCF}}_{i,t} = \frac{SOC_{i,t}}{SOC^{\mathrm{pnv}}_{i,t}} .
@@ -159,10 +159,10 @@ Note that the absolute changes $\Delta SOC$ can be also interpreted as the SOC d
 
 ### Initialization of SOC pools {#sec:initsoc}
 
-The initialization of $SOC$ pools is very important and has to include the proper accounting for the land-use history, as many CO~2~ emissions from agricultural soils are caused by historical land-use change (LUC) and the slow decline of $SOC$ under crop cultivation, before it reaches a new equilibrium.
-We initialize our $SOC$ sub-pools using a three-step approach, since input data availability is limited for climate and litter estimates (starting only in 1901) as well as for agricultural management data (starting only in 1965):
+The initialization of SOC pools is very important and has to include the proper accounting for the land-use history, as many CO~2~ emissions from agricultural soils are caused by historical land-use change (LUC) and the slow decline of SOC under crop cultivation, before it reaches a new equilibrium.
+We initialize our SOC sub-pools using a three-step approach, since input data availability is limited for climate and litter estimates (starting only in 1901) as well as for agricultural management data (starting only in 1965):
 
-Firstly, in order to account for the impacts of legacy fluxes from land-use changes long before the time horizon of interest, we consider land-use change from 1510 onwards. In 1510, we assume all $SOC$ pools to be in natural steady-state, implying that all land-use change prior to that time occurs in 1510. We assume that by 1901, all cropland converted in 1510 has reached its new steady state, so that it is not necessary to explicitly account for even older land conversion. Model inputs for 1901--1930 for climate and natural vegetation litterfall are repeated for 1510--1900 to mimic constant climate conditions for this first initializing period. Similarly, agricultural management data are held constant at the level of 1965 until 1965.  This approach follows others studies looking on effects of land-use change and management [e.g. @schaphoff_lpjml4_2018-1; @herzfeld_soc_2021].
+Firstly, in order to account for the impacts of legacy fluxes from land-use changes long before the time horizon of interest, we consider land-use change from 1510 onwards. In 1510, we assume all SOC pools to be in natural steady-state, implying that all land-use change prior to that time occurs in 1510. We assume that by 1901, all cropland converted in 1510 has reached its new steady state, so that it is not necessary to explicitly account for even older land conversion. Model inputs for 1901--1930 for climate and natural vegetation litterfall are repeated for 1510--1900 to mimic constant climate conditions for this first initializing period. Similarly, agricultural management data are held constant at the level of 1965 until 1965.  This approach follows others studies looking on effects of land-use change and management [e.g. @schaphoff_lpjml4_2018-1; @herzfeld_soc_2021].
 
 Secondly, with the availability of transient climate data after 1901, we account not only for land-use change, but also for historical climate change and consequently natural litter inputs to the soil from 1901 to 1965 still considering constant agricultural input data, which are not available prior to 1965.
 
@@ -172,7 +172,7 @@ With transient climate considered after 1901, decay rates $k_{sub}$ become dynam
 
 ## SOC stocks and stock changes following Tier 1 {#sec:tier1}
 
-Additionally to the Tier 2 modeling approach [@ogle_cropland_in_ipcc_2019] and the detailed analysis of management data coming with it, $SOC$ changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines [@eggleston_ipcc_2006; @calvo_buendia_ipcc_2019]. Here, stocks are calculated via stock change factors ($F^{\mathrm{SCF}}$) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of $F^{\mathrm{SCF}}$ are differentiated by crops, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these flows. Moreover, estimates of $F^{\mathrm{SCF}}$ vary for different climatic zones ($c$) specified by the IPCC (see Fig. \@ref(fig:CLIMzone)). The actual $SOC$ stocks are thus calculated based on a given reference stock $SOC^{\mathrm{ref}}$ by
+Additionally to the Tier 2 modeling approach [@ogle_cropland_in_ipcc_2019] and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines [@eggleston_ipcc_2006; @calvo_buendia_ipcc_2019]. Here, stocks are calculated via stock change factors ($F^{\mathrm{SCF}}$) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of $F^{\mathrm{SCF}}$ are differentiated by crops, management and input systems (here summarized under $m$) reflecting different dynamics under changed in- and outflows without explicitly tracking these flows. Moreover, estimates of $F^{\mathrm{SCF}}$ vary for different climatic zones ($c$) specified by the IPCC (see Fig. \@ref(fig:CLIMzone)). The actual $SOC$ stocks are thus calculated based on a given reference stock $SOC^{\mathrm{ref}}$ by
 
 \begin{equation}
 SOC_{i,t} = \sum_{c,m} T_{c,i} \cdot SOC^{\mathrm{ref}}_{i,t} \cdot F^{\mathrm{SCF}}_{c,m}
@@ -187,7 +187,7 @@ We compile country-specific FAO production and cropland statistics [@faostat_fao
 
 ### Land use and land-use change {#sec:landuse}
 
-Land-use patterns are based on the Land-Use Harmonization 2 [@hurtt_harmonization_2020] data set (short LUH2), which we sum up from quarter-degree to half-degree resolution. We disaggregate the physical area (in Mha) of the five different cropland subcategories (c3ann: C3 annual crops, c3per: C3 perennial crops, c4ann: C4 annual crops, c4per: C4 perennial crops, c3nfx: C3 nitrogen-fixing crops) of LUH2 into our 17 crop groups (see Table \@ref(tab:fao2luh2mag)), applying the relative shares for each grid cell based on the country- and year-specific area harvested shares of FAOSTAT data [@faostat_faostat_2016]. By calculating country-specific multicropping factors $MCF$ using FAOSTAT data, we are able to compute crop-group specific area harvested on grid cell level. 
+Land-use patterns are based on the Land-Use Harmonization 2 [@hurtt_harmonization_2020] data set (short LUH2), which we sum up from quarter-degree to half-degree resolution. We disaggregate the physical area (in Mha) of the five different cropland subcategories (c3ann: C3 annual crops, c3per: C3 perennial crops, c4ann: C4 annual crops, c4per: C4 perennial crops, c3nfx: C3 nitrogen-fixing crops) of LUH2 into our 17 crop groups [see FAO2LUH2MAG_croptypes.csv in @bodirsky_mrcommons_2020], applying the relative shares for each grid cell based on the country- and year-specific area harvested shares of FAOSTAT data [@faostat_faostat_2016]. By calculating country-specific multicropping factors $MCF$ using FAOSTAT data, we are able to compute crop-group specific area harvested on grid cell level. 
 Land-use transitions are calculated as net area differences of the land-use data at half-degree resolution, considering no split up into crop-group specific areas but only total cropland and natural vegetation areas.
 
 ### Crop and crop residues production {#sec:residues}
@@ -212,7 +212,7 @@ A country-specific fixed share of the $AGR$ is assumed to be burned on field dep
 
 From our 17 crop groups, we compile four residue groups (straw, high- and low-lignin residues, residues without dual use), of which the first three are taken away from the field for other purposes (see mappingCrop2Residue.csv in Bodirsky et al. [-@bodirsky_mrcommons_2020]. Residue feed demand for five different livestock groups is based on country-specific feed baskets [see @weindl_livestock_2017], that differentiate between the residue groups and take available $AGR$ biomass as well as livestock productivity into account. We estimate a material-use share for the straw-residue group of 5% and a fuel-share of 10% for all used residue groups in low-income countries. For high-income countries, no withdrawal for material or fuel use is assumed, and use shares of middle-income countries are linearly interpolated based on per-capita income, following the same rationale as for the share of burnt residues described above. The remaining $AGR$ as well as all $BGR$ are expected to be left on the field. We limit high residue return rates to at most $10\unit{tC\,ha}^{-1}$ in order to correct for outliers. 
 
-To transform dry matter estimates into carbon and nitrogen, we compiled crop-group and plant-part specific carbon and nitrogen to dry matter ratios (see Table \@ref(tab:c2dm)).
+To transform dry matter estimates into carbon and nitrogen, we compiled crop-group and plant-part specific carbon and nitrogen to dry matter ratios (see \@ref(tab:c2dm)).
 
 ### Livestock distribution and manure excretion {#sec:livstmanure}
 

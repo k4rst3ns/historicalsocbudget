@@ -6135,19 +6135,4 @@ DOI = {10.5194/bg-19-957-2022}
   number    = {9},
   pages     = {e0222604},
   volume    = {14},
-  abstract  = {Assessments of the global carbon (C) cycle typically rely on simplified models which consider large areas as homogeneous in terms of the response of soils to land use or consider very broad land classes. For example, ``cropland'' is typically modelled as an aggregation of distinct practices and individual crops over large regions. Here, we use the process-based Rothamsted soil Carbon Model (RothC model), which has a history of being successfully applied at a global scale, to calculate attainable SOC stocks and C mineralization rates for each of c. 17,000 regions (combination of soil type and texture, climate type, initial land use and country) in the World, under near-past climate conditions. We considered 28 individual crops and, for each, multiple production practices, plus 16 forest types and 1 grassland class (total of 80 classes). We find that conversion to cropland can result in SOC increases, particularly when the soil remains covered with crop residues (an average gain of 12 t C/ha) or using irrigation (4 t C/ha), which are mutually reinforcing effects. Attainable SOC stocks vary significantly depending on the land use class, particularly for cropland. Common aggregations in global modelling of a single agricultural class would be inaccurate representations of these results. Attainable SOC stocks obtained here were compared to long-term experiment data and are well aligned with the literature. Our results provide a regional and detailed understanding of C sequestration that will also enable better greenhouse gas reporting at national level as alternatives to IPCC tier 2 defaults.},
-  doi       = {10.1371/journal.pone.0222604},
-  file      = {/home/kristine/Zotero/storage/LB3ECK8C/Morais et al. - 2019 - Detailed global modelling of soil organic carbon i.pdf;/home/kristine/Zotero/storage/ZZ7CQ5CS/article.html},
-  keywords  = {Agricultural irrigation,Agricultural soil science,Crops,Fertilizers,Forests,Grasslands,Maize,Soil mineralization},
-  langid    = {english},
-  publisher = {{Public Library of Science}},
-}
-
-@Comment{jabref-meta: databaseType:bibtex;}
-
-@Comment{jabref-meta: grouping:
-0 AllEntriesGroup:;
-1 StaticGroup:Markings\;2\;1\;\;\;\;;
-2 StaticGroup:[kristine:]\;2\;1\;\;\;\;;
-2 StaticGroup:kristine:6\;2\;1\;\;\;\;;
-}
+  abstract  = {Assessments of the global carbon (C) cycle typically rely on simplified models which consider large areas as homogeneous in terms of the response of soils to land use or consider very broad land classes. For example, ``cropland'' is typically modelled as an aggregation of distinct practices and individual crops over large regions. Here, we use the process-based Rothamsted soil Carbon Model (RothC model), which has a history of being successfully applied at a global scale, to calculate attainable SOC stocks and C mineralization rates for each of c. 17,000 regions (combination of soil type and texture, climate type, initial land use and country) in the World, under near-past climate conditions. We considered 28 individual crops and, for each, multiple production pr

@@ -8,25 +8,48 @@ output:
 ```{r arrange plot, out.height=3000 , out.width=3300}
 library(cowplot)
 library(ggplot2)
+library(magick)
+library(grImport)
 
-start     <- "../FlowFigure/LUC_start_rotated.pdf"
-trans     <- "../FlowFigure/LUC_transition_rotated.pdf"
-hetero    <- "../FlowFigure/LUC_hetero_rotated.pdf"
-homo      <- "../FlowFigure/LUC_homo_rotated.pdf"
-text      <- "../FlowFigure/LUC_text_rotated.pdf"
-outputdir <- "Output/Images"
+path <- "../FlowFigure/"
 
-p1 <- ggdraw() + draw_image(start)
-p2 <- ggdraw() + draw_image(trans)
-p3 <- ggdraw() + draw_image(hetero)
-p4 <- ggdraw() + draw_image(homo)
-pt <- ggdraw() + draw_image(text)
+start     <- "LUC_start.svg"
+trans     <- "LUC_trans.svg"
+hetero    <- "LUC_hetero.svg"
+homo      <- "LUC_homo.svg"
+text      <- "LUC_text.svg"
 
-grid_1 <- plot_grid(p1, p2, p3, ncol=3)
-grid_2 <- plot_grid (pt, p4, ncol=2, rel_widths = c(2, 1))
-grid   <- plot_grid(grid_1, grid_2, nrow=2)
+#for(tmp in c(start, trans, hetero, homo, text)) PostScriptTrace(paste0(path, tmp), paste0("Output/", tmp, ".xml"))
+for(tmp in c(start, trans, hetero, homo, text)) grConvert::convertPicture(paste0(path, tmp), paste0("Output/", gsub("\\.(.*)", "\\.svg", tmp)))
+
+
+start     <- grImport2::pictureGrob(grImport2::readPicture(paste0("Output/", gsub("\\.(.*)", "\\.svg", start))))
+trans     <- grImport2::pictureGrob(grImport2::readPicture(paste0("Output/", gsub("\\.(.*)", "\\.svg", trans))))
+hetero    <- grImport2::pictureGrob(grImport2::readPicture(paste0("Output/", gsub("\\.(.*)", "\\.svg", hetero))))
+homo      <- grImport2::pictureGrob(grImport2::readPicture(paste0("Output/", gsub("\\.(.*)", "\\.svg", homo))))
+text      <- grImport2::pictureGrob(grImport2::readPicture(paste0("Output/", gsub("\\.(.*)", "\\.svg", text))))
+
+
+# start     <- pictureGrob(readPicture(paste0("Output/", start, ".xml")))
+# trans     <- pictureGrob(readPicture(paste0("Output/", trans, ".xml")))
+# hetero    <- pictureGrob(readPicture(paste0("Output/", hetero, ".xml")))
+# homo      <- pictureGrob(readPicture(paste0("Output/", homo, ".xml")))
+# text      <- pictureGrob(readPicture(paste0("Output/", text, ".xml")))
+
+
+
+
+# gridExtra::grid.arrange(g[1], g[2], g[3], g[4], g[5], nrow=2)
+
+#PostScriptTrace("../FlowFigure/LUC_start.svg")
+
+# # pt <- ggdraw() + draw_image(text)
+# 
+# #grid_1 <- plot_grid(p1, p2, p3, ncol=3)
+# #grid_2 <- plot_grid (pt, p4, ncol=2, rel_widths = c(2, 1))
+grid   <- plot_grid(start, trans, hetero, homo, text, nrow=2)
 grid
-ggsave(paste0(outputdir,"/LUtransition_rotated.png"), plot=grid, width = 33, height = 30, dpi = 400, units = "cm", bg="white")
+ggsave(paste0(outputdir,"/LUtransition_rotated.pdf"), plot=grid, width = 22, height = 30, units = "cm", bg="white")
 
 ```
 

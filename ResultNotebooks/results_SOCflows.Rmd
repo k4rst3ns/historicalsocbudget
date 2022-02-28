@@ -12,7 +12,7 @@ library(madrat)
 library(magpiesets)
 
 outputdir <- "Output/"
-revfolder <- "Data/histManagement/"
+revfolder <- "Data/rev30histManagement/"
 
 ```
 
@@ -138,7 +138,7 @@ CarbonIn          <- grepSpaceTime(CarbonInflow[,,"crop"]*Landuse[,,"crop"])
 CarbonIn          <- mbind(CarbonIn[,,"ag"],CarbonIn[,,"bg"],
                            add_dimension(dimSums(
                              CarbonIn[,,c("livst_chick","livst_egg","livst_milk","livst_pig","livst_rum")], dim=3.1),
-                              add="subpool", nm="manure"))
+                              add="inputs", nm="manure"))
 
 TotalSOCBudget    <- mbind(TotalSOCBudget,
                            setNames(CarbonIn, gsub("\\.","_", getNames(CarbonIn))))

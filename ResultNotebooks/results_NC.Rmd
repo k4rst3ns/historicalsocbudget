@@ -11,20 +11,14 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-rev       <- "rev19"
+scenarios <- c("rev27histManagement") #,"rev18histManagement_ResAllom_2021_02_01")
 outputdir <- "Output/"
 
-#filesNeeded  <- c("SoilCarbon.rds","Landuse.rds","LanduseChange.rds")
-#untar(paste0(getConfig("outputfolder"),"/",rev, "histManagement_ResAllom_2021_01_12_h12_carbonbudget.tgz"), files=filesNeeded, exdir="Data/histManagement_ResAllom", extras="--keep-newer-files ")
+#untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
 
-# SoilCarbon    <- read.magpie(paste0("Data/histManagement_ResAllom/SoilCarbon.rds"))
-# Landuse       <- read.magpie(paste0("Data/histManagement_ResAllom/Landuse.rds"))
-# LanduseChange <- read.magpie(paste0("Data/histManagement_ResAllom/LanduseChange.rds"))
-
-
-SoilCarbon    <- read.magpie(paste0("Data/rev19histManagement/SoilCarbon.rds"))
-Landuse       <- read.magpie(paste0("Data/rev19histManagement/Landuse.rds"))
-LanduseChange <- read.magpie(paste0("Data/rev19histManagement/LanduseChange.rds"))
+SoilCarbon    <- read.magpie(paste0("Data/",scenarios[1],"/SoilCarbon.rds"))
+Landuse       <- read.magpie(paste0("Data/",scenarios[1],"/Landuse.rds"))
+LanduseChange <- read.magpie(paste0("Data/",scenarios[1],"/LanduseChange.rds"))
 
 
 ```

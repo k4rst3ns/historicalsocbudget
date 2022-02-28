@@ -51,7 +51,7 @@ The large contribution of residues relative to manure also becomes visible when 
 
 ## Model evaluation {#sec:validate}
 
-To evaluate our model results against reference data in five steps: (1) we compare our stock change factors (see Sect. \@ref(sec:tier1)) to IPCC default assumptions [@lasco_cropland_in_ipcc_2006; @ogle_cropland_in_ipcc_2019]; (2) we compare our global (and climate-zone specific) total SOC stocks to other literature estimates; (3) we compare our results to point measurements. To evaluate the representation of our natural SOC stocks (4) we correlated LPJmL4 SOC stocks for PNV with our natural state SOC results on grid level; and (5) we do a similar correlation analysis for our modeled actual SOC stocks in comparison to the results of SoilGrids 2.0 [@poggio_soilgrids_2021], which accounts for actual land use too.
+To evaluate our model results against reference data in five steps: (1) we compare our stock change factors (see Sect. \@ref(#sec:tier1)) to IPCC default assumptions [@lasco_cropland_in_ipcc_2006; @ogle_cropland_in_ipcc_2019]; (2) we compare our global (and climate-zone specific) total SOC stocks to other literature estimates; (3) we compare our results to point measurements. To evaluate the representation of our natural SOC stocks (4) we correlated LPJmL4 SOC stocks for PNV with our natural state SOC results on grid level; and (5) we do a similar correlation analysis for our modeled actual SOC stocks in comparison to the results of SoilGrids 2.0 [@poggio_soilgrids_2021], which accounts for actual land use too.
 
 ### Stock change factors compared to IPCC assumptions {#sec:ipcccompare}
 
