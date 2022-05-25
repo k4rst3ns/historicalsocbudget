@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  28 FEB 2022 23:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2020.7.28)  4 MAR 2022 20:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,7 +1027,7 @@ Overfull \hbox (75.54668pt too wide) in paragraph at lines 207--207
  []
 
 [5]
-<../ResultNotebooks/Output/Images/LUtransitions.png, id=253, 647.7801pt x 1104.
+<../ResultNotebooks/Output/Images/LUtransitions.png, id=258, 647.7801pt x 1104.
 5265pt>
 File: ../ResultNotebooks/Output/Images/LUtransitions.png Graphic file (type png
 )
@@ -1039,245 +1039,256 @@ ed on input line 271.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [6]
-Overfull \vbox (24.59908pt too high) has occurred while \output is active []
+Overfull \vbox (24.93658pt too high) has occurred while \output is active []
 
 [7 <../ResultNotebooks/Output/Images/LUtransitions.png>] [8] [9] [10] [11] [12]
 [13]
-<../ResultNotebooks/Output/Images/4panelfigure.png, id=412, 569.0058pt x 398.20
+<../ResultNotebooks/Output/Images/4panelfigure.png, id=414, 569.0058pt x 398.20
 77pt>
 File: ../ResultNotebooks/Output/Images/4panelfigure.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/4panelfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/4panelfigure.png  use
-d on input line 421.
+d on input line 420.
 (pdftex.def)             Requested size: 512.1496pt x 358.42007pt.
 
-Overfull \hbox (8.53583pt too wide) in paragraph at lines 421--421
+Overfull \hbox (8.53583pt too wide) in paragraph at lines 420--420
  [][] 
  []
 
 [14 <../ResultNotebooks/Output/Images/4panelfigure.png>]
-<../ResultNotebooks/Output/Images/CarbonBudget.png, id=430, 680.7834pt x 647.78
+<../ResultNotebooks/Output/Images/2panelfigure.png, id=431, 284.5029pt x 398.20
+77pt>
+File: ../ResultNotebooks/Output/Images/2panelfigure.png Graphic file (type png)
+
+<use ../ResultNotebooks/Output/Images/2panelfigure.png>
+Package pdftex.def Info: ../ResultNotebooks/Output/Images/2panelfigure.png  use
+d on input line 431.
+(pdftex.def)             Requested size: 256.0748pt x 358.42007pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<../ResultNotebooks/Output/Images/CarbonBudget.png, id=434, 680.7834pt x 647.78
 01pt>
 File: ../ResultNotebooks/Output/Images/CarbonBudget.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/CarbonBudget.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/CarbonBudget.png  use
-d on input line 435.
+d on input line 442.
 (pdftex.def)             Requested size: 455.24408pt x 433.17024pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<../ResultNotebooks/Output/Images/scenario_horiz.png, id=431, 426.6339pt x 284.
+[15]
+<../ResultNotebooks/Output/Images/scenario_horiz.png, id=442, 426.6339pt x 284.
 5029pt>
 File: ../ResultNotebooks/Output/Images/scenario_horiz.png Graphic file (type pn
 g)
 <use ../ResultNotebooks/Output/Images/scenario_horiz.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scenario_horiz.png  u
-sed on input line 445.
+sed on input line 452.
 (pdftex.def)             Requested size: 398.33858pt x 265.63551pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[15] [16 <../ResultNotebooks/Output/Images/CarbonBudget.png>] [17 <../ResultNot
-ebooks/Output/Images/scenario_horiz.png>]
-<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=489, 284.5029pt 
-x 113.7048pt>
+[16 <../ResultNotebooks/Output/Images/2panelfigure.png>] [17 <../ResultNotebook
+s/Output/Images/CarbonBudget.png>] [18 <../ResultNotebooks/Output/Images/scenar
+io_horiz.png>]
+<../ResultNotebooks/Output/Images/glo_comparisonfigure.png, id=505, 341.3553pt 
+x 170.5572pt>
 File: ../ResultNotebooks/Output/Images/glo_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/glo_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/glo_comparisonfigure.
-png  used on input line 489.
-(pdftex.def)             Requested size: 227.62204pt x 90.97089pt.
+png  used on input line 496.
+(pdftex.def)             Requested size: 312.9803pt x 156.3836pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[18]
-<../ResultNotebooks/Output/Images/scatterComparePointData_2010.png, id=518, 455
+<../ResultNotebooks/Output/Images/scatterComparePointData_2010.png, id=517, 455
 .0601pt x 455.0601pt>
 File: ../ResultNotebooks/Output/Images/scatterComparePointData_2010.png Graphic
  file (type png)
 <use ../ResultNotebooks/Output/Images/scatterComparePointData_2010.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scatterComparePointDa
-ta_2010.png  used on input line 500.
+ta_2010.png  used on input line 507.
 (pdftex.def)             Requested size: 284.52756pt x 284.5438pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png, id=519, 433
+[19]
+<../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png, id=535, 433
 .62pt x 433.62pt>
 File: ../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png Graphic
  file (type png)
 <use ../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scatterCompareLPJmL42
-010_pnv.png  used on input line 509.
+010_pnv.png  used on input line 516.
 (pdftex.def)             Requested size: 369.88582pt x 369.90204pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19 <../ResultNotebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>]
-<../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png, id=539,
+[20 <../ResultNotebooks/Output/Images/glo_comparisonfigure.png (PNG copy)>]
+<../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png, id=551,
  433.62pt x 433.62pt>
 File: ../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png Gra
 phic file (type png)
 <use ../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/scatterCompareSoilGri
-ds2_2010_lu.png  used on input line 522.
+ds2_2010_lu.png  used on input line 529.
 (pdftex.def)             Requested size: 369.88582pt x 369.90204pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2.png, id=540, 426.6339p
+<../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2.png, id=552, 426.6339p
 t x 284.5029pt>
 File: ../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2.png Graphic file 
 (type png)
 <use ../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/SOCquantilesSoilGrids
-2.png  used on input line 526.
+2.png  used on input line 533.
 (pdftex.def)             Requested size: 398.33858pt x 265.63551pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[20 <../ResultNotebooks/Output/Images/scatterComparePointData_2010.png>] [21 <.
-./ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png>] [22 <../Resu
-ltNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png>] [23 <../Result
-Notebooks/Output/Images/SOCquantilesSoilGrids2.png>] [24] [25] [26] [27]
-<../ResultNotebooks/Output/Images/climatezones.png, id=751, 569.0058pt x 398.20
+[21 <../ResultNotebooks/Output/Images/scatterComparePointData_2010.png>] [22 <.
+./ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png>] [23 <../Resu
+ltNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu.png>] [24 <../Result
+Notebooks/Output/Images/SOCquantilesSoilGrids2.png>] [25] [26] [27] [28]
+<../ResultNotebooks/Output/Images/climatezones.png, id=764, 569.0058pt x 398.20
 77pt>
 File: ../ResultNotebooks/Output/Images/climatezones.png Graphic file (type png)
 
 <use ../ResultNotebooks/Output/Images/climatezones.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/climatezones.png  use
-d on input line 620.
+d on input line 622.
 (pdftex.def)             Requested size: 369.88582pt x 258.85623pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 657--657
+Underfull \hbox (badness 10000) in paragraph at lines 659--659
 
  []
 
 
-LaTeX Warning: Float too large for page by 5.69054pt on input line 665.
+LaTeX Warning: Float too large for page by 5.69054pt on input line 667.
 
-
-LaTeX Warning: Float too large for page by 2037.4462pt on input line 843.
-
-[28] [29] [30]
-<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=784, 426.6339pt 
-x 255.8358pt>
+[29] [30]
+<../ResultNotebooks/Output/Images/reg_comparisonfigure.png, id=789, 426.6339pt 
+x 284.5029pt>
 File: ../ResultNotebooks/Output/Images/reg_comparisonfigure.png Graphic file (t
 ype png)
 <use ../ResultNotebooks/Output/Images/reg_comparisonfigure.png>
 Package pdftex.def Info: ../ResultNotebooks/Output/Images/reg_comparisonfigure.
-png  used on input line 848.
-(pdftex.def)             Requested size: 455.24408pt x 272.99599pt.
+png  used on input line 672.
+(pdftex.def)             Requested size: 455.24408pt x 303.58592pt.
 [31 <../ResultNotebooks/Output/Images/climatezones.png>] [32 <../ResultNotebook
 s/Output/Images/reg_comparisonfigure.png (PNG copy)>] (./SOCbudget.bbl [33]
-Underfull \hbox (badness 6978) in paragraph at lines 28--31
+Underfull \hbox (badness 6978) in paragraph at lines 24--27
 []\T1/ptm/m/n/9 Batjes, N.: To-tal Car-bon and Ni-tro-gen in the Soils of the W
 orld, Eu-ro-pean Jour-nal of Soil Sci-ence, 47, 151--163,
  []
 
 
-Underfull \hbox (badness 4132) in paragraph at lines 47--52
+Underfull \hbox (badness 4132) in paragraph at lines 43--48
 []\T1/ptm/m/n/9 Bodirsky, B. L., Popp, A., Weindl, I., Di-et-rich, J. P., Rolin
 -ski, S., Scheif-fele, L., Schmitz, C., and Lotze-Campen, H.:
  []
 
 [34]
-Underfull \hbox (badness 1127) in paragraph at lines 220--224
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 185.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [35]
+Underfull \hbox (badness 1127) in paragraph at lines 230--234
 []\T1/ptm/m/n/9 Fujisaki, K., Per-rin, A.-S., Des-jardins, T., Bernoux, M., Bal
 -bino, L. C., and Brossard, M.: From For-est to Crop-land and Pas-
  []
 
-[35]
-Underfull \hbox (badness 3199) in paragraph at lines 227--233
+
+Underfull \hbox (badness 3199) in paragraph at lines 237--243
 []\T1/ptm/m/n/9 Guo, L., Deng, M., Yang, S., Liu, W., Wang, X., Wang, J., and L
 iu, L.: The co-or-di-na-tion be-tween leaf and fine root
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 227--233
+Underfull \hbox (badness 4673) in paragraph at lines 237--243
 \T1/ptm/m/n/9 lit-ter de-com-po-si-tion and the dif-fer-ence in their con-trol-
 ling fac-tors, Global Ecol-ogy and Bio-geog-ra-phy, 30, 2286--2296,
  []
 
-
-Underfull \hbox (badness 2326) in paragraph at lines 328--331
+[36]
+Underfull \hbox (badness 2326) in paragraph at lines 343--346
 []\T1/ptm/m/n/9 Karstens, K.: Model out-put data of the pa-per: "Man-age-ment i
 n-duced changes of soil or-ganic car-bon on global crop-lands",
  []
 
-[36]
-Underfull \hbox (badness 1189) in paragraph at lines 346--350
+
+Underfull \hbox (badness 1189) in paragraph at lines 361--365
 []\T1/ptm/m/n/9 Keel, S. G., Leifeld, J., Mayer, J., Taghizadeh-Toosi, A., and 
 Ole-sen, J. E.: Large Un-cer-tainty in Soil Car-bon Mod-elling Re-
  []
 
 
-Underfull \hbox (badness 5161) in paragraph at lines 352--355
+Underfull \hbox (badness 5161) in paragraph at lines 367--370
 []\T1/ptm/m/n/9 Lal, R.: World Crop-land Soils as a Source or Sink for At-mo-sp
 heric Car-bon, vol. 71, pp. 145--191, Aca-demic Press,
  []
 
 [37]
-Underfull \hbox (badness 1694) in paragraph at lines 480--485
+Underfull \hbox (badness 1694) in paragraph at lines 495--500
 []\T1/ptm/m/n/9 Portmann, F. T., Siebert, S., and Döll, P.: MIRCA2000^^VGlobal 
 Monthly Ir-ri-gated and Rain-fed Crop Ar-eas around the Year
  []
 
 
-Underfull \hbox (badness 2689) in paragraph at lines 480--485
+Underfull \hbox (badness 2689) in paragraph at lines 495--500
 \T1/ptm/m/n/9 2000: A New High-Resolution Data Set for Agri-cul-tural and Hy-dr
 o-log-i-cal Mod-el-ing, Global Bio-geo-chem-i-cal Cy-cles, 24,
  []
 
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 551.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
-File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [38]
-Underfull \hbox (badness 10000) in paragraph at lines 596--599
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 611--614
 []\T1/ptm/m/n/9 Smil, V.: Ni-tro-gen in Crop Pro-duc-tion: An Ac-count of Globa
 l Flows, Global Bio-geo-chem-i-cal Cy-cles, 13, 647--662,
  []
 
 
-Underfull \hbox (badness 1178) in paragraph at lines 613--616
+Underfull \hbox (badness 1178) in paragraph at lines 628--631
 []\T1/ptm/m/n/9 Smith, P.: Soil Car-bon Se-ques-tra-tion and Biochar as Neg-a-t
 ive Emis-sion Tech-nolo-gies, Global Change Bi-ol-ogy, 22, 1315--1324,
  []
 
 [39]
-Underfull \hbox (badness 3601) in paragraph at lines 673--677
+Underfull \hbox (badness 3601) in paragraph at lines 688--692
 []\T1/ptm/m/n/9 Waha, K., Di-et-rich, J. P., Port-mann, F. T., Siebert, S., Tho
 rn-ton, P. K., Bon-deau, A., and Her-rero, M.: Mul-ti-ple Crop-
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 673--677
+Underfull \hbox (badness 1259) in paragraph at lines 688--692
 \T1/ptm/m/n/9 ping Sys-tems of the World and the Po-ten-tial for In-creas-ing C
 rop-ping In-ten-sity, Global En-vi-ron-men-tal Change, 64, 102131,
  []
 
 ) [40]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 907.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 907.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 731.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 731.
 (./SOCbudget.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 907.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 907.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 907.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 731.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 731.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 731.
  ) 
 Here is how much of TeX's memory you used:
- 11243 strings out of 494847
- 164728 string characters out of 6179080
- 339188 words of memory out of 5000000
- 14120 multiletter control sequences out of 15000+600000
+ 11256 strings out of 494847
+ 165170 string characters out of 6179080
+ 304744 words of memory out of 5000000
+ 14130 multiletter control sequences out of 15000+600000
  50017 words of font info for 77 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 43i,17n,40p,1888b,648s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,17n,40p,1924b,648s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -1293,10 +1304,10 @@ ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on SOCbudget.pdf (40 pages, 2789363 bytes).
+Output written on SOCbudget.pdf (40 pages, 3000181 bytes).
 PDF statistics:
- 1044 PDF objects out of 1200 (max. 8388607)
- 956 compressed objects within 10 object streams
- 220 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1049 PDF objects out of 1200 (max. 8388607)
+ 959 compressed objects within 10 object streams
+ 222 named destinations out of 1000 (max. 500000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
