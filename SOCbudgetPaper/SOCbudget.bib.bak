@@ -5752,12 +5752,12 @@
 
 @Dataset{karstens_model_2020,
   author    = {Karstens, Kristine},
-  doi       = {10.5281/zenodo.4320662},
+  doi       = {10.5281/zenodo.4320663},
   groups    = {kristine:6},
   month     = dec,
   publisher = {Zenodo},
   title     = {{Model output data of the paper: "Management induced changes of soil organic carbon on global croplands"}},
-  url       = {https://doi.org/10.5281/zenodo.4320662},
+  url       = {https://doi.org/10.5281/zenodo.4320663},
   year      = {2020},
 }
 

@@ -17,9 +17,9 @@
    viewBox="0 0 239.29211 227.68861"
    height="227.68861mm"
    width="239.29211mm"
-   inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/CarbonBudget_new3.png"
-   inkscape:export-xdpi="264"
-   inkscape:export-ydpi="264"
+   inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/CarbonBudget.png"
+   inkscape:export-xdpi="299.96976"
+   inkscape:export-ydpi="299.96976"
    style="enable-background:new">
   <sodipodi:namedview
      gridtolerance="1"
@@ -28,17 +28,17 @@
      objecttolerance="1"
      inkscape:window-maximized="1"
      inkscape:window-y="56"
-     inkscape:window-x="1928"
+     inkscape:window-x="0"
      inkscape:window-height="954"
      inkscape:window-width="1920"
      inkscape:measure-end="0,0"
      inkscape:measure-start="0,0"
      showgrid="false"
-     inkscape:current-layer="layer15"
+     inkscape:current-layer="layer7"
      inkscape:document-units="mm"
-     inkscape:cy="564.62815"
-     inkscape:cx="150.72664"
-     inkscape:zoom="1.4753686"
+     inkscape:cy="367.10635"
+     inkscape:cx="317.54837"
+     inkscape:zoom="0.7376843"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      borderopacity="1.0"
@@ -1213,7 +1213,7 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="display:none"
+     style="display:inline"
      inkscape:label="LegendBack"
      id="layer2"
      inkscape:groupmode="layer"
@@ -1272,7 +1272,7 @@
          id="tspan1448-4"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">1429</tspan></text>
+         style="stroke-width:0.99999994">1564</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994"
@@ -1288,7 +1288,7 @@
          x="-1.9840001"
          y="15.125334"
          style="stroke-width:0.99999994"
-         id="tspan1959">1487</tspan></text>
+         id="tspan1959">1307</tspan></text>
     <rect
        style="display:inline;opacity:0.95;fill:#f1f1f1;fill-opacity:1;stroke:none;stroke-width:2.02221918;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:stroke markers fill"
        id="soc-3"
@@ -1438,7 +1438,7 @@
          id="tspan2047-0"
          x="-10.583565"
          y="254.8951"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';stroke-width:0.26458332">616193</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';stroke-width:0.26458332">663335</tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot548"
@@ -1558,7 +1558,7 @@
      inkscape:groupmode="layer"
      id="layer10"
      inkscape:label="LostSoil"
-     style="display:none">
+     style="display:inline">
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:label="#SOC_decompose"
@@ -1589,13 +1589,13 @@
          id="tspan1448-62-7-6"
          x="47.064205"
          y="-187.97458"
-         style="stroke-width:0.26458332">840</tspan></text>
+         style="stroke-width:0.26458332">1277</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer13"
      inkscape:label="LostSoil2"
-     style="display:inline">
+     style="display:none">
     <path
        inkscape:label="#SOC_decompose"
        inkscape:transform-center-y="0.60804146"
@@ -1625,7 +1625,7 @@
          id="tspan1448-62-7-6-56"
          x="123.46163"
          y="-223.47902"
-         style="stroke-width:0.26458332">840</tspan></text>
+         style="stroke-width:0.26458332">1277</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1733,7 +1733,7 @@
          id="tspan2047"
          x="74.612495"
          y="256.25388"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';stroke-width:0.26458332">  58604</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';stroke-width:0.26458332">  45245</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -1769,7 +1769,7 @@
          id="tspan1448-62-7-5"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">1200</tspan></text>
+         style="stroke-width:0.99999994">1350</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -1787,13 +1787,13 @@
          id="tspan1448-62-7-2"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">785</tspan></text>
+         style="stroke-width:0.99999994">729</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer11"
      inkscape:label="toSoilLost"
-     style="display:none">
+     style="display:inline">
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:connector-curvature="0"
@@ -1832,7 +1832,7 @@
          id="tspan1448-62-7-6-8"
          x="49.94738"
          y="-28.760443"
-         style="stroke-width:0.26458332">471</tspan></text>
+         style="stroke-width:0.26458332">437</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -1850,7 +1850,7 @@
          id="tspan1448-62-7-6-38"
          x="47.650494"
          y="-134.26326"
-         style="stroke-width:0.26458332">718</tspan></text>
+         style="stroke-width:0.26458332">807</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -1868,7 +1868,7 @@
          id="tspan1448-62-7-6-5"
          x="46.946613"
          y="-174.36267"
-         style="stroke-width:0.26458332">233</tspan></text>
+         style="stroke-width:0.26458332">232</tspan></text>
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:connector-curvature="0"
@@ -1953,13 +1953,13 @@
          id="tspan983"
          x="11.98545"
          y="100.63187"
-         style="stroke-width:0.26458332">litter soil barrier</tspan></text>
+         style="stroke-width:0.26458332">soil surface</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer15"
      inkscape:label="AddLegend"
-     style="display:inline">
+     style="display:none">
     <image
        y="87.935585"
        x="4.0914764"
@@ -2639,7 +2639,7 @@
      inkscape:groupmode="layer"
      id="layer12"
      inkscape:label="insideSoilNumbers"
-     style="display:none">
+     style="display:inline">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2657,7 +2657,7 @@
          id="tspan1448-62-6"
          x="-209.76527"
          y="144.99483"
-         style="stroke-width:0.26458332">117</tspan></text>
+         style="stroke-width:0.26458332">119</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2675,7 +2675,7 @@
          id="tspan1448-62-6-2"
          x="-208.83022"
          y="129.4146"
-         style="stroke-width:0.26458332">391</tspan></text>
+         style="stroke-width:0.26458332">441</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2693,7 +2693,7 @@
          id="tspan1448-62-6-1"
          x="-210.32599"
          y="84.307991"
-         style="stroke-width:0.26458332">255</tspan></text>
+         style="stroke-width:0.26458332">237</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2711,7 +2711,7 @@
          id="tspan1448-62-7-6-2"
          x="-225.80775"
          y="85.399452"
-         style="stroke-width:0.26458332">59</tspan></text>
+         style="stroke-width:0.26458332">55</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2729,14 +2729,14 @@
          id="tspan1448-62-7-6-6"
          x="-224.85341"
          y="145.48782"
-         style="stroke-width:0.26458332">34</tspan></text>
+         style="stroke-width:0.26458332">32</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
-       x="-224.65068"
-       y="130.75241"
+       x="-195.74152"
+       y="164.05725"
        id="v_SOC_decompose-9"
-       transform="rotate(-89.072814,0.58722717,-33.194919)"
+       transform="rotate(-89.072814)"
        inkscape:transform-center-x="-3.1729905"
        inkscape:transform-center-y="3.1743152"
        inkscape:export-xdpi="264"
@@ -2745,9 +2745,9 @@
        inkscape:label="#v_SOC_decompose"><tspan
          sodipodi:role="line"
          id="tspan1448-62-7-6-13"
-         x="-224.65068"
-         y="130.75241"
-         style="stroke-width:0.26458332">91</tspan></text>
+         x="-195.74152"
+         y="164.05725"
+         style="stroke-width:0.26458332">102</tspan></text>
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:label="#soc_active2slow"
@@ -2818,7 +2818,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="LostAgri"
-     style="display:none">
+     style="display:inline">
     <path
        transform="translate(33.768297,-32.070617)"
        style="display:inline;opacity:0.95;fill:none;stroke:#bcbcbc;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutSJQ-5-0MLC);enable-background:new"
@@ -2862,7 +2862,7 @@
          id="tspan1448-62-7-6-3"
          x="48.951164"
          y="-42.111778"
-         style="stroke-width:0.26458332">1191</tspan></text>
+         style="stroke-width:0.26458332">1174</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2880,7 +2880,7 @@
          id="tspan1448-62-7-6-4"
          x="48.207596"
          y="-107.36974"
-         style="stroke-width:0.26458332">325</tspan></text>
+         style="stroke-width:0.26458332">196</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2898,7 +2898,7 @@
          id="tspan1448-62-7-6-1"
          x="47.099995"
          y="-150.05093"
-         style="stroke-width:0.26458332">572</tspan></text>
+         style="stroke-width:0.26458332">474</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332;enable-background:new"
@@ -2916,13 +2916,13 @@
          id="tspan1448-62-7-6-48"
          x="47.254852"
          y="-162.53981"
-         style="stroke-width:0.26458332">238</tspan></text>
+         style="stroke-width:0.26458332">234</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer7"
      inkscape:label="CylingInAgri"
-     style="display:none">
+     style="display:inline">
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:label="#ag_feedintake"
@@ -2989,7 +2989,7 @@
          id="tspan1444"
          x="62.464783"
          y="96.383949"
-         style="stroke-width:0.26458332">112</tspan></text>
+         style="stroke-width:0.26458332"> 88</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -3004,7 +3004,7 @@
          id="tspan1448-5"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">458</tspan></text>
+         style="stroke-width:0.99999994">456</tspan></text>
     <path
        transform="translate(33.768297,-32.070617)"
        inkscape:label="#livst_humandemand"
@@ -3032,7 +3032,7 @@
          id="tspan1440"
          x="64.254951"
          y="85.84024"
-         style="stroke-width:0.26458332">47</tspan></text>
+         style="stroke-width:0.26458332">44</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -3050,7 +3050,7 @@
          id="tspan1448-62"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">622</tspan></text>
+         style="stroke-width:0.99999994">618</tspan></text>
     <image
        y="87.882233"
        x="3.961931"
@@ -3101,7 +3101,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="PlantPartSplitUp"
-     style="display:none">
+     style="display:inline">
     <g
        transform="matrix(0.10941891,0,0,0.10941891,173.14098,65.246975)"
        inkscape:label="#feedintake"
@@ -3275,7 +3275,7 @@
          id="tspan1448"
          x="58.737511"
          y="107.82295"
-         style="stroke-width:0.26458332">1032</tspan></text>
+         style="stroke-width:0.26458332">1041</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -3290,7 +3290,7 @@
          id="tspan1448-6"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">783</tspan></text>
+         style="stroke-width:0.99999994">680</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -3308,7 +3308,7 @@
          id="tspan1448-62-7-2-6"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">785</tspan></text>
+         style="stroke-width:0.99999994">729</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;display:inline;opacity:0.95;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994;enable-background:new"
@@ -3326,7 +3326,7 @@
          id="tspan1448-62-7-5-4"
          x="-1.9840001"
          y="15.125334"
-         style="stroke-width:0.99999994">2095</tspan></text>
+         style="stroke-width:0.99999994">2091</tspan></text>
     <g
        transform="matrix(0.04100093,0,0,0.04100093,1.642714,59.864058)"
        inkscape:label="#feedintake"
@@ -3548,7 +3548,8 @@
        transform="matrix(0.137477,0,0,0.137477,-26.749423,67.437862)"
        inkscape:export-xdpi="264"
        inkscape:export-ydpi="264"
-       inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png">
+       inkscape:export-filename="/home/kristine/WORK/Paper/historicalsocbudget/ResultNotebooks/Output/Images/OuFlowFig.png"
+       inkscape:label="humandemand-0">
       <g
          transform="matrix(0.26458333,0,0,0.26458333,189.76305,-117.62098)"
          id="g1800-2">
@@ -3663,7 +3664,7 @@
      id="layer4"
      inkscape:label="PrimaryProduction"
      transform="translate(33.768296,-32.070618)"
-     style="display:none">
+     style="display:inline">
     <g
        id="crop_icon"
        transform="matrix(0.22623162,0,0,0.22623162,28.560055,65.573128)"
@@ -3772,7 +3773,7 @@
          id="tspan1448-62-7-5-4-4"
          x="-62.68615"
          y="95.052895"
-         style="stroke-width:0.26458332">4764</tspan></text>
+         style="stroke-width:0.26458332">4585</tspan></text>
     <path
        transform="translate(1.2291667e-6,1.2083333e-6)"
        inkscape:connector-curvature="0"

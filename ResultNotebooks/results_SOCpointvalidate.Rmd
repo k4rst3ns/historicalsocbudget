@@ -1,0 +1,287 @@
+---
+title: "SOC budget analysis in comparsion"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  bookdown::pdf_document2: default
+   keep_md: true
+---
+
+```{r load}
+library(magclass)
+library(madrat)
+library(mrcommons)
+
+outputdir <- "Output/Images/"
+
+rev         <- "rev30"
+scen        <- "histManagement"
+
+SoilCarbon <- readRDS(paste0("Data/", rev, scen, "/SoilCarbon.rds"))
+Landuse    <- readRDS(paste0("Data/", rev, scen, "/Landuse.rds"))
+
+```
+
+
+```{r extract carbon stock for validation year}
+
+year            <- "y2010"
+SOCStock_natveg <- dimSums(SoilCarbon[, year, c("actualstate.natveg")], dim = 3)
+SOCStock_crop   <- dimSums(SoilCarbon[, year, c("actualstate.crop")],   dim = 3)
+
+SOCcrop_table      <- as.data.frame(setCells(SOCStock_crop, gsub("\\.", "_", getCells(SOCStock_crop))))
+SOCcrop_table$Cell <- gsub("_", "\\.", SOCcrop_table$Region)
+SOCcrop_table$Native  <- 0
+SOCcrop_table         <- SOCcrop_table[-c(2:4)] 
+names(SOCcrop_table)[names(SOCcrop_table) == "Value"] <- "thisStudy"
+
+SOCnatveg_table      <- as.data.frame(setCells(SOCStock_natveg, gsub("\\.", "_", getCells(SOCStock_natveg))))
+SOCnatveg_table$Cell <- gsub("_", "\\.", SOCnatveg_table$Region)
+SOCnatveg_table$Native  <- 1
+SOCnatveg_table         <- SOCnatveg_table[-c(2:4)] 
+names(SOCnatveg_table)[names(SOCnatveg_table) == "Value"] <- "thisStudy"
+```
+
+### Sanderman validation data (point data)
+
+```{r reformat point validation data for plotting, warning=FALSE}
+
+  library(stringr)
+
+  sand  <- readRDS(paste0("Data/", rev, "histManagement/calcSOCPointData.rds"))
+  getCells(sand)  <- gsub("\\.", "_", getCells(sand)) 
+  sand_table      <- as.data.frame(sand)
+  sand_table      <- reshape2::dcast(sand_table, Region ~ Data1, value.var = "Value")
+  sand_table$ID   <- str_extract(sand_table$Region, "[^_]*$")
+  sand_table$Cell <- gsub("_", "\\.", str_extract(sand_table$Region, "[^_]*_[^_]*"))
+  sand_table      <- sand_table[names(sand_table) %in% c("Cell", "Native", "SOC", "ID")]
+  names(sand_table)[names(sand_table) == "SOC"] <- "ValidationData"
+
+  getCells(sand) <- str_extract(getCells(sand), "[^_]*_[^_]*")
+  unique         <- unique(getCells(sand))
+  names          <- as.vector(outer(c("natveg", "crop"), 
+                                    c("median", "mean", "max", "min", "q25", "q75"), 
+                                    paste, sep = "."))
+  sand_reduced   <- new.magpie(unique, NULL, names, fill = NA) 
+  
+  for(u in unique) {
+    sand_reduced[u, , "natveg.mean"]   <- mean(    as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1])
+    sand_reduced[u, , "crop.mean"]     <- mean(    as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0])
+    sand_reduced[u, , "natveg.median"] <- median(  as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1])
+    sand_reduced[u, , "crop.median"]   <- median(  as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0])
+    sand_reduced[u, , "natveg.max"]    <- max(     as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1])
+    sand_reduced[u, , "crop.max"]      <- max(     as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0])
+    sand_reduced[u, , "natveg.min"]    <- min(     as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1])
+    sand_reduced[u, , "crop.min"]      <- min(     as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0])
+    sand_reduced[u, , "natveg.q25"]    <- quantile(as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1], probs = 0.25)
+    sand_reduced[u, , "crop.q25"]      <- quantile(as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0], probs = 0.25)
+    sand_reduced[u, , "natveg.q75"]    <- quantile(as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==1], probs = 0.75)
+    sand_reduced[u, , "crop.q75"]      <- quantile(as.array(sand[u, ,"SOC"])[sand[u,,"Native"]==0], probs = 0.75)
+  }
+  
+  sand_crop_table <- reshape2::dcast(as.data.frame(sand_reduced[, , "crop"]), 
+                                        Region ~ Data2, value.var = "Value")
+  sand_crop_table$Cell   <- gsub("_", "\\.", sand_crop_table$Region)
+  sand_crop_table$Native <- 0
+  sand_crop_table        <- sand_crop_table[complete.cases(sand_crop_table), ][-1]
+  
+  
+  sand_natveg_table <- reshape2::dcast(as.data.frame(sand_reduced[, , "natveg"]), 
+                                        Region ~ Data2, value.var = "Value")
+  sand_natveg_table$Cell   <- gsub("_", "\\.", sand_natveg_table$Region)
+  sand_natveg_table$Native <- 1
+  sand_natveg_table        <- sand_natveg_table[complete.cases(sand_natveg_table), ][-1]
+  
+
+  
+  
+```
+  
+```{r merge validation and output data}
+
+allPoints   <- rbind(merge(sand_table, SOCcrop_table, by = c("Cell", "Native")),
+                     merge(sand_table, SOCnatveg_table, by = c("Cell", "Native")))
+
+
+
+statsPoints <- rbind(merge(sand_crop_table,   SOCcrop_table,   by = c("Cell", "Native")),
+                     merge(sand_natveg_table, SOCnatveg_table, by = c("Cell", "Native")))
+
+ 
+correlations <- new.magpie("GLO", NULL, names = unlist(outer(c("median", "mean", "allP"), 
+                                                            c("crop", "natveg", "allLU"),
+                                                            paste, sep = ".")))
+
+correlations[, , "median.allLU"]  <- cor.test(statsPoints$median, statsPoints$thisStudy)$estimate^2
+correlations[, , "mean.allLU"]    <- cor.test(statsPoints$mean,   statsPoints$thisStudy)$estimate^2
+
+correlations[, , "median.natveg"] <- cor.test(statsPoints$median[statsPoints$Native == 1], statsPoints$thisStudy[statsPoints$Native == 1])$estimate^2
+correlations[, , "mean.natveg"]   <- cor.test(statsPoints$mean[  statsPoints$Native == 1], statsPoints$thisStudy[statsPoints$Native == 1])$estimate^2
+correlations[, , "median.crop"]   <- cor.test(statsPoints$median[statsPoints$Native == 0], statsPoints$thisStudy[statsPoints$Native == 0])$estimate^2
+correlations[, , "mean.crop"]     <- cor.test(statsPoints$mean[  statsPoints$Native == 0], statsPoints$thisStudy[statsPoints$Native == 0])$estimate^2
+ 
+correlations[, , "allP.allLU"]    <- cor.test(allPoints$ValidationData, allPoints$thisStudy)$estimate^2
+correlations[, , "allP.natveg"]   <- cor.test(allPoints$ValidationData[allPoints$Native == 0], allPoints$thisStudy[allPoints$Native == 0])$estimate^2
+correlations[, , "allP.crop"]     <- cor.test(allPoints$ValidationData[allPoints$Native == 1], allPoints$thisStudy[allPoints$Native == 1])$estimate^2
+
+```
+  
+```{r sanderman2, fig.height=8, fig.width=8}
+
+library(ggplot2)
+theme_set(theme_bw())
+legend_size <- 14
+scen_cols   <- c("#785EF0", "#FE6100")
+input_cols  <- scen_cols[1:4]
+
+
+SOCPointValid  <- ggplot() + 
+                  geom_point(data = statsPoints, 
+                            aes(alpha = str_wrap("Median (R2=0.13)", 7), x = median, y = thisStudy, colour = factor(Native)),
+                            shape = 3, size = 2) +
+                  geom_segment(data = statsPoints,
+                               aes(alpha = "Min-Max", x = min, y = thisStudy, xend = max, yend = thisStudy, 
+                                   colour = factor(Native)), 
+                               size = 0.5) +
+                  geom_point(data = allPoints, 
+                             aes(alpha = "Point Data", x = ValidationData, y = thisStudy, colour = factor(Native)),
+                             shape = 1, size = 0.5) +
+                  labs( x = "Point measurement data (tC/ha) ", y = "Predicted value by this study (tC/ha)") +
+                  scale_x_continuous(trans = 'log10', limits = c(7, 470)) + 
+                  scale_y_continuous(trans = 'log10', limits = c(7, 470)) +
+                  coord_fixed(1) + theme(aspect.ratio=1) +
+                  geom_abline(slope=1, intercept=0, color = "grey", size = 0.5, linetype = "dashed") + 
+                  theme(rect=element_blank(),
+                        axis.title.y= element_text(size=legend_size, margin = margin(t = 0, r =10, b = 0, l = 0, unit = "pt")),
+                        axis.title.x= element_text(size=legend_size, margin = margin(t =10, r = 0, b = 0, l = 0, unit = "pt")),
+                        axis.text.x = element_text(angle=60, hjust=0.8, vjust=0.8, size=legend_size),
+                        axis.text.y = element_text(size = legend_size),
+                        legend.position= c(0.87, 0.2), legend.direction="vertical",
+                        legend.title = element_text(size = legend_size), 
+                        legend.text  = element_text(size = legend_size),
+                        legend.spacing.y = unit(0.1, "cm")) +
+                  scale_color_manual(values = scen_cols, labels = c("Cropland", str_wrap("Natural vegetation", 7)), name = "") +
+                  scale_alpha_manual(name = NULL,
+                                     values = c(1, 1, 1),
+                                     breaks = c(str_wrap("Median (R2=0.13)", 7), "Min-Max", "Point Data"),
+                                     guide = guide_legend(override.aes = list(linetype = c(0, 1, 0),
+                                                                                 shape = c(3, NA, 1),
+                                                                                  size = c(2, 0.5, 0.5), 
+                                                                                 color = "black")))
+
+SOCPointValid 
+
+
+ggsave(paste0(outputdir,"scatterComparePointData_2010.png"), plot=SOCPointValid, height=16, width=16, units="cm", dpi = 300)
+
+```
+
+
+
+  
+  
+  
+
+```{r sanderman4, fig.height=7.5, fig.width=7.5}
+  
+year         <- "y2010"
+
+sand_data    <- readRDS("Data/additional/dataframe.rds")
+
+SOCcrop_data <- as.data.frame(setCells(SOCStock_crop_raw[, year, ], 
+                                       gsub("\\.", "_", getCells(SOCStock_crop_raw))))
+
+SOCcrop_data$celliso <- gsub("_", "\\.", SOCcrop_data$Region)
+SOCcrop_data$native  <- 0
+SOCcrop_data <- SOCcrop_data[-c(1:4)]
+  
+SOCnatveg_data <- as.data.frame(setCells(SOCStock_natveg_raw[, year, ], 
+                                       gsub("\\.", "_", getCells(SOCStock_crop_raw))))
+
+SOCnatveg_data$celliso <- gsub("_", "\\.", SOCnatveg_data$Region)
+SOCnatveg_data$native  <- 1
+SOCnatveg_data <- SOCnatveg_data[-c(1:4)]
+
+test <- rbind(merge(sand_data, SOCcrop_data, by = c("celliso", "native"))[-c(3, 4)],
+              merge(sand_data, SOCnatveg_data, by = c("celliso", "native"))[-c(3, 4)])
+
+testcrop <- merge(sand_data, SOCcrop_data, by = c("celliso", "native"))[-c(3, 4)] 
+testcrop$Value <- as.factor(testcrop$Value)
+
+p <- ggplot(testcrop, aes(x=Value, y=soc)) + geom_boxplot() + coord_flip()
+
+  ### RAW DATA
+  
+  points(sand[,,"soc"][sand[,,"native"] == 0],SOCStock_crop_raw[getCells(sand),year,][sand[,,"native"] == 0], col ="red")
+  lines(c(-1000, 1000), c(-1000, 1000), col = "grey")
+  
+  ### MEAN DATA
+  
+  plot(sand_reduced[,,"soc_nat"][                        !is.na(sand_reduced[,,"soc_nat"])],
+       SOCStock_natveg_raw[getCells(sand_reduced),year,][!is.na(sand_reduced[,,"soc_nat"])], 
+       xlab = "Sandermann", ylab = "This Study",
+       xlim = c(0, unname(lim)), ylim = c(0, unname(lim)))
+  
+  points(sand_reduced[,,"soc_crop"][                     !is.na(sand_reduced[,,"soc_crop"])],
+         SOCStock_crop_raw[getCells(sand_reduced),year,][!is.na(sand_reduced[,,"soc_crop"])], 
+         col ="red")
+  lines(c(-1000, 1000), c(-1000, 1000), col = "grey")
+  
+  for (u in unique) {
+    
+    lines(c(sand_reduced[u,,"soc_crop"] - sand_reduced[u,,"sd_crop"], 
+            sand_reduced[u,,"soc_crop"] + sand_reduced[u,,"sd_crop"]), 
+          c(SOCStock_crop_raw[u,year,],
+            SOCStock_crop_raw[u,year,]), col = "pink")
+    
+    lines(c(sand_reduced[u,,"soc_nat"] - sand_reduced[u,,"sd_nat"], 
+            sand_reduced[u,,"soc_nat"] + sand_reduced[u,,"sd_nat"]), 
+          c(SOCStock_natveg_raw[u,year,],
+            SOCStock_natveg_raw[u,year,]), col = "grey")
+    
+  }
+  
+```
+
+```{r sandermann3}
+  x <- c(sand[, , "soc"][sand[, , "native"] == 0],
+         sand[, , "soc"][sand[, , "native"] == 1])
+  
+  y <- c(SOCStock_crop_raw[    getCells(sand), year, ][sand[, , "native"] == 0], 
+         SOCStock_natveg_raw[getCells(sand), year, ][sand[, , "native"] == 1])#
+  
+  x_clean <- c(sand[, , "soc"][sand[, , "native"] == 0],
+               sand[, , "soc"]["CHN.9964",,,invert=TRUE][sand[, , "native"] == 1])
+  
+  y_clean <- c(SOCStock_crop_raw[  getCells(sand), year, ][sand[, , "native"] == 0], 
+               SOCStock_natveg_raw[getCells(sand), year, ]["CHN.9964",,,invert=TRUE][sand[, , "native"] == 1])
+  
+  
+  x_crop <- c(sand[, , "soc"][sand[, , "native"] == 0])
+  
+  y_crop <- c(SOCStock_crop_raw[getCells(sand), year, ][sand[, , "native"] == 0])
+  
+  
+  x_red  <- c(sand_reduced[, , "soc_nat" ][!is.na(sand_reduced[, , "soc_nat" ])],
+              sand_reduced[, , "soc_crop"][!is.na(sand_reduced[, , "soc_crop"])])
+  
+  y_red  <- c(SOCStock_natveg_raw[getCells(sand_reduced), year, ][!is.na(sand_reduced[, , "soc_nat" ])],
+              SOCStock_crop_raw[  getCells(sand_reduced), year, ][!is.na(sand_reduced[, , "soc_crop"])])
+  
+  
+  x_red2  <- c(sand_reduced[, , "soc_nat" ]["CHN.9964",,,invert=TRUE][!is.na(sand_reduced[, , "soc_nat" ])],
+              sand_reduced[, , "soc_crop"][!is.na(sand_reduced[, , "soc_crop"])])
+  
+  y_red2  <- c(SOCStock_natveg_raw[getCells(sand_reduced), year, ]["CHN.9964",,,invert=TRUE][!is.na(sand_reduced[, , "soc_nat" ])],
+              SOCStock_crop_raw[  getCells(sand_reduced), year, ][!is.na(sand_reduced[, , "soc_crop"])])
+  
+  
+  cor(x, y)^2
+  cor.test(x, y)$estimate^2
+  cor.test(x_clean, y_clean)$estimate^2
+  cor.test(x_crop, y_crop)$estimate^2
+  cor.test(x_red, y_red)$estimate^2
+  cor.test(log(x_red2), log(y_red2))$estimate^2
+  
+```

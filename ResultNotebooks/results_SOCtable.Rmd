@@ -12,7 +12,7 @@ library(mrvalidation)
 library(mrsoil)
 library(magpiesets)
 
-scenarios <- c("rev26histManagement") #,"rev18histManagement_ResAllom_2021_02_01")
+scenarios <- c("rev30histManagement") #,"rev18histManagement_ResAllom_2021_02_01")
 outputdir <- "Output/"
 
 #untar(paste0(getConfig("outputfolder"),"/",rev, "_h12_carbonbudget.tgz"), exdir="Data/histManagement", extras="--keep-newer-files ")
@@ -28,21 +28,22 @@ library(stats)
 library(reshape2)
 
 years             <- findset("past")
-climateIPCCr      <- readRDS("Data/rev26histManagement/IPCC_reduced.rds")
+climateIPCCr      <- readRDS("Data/rev30histManagement/IPCC_reduced.rds")
 
   
 ### calculating stock change factors cropand weighted
 SOCDens           <- dimSums(SoilCarbon[,years,c("actualstate","naturalstate")], dim=3.3) 
 SOCDens[,,"naturalstate.crop"] <- SOCDens[,,"actualstate.crop"]
 
-CShare_ipcczone   <- dimSums(climateIPCCr * SOCDens[,,"crop"][,,"actualstate"]   * Landuse[,years,"crop"], dim=1)/
-                     dimSums(climateIPCCr * SOCDens[,,"natveg"][,,"naturalstate"] * Landuse[,years,"crop"], dim=1)
+# CShare_ipcczone   <- dimSums(climateIPCCr * SOCDens[,,"crop"][,,"actualstate"]   * Landuse[,years,"crop"], dim=1)/
+#                     dimSums(climateIPCCr * SOCDens[,,"natveg"][,,"naturalstate"] * Landuse[,years,"crop"], dim=1)
 
-# CShare_ipcczone   <- dimSums(climateIPCCr * toolConditionalReplace(SOCDens[,,"crop"][,,"actualstate"]/SOCDens[,,"natveg"][,,"naturalstate"],
-#                                                                  c("is.na()", "is.nan()", "is.infinite()",">3"), c(1,1,1,5)) * Landuse[,years,"crop"], dim=1)/
-#                     dimSums(climateIPCCr * Landuse[,years,"crop"], dim=1)
+CShare_ipcczone   <- dimSums(climateIPCCr * toolConditionalReplace(SOCDens[,,"crop"][,,"actualstate"]/SOCDens[,,"natveg"][,,"naturalstate"],
+                                                                  c("is.na()", "is.nan()", "is.infinite()",">3"), c(1,1,1,5)) * Landuse[,years,"crop"], dim=1) /
+                     dimSums(climateIPCCr * Landuse[,years,"crop"], dim=1)
 
 getNames(CShare_ipcczone) <- gsub("_", " ", getNames(CShare_ipcczone))
+getCells(CShare_ipcczone) <- "GLO" 
  
 SCF_table  <- data.frame(dcast(as.data.frame(collapseNames(CShare_ipcczone[,years,"naturalstate"])), 
                              Year ~ Data1, value.var="Value", row.names=years), row.names = "Year")
@@ -52,8 +53,8 @@ saveRDS(list(SCF_table = SCF_table), paste0(outputdir, "SFC_climatezone.rds"))
 
 ```{r plot climte map}
 
-climateIPCCr       <- readRDS("Data/rev26histManagement/IPCC_reduced.rds")
-climateIPCC        <- readRDS("Data/rev26histManagement/IPCC.rds")
+climateIPCCr       <- readRDS("Data/rev30histManagement/IPCC_reduced.rds")
+climateIPCC        <- readRDS("Data/rev30histManagement/IPCC.rds")
 
 getNames(climateIPCC) <- c( "W-Temp Moist","W-Temp Dry","C-Temp Moist","C-Temp Dry","Polar Moist","Polar Dry","Boreal Moist",
                             "Boreal Dry","Tropical Montane","Tropical Wet","Tropical Moist", "Tropical Dry")
@@ -135,7 +136,7 @@ library(stats)
 library(luplot)
 library(reshape2)
 
-MShare_ipcc <- LShare_ipcc <-  HShare_ipcc <- new.magpie("GLO",NULL,outer(c("IPCC2006","IPCC2019"),
+MShare_ipcc <- LShare_ipcc <-  HShare_ipcc <- new.magpie("GLO",NULL, outer(c("IPCC2006","IPCC2019"),
                                                                           getNames(climateIPCCr), paste, sep="."))
 
 MShare_ipcc <- add_dimension(MShare_ipcc, dim=3.2, nm="medium.invariant", add="input.year")
@@ -178,8 +179,8 @@ CShare_ipcc <- mbind(LShare_ipcc,MShare_ipcc,HShare_ipcc)
 getNames(CShare_ipcc) <- gsub("_", " ", getNames(CShare_ipcc))
 
 comparison <- mbind(CShare_ipcc, 
-                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1990","naturalstate"]),NULL),
-                                  nm="This Study.hist.1990",add="model.input.year"),2),
+                    round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y1975","naturalstate"]),NULL),
+                                  nm="This Study.hist.1975",add="model.input.year"),2),
                     round(add_dimension(setYears(collapseNames(CShare_ipcczone[,"y2010","naturalstate"]),NULL),
                                   nm="This Study.hist.2010",add="model.input.year"),2))
 
@@ -207,6 +208,6 @@ save  <- kbl(table$comparison_table, latex = T, digit=2)%>%
             kable_styling(latex_options = c("scale_down","striped"), full_width = F)%>%
               row_spec(7:8, bold=TRUE)
 
-save_kable(save, file="Output/Images/TableSCF_comparison.png")
+save_kable(save, file="Output/Images/TableSCF_comparison_new.png")
 table
 ```

@@ -55,7 +55,7 @@ affiliation:
   - code: 3
     address: Humboldt-Universität zu Berlin, Department of Agricultural Economics, Unter den Linden 6, 10099 Berlin, Germany
 abstract: |
-  Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. The first meter of the Earths soils profile stores three times as much carbon as the vegetation and twice the amount of C in the atmosphere. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with as reduced-complexity model based on the IPCC Tier 2 method to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around 32 GtC relative to a counterfactual natural state in 1975. Within the period 1975--2010 this SOC debt continued to increasing by 5 GtC ($0.14\unit{GtC yr^{-1}}$) to around 37 GtC. However, accounting for historical management rather than assuming constant management conditions led to 2 GtC less $0.06\unit{GtC yr^{-1}}$  emissions. We also find that SOC is most sensitive to management decisions concern soil inputs such as residue returning, indicating that biomass increasing SOC sequestration techniques might be (the more) promising negative emission techniques (NET). Using the here proposed reduced-complexity SOC model it might be possible to track these management-driven SOC gains within integrated (land-use) assessment modeling accounting dynamically for their socio-economic NET potential. 
+  Soil organic carbon (SOC) is one of the largest terrestrial carbon (C) stocks on Earth. The first meter of the Earth's soils profile stores three times as much C as the vegetation and twice the amount of C in the atmosphere. SOC has been depleted by anthropogenic land-cover change and agricultural management. However, the latter has so far not been well represented in global C stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatially explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with a reduced-complexity model based on the IPCC Tier 2 method to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around $34.6\,\unit{GtC}$ relative to a counterfactual hypothetical natural state in 1975. Within the period 1975--2010 this SOC debt continued to expand by $5\,\unit{GtC}$ ($0.14\,\unit{GtC\,yr^{-1}}$) to around 39.6 GtC. However, accounting for historical management led to $2.1\,\unit{GtC}$ less ($0.06\,\unit{GtC\,yr^{-1}}$) emissions than under the assumption of constant management. We also find that management decisions have influenced the historical SOC trajectory most strongly by residue returning, indicating that increasing SOC sequestration by biomass retention may be a promising negative emissions technique. The reduced-complexity SOC model may allow to simulate management-induced SOC sequestration also within computationally demanding integrated (land-use) assessment modeling. 
 bibliography: SOCbudget.bib
 running:
   title: R Markdown Template for Copernicus
@@ -66,7 +66,6 @@ competinginterests: |
 algorithms: true
 # See https://publications.copernicus.org/for_authors/licence_and_copyright.html, normally used for transferring the copyright, if needed.
 # copyrightstatement: |
-#   The author's copyright for this publication is transferred to Potsdam Institute for Climate Impact Research (PIK).
 availability:
   codedata: |
    We compile calculations as open-source R packages available at github.com/pik-piam/mrcommons \citep{bodirsky_mrcommons_2020} for the management related functions, github.com/pik-piam/mrsoil \citep{karstens_mrsoil_2020} for soil dynamic related functions and  github.com/pik-piam/mrvalidation \citep{bodirsky_mrvalidation_2020} for validation data. All libraries are based on the MADRaT package at github.com/pik-piam/madrat \citep{dietrich_madrat_2020}, a framework which aims to improve reproducibility and transparency in data processing. Model results including C input data are accessable under https://doi.org/10.5281/zenodo.4320663 \citep{karstens_model_2020}. Software code for paper and result prepartion can be found under www.github.com/k4rst3ns/historicalsocmanegement.
@@ -74,15 +73,13 @@ authorcontribution: |
   KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback to outline of the study. All authors discussed the results and commented on the manuscript.
   
 acknowledgements: |
-  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Additional thanks to the rticles contributors for providing a R Markdown template. The authors thank for the data provided by FAOSTAT and LUH2v2. The work of KK was funded by the DFG Priority Program “Climate Engineering: Risks, Challenges, Opportunities?” (SPP 1689) and specifically the CEMICS2 project (grant no. ED78/3-2). The research leading to these results has received funding for BLB from the European Union’s Horizon 2020 research and innovation program under grant agreement no. 776479 (COACCH) and  no. 821010 (CASCADES). The work of SR, JS and IW was also supported by CLIMASTEPPE (01DJ8012), EXIMO (01LP1903D) and FOCUS (031B0787B) funded by the German Federal Ministry of Education and Research (BMBF). The input of PS, MK and MD contributes to the Soils-R-GGREAT project (NE/P019455/1) and CIRCASA (EU H2020; grant agreement no. 774378).
   
+  Thanks to Vera Porwollik for contributing the time resolved tillage data set based on her previous work. Additional thanks to the rticles contributors for providing a R Markdown template. The authors thank for the data provided by FAOSTAT and LUH2v2. The work of KK was funded by the DFG Priority Program “Climate Engineering: Risks, Challenges, Opportunities?” (SPP 1689) and specifically the CEMICS2 project (grant no. ED78/3-2). The research leading to these results has received funding for BLB from the European Union’s Horizon 2020 research and innovation program under grant agreement no. 776479 (COACCH) and  no. 821010 (CASCADES). The work of SR, JS and IW was also supported by CLIMASTEPPE (01DJ8012), EXIMO (01LP1903D) and FOCUS (031B0787B) funded by the German Federal Ministry of Education and Research (BMBF). The input of PS, MK and MD contributes to the Soils-R-GGREAT project (NE/P019455/1) and CIRCASA (EU H2020; grant agreement no. 774378).
 appendix: |
 
   \section{Figures and tables in appendices}
-
   \subsection{Methods}
-
-    ```{=latex}
+      ```{=latex}
   \begin{figure}[h]
     \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones} 
     \caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \citep{eggleston_ipcc_2006} and has been reimplented by \citet{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
@@ -136,21 +133,13 @@ appendix: |
 
   <!-- closs in AWMS - Table {#append:TableclossAWMS} -->
 
-  \subsection{Discussion}
+  \subsection{Results}
 
     ```{=latex}
   \begin{figure}[H]
     \includegraphics[width=16cm]{../ResultNotebooks/Output/Images/reg_comparisonfigure} 
     \caption{Modelled as well as data based estimation for climate zone specific SOC stock in GtC for the first 30 cm of soil aggregated over all land area: SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010. PNV denotes the potential natural vegetation state without considering human cropping activities, calculated as reference stock within our model. We use the climate zone specification of the IPCC \citep{eggleston_ipcc_2006}.}
     \label{fig:SOCreg}
-  \end{figure}
-  ```
-
-    ```{=latex}
-  \begin{figure}[H]
-    \includegraphics[width=16cm]{../ResultNotebooks/Output/Images/scenario_litter} 
-    \caption{Global $\Delta SOC$ for different litter parameterization choices: Whereas perennial grasses (scenario name \textit{LitterPNV-PerennialGrasses}) are given by the IPCC guidelines \citep{calvo_buendia_ipcc_2019}, we used CENTURY configuration file for woody biomass parameterization (see tree.100 in \citealt{century_model_2000}). \textit{LitterPNV-CenturyAverage} forms the baseline parameterization as used within the study and is calculated as the average over all tree compartments and tree types equally. Litter parameterization has the ability to change global SOC stocks and SOC debt, but is robust concerning trends and sequestration rates.}
-    \label{fig:SOClitter}
   \end{figure}
   ```
   
@@ -184,5 +173,3 @@ output:
 
 ```{r child = 'conclusion.Rmd'}
 ```
-
-

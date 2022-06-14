@@ -14,8 +14,7 @@
 
 
 
-%% Journal abbreviations (please use the same for discussion papers and final revised papers)
-
+%% Journal abbreviations (please use the same for preprints and final revised papers)
 
 % Advances in Geosciences (adgeo)
 % Advances in Radio Science (ars)
@@ -23,7 +22,6 @@
 % Advances in Statistical Climatology, Meteorology and Oceanography (ascmo)
 % Annales Geophysicae (angeo)
 % Archives Animal Breeding (aab)
-% ASTRA Proceedings (ap)
 % Atmospheric Chemistry and Physics (acp)
 % Atmospheric Measurement Techniques (amt)
 % Biogeosciences (bg)
@@ -34,6 +32,7 @@
 % Earth System Dynamics (esd)
 % Earth System Science Data (essd)
 % E&G Quaternary Science Journal (egqsj)
+% EGUsphere (egusphere) | This is only for EGUsphere preprints submitted without relation to an EGU journal.
 % European Journal of Mineralogy (ejm)
 % Fossil Record (fr)
 % Geochronology (gchron)
@@ -51,8 +50,10 @@
 % Natural Hazards and Earth System Sciences (nhess)
 % Nonlinear Processes in Geophysics (npg)
 % Ocean Science (os)
+% Polarforschung - Journal of the German Society for Polar Research (polf)
 % Primate Biology (pb)
 % Proceedings of the International Association of Hydrological Sciences (piahs)
+% Safety of Nuclear Waste Disposal (sand)
 % Scientific Drilling (sd)
 % SOIL (soil)
 % Solid Earth (se)
@@ -61,29 +62,29 @@
 % Web Ecology (we)
 % Wind Energy Science (wes)
 
-
-%% \usepackage commands included in the copernicus.cls:
-%\usepackage[german, english]{babel}
-%\usepackage{tabularx}
-%\usepackage{cancel}
-%\usepackage{multirow}
-%\usepackage{supertabular}
-%\usepackage{algorithmic}
-%\usepackage{algorithm}
-%\usepackage{amsthm}
-%\usepackage{float}
-%\usepackage{subfig}
-%\usepackage{rotating}
-
 % Pandoc citation processing
 
 % The "Technical instructions for LaTex" by Copernicus require _not_ to insert any additional packages.
+% % % From pandoc table feature
+% \usepackage{longtable,booktabs,array}
+% % \usepackage{calc} % for calculating minipage widths
+% % Correct order of tables after \paragraph or \subparagraph
+% \usepackage{etoolbox}
+% \makeatletter
+% \patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+% \makeatother
+% % Allow footnotes in longtable head/foot
+% \IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+% \makesavenoteenv{longtable}
+% 
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
 %
-\usepackage{algorithmic}
-\usepackage{algorithm}
-
-
 \begin{document}
+
 
 \title{Management induced changes of soil organic carbon on global croplands}
 
@@ -130,7 +131,7 @@
 
 
 \begin{abstract}
-Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Earth. The first meter of the Earths soils profile stores three times as much carbon as the vegetation and twice the amount of C in the atmosphere. SOC has been depleted by anthropogenic land cover change and agricultural management. However, the latter has so far not been well represented in global carbon stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatial explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with the IPCC Tier 2 steady-state soil model to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around 26 GtC relative to a counterfactual natural state in 1975. Yet, within the period 1975--2010 this SOC debt has been decreasing again by a net quantity of 4 Gt SOC, which can be mainly traced back to an increased input of C in crop residues due to higher crop productivity. We also find that SOC is very sensitive to management decisions such as residue returning indicating the necessity to incorporate better management data in soil model simulations.
+Soil organic carbon (SOC) is one of the largest terrestrial carbon (C) stocks on Earth. The first meter of the Earth's soils profile stores three times as much C as the vegetation and twice the amount of C in the atmosphere. SOC has been depleted by anthropogenic land-cover change and agricultural management. However, the latter has so far not been well represented in global C stock assessments. While SOC models often simulate detailed biochemical processes that lead to the accumulation and decay of SOC, the management decisions driving these biophysical processes are still little investigated at the global scale. Here we develop a spatially explicit data set for agricultural management on cropland, considering crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We combine it with a reduced-complexity model based on the IPCC Tier 2 method to create a half-degree resolution data set of SOC stocks and SOC stock changes for the first 30 cm of mineral soils. We estimate that due to arable farming, soils have lost around \(34.6\,\unit{GtC}\) relative to a counterfactual hypothetical natural state in 1975. Within the period 1975--2010 this SOC debt continued to expand by \(5\,\unit{GtC}\) (\(0.14\,\unit{GtC\,yr^{-1}}\)) to around 39.6 GtC. However, accounting for historical management led to \(2.1\,\unit{GtC}\) less (\(0.06\,\unit{GtC\,yr^{-1}}\)) emissions than under the assumption of constant management. We also find that management decisions have influenced the historical SOC trajectory most strongly by residue returning, indicating that increasing SOC sequestration by biomass retention may be a promising negative emissions technique. The reduced-complexity SOC model may allow to simulate management-induced SOC sequestration also within computationally demanding integrated (land-use) assessment modeling.
 \end{abstract}
 
 
@@ -140,35 +141,38 @@ Soil organic carbon (SOC) is one of the largest terrestrial carbon stocks on Ear
 
 \introduction
 
-Soil Organic Carbon (SOC), the amount of organic carbon stored in the Earth's soil, is the largest terrestrial organic carbon pool. It exceeds the carbon in the atmospheric and vegetation pools multiple times \citep{batjes_total_1996}. Even small changes in processes affecting SOC lead therefore to substantial shifts in the terrestrial carbon cycle and influence the amount of CO\textsubscript{2} in the atmosphere \citep{friedlingstein_global_2019, minasny_soil_2017}. The specific amount of carbon stored in soils globally is quantified with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile \citep{batjes_total_1996, sanderman_soil_2017}.
+Soil organic carbon (SOC), the amount of organic carbon stored in the Earth's soil, constitutes the largest terrestrial organic carbon pool. It exceeds the carbon in the atmospheric and vegetation pools multiple times \citep{batjes_total_1996}. Even small changes in processes affecting SOC lead therefore to substantial shifts in the terrestrial carbon cycle and influence the amount of CO\textsubscript{2} in the atmosphere \citep{frielingstein_glob_carbon_2020, minasny_soil_2017}. The specific amount of carbon stored in soils globally is quantified with estimates ranging from 1500 to 2400 GtC for the first meter of the soil profile \citep{batjes_total_1996, sanderman_soil_2017}.
 
-Natural properties like climatic, biophysical, and landscape characteristics clearly play the most important roles to determine SOC variations over space and time. Recent studies have focused on the evaluation of total SOC stocks of the world as well as on the spatial disaggregation of soil properties such as SOC content \citep{batjes_harmonized_2016, hengl_soilgrids250m_2017, fao_global_2018}. However, these studies often do not include human interventions, like land cover change and agricultural management, in their analysis. Compared to climatic and geological drivers, they alter terrestrial carbon pools over much shorter time scales and are currently one of most dominant drivers of SOC changes on managed land.
+Natural properties like climatic, biophysical, and landscape characteristics clearly play the most important roles to determine SOC variations over space and time. Recent studies have focused on the evaluation of total SOC stocks of the world as well as on the spatial disaggregation of soil properties such as SOC content \citep{batjes_harmonized_2016, hengl_soilgrids250m_2017, fao_global_2018}. However, these studies often do not include human interventions, like land cover change and agricultural management, in their analysis. Compared to climatic and geological driving forces, human interventions alter terrestrial carbon pools over much shorter time scales and are currently one of the most dominant drivers of SOC changes on managed land \citep{hansis_relevance_2015, bastos_comparison_2021}.
 
-The anthropogenic impact can be measured by the SOC debt (also referred to as SOC component of land-use change emissions), which is the amount of organic carbon soils have lost under cultivation compared to a potential natural vegetated state. Sanderman et al.~\citeyearpar{sanderman_soil_2017} identified the anthropogenic SOC debt for the first meter of the soil profile due to land cover change at around 116 GtC (37 GtC for the first 30 cm), compared to previous estimates of 60--130 GtC for the first meter \citep{lal_world_2001}.
+The anthropogenic impact can be measured by the SOC debt (also referred to as SOC component of land-use change emissions, see Pongratz et al.~\citeyearpar{pongratz_terminolgy_2014}), which is the amount of organic carbon soils have lost under cultivation compared to a hypothetical potential natural vegetation state. Sanderman et al.~\citeyearpar{sanderman_soil_2017} identified the anthropogenic SOC debt for the first meter of the soil profile due to land cover change at around 116 GtC (37 GtC for the first 30 cm), compared to previous estimates of 60--130 GtC for the first meter \citep{lal_world_2001}.
 
-Global assessments of the carbon cycle via dynamic global vegetation models (DGVMs) and Earth System Models (ESMs) or bookkeeping models (BKMs) have analyzed SOC losses as part of a comprehensive evaluation of the global carbon budget and land-use change (LUC) emissions \citep{friedlingstein_global_2019}. While providing estimates of the magnitude of SOC losses due to land cover change, most models lack a detailed consideration of agricultural management. Earlier DGVM and ESM based assessments only considered changes in land cover, but ignored the removal of biomass at harvest \citep{strassmann_simulating_2008, betts_climate_2015}. BKMs are designed to estimate LUC related emissons but ignore changes in SOC due to climate change, CO\textsubscript{2} fertilization, and agricultural management \citep{friedlingstein_global_2019, houghton_carbon_2012, hansis_relevance_2015}.
+Global assessments of the carbon cycle via dynamic global vegetation models (DGVMs), Earth System Models (ESMs) or bookkeeping models (BKMs) have analyzed SOC losses as part of a comprehensive evaluation of the global carbon budget and land-use change (LUC) emissions \citep{frielingstein_glob_carbon_2020}. While providing estimates of the magnitude of SOC losses due to land-cover change, most models lack a detailed representation of agricultural management. Earlier DGVM- and ESM-based assessments only considered changes in land cover, but ignored the removal of biomass at harvest \citep{strassmann_simulating_2008, betts_climate_2015}. BKMs are designed to estimate LUC related emissions but often ignore changes in SOC due to climate change, CO\textsubscript{2} fertilization and N deposition. Whereas BKM have largely improved in estimating additional emissions from wood harvest and shifting cultivation, state of the art models do not consider impacts of varying agricultural management \citep{frielingstein_glob_carbon_2020, houghton_carbon_2012, hansis_relevance_2015, bastos_comparison_2021}.
 
-Managed agricultural systems were introduced in greater detail to DGVMs and ESMs to improve the assessment of the terrestrial carbon balance \citep[e.g.~][]{bondeau_modelling_2007, lindeskog_implications_2013}. Pugh et al.~\citeyearpar{pugh_simulated_2015} explicitly consider agricultural management in the form of tillage, irrigation and biomass extraction at harvest, but worked with stylized scenarios rather than with historic management data. They also showed the importance of accounting for the land-use history, as many carbon emissions from agricultural soils are caused by historic LUC and the slow decline of SOC under cropland before it reaches a new equilibrium.
+Managed agricultural systems were introduced in greater detail to DGVMs and ESMs to improve the assessment of the terrestrial carbon balance \citep[e.g.~][]{bondeau_modelling_2007, lindeskog_implications_2013}. Pugh et al.~\citeyearpar{pugh_simulated_2015} explicitly consider agricultural management in the form of tillage, irrigation and biomass extraction at harvest, but worked with stylized scenarios rather than with historical management data. They also showed the importance of accounting for the land-use history, as many carbon emissions from agricultural soils are caused by historical LUC and the slow decline of SOC under cropland before a new equilibrium is reached.
 
-In global-scale carbon cycle assessments, management systems are typically represented as spatially explicit patterns that are static in time (e.g.~growing seasons \citep{portmann_mirca2000global_2010} multiple cropping systems \citep{waha_multiple_2020}, irrigation systems \citep{jagermeyr_water_2015}) or as stylized scenarios \citep[e.g.~][\citet{lutz_simulating_2019}]{pugh_simulated_2015}.
+In global-scale carbon cycle assessments, management systems are typically represented as spatially explicit patterns that are static in time (e.g.~growing seasons \citep{portmann_mirca2000global_2010}, multiple cropping systems \citep{waha_multiple_2020}, irrigation systems \citep{jagermeyr_water_2015}) or as stylized scenarios \citep[e.g.~][]{pugh_simulated_2015, lutz_simulating_2019}. Herzfeld et al.~\citeyearpar{herzfeld_soc_2021} account for historical changes in fertilizer and manure inputs, residue removal rates and tillage systems and report SOC losses from cropland expansion over the period from 1700--2018 of 215 GtC. Within their stylized future management scenarios they find that none of the management aspects considered (residue management, no-tillage) can create a net carbon sink on current cropland areas under future climate change.
 
-More data sets on spatially explicit agricultural management time series with global coverage become available (e.g.~on tillage systems, see \citep{porwollik_generating_2018}, \citep{prestele_spatially_2018}) and model approaches are increasingly developed to project the dynamics of management systems into the future (e.g.~\citep{iizumi_modeling_2019}, \citep{minoli_modelling_2019}), but have --- to our knowledge --- not found their way into comprehensive assessments of the terrestrial carbon cycle in DGVMs and BKMs.
+More data sets on spatially explicit agricultural management time series with global coverage are becoming available (e.g.~on tillage systems, see \citep{porwollik_generating_2019, prestele_spatially_2018}) and modeling approaches are increasingly being developed to project the dynamics of management systems into the future (e.g.~\citep{iizumi_modeling_2019, minoli_modelling_2019}), but have --- to our knowledge --- not yet found their way into comprehensive assessments of the terrestrial carbon cycle in DGVMs and BKMs.
 
-Field-scale models \citep[\citet{coleman_simulating_1997}, \citet{smith_estimating_2010}, \citet{taghizadeh-toosi_c-tool_2014}]{del_grosso_simulated_2001} are able to better account for historic agricultural management if detailed information on crop yield levels, fertilizer inputs and various other on-farm measures is available for the studied sites. However, due to the lack of comprehensive global management data as input to these models, scaling up to the global domain remains a complex challenge.
+Field-scale models \citep{del_grosso_simulated_2001, coleman_simulating_1997, smith_estimating_2010, taghizadeh-toosi_c-tool_2014} are able to better account for historical agricultural management if detailed information on crop yield levels, fertilizer inputs and various other on-farm measures is available for the studied sites. However, due to the lack of comprehensive global management data as input to these models, scaling up to the global domain remains a complex challenge \citep{morais_detailed_2019}.
 
-The objective of our study is to provide the first global, spatially explicit SOC and SOC debt map that considers spatially explicit and time-variant historic agricultural management. To achieve this objective we create and provide a comprehensive data set of the global gridded management time series data, including crop production levels, residue returning rates, manure application, and the adoption of irrigation and tillage practices. We simulate SOC stocks, dynamics and the SOC debt for 1975--2010. Using a scenario analysis, we decompose the contribution of different management activities.
+Managed soils have been increasingly studied not only for their carbon emitting behavior, but also because of their capacity to re-store carbon (soil carbon sequestration (SCS) techniques). However, assessing SCS dynamically considering the interdependency with environmental, social and economic sustainability targets has been difficult so far, as integrated assessment models (IAMs) \citep{popp_land-use_2016, rogelj_scenarios_2018, forster_sr1p5_2018} have not integrated soil management into their mitigation pathways. More detailed process-based models are typically computationally too demanding to be integrated into optimization-based IAMs. Better accounting for soil carbon management in IAMs thus requires a light-weight model suitable for iterative modeling with detailed options to represent agricultural soil management.
+
+The objectives of our study are (1) to develop a reduced-complexity SOC model able to account for SCS in IAM frameworks; (2) to create a comprehensive data set of the global gridded management time series, including crop production levels, residue input rates, manure amendments, and the adoption of irrigation and tillage practices; and (3) to provide global as well as spatially explicit SOC and SOC debt estimates that consider spatially explicit and time-variant agricultural management.
+We decompose the contribution of different management activities through a scenario analysis, identifying the most impacting management decisions for SOC development. Moreover, we compare our model performance against other SOC stock and SOC emission estimates, to evaluate the suitability of this reduced-complexity approach for integration into IAM modeling.
 \newpage
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-In Sect. \ref{sec:carbonbudget} we introduce the basic concept of SOC dynamics as applied in this study and explained in more detail within the refinement of the IPCC guidelines vol.~4 \citep{calvo_buendia_ipcc_2019}. We additionally describe how we configured and extended the steady-state method (for model code see \citep{karstens_mrsoil_2020}. In Sect. \ref{sec:tier1} we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019}.
-Section \ref{sec:agrimanagement} provides a detailed description of the global, gridded management data used to drive the model, including crop production levels, residue input rates, manure amendments, and the adoption of irrigation and tillage practices \citep[for model code see][]{bodirsky_mrcommons_2020}. In Sect. \ref{sec:scenarios} we define the scenarios used to complement our historic model results.
+In Sect. \ref{sec:carbonbudget} we introduce the basic concept of SOC dynamics as applied in this study and explained in more detail in the refinement of the IPCC guidelines vol.~4 Chapter 5 on ``Cropland'' \citep{ogle_cropland_in_ipcc_2019}. We additionally describe how we configured and extended the Tier 2 modeling approach \citep[for model code see][]{karstens_mrsoil_2020}. In Sect. \ref{sec:tier1} we shortly refer to the concept of stock change factors as outlined in the Tier 1 approach of the IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019}.
+Section \ref{sec:agrimanagement} provides a detailed description of the global, gridded management data used to drive the model, including crop production levels, residue input rates, manure amendments, and the adoption of irrigation and tillage practices \citep[for model code see][]{bodirsky_mrcommons_2020}. In Sect. \ref{sec:scenarios} we define the management scenarios used to analyze the role of different management aspects in historical cropland SOC dynamics.
 
 \hypertarget{sec:carbonbudget}{%
-\subsection{SOC stocks and stock changes following the steady-state method}\label{sec:carbonbudget}}
+\subsection{SOC stocks and stock changes following the Tier 2 modeling approach}\label{sec:carbonbudget}}
 
-Following the Tier 2 steady-state approach of the refinement of the IPCC guidelines vol.~4 \citep{calvo_buendia_ipcc_2019}; referred to as \textit{steady-state method} in the following), we estimate soil organic carbon (\(SOC\)) stocks and their change over time for cropland at half-degree resolution from 1975 to 2010. We restrict our analysis to the first 0-30 cm of the soil profile. Moreover, we assume the current \(SOC\) state converges towards a steady state, which itself depends on biophysical, climatic and agronomic conditions.
+Following the Tier 2 modeling approach of the refinement of the IPCC guidelines vol.~4 Chapter 5 on ``Cropland'' \citep{ogle_cropland_in_ipcc_2019}; referred to as \textit{Tier 2 modeling approach} in the following), we estimate \(SOC\) stocks and their change over time for cropland at half-degree resolution from 1975 to 2010. We restrict our analysis to the first 0-30 cm of the soil profile. Moreover, we assume the current \(SOC\) state converges towards a steady state, which itself depends on biophysical, climatic and agronomic conditions.
 Therefore, we take the following three steps for each year of our simulation period:
 (1) We calculate annual land-use type-specific steady states and decay rates for \(SOC\) stocks (Sect. \ref{sec:steadystates});
 (2) we account for land conversion by transferring \(SOC\) from and to natural vegetation (Sect. \ref{sec:carbontransfer}),
@@ -183,40 +187,46 @@ In a simple first order kinetic approach the steady-state soil organic carbon st
 SOC^{\mathrm{eq}}_{i,t,sub,lu} =\frac{C^{\mathrm{in}}_{i,t,sub,lu}}{k_{i,t,sub,lu}}
 \label{eq:inoutflow}
 \end{equation}
-with \(C^{\textrm{in}}\) being the carbon inputs to the soil, \(k\) denotes the soil organic carbon decay rate. This equation is valid for all grid cells \(i\) and all years \(t\). We use the steady-state method for our calculations, which assumes three soil carbon sub-pools \(sub\) (active, slow and passive) and interactions between them, following the approach in the Century model \citep{parton_analysis_1987}. Annual carbon inflow to each sub-pool and annual decay rates of each sub-pool are land-use type \(lu\) specific.
+with \(C^{\textrm{in}}\) being the carbon inputs to the soil, \(k\) denotes the soil organic carbon decay rate. This equation is valid for all grid cells \(i\) and all years \(t\). We use the Tier 2 modeling approach for our calculations, which assumes three soil carbon sub-pools \(sub\) (active, slow and passive) and interactions between them, following the approach in the Century model \citep{parton_analysis_1987}. Annual carbon inflow to each sub-pool and annual decay rates of each sub-pool are land-use type \(lu\) specific.
 We distinguish two land-use types: cropland and uncropped land under potential natural vegetation as representative for all other land-use types including forestry and pastures (referred to as natural vegetation in the following).
 
-Carbon inputs for cropland are below- and above-ground residues left or returned to the field (see Sect. \ref{sec:residues}) and manure inputs (see Sect. \ref{sec:livstmanure}); for natural vegetation litterfall including fine root turnover \citep{schaphoff_lpjml4_2018} is the only source of carbon inflow to the soil. Following the IPCC guidelines \citep{calvo_buendia_ipcc_2019}, carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content. For each component the sum of all carbon input sources is allocated to the respective \(SOC\) sub-pools via transfer coefficients. This implies that both the amount of carbon and its structural composition determine the effective inflow into the different pools. Data sources for all considered carbon inputs as well as for lignin and nitrogen content are listed in Table \ref{tab:datasourceinputs}.
+Carbon inputs for cropland are below- and above-ground crop residues left or returned to the field (see Sect. \ref{sec:residues}) and manure inputs (see Sect. \ref{sec:livstmanure}); for natural vegetation, litterfall including fine root turnover \citep{schaphoff_lpjml4_2018} is the only source of carbon inflow to the soil. Following the IPCC guidelines \citep{ogle_cropland_in_ipcc_2019}, carbon inputs are disaggregated into metabolic and structural components depending on their lignin and nitrogen content. For each component the sum of all carbon input sources is allocated to the respective \(SOC\) sub-pools via transfer coefficients. This implies that both the amount of carbon and its structural composition determine the effective inflow into the different pools.
+
+Whereas residue and manure default lignin and nitrogen fractions are given by the IPCC guidelines \citep{ogle_cropland_in_ipcc_2019}, we use plant-functional type and plant-organ specific parameterization for the natural litterfall. Global distribution of plant-functional types is given by \citep{schaphoff_lpjml4_2018} as well as separation of litter into leaf, fine root and wood litter compartments excluding litter biomass burnt in wild fires. Leaf litter parameters are given by Brovkin et al.~\citeyearpar{brovkin_plant-driven_2012}, fine root to leaf litter lignin ratio by Guo et al.~\citeyearpar{guo_leaf_root_decompostion_2021}, lignin content of wood litter by Rahman et al.~\citeyearpar{rahman_lignin_2013} and nitrogen content scaling factors for leaf to fine roots and leaf to wood litter by von Bloh et al.~\citeyearpar{vBloh_lpjml5_2018}.
+Data sources for all considered carbon inputs as well as for lignin and nitrogen parameterization are listed in Table \ref{tab:datasourceinputs}.
 
   \begin{table*}[h]
-  \caption{Type and data sources for carbon inputs and parameterization to different land-use types }
+  \caption{type and data sources for carbon inputs and parameterization to different land-use types }
   \begin{tabular}{p{0.15\textwidth} p{0.20\textwidth} p{0.20\textwidth} p{0.35\textwidth}}
   \tophline
   \textbf{land-use types}   & \textbf{source of carbon inputs} & \textbf{data source} & \textbf{nitrogen and lignin content} \\
   \middlehline
-  \multirow{3}{*}{Cropland} & above-ground residues, & \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
+  \multirow{3}{*}{cropland} & above-ground residues, & \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
                                                                       \citet{faostat_faostat_2016}, \\
                                                                       \citet{schaphoff_lpjml4_2018},\\
                                                                       \citet{weindl_livestock_2017} \end{minipage}} & 
-                                                      \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
-                                                                      LG:C generic values according to Table 5.5B,\\
-                                                                      5.5C from IPCC \citep{calvo_buendia_ipcc_2019},\\
-                                                                      crop-specific N:C from \citet{bodirsky_n2o_2012}
+                         \multirow{3}{*}{\begin{minipage}[t]{0.35\columnwidth}\raggedright
+                         LG:C generic values according to Table 5.5B,\\
+                         5.5C from IPCC \citep{ogle_cropland_in_ipcc_2019},\\
+                         crop-specific N:C from \citet{bodirsky_n2o_2012}
                                                                       \end{minipage}} \\
                             & below-ground residues, &  &  \\
                             & manure                &  &  \\ 
                             \hline
-  Natural vegetation        & annual litterfall &  \citet{schaphoff_lpjml4_2018}
-                            & \begin{minipage}[t]{0.35\columnwidth}\raggedright\strut 
-                                IPCC \citep{calvo_buendia_ipcc_2019} and\\ 
-                                CENTURY (\citep{century_model_2000}) \strut \end{minipage}\tabularnewline
+  natural vegetation        & annual litterfall &  \citet{schaphoff_lpjml4_2018}
+                      & \begin{minipage}[t]{0.35\columnwidth}\raggedright\strut 
+                          leaf N and LG concentration from \citet{brovkin_plant-driven_2012}, 
+                          root to leaf litter LG ratio \citet{guo_leaf_root_decompostion_2021},  
+                          lignin content of wood litter \citet{rahman_lignin_2013} and 
+                          nitrogen scaling factors for leaf to root and wood litter 
+                          from \citet{vBloh_lpjml5_2018} \strut \end{minipage}\tabularnewline
  \bottomhline
  \end{tabular}
  \label{tab:datasourceinputs}
  \belowtable{}
  \end{table*}
 
-The sub-pool specific decay rates \(k_{sub}\) are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that all vary over space (\(i\)) and time (\(t\)). Following the steady-state method \citep{calvo_buendia_ipcc_2019}, we consider temperature (\(temp\)), water (\(wat\)), sand fraction (\(sf\)) and tillage (\(till\)) effects to account for spatial variation of decay rates. Thus, \(k_{sub}\) are given by
+The sub-pool specific decay rates \(k_{sub}\) are influenced by climatic conditions, biophysical and biochemical soil properties as well as management factors that all vary over space \(i\) and time \(t\). Following the Tier 2 modeling approach \citep{ogle_cropland_in_ipcc_2019}, we consider temperature \(temp\), water \(wat\), sand-fraction \(sf\), and tillage \(till\) effects to account for spatial and temporal variation of decay rates. Thus, \(k_{sub}\) rates are given by
 
 \begin{equation}
 \begin{aligned}
@@ -227,27 +237,27 @@ The sub-pool specific decay rates \(k_{sub}\) are influenced by climatic conditi
 \end{aligned}.
 \end{equation}
 
-For natural vegetation, we assume rainfed and non-tilled conditions, whereas for cropland, we distinguish the effect of different tillage (see Sect. \ref{sec:tillage}) and irrigation (see Sect. \ref{sec:irrigation}) practices on decay rates. We calculated area weighted means for \(till\) and \(wat\) on cropland for each grid cell, using area shares for the different tillage and irrigation pratices. Data sources as well as used parameters for the different decay drivers for all land-use types are listed in Table \ref{tab:datasourcedecay}; equations are displayed by equation 5.0B--5.0F in Calvo Buendia et al.~\citeyearpar{calvo_buendia_ipcc_2019}.
+For natural vegetation, we assume rainfed and non-tilled conditions, whereas for cropland, we distinguish the effect of different tillage (see Sect. \ref{sec:tillage}) and irrigation (see Sect. \ref{sec:irrigation}) practices on decay rates. We calculate area-weighted means for \(till\) and \(wat\) on cropland for each grid cell, using area shares for the different tillage and irrigation practices. Data sources as well as used parameters for the different decay drivers for all land-use types are listed in Table \ref{tab:datasourcedecay}; equations are displayed by equations 5.0B--5.0F in Ogle et al.~\citeyearpar{ogle_cropland_in_ipcc_2019}.
 
  \begin{table*}[h]
- \caption{Type and data sources for carbon inputs to different land-use types}
+ \caption{type and data sources for carbon inputs to different land-use types}
  \begin{tabular}{l l l l}
  \tophline
   land-use types   & type of decay driver & parameter use to represent driver & data source \\
  \middlehline
- \multirow{2}{*}{all} & Soil quality & Sand fraction of the first 0-30 cm 
+ \multirow{2}{*}{all} & soil quality & sand fraction of the first 0-30 cm 
                                      & \citet{hengl_soilgrids250m_2017} \\
                       \cline{2-4}
                       
-                      & Mircobial activity & air temperature & \citet{harris_version_2020} \\
+                      & mircobial activity & air temperature & \citet{harris_version_2020} \\
                       \cline{2-4}
                       
-                      & Water restriction & precipitation \& potential evapotranspiration & \citet{harris_version_2020} \\
+                      & soil moisture & precipitation \& potential evapotranspiration & \citet{harris_version_2020} \\
                       \cline{1-4}
-\multirow{2}{*}{\begin{minipage}[t]{0.2\columnwidth}\raggedright\strut Cropland\\(additionally)\strut\end{minipage}} & Water restriction*  & irrigation  & Sect. \ref{sec:irrigation} \\ 
+\multirow{2}{*}{\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut cropland\\(additionally)\strut\end{minipage}} & soil moisture*  & irrigation  & Sect. \ref{sec:irrigation} \\ 
                       \cline{2-4}
                       
-                      & Soil disturbance & tillage & Sect. \ref{sec:irrigation} \\
+                      & soil disturbance & tillage & Sect. \ref{sec:tillage} \\
  \bottomhline
  \end{tabular}
  \belowtable{}
@@ -257,19 +267,23 @@ For natural vegetation, we assume rainfed and non-tilled conditions, whereas for
 \hypertarget{sec:carbontransfer}{%
 \subsubsection{SOC transfer between land-use types}\label{sec:carbontransfer}}
 
-We calculate \(SOC\) stocks based on the area shares of land-use types (\(lu\)) within our grid cells (\(i\)). If land is converted from one land-use type \(lu=\{crop,natveg\}\) into the other \(!lu=\{natveg,crop\}\), a respective share of the \(SOC\) is reallocated. We account for land conversion at the beginning of each time step \(t\) by calculating a preliminary stock \(SOC_{t^*}\) via
+\begin{figure}[h]
+\includegraphics[width=8cm]{../ResultNotebooks/Output/Images/LUtransitions} \caption{Scheme of land-use transition representation. Given an initial land-use pattern (as in this example 2 ha land under natural vegetation and 1 ha of cropland), there are separate $SOC$ stocks for natural vegetation and cropland. While in this example we assume $SOC$ under natural vegetation to be in steady state, the cropland $SOC$ stock approaches its steady state without having reached it yet (a). Upon cropland expansion (in this example half of the natural vegetation is cleared to be used as cropland), $SOC$ stocks on cropland increase due to a transfer of land from natural vegetation (b). Explicitly representing newly converted cropland and existing cropland to account for SOC dynamics (c) leads to the same weighted mean value as averaging $SOC$ stocks (d), due to the linearity of Eq. \ref{eq:SOCstate} and cropland-age independent decay rates (see Eq. \ref{eq:decayrates}).}\label{fig:LUtrans}
+\end{figure}
+
+We calculate \(SOC\) stocks based on the area shares of land-use types \(lu\) within our grid cells \(i\). If land is converted from one land-use type \(lu=\{crop,natveg\}\) into the other \(!lu=\{natveg,crop\}\), a respective share of the \(SOC\) is reallocated within our budget. We do not distinguish between newly converted and existing cropland, but can work with the average carbon content as the relative decay of \(SOC\) is proportional to the \(SOC\) stock (see \ref{fig:LUtrans}). We account for land conversion at the beginning of each time step \(t\) by calculating a preliminary stock \(SOC_{t^*}\) via
 
 \begin{equation}
 SOC_{i,t^*,sub,lu} = SOC_{i,t-1,sub,lu} - \frac{SOC_{i,t-1,sub,lu}}{A_{i,t-1,lu}} \cdot  AR_{i,t,lu} + \frac{SOC_{i,t-1,sub,!lu}}{A_{i,t-1,!lu}} \cdot  AE_{i,t,lu}
 \label{eq:ctransfer}
 \end{equation}
 
-with \(A_{lu}\) being the land-use type specific areas, \(AR_{lu}\) and \(AE_{lu}\) the area reduction resp. area expansion of the two land-use types. Data sources and methodology on land-use states and changes are described in Sect. \ref{sec:landuse}.
+with \(A_{lu}\) being the land-use type specific areas, \(AR_{lu}\) the area reduction and \(AE_{lu}\) the area expansion of the two land-use types. Data sources and methodology on land-use states and changes are described in Sect. \ref{sec:landuse}.
 
 \hypertarget{sec:totalsoc}{%
 \subsubsection{Total SOC stocks and stock changes}\label{sec:totalsoc}}
 
-\(SOC\) converge towards the calculated steady-state stock \(SOC^{\mathrm{eq}}\) for each grid cell \(i\), each annual time step \(t\), each land-use type \(lu\) and each sub-pool \(sub\) like
+\(SOC\) converges towards the calculated steady-state stock \(SOC^{\mathrm{eq}}\) for each grid cell \(i\), each annual time step \(t\), each land-use type \(lu\) and each sub-pool \(sub\) like
 
 \begin{equation}
 SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} + (SOC^{\mathrm{eq}}_{i,t,sub,lu} - SOC_{i,t^*,sub,lu}) \cdot k_{i,t,sub,lu} \cdot 1\unit{a}.
@@ -287,11 +301,11 @@ SOC_{i,t,sub,lu} = SOC_{i,t^*,sub,lu} - \underbrace{SOC_{i,t^*,sub,lu} \cdot k_{
 The global \(SOC\) stock for each time step \(t\) can then be calculated via
 
 \begin{equation}
-SOC_{t} = \sum_{i} \underbrace{\sum_{lu} \overbrace{\sum_{sub} SOC_{i,t,sub,lu}}^{\text{$SOC_{i,t,lu}$ -- land-use type specific SOC stock within cell}}}_{\text{$SOC_{i,t}$ -- total SOC stock within cell}}.
+SOC_{t} = \sum_{i} \underbrace{\sum_{lu} \overbrace{\sum_{sub} SOC_{i,t,sub,lu}}^{\text{$SOC_{i,t,lu}$ -- land-use type specific $SOC$ stock within cell}}}_{\text{$SOC_{i,t}$ -- total $SOC$ stock within cell}}.
 \label{eq:totalstock}
 \end{equation}
 
-According to the IPCC guidelines \(SOC\) changes can be expressed as the difference of two consecutive years \citep[see Eq. 5.0A in][]{calvo_buendia_ipcc_2019}. This, however, will also include naturally occurring changes due to climatic variation over time. For our study, we defined the absolute and relative SOC changes in relation to a potential natural state \(SOC^{\mathrm{pnv}}\) under the same climatic conditions in grid cell \(i\) at time \(t\), that is based on the natural vegetation \(SOC\) calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes \(\Delta SOC\) and relative changes \(F^{\mathrm{SCF}}\) are thus given by
+According to the IPCC guidelines \(SOC\) changes can be expressed as the difference of two consecutive years \citep[see Eq. 5.0A in][]{ogle_cropland_in_ipcc_2019}. This, however, will also include naturally occurring changes due to climatic variation over time. For our study, we define the absolute and relative \(SOC\) changes in relation to a potential natural state \(SOC^{\mathrm{pnv}}\) under the same climatic conditions in grid cell \(i\) at time \(t\), that is based on the natural vegetation \(SOC\) calculations as defined above without accounting for land conversion from cropland at any time. The absolute changes \(\Delta SOC\) and relative changes \(F^{\mathrm{SCF}}\) are thus given by
 
 \begin{equation}
 \Delta SOC_{i,t} = SOC_{i,t} - SOC^{\mathrm{pnv}}_{i,t}\qquad \text{and} \qquad  F^{\mathrm{SCF}}_{i,t} = \frac{SOC_{i,t}}{SOC^{\mathrm{pnv}}_{i,t}} .
@@ -303,208 +317,157 @@ Note that the absolute changes \(\Delta SOC\) can be also interpreted as the SOC
 \hypertarget{sec:initsoc}{%
 \subsubsection{Initialization of SOC pools}\label{sec:initsoc}}
 
-To initialize all SOC sub-pools we assume that cropland and natural vegetation are in a land-use type specific steady state for the initialization year 1901. While land-use, climate and litter input information are available from 1901, agricultural management data on residue and manure inputs are held constant at the level of 1965. After a spin-up period of 64 years (1901-1965) with constant agricultural input data, we run the model for additional 10 years with historic input data and start analyzing results from 1975 onwards. Irrigation areas are part of the land-use data set and therefore dynamic from 1901 on, whereas data on no-tillage area is only available after 1974.
+The initialization of \(SOC\) pools is very important and has to include the proper accounting for the land-use history, as many CO\textsubscript{2} emissions from agricultural soils are caused by historical land-use change (LUC) and the slow decline of \(SOC\) under crop cultivation, before it reaches a new equilibrium.
+We initialize our \(SOC\) sub-pools using a three-step approach, since input data availability is limited for climate and litter estimates (starting only in 1901) as well as for agricultural management data (starting only in 1965):
+
+Firstly, in order to account for the impacts of legacy fluxes from land-use changes long before the time horizon of interest, we consider land-use change from 1510 onwards. In 1510, we assume all \(SOC\) pools to be in natural steady-state, implying that all land-use change prior to that time occurs in 1510. We assume that by 1901, all cropland converted in 1510 has reached its new steady state, so that it is not necessary to explicitly account for even older land conversion. Model inputs for 1901--1930 for climate and natural vegetation litterfall are repeated for 1510--1900 to mimic constant climate conditions for this first initializing period. Similarly, agricultural management data are held constant at the level of 1965 until 1965. This approach follows others studies looking on effects of land-use change and management \citep[e.g.~][]{schaphoff_lpjml4_2018-1, herzfeld_soc_2021}.
+
+Secondly, with the availability of transient climate data after 1901, we account not only for land-use change, but also for historical climate change and consequently natural litter inputs to the soil from 1901 to 1965 still considering constant agricultural input data, which are not available prior to 1965.
+
+Thirdly, we run the model for 10 years from 1965 to 1975 with historical dynamic data on agricultural management and start analyzing results from 1975 onward. This is in line with the IPCC guidelines vol.~4 method suggestion to have a 5-20 year spin-up period \citep{ogle_cropland_in_ipcc_2019}.
+
+With transient climate considered after 1901, decay rates \(k_{sub}\) become dynamic in time. As the decay rates are also affected by irrigation and tillage (see Sect. \ref{sec:steadystates}), we also account for transient changes in irrigated areas after 1901. Data on no-tillage practices are only available after 1974 and we assume conventional tillage on all cropland prior to 1975.
 
 \hypertarget{sec:tier1}{%
 \subsection{SOC stocks and stock changes following Tier 1}\label{sec:tier1}}
 
-Additionally to the steady-state method \citep{calvo_buendia_ipcc_2019} and the detailed analysis of management data coming with it, SOC changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019}. Here, stocks are calculated via stock change factors (\(F^{\mathrm{SCF}}\)) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of \(F^{\mathrm{SCF}}\) are differentiated by different crops, management and input systems (here summarized under \(m\)) reflecting different dynamics under changed in- and outflows without explicitly tracking these. Moreover, estimates of \(F^{\mathrm{SCF}}\) vary for different climatic zones (\(c\)) specified by the IPCC (see Fig. \ref{fig:CLIMzone}). The actual \(SOC\) stocks are thus calculated based on a given reference stock \(SOC^{\mathrm{ref}}\) by
+Additionally to the Tier 2 modeling approach \citep{ogle_cropland_in_ipcc_2019} and the detailed analysis of management data coming with it, \(SOC\) changes can be estimated using the IPCC Tier 1 approach of IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019}. Here, stocks are calculated via stock change factors (\(F^{\mathrm{SCF}}\)) given by the IPCC for the topsoil (0-30 cm) and based on observational data. Estimates of \(F^{\mathrm{SCF}}\) are differentiated by crops, management and input systems (here summarized under \(m\)) reflecting different dynamics under changed in- and outflows without explicitly tracking these flows. Moreover, estimates of \(F^{\mathrm{SCF}}\) vary for different climatic zones (\(c\)) specified by the IPCC (see Fig. \ref{fig:CLIMzone}). The actual \(SOC\) stocks are thus calculated based on a given reference stock \(SOC^{\mathrm{ref}}\) by
 
 \begin{equation}
 SOC_{i,t} = \sum_{c,m} T_{c,i} \cdot SOC^{\mathrm{ref}}_{i,t} \cdot F^{\mathrm{SCF}}_{c,m}
 \label{eq:tier1}
 \end{equation}
 
-with \(T_{c,i}\) being the translation matrix for grid cells \(i\) into corresponding climate zones \(c\). For this analysis, we use the default \(F^{\mathrm{SCF}}\) from the Tier 1 method of Eggleston et al.~\citeyearpar{eggleston_ipcc_2006} and Calvo Buendia et al.~\citep{calvo_buendia_ipcc_2019} as a comparison and consistency check for our more detailed Tier 2 steady-state approach.
+with \(T_{c,i}\) being the translation matrix for grid cells \(i\) into corresponding climate zones \(c\). For this analysis, we use the default \(F^{\mathrm{SCF}}\) from the Tier 1 method of Eggleston et al.~\citeyearpar{eggleston_ipcc_2006} and Calvo Buendia et al.~\citeyearpar{calvo_buendia_ipcc_2019} as a comparison and consistency check for our more detailed Tier 2 steady-state approach.
 
 \hypertarget{sec:agrimanagement}{%
 \subsection{Agricultural management data at 0.5 degree resolution}\label{sec:agrimanagement}}
 
-We compile country-specific FAO production and cropland statistics \citep{faostat_faostat_2016} to a harmonized and consistent data set. The data is prepared in 5-year time steps from 1965 to 2010, which restricts our analysis to the time span from 1975 to 2010 (after a spin-up phase from 1901-1974). For all the following data, if not declared differently, we interpolate values linearly between the time steps and keep them constant before 1965.
+We compile country-specific FAO production and cropland statistics \citep{faostat_faostat_2016} to a harmonized and consistent data set. The data is prepared in 5-year time steps from 1965 to 2010, which restricts our analysis to the time span from 1975 to 2010 (after a spin-up phase from 1510--1974). For all the following data, if not declared differently, we interpolate values linearly between the time steps and keep them constant before 1965.
 
 \hypertarget{sec:landuse}{%
 \subsubsection{Land use and land-use change}\label{sec:landuse}}
 
-Land-use patterns are based on the Land-Use Harmonization 2 \citep{hurtt_harmonization_2020} data set, which we sum up from quarter-degree to half-degree resolution. We disaggregate the physical area of the five different cropland subcategories (c3ann, c3per, c4ann, c4per, c3nfx) of LUH2 into our 17 crop groups \citep[see FAO2LUH2MAG\_croptypes.csv in][]{bodirsky_mrcommons_2020}, applying the relative shares for each grid cell based on the country- and year-specific area harvested shares of FAOSTAT data \citep{faostat_faostat_2016}. By calculating country-specific multicropping factors using FAOSTAT data, we are able to compute crop-group specific area harvested on grid cell level.
+Land-use patterns are based on the Land-Use Harmonization 2 \citep{hurtt_harmonization_2020} data set (short LUH2), which we sum up from quarter-degree to half-degree resolution. We disaggregate the physical area (given as total land area in million ha) of the five different cropland subcategories (c3ann: C3 annual crops, c3per: C3 perennial crops, c4ann: C4 annual crops, c4per: C4 perennial crops, c3nfx: C3 nitrogen-fixing crops) of LUH2 into our 17 crop groups \citep[see Table ``FAO2LUH2MAG\_croptypes.csv'' in][]{karstens_model_2020}, applying the relative shares for each grid cell based on the country- and year-specific area harvested shares of FAOSTAT data \citep{faostat_faostat_2016}. By calculating country-specific multicropping factors \(MCF\) using FAOSTAT data, we are able to compute crop-group specific area harvested on grid cell level.
 Land-use transitions are calculated as net area differences of the land-use data at half-degree resolution, considering no split up into crop-group specific areas but only total cropland and natural vegetation areas.
 
 \hypertarget{sec:residues}{%
 \subsubsection{Crop and crop residues production}\label{sec:residues}}
 
-Crop production patterns are compiled crop group specific using half-degree yield data from LPJmL \citep{schaphoff_lpjml4_2018} as well as half-degree cropland patterns (see Sect. \ref{sec:landuse}). We calibrate cellular yields with a country-level calibration factor for each crop group to meet historic FAOSTAT production \citep{faostat_faostat_2016}. By using physical cropland areas in combination with harvested areas, we account for multiple cropping systems as well as for fallow land.
+Crop production patterns are compiled crop group specific using half-degree yield data from LPJmL \citep{schaphoff_lpjml4_2018} as well as half-degree cropland patterns (see Sect. \ref{sec:landuse}). We calibrate cellular yields with a country-level calibration factor for each crop group to meet historical FAOSTAT production \citep{faostat_faostat_2016}. Note
 
-Crop residue production and management is based on a revised methodology of Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} and key aspects are explained here given its central role for soil carbon modeling. Starting from harvested crop production (\(CP\)) estimates and their respective harvested crop area (\(CA\)), we estimate above-ground (\(AGR\)) and below-ground (\(BGR\)) residual biomass using crop group (\(cg\)) specific harvest index values (\(HI\)) and root:shoot ratios (\(RS\)) as follows
+Crop residue production and management is based on a revised methodology of Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} and key aspects are explained as they play a central role in soil carbon modeling. Starting from crop yield estimates \(Y\) and respective physical crop area \(CA\), we estimate total above-ground \(AGR\) and below-ground \(BGR\) residue biomass (in tonnes) using crop group \(cg\) specific ratios for above-ground residues to harvested biomass \(r^{\mathrm{ag,prod}}_{cg}\) in \((tDM\,ha^{-1})(tDM\,ha^{-1})^{-1}\) above-ground residues to harvested area \(r^{\mathrm{ag,area}}_{cg}\) in \(\unit{tDM\,\unit{ha}^{-1}}\) and below-ground residues to above-ground biomass \(r^{\mathrm{bg}}_{cg}\) in \(\unit{tDM\,\unit{tDM}^{-1}}\) as follows
 
 \begin{equation}
 \begin{aligned}
-AGR_{i,t,cg} & = CP_{i,t,cg} \cdot HI^{\mathrm{prod}}_{cg} + CA_{i,t,cg} \cdot HI^{\mathrm{area}}_{cg}
+AGR_{i,t,cg} & = CA_{i,t,cg} \cdot \left( Y_{i,t,cg} \cdot  r^{\mathrm{ag,prod}}_{cg} + MCF_{i,t} \cdot r^{\mathrm{ag,area}}_{cg} \right)
 \qquad & \textrm{and} \\
-BGR_{i,t,cg} & = (CP_{i,t,cg} + AGR_{i,t,cg}) \cdot RS_{cg} \qquad                                            & \forall\quad cg, i, t.
+BGR_{i,t,cg} & = (CA_{i,t,cg} \cdot Y_{i,t,cg} + AGR_{i,t,cg}) \cdot r^{\mathrm{bg}}_{cg} \quad.
 \label{eq:resbiomass}
 \end{aligned}
 \end{equation}
 
-Following the IPCC guidelines, we split the harvest index into a production (\(HI^{\mathrm{prod}}\)) and an area dependent (\(HI^{\mathrm{area}}\)) fraction \citep{eggleston_ipcc_2006}. Deviating from Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} we use harvested instead of physical crop area to account for increased residue biomass due to multiple cropping and decreased residue amounts due to fallow land. We assume that all \(BGR\) are left in the soil, whereas \(AGR\) can be burned or harvested for other purposes such as feeding animals \citep{weindl_livestock_2017}, fuel or for material use.
+Following the IPCC guidelines, we split the above-ground residue calculations into a yield-dependent slope (\(r^{\mathrm{ag,prod}}\)) and a positive intercept (\(r^{\mathrm{ag,area}}\)) fraction \citep{hergoualch_n2o_in_ipcc_2019}. Residues biomass therefore increases under-proportionally with rising yields, reflecting a shifting harvest index of higher-yielding breeds.
+Deviating from Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} we use harvested instead of physical crop area (denoted in Eq. \eqref{eq:resbiomass} by MCF described in Sect. \ref{sec:landuse}) to account for increased residue biomass due to multiple cropping (multiple harvests with each lower yields) and decreased residue amounts due to fallow land. We assume that all \(BGR\) are left in the soil, whereas \(AGR\) can be burned or harvested for other purposes such as feeding animals \citep{weindl_livestock_2017}, fuel or for material use.
 
-A country-specific fixed share of the \(AGR\) is assumed to be burned on field depending on the per-capita income of the country. Following Smil \citeyearpar{smil_nitrogen_1999} we assume a burn share of \(25\%\) for low-income countries according to World Bank definitions (\(<\,1000\,\tfrac{USD}{yr\,cap}\)), 15\% for high-income (\(>\,10000\,\tfrac{USD}{yr\,cap}\)) and linearly interpolate shares for all middle-income countries depending on their per-capita income. Depending on the crop group, 80--90\% of the carbon in the crop residues burned in the fields is lost within the combustion process \citep{eggleston_ipcc_2006}.
+A country-specific fixed share of the \(AGR\) is assumed to be burned on field depending on the per-capita income of the country. Following Smil \citeyearpar{smil_nitrogen_1999} we assume a burn share of 25\% for low-income countries according to World Bank definitions (\(<\,10000\,\unit{USD}\,\unit{yr}^{-1}\,\unit{cap}^{-1}\)), 15\% for high-income (\(>\,10000\,\unit{USD}\,\unit{yr}^{-1}\,\unit{cap}^{-1}\)) and linearly interpolate shares for all middle-income countries depending on their per-capita income for the periods before 1995. After 1995 we estimate a linear decline of burn shares to 10\% for low-income countries and 0\% for high-income countries till 2025 to account for recent increases in air pollution regulation. The estimated trends show good agreement with fire-satellite-image derived estimates by the Global Fire Database \citep{vanderWerf_fire_2017}. Depending on the crop group, 80--90\% of the carbon in the crop residues burned in the fields is lost within the combustion process \citep{eggleston_ipcc_2006}.
 
-From our 17 crop groups, we compile four residue groups (straw, high- and low-lignin residues, residues without dual use), of which the first three are taken away from the field for other purposes (see mappingCrop2Residue.csv in Bodirsky et al.~\citeyearpar{bodirsky_mrcommons_2020}. Residue feed demand for five different livestock groups is based on country-specific feed baskets \citep[see][]{weindl_livestock_2017}, that differentiate between the residue groups and take available \(AGR\) biomass as well as livestock productivity into account. We estimate a material-use share for the straw-residue group of 5\% and a fuel-share of 10\% for all used residue groups in low-income countries. For high-income countries, no withdrawal for material or fuel use is assumed, and use shares of middle-income countries are linearly interpolated based on per-capita income, following the same rationale as for the share of burnt residues described above. The remaining \(AGR\) as well as all \(BGR\) are expected to be left on the field. We limit high residue return rates to at most \(10\unit{tC\,ha}^{-1}\) in order to correct for outliers.
+From our 17 crop groups, we compile four residue groups (straw, high- and low-lignin residues, residues without dual use), of which the first three are taken away from the field for other purposes (see mappingCrop2Residue.csv in Bodirsky et al.~\citeyearpar{bodirsky_mrcommons_2020}). Residue feed demand for five different livestock groups is based on country-specific feed baskets \citep[see][]{weindl_livestock_2017}, that differentiate between the residue groups and take available \(AGR\) biomass as well as livestock productivity into account. We estimate a material-use share for the straw-residue group of 5\% and a fuel-share of 10\% for all used residue groups in low-income countries. For high-income countries, no withdrawal for material or fuel use is assumed, and use shares of middle-income countries are linearly interpolated based on per-capita income, following the same rationale as for the share of burnt residues described above. The remaining \(AGR\) as well as all \(BGR\) are expected to be left on the field. We limit high residue return rates to at most \(10\,\unit{tC\,ha}^{-1}\) in order to correct for outliers.
 
-To transform dry matter estimates into carbon and nitrogen, we compiled crop-group and plant-part specific carbon resp. nitrogen to dry matter (c/dm, n/dm) ratios (see \ref{tab:c2dm}).
+To transform dry matter estimates into carbon and nitrogen, we compiled crop-group and plant-part specific carbon and nitrogen to dry matter ratios (see Table \ref{tab:c2dm}).
 
 \hypertarget{sec:livstmanure}{%
 \subsubsection{Livestock distribution and manure excretion}\label{sec:livstmanure}}
 
-Manure especially from ruminants is often excreted at pastures and rangelands, but due to the intensification of livestock systems at the present day a lot of the manure has to be stored and can be applied on croplands. We assume that manure application happens at its excretion place, so that the livestock distribution is the driving factor of the spatial pattern of manuring.
+Manure especially from ruminants is often excreted at pastures and rangelands, but due to the intensification of livestock systems a lot of the manure has to be stored and can be applied on cropland. We assume that manure is applied in close proximity to its excretion, so that the distribution of livestock is the driving factor for the spatial pattern of manure application.
 
 To disaggregate country level FAOSTAT livestock production data to half-degree resolution, we use the following rule-based assumptions, drawing from the approach of Robinson et al.~\citeyearpar{robinson_mapping_2014} and applying feed basket assumptions based on a revised methodology from Weindl et al.~\citeyearpar{weindl_livestock_2017}. We differentiate between ruminant and monogastric systems, as well as extensive and intensive systems.
-Due to great feed demand of ruminants, we assume that ruminant livestock is located where the production of feed occurs to minimize transport of feed. We distinguish between grazed pasture, which is converted into livestock products in extensive systems, and primary-crop feed stuff, which we consider to be consumed in intensive systems.
+Due to high feed demand of ruminants, we assume that ruminant livestock is located where the production of feed occurs to minimize transport of feed. We distinguish between grazed pasture, which is converted into livestock products in extensive systems, and primary-crop feed stuff, which we consider to be consumed in intensive systems.
 For poultry, egg and monogastric meat production we use the per-capita income of the country to distinguish between intensive and extensive production systems. For low-income countries, we assume only extensive production systems. We locate them according to the share of built-up areas based on the assumption that these animals are held in subsistence or small-holder farming systems with a high labor-per-animal ratio. Intensive production associated with high-income countries, is distributed within a country using the share of primary-crop production, assuming that feed availability is the most determining factor for livestock location. For middle-income countries we split the livestock production into extensive and intensive systems based on the per-capita income.
 
-Manure production and management is based on a revised methodology of Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} and is presented here due to its central role in soil carbon modeling. Based on the gridded livestock distribution we calculate spatially explicit excretion by estimating the nitrogen balance of the livestock systems on the basis of comprehensive livestock feed baskets \citep{weindl_livestock_2017}, assuming that all nitrogen in protein feed intake, minus the nitrogen in the slaughter mass, is excreted. Carbon in excreted manure is estimated by applying fixed C:N ratios, which range from 10 for poultry up to 19 for beef cattle (for full detail see Calvo Buendia et al.~\citeyearpar{calvo_buendia_ipcc_2019}.
+Manure production and management is based on a revised methodology of Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012} and is presented here due to its central role in soil carbon modeling. Based on the gridded livestock distribution we calculate spatially explicit excretion by estimating the nitrogen balance of the livestock systems on the basis of comprehensive livestock feed baskets \citep{weindl_livestock_2017}, assuming that all nitrogen in protein feed intake, minus the nitrogen in the slaughter mass, is excreted. Carbon in excreted manure is estimated by applying fixed C:N ratios, which range from 10 for poultry up to 19 for beef cattle (for full detail see Calvo Buendia et al.~\citeyearpar{ogle_cropland_in_ipcc_2019}.
 Depending on the feed system we assume manure to be handled in four different ways:
 All manure originated from pasture feed intake is excreted directly on pastures and rangelands (pasture grazing), deducting manure collected as fuel.
 Whereas for low-income countries, we adopt a share of 25\% of crop residues in feed intake directly consumed and excreted on crop fields (stubble grazing), we do not consider any stubble grazing in high-income countries; middle-income countries see linearly interpolated shares depending on their per-capita income.
 For all other feed items, we assume the manure to be stored in animal waste management systems associated with livestock housing.
-To estimate the carbon actually returned to the soil, we account for carbon losses during storage, where return shares depend on different animal waste management and grazing systems. Whereas we assume no losses for pasture and stubble grazing, we consider that the manure collected as fuel is not returned to the fields. For manure stored in different animal waste management systems we compiled carbon loss rates (see calcClossConfinement.R in Bodirsky et al.~\citeyearpar{bodirsky_mrcommons_2020} for more details) depending on the different systems and the associated nitrogen loss rates as specified in Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012}. We limit high application shares at \(10\unit{tC\,ha}^{-1}\) to correct for outliers.
+To estimate the carbon actually returned to the soil, we account for carbon losses during storage, where return shares depend on different animal waste management and grazing systems. Whereas we assume no losses for pasture and stubble grazing, we consider that the manure collected as fuel is not returned to the fields. For manure stored in different animal waste management systems we compiled carbon loss rates (see calcClossConfinement.R in Bodirsky et al.~\citeyearpar{bodirsky_mrcommons_2020} for more details) depending on the different systems and the associated nitrogen loss rates as specified in Bodirsky et al.~\citeyearpar{bodirsky_n2o_2012}. We limit high application shares at \(10\,\unit{tC\,ha}^{-1}\) to correct for outliers, that can occur due to inconsistencies between FAO production and 0.5 degree land-use data.
 
 \hypertarget{sec:irrigation}{%
 \subsubsection{Irrigation}\label{sec:irrigation}}
 
-The LUH2v2 \citep{hurtt_harmonization_2020} data set provides irrigated fractions for their cropland subcategories. We sum up irrigation area shares for all crop groups within a grid cell, and calculate the water effect coefficient \(wat\) on decay rates using these shares to compute the weighted mean between rainfed and irrigated \(wat\) factors. As a result \(wat\) is the same for all crop groups within a grid cell. Furthermore, we suppose the irrigation effect to be present for all 12 months of a year in a grid cell including irrigated areas, since we do not have consistent crop group specific growing periods available. This will lead to an overestimation of the irrigation effect. We expect, however, water limitations to be a minor problem during the off-season in temperature limited cropping regions, causing our assumption to not dramatically overestimate the moisture effects. In tropical, water-limited cropping areas, irrigated growing periods might even span over the whole year.
+The LUH2v2 \citep{hurtt_harmonization_2020} data set provides irrigated fractions for its cropland subcategories. We sum up irrigation area shares for all crop groups within a grid cell, and calculate the water effect coefficient \(wat\) on decay rates using these shares to compute the weighted mean between rainfed and irrigated \(wat\) factors. As a result \(wat\) is the same for all crop groups within a grid cell. Furthermore, we suppose the irrigation effect to be present for all 12 months of a year, since we do not have consistent crop group specific growing periods available. This will lead to an overestimation of the irrigation effect. We expect, however, water limitations to be a minor problem during the off-season in temperature limited cropping regions, causing our assumption to not dramatically overestimate the moisture effects. In tropical, water-limited cropping areas, irrigated growing periods might even span over the whole year.
 
 \hypertarget{sec:tillage}{%
 \subsubsection{Tillage}\label{sec:tillage}}
 
-In order to derive a spatial distribution of the three different tillage types specified by the IPCC --- full tillage, reduced tillage and no tillage ---, we assume that all natural land and pastures are not tilled, whereas annual crops are under full and perennials under reduced tillage per default. Furthermore, we assume no tillage in cropland cells specified as no tillage cell based on the historic global gridded tillage data set from Porwollik et al.~\citeyearpar{porwollik_generating_2018}. This data set is extended to the period of 1975--2010 by combining country-level data on areas under conservation agriculture from FAO \citeyearpar{fao_aquastat_2016} and half-degree resolution physical crop areas from Hurtt et al.~\citeyearpar{hurtt_harmonization_2020}, applying the methodology of Prowollik et al.~\citeyearpar{porwollik_generating_2018} to identify potential no-tillage grid cells.
+In order to derive a spatial distribution of the three different tillage types specified by the IPCC --- full tillage, reduced tillage and no tillage ---, we assume that all natural land and pastures are not tilled, whereas annual crops are under full and perennials under reduced tillage per default. Furthermore, we assume no tillage in cropland cells specified as no tillage cell based on the historical global gridded tillage data set from Porwollik et al.~\citeyearpar{porwollik_generating_2019}. This data set is extended to the period of 1975--2010 by combining country-level data on areas under conservation agriculture from FAO \citeyearpar{fao_aquastat_2016} and half-degree resolution physical crop areas from Hurtt et al.~\citeyearpar{hurtt_harmonization_2020}, applying the methodology of Prowollik et al.~\citeyearpar{porwollik_generating_2019} to identify potential no-tillage grid cells.
 
 \hypertarget{sec:scenarios}{%
-\subsection{Scenario definitions}\label{sec:scenarios}}
+\subsection{Management scenario definitions}\label{sec:scenarios}}
 
-To highlight the impact of changing management effects and to assess the sensitivity of the model towards different initialization and parameter choices, we perform a set of scenario runs. In the following sections we outline name and idea of these scenarios \citep[for technical implementation see][]{karstens_mrsoil_2020}.
-
-\hypertarget{sec:scen_management}{%
-\subsubsection{Management scenarios}\label{sec:scen_management}}
-
-To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for these three drivers: In the \textit{constTillage} scenario the adoption of no-tillage practices are neglected (adoption starts in 1974 according to the available data set). The \textit{constResidues} and the \textit{constManure} scenario assume constant input rates from residues resp. manure (in \(\unit{t ha^{-1}}\)) at the level of 1975 onwards. Within the \textit{constResidue} scenario at different effects overlay each other: yields and with them residue biomass increase due to productivity gains; rates of residue left or returned to fields are raising; and shifts of cropping pattern change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios \textit{constTillage}, \textit{constResidues} and \textit{constManure}.
-
-\hypertarget{sec:scen_initial}{%
-\subsubsection{Initialization choice}\label{sec:scen_initial}}
-
-As outlined in Sect. \ref{sec:initsoc} we assume landuse-type specific steady-state SOC stocks for the start year 1901 followed by a long spin-up period of 74 years (\textit{Initial-lu}). As some SOC compartments decay over very long timescales, the initialisation setting might strongly effect the overall outcome of SOC stocks and changes. Thus we conduct counterfactual scenario \textit{Initial-natveg}, initializing the start year with the steady-state SOC under potential natural vegetation for all land-use types. We additionally combined the \textit{Initial-natveg} scenario with the \textit{constManagement} scenario.
-
-\hypertarget{sec:scenlitterpnv}{%
-\subsubsection{Parameterization of natural litter fall}\label{sec:scenlitterpnv}}
-
-Due to missing information about the litterfall composition, we assume woody potential natural vegetation for the lignin-to-carbon (short LG:C) and nitrogen-to-carbon (short N:C) ratios for all land under natural vegetation. This is however a strong simplification. Therefore, we test the sensitivity of the model for other natural vegetation parameterizations. Perennial grasses are given by the IPCC guidelines \citep{calvo_buendia_ipcc_2019}, but for woody biomass we used the CENTURY configuration file \citep{century_model_2000} for trees as parameterization were not given. Whereas LG:C ratios ranges between \(0.09-0.35\) with an average of \(0.24\) (default value) for different tree compartments and different tree types, N:C ratios range between \(0.001-0.05\) with an average of \(0.015\) (default value). We decided to average over all tree compartments and tree types equally for the default values, since we have no data available on tree type distribution and tree compartment composition. We test however a range of different plant types as specified in Table \ref{tab:scenlitterpnv}.
-
- \begin{table*}[h]
- \caption{Scenarios for sensitivity analysis on litter parameterization}
- \begin{tabular}{l l l l}
- \tophline
-  Scenario name & plant type & N:C & LG:C \\
-  \middlehline
-  \textit{LitterPNV-Mean} & mix over all tree types & 0.015  & 0.25 \\
-  \textit{LitterPNV-Grass} & perennial grasses     & 0.029  & 0.11 \\
-  \textit{LitterPNV-AASS}  & Arctic alpine subshrub           & 0.022  & 0.22 \\
-  \textit{LitterPNV-BLEAF} & Temperate broadleaf evergreen    & 0.013  & 0.27 \\
-  \textit{LitterPNV-BRCF}  & Boreal coniferous forest         & 0.013  & 0.17 \\
-  \textit{LitterPNV-MTCF}  & Maritime coniferous forest       & 0.0094 & 0.22 \\
-  \textit{LitterPNV-TREF}  & Tropical evergreen forest        & 0.016  & 0.30 \\
- \bottomhline
- \end{tabular}
- \belowtable{}
- \label{tab:scenlitterpnv}
- \end{table*}
-
+To single out the impact of tillage practices, residue and manure inputs, we defined scenario with constant values for these three drivers: In the \textit{constTillage} scenario the adoption of no-tillage practices are neglected (adoption starts in 1974 according to the available data set). The \textit{constResidues} and the \textit{constManure} scenario assume constant input rates from residues resp. manure (in \(\unit{t ha^{-1}}\)) at the level of 1975 onward. Within the \textit{constResidue} scenario at different effects overlay each other: yields and with them residue biomass increase due to productivity gains; rates of residue left or returned to fields are raising; and shifts of cropping pattern change the amount of residue biomass due to crop-group specific harvest index values. The \textit{constManagement} combines all three scenarios \textit{constTillage}, \textit{constResidues} and \textit{constManure}.
 \newpage
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in Karstens \citeyearpar{karstens_model_2020}. In the following, the most important results \citep[see][]{karstens_result_2020} for post-processing script) are summarized.
+Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in Karstens \citeyearpar{karstens_model_2020}. In the following, the most important results \citep[see][ for post-processing script]{karstens_result_2020} are summarized.
 
 \hypertarget{soc-distribution-and-depletion}{%
 \subsection{SOC distribution and depletion}\label{soc-distribution-and-depletion}}
 
 \begin{figure}[h]
-\includegraphics[width=18cm]{../ResultNotebooks/Output/Images/4panelfigure} \caption{(a): Distribution of total global SOC stocks for the first 30 cm on cropland:  Carbon stocks are large in high yielding areas. (b)+(c): Absolute (b) and relative (c) SOC stocks changes compared to a potential natural state identify different hotspots of SOC dynamics. Whereas absolute losses $\Delta SOC$ are often highest in temperate dry regions, relative losses $F^\mathrm{SCF}$ are often larger in tropical moist areas. (d): $\Delta SOC$ between SOC under historic land use and potential natural vegetation is decreasing over time, meaning net SOC gains on global croplands over the the period 1975--2010. }\label{fig:SOCmaps}
+\includegraphics[width=18cm]{../ResultNotebooks/Output/Images/4panelfigure} \caption{Global SOC stocks and SOC stock changes on cropland for the first 30 cm of the soil profile considering historical management data. Panel (a) shows global $\Delta SOC$ between historical land use and potential natural vegetation (PNV). The distribution of total global SOC stocks for the first 30 cm on cropland for the year 2010 is depcited in panel (b). Absolute (c) and relative (d) SOC stocks changes for the year 2010 are compared to a potential natural state identify different hotspots of SOC losses and gains.}\label{fig:SOCmaps}
 \end{figure}
 
-In Fig. \ref{fig:SOCmaps}(a) we provide the first world map of SOC stocks for the first 30 cm on croplands considering historic management data at the global scale for the year 2010. Values ranging between well over \(100\unit{t ha^{-1}}\) in northern temperate croplands to less than \(5\unit{t ha^{-1}}\) for arid and semiarid croplands.
-Our spatially explicit results show hotspots of SOC losses and gains compared to SOC under potential natural vegetation in two complementary ways:
-1. Absolute SOC changes \(\Delta SOC\) (see Fig. \ref{fig:SOCmaps}(b)) indicate areas with high importance for the global SOC losses. They might be driven by large relative changes (e.g.~in Central Africa) or by a high natural stock, from which even small relative deviations could lead to substantial absolute losses (e.g.~North-East Asia). In contrast, large net gains of SOC occur primarily in developed countries of the Global North according to our results.
-2. Relative SOC changes measured as stock changes factors \(F^{SCF}\) (see Fig. \ref{fig:SOCmaps}(c)) are a helpful metric to analyze the impact of human cropping activities. They indicate areas with large differences in carbon inflows or SOC decay compared to natural vegetation, that may hold potential to be overcome due to improved agricultural practices. Large parts of tropical croplands seem to suffer from low stock changes factors, meaning high relative SOC losses and maybe indicating SOC degradation. Conversely, not only temperate croplands of Central Europe, Japan and western areas of the USA have high stock change factors, but irrigated croplands at the border to dry, unsuitable areas worldwide as well.
+The global SOC debt has increased by about 14\% in the period between 1975 and 2010 from \(34.6\) to \(39.6\,\unit{GtC}\) (Fig. \ref{fig:SOCmaps}(a)). This corresponds to an average loss rate of \(0.14\,\unit{GtC\,yr^{-1}}\) in comparison to a hypothetical potential natural vegetation (PNV) state. Considering our estimate of the global SOC stock of around \(705\,\unit{GtC}\) in the upper \(30\,\unit{cm}\) in 1975, global SOC decreased by 0.2 per 1000 per year for the period between 1975--2010. The speed of this SOC loss has decreased towards the end of the modeling period.
 
-The global SOC debt has decreased by about 15\% in the period between 1975 and 2010 to \(22\unit{GtC}\) (Fig. \ref{fig:SOCmaps}(d)). This corresponds to a sequestration rate of \(0.11\unit{GtC yr^{-1}}\). Considering our estimate of the global SOC stock of around \(660\unit{GtC}\) in 1975, global SOC increased by 0.2 per 1000 per year for the period between 1975--2010.
+In Fig. \ref{fig:SOCmaps}(b) we provide a world map of SOC stocks estimates for the first \(30\,\unit{cm}\) on cropland considering historical management data for the year 2010. Values range between over \(100\,\unit{t\,ha^{-1}}\) in northern temperate cropland to less than \(5\,\unit{t\,ha^{-1}}\) for arid and semiarid cropland.
+Our spatially explicit results show hotspots of SOC losses and gains compared to SOC under PNV in two complementary ways:
+1. Absolute SOC changes \(\Delta SOC\) (Fig. \ref{fig:SOCmaps}(c)) indicate areas with high importance for the global \(SOC\) loss. They can be driven by large relative changes (e.g.~in Central Africa) or by a high natural stock, from which even small relative deviations could lead to substantial absolute losses (e.g.~North-East Asia).
+2. Relative SOC changes measured as stock changes factors \(F^{SCF}\) (Fig. \ref{fig:SOCmaps}(d)) are a helpful metric to analyze the impact of human cropping activities. They indicate areas with large differences in carbon inflows or SOC decay compared to natural vegetation, that may hold potential to be overcome by improved agricultural practices. Large parts of tropical cropland seem to suffer from strongly reduced relative stocks, indicating SOC degradation. Conversely, irrigated cropland at the border to dry, unsuitable areas worldwide shows a strong relative increase in SOC stocks.
+
+\begin{figure}[h]
+\includegraphics[width=9cm]{../ResultNotebooks/Output/Images/2panelfigure} \caption{Global total $\Delta SOC$ and $\Delta SOC$ change for the first 30 cm of the soil profile.
+Panel (a) shows global $\Delta SOC$ as the difference between $SOC$ under historical land use and $SOC$ under potential natural vegetation (PNV) in the year 2010 summed over all land-use types. Computing the difference between the $\Delta SOC$ estimate for 2010 and for 1975 (b) depicts areas of soil depletion (SOC debt increase, red) and net-sequestration (SOC debt decline, blue).}\label{fig:SOCdebt}
+\end{figure}
+
+The spatial distribution of the total \(\Delta SOC\) summed over all land-use types (Fig. \ref{fig:SOCdebt}(a)) and its change from 1975 to 2010 (Fig. \ref{fig:SOCdebt}(b)) reveals areas of SOC debt decline and increase.
+Regions with large cropland expansion (e.g.~Brazil, Southeast Asia, Canada) continue to lose SOC, whereas regions with cropland reduction (and thus SOC restoration) or with accumulating cropland SOC can be found e.g.~in highly productive areas of Europe and Central USA.
 
 \hypertarget{carbon-flows-in-the-agricultural-system}{%
 \subsection{Carbon flows in the agricultural system}\label{carbon-flows-in-the-agricultural-system}}
 
 \begin{figure}[h]
-\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/CarbonBudget} \caption{Global carbon flows within the agricultural system for the year 2010 (in MtC): Carbon is first photosynthesise by crop plants and than used depending on the plant part by humans for feed of livestock and various other usages subsumed under human demand. After accounting for losses within the agricultural system three major C inputs are applied to croplands: manure, above- and below-ground residues. Large parts of C, however, get mineralized on field before entering the soil. Additionally, C is transferred to and from agricultural soils via land-use change to and from natural vegetation. Finally, SOC gets mineralized and flows back into the atmosphere.}\label{fig:FlowFig}
+\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/CarbonBudget} \caption{Global carbon flows within the agricultural system for the year 2010 (in $\unit{MtC}$). Carbon is first photosynthesised by crop plants and then used for livestock feed and various other usages subsumed under human demand. After accounting for losses within the agricultural system, there are three major C inputs to cropland SOC: manure, above- and below-ground residues. Large parts of C, however, are mineralized on the field before entering the soil. Additionally, C is transferred to and from the global agricultural soil stock via land-use change between cropland and natural vegetation. Finally, SOC is mineralized and flows back to the atmosphere.}\label{fig:FlowFig}
 \end{figure}
 
-C is sequestered from the atmosphere via plant growth and allocated to three different plant parts (harvest organ, above- and below-ground residues). Whereas harvested organs as well as above ground-residues are taken (partially) from the field to be used for other purposes, below-ground residues (785 MtC in 2010) are directly returned to the field. We split up usage for crop biomass into feed usage and aggregate all other usage types (e.g.~like food, bioenergy and material) into a human demand category. Livestock feed demand for crop harvest and above-ground residues of 1141 MtC is almost equal to the human demand of 1144 MtC. Whereas large parts of feed intake are recycled to the soils via manure (C input from manure at 384 MtC), we assume the carbon demanded from humans (ending up as e.g.~compost, night soil and sewage) is not recycled to soils. Besides manure C and below-ground residues, above-ground residues form the largest C input to the soil with 1200 MtC returned to the field in 2010. However, around 60\% of C decomposes before its integrated into soils at the the litter-soil barrier. Due to the different C composition, proportional more C enters the slow pool from manure compared to crop residue. According to our model results, land-use change dynamics led to a C transfer from cropland to natural vegetation of 58 MtC in 2010. 4764 MtC sequestered by crop plants face 3897 MtC released within the agricultural system. Accounting for SOC transfer, SOC increase under cropland is around 809 MtC.
+C is sequestered from the atmosphere via plant growth and allocated to different plant parts, which we aggregate to three pools (harvested organ, above- and below-ground residues). Whereas harvested organs as well as above ground-residues are taken (partially) from the field to be used for other purposes, below-ground residues (\(729\,\unit{MtC}\) in 2010) are directly returned to the field. We divide crop biomass usage into feed usage and aggregate all other usage types (e.g.~food, bioenergy and material) into a human demand category. Livestock feed demand for crop organ harvest and above-ground residues of \(1136\,\unit{MtC}\) is roughly equal to the human demand of \(1129\,\unit{MtC}\). Whereas large parts of feed intake are returned to the soils via manure (C input from manure at \(384\,\unit{MtC}\)), we assume the carbon demanded from humans (ending up as e.g.~compost, night soil and sewage) is not returned to soils. Besides manure C and below-ground residues, above-ground residues form the largest C input to the soil with \(1350\,\unit{MtC}\) returned to the fields in the year 2010. However, around 60\% of this organic C decomposes before it is integrated into soils. Due to the different composition of organic C, proportionally more C enters the slow pool from manure than from crop residue.
+According to our model results, land-use change dynamics led to a C transfer from natural vegetation to cropland of \(257\,\unit{MtC}\) in 2010. The agricultural system receives \(4585\,\unit{MtC}\) assimilated by crop plants and releases \(3554\,\unit{MtC}\) mostly through respiration. Accounting for SOC transfer and decomposition, the net SOC decrease of global cropland is around \(33\,\unit{MtC}\) for the year 2010.
 
 \hypertarget{agricultural-management-effects-on-soc-debt}{%
 \subsection{Agricultural management effects on SOC debt}\label{agricultural-management-effects-on-soc-debt}}
 
 \begin{figure}[h]
-\includegraphics[width=14cm]{../ResultNotebooks/Output/Images/scenario_horiz} \caption{(a) Global $\Delta SOC$ in GtC for different management scenarios: The stylized scenarios devate from historic argicultural management by holding effects of carbon inflows from residues (constResidues), manure (constManure) constant or neglecting adoption of no-tillage practices (constTillage). ConstManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a natural vegetation state. Figure (b) shows the carbon inflows from crop residue and manure, underlining the strong impact of residues for SOC stock and SOC stock changes.}\label{fig:SOCscen}
+\includegraphics[width=14cm]{../ResultNotebooks/Output/Images/scenario_horiz} \caption{(a) Global $\Delta SOC$ in $\unit{GtC}$ for different management scenarios. The stylized scenarios deviate from historical agricultural management patterns (histManagement) by holding effects of carbon inflows from residues (constResidues) or manure (constManure) constant at the 1975 level, or neglecting adoption of no-tillage practices over time (constTillage). The scenario constManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a hypothetical natural vegetation state. Panel (b) shows the carbon inflows from crop residue and manure.}\label{fig:SOCscen}
 \end{figure}
 
-We analyze the relative impact of individual management aspects by comparing the actual historic management scenario with counterfactual scenarios where individual management aspects are kept static at the 1975 values (Figure \ref{fig:SOCscen}(a)). Without changes in management regimes, the global \(\Delta SOC\) on cropland would be increasing at a rate of \(0.1\unit{GtC yr^{-1}}\). As shown by the constResidue scenario, changes in residue return rates dominate the management effects. Without the historic increase in residue returning, the global \(\Delta SOC\) would still increase at a rate of \(0.06\unit{GtC yr^{-1}}\). Both the constManure and constTillage scenarios show only small deviations from the historic values (sequestration rate of \(0.09\unit{GtC yr^{-1}}\) for both). The effect of no-tillage has been particuarly strong since the 1990s.
-The strong impact of almost doubling C inputs from crop residue biomass over a period of 35 years on agricultural SOC stocks is shown in Fig. \ref{fig:SOCscen}(b).
+We analyze the relative impact of different management practices by comparing the actual historical management scenario with counterfactual scenarios, where individual management practices (residues in constResidues, manure in constManure, tillage practices in constTillage, all three in constManagement) are kept static at the 1975 values (Figure \ref{fig:SOCscen}(a)). As shown by the difference between the constResidues scenario and the other counterfactuals, changes in residue return rates dominate the management effects. Without the historical increase in C inputs from residues to agricultural soils, the global \(\Delta SOC\) would decrease to \(41.7\,\unit{GtC}\) at a rate of \(0.20\,\unit{GtC\,yr^{-1}}\) --- a 35\% increase compared to \(0.14\,\unit{GtC\,yr^{-1}}\) for the histManagement estimates. Both the constManure and constTillage scenarios show only small deviations from the historical agricultural management values with \(0.15\,\unit{GtC\,yr^{-1}}\). The effect of no-tillage only becomes discernible from 2000 onwards.
+The large contribution of residues relative to manure also becomes visible when considering the annual C inputs of residues and manure to soils over a period of 35 years (Fig. \ref{fig:SOCscen}(b)).
 
-\begin{figure}[h]
-\includegraphics[width=10cm]{../ResultNotebooks/Output/Images/scenario_init} \caption{Global $\Delta SOC$ for different SOC initialization choices in the start year 1901: Starting the spin-up phase with natural steady-state SOC under vegetation without any human cropping activities (Initial-natveg) lead to a smaller $\Delta SOC$ in 1975 and a less steeper increase till 2010, as compared to initialzing with steady-state SOC stocks under historic land-use.}\label{fig:SOCinit}
-\end{figure}
+\hypertarget{sec:validate}{%
+\subsection{Model evaluation}\label{sec:validate}}
 
-Our sensitivity analysis shows that the management impact is robust to the initialization of SOC stocks at the beginning of the spin-up phase (Fig. \ref{fig:SOCinit}). The Initial-natveg scenario initializes the start year with the steady-state SOC under potential natural vegetation for all land-use types, compared to the default assumption (Initial-lu), which assumes landuse-type specific steady-state SOC stocks in 1901. The \(\Delta SOC\) estimation almost halves (from \textasciitilde26 GtC to \textasciitilde14 GtC), as does the decrease in \(\Delta SOC\) for the period of 1975--2010 (from \textasciitilde4 GtC to \textasciitilde2.5 GtC) for the Inital-natveg scenario.
-
-Global SOC stocks range between 645--700 GtC for different parameterization of the natural litterfall, whereas \(\Delta SOC\) vary 19-24 GtC for the year 2010 (see Fig. \ref{fig:SOClitter}. The increase of \(\Delta SOC\) during the period of 1975--2010 is independent of the parameterization choice at \textasciitilde4 GtC.
-
-\newpage
-
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
-
-This study shows that spatially explicit and time-variant historic agricultural management data considerably alter estimates of the states and trends of SOC compared to the often used constant management assumptions. This result remains robust to variations of central model parameters and variations in the initialization of SOC stocks. While land cover change has depleted SOC stocks and increased the SOC debt, our analysis points out that the high increases in agricultural productivity may have even led to a net reduction of the SOC debt since 1975.
-
-\hypertarget{soc-debt-and-soc-drivers-in-literature}{%
-\subsection{SOC debt and SOC drivers in literature}\label{soc-debt-and-soc-drivers-in-literature}}
-
-The evaluation of SOC stock gains and losses is complex and has several dimensions as climatic and anthropogenic effects overlap. If defining the SOC debt of 1975 as the baseline, and measuring land-use emissions on croplands as the difference between a potential natural state and the state under human interventions \citep[see][]{pugh_simulated_2015}, global croplands have acted as a carbon sink since 1975 according to our study. However, annual C sequesteration rates of 0.2 per 1000 are well below the promoted 4 per 1000 \citep{minasny_soil_2017}, indicating that productivity gains on historic levels alone are not enough to meet ambitious climate targets.
-
-According to Sanderman et al.~\citeyearpar{sanderman_soil_2017}, the SOC debt since the beginning of human cropping activities has been at around 37 GtC for the first 30 cm of the soil with half of it attributed to SOC depletion on grasslands. Our estimate of 22 GtC in 2010 for cropland debt is higher as Sanderman et al.~\citeyearpar{sanderman_soil_2017} estimations. However, there are large uncertainties in modeling SOC at the global scale, and Sanderman et al.~\citeyearpar{sanderman_soil_2017} pointed out that their results might be conservatively low compared to experimental results. This suggests that our results are within a plausible range.
-
-Furthermore, Sanderman et al.~\citeyearpar{sanderman_soil_2017} modeled historic trends based on agricultural land expansion without considering SOC variations due to time-variant agricultural management. Pugh et al.~\citeyearpar{pugh_simulated_2015} considered management effects like tillage and residue returning in a static way, but neither changes over time nor alignment to observed historic data like yield-levels or no-tillage areas were taken into account. Their study moreover concludes that crop productivity-gains (increasing yield levels by 18\% in their simulations) do not lead to a~substantial decline in SOC debt (less than 1\% change). Historic productivity increases were, however, notably larger. Despite large spatial heterogeneity aggregate yield increase rates are often estimated to be well above 50\% \citep{pellegrini_crop_2018, ray_recent_2012, rudel_agricultural_2009}.
-
-Our study for the first time uses a dynamic management dataset as driver for SOC dynamics. We show that the moderate global cropland expansion of around 11\% between 1974 and 2010 and the resulting depletion of SOC stocks in converted cropland has been outweighed by improvements in agricultural productivity and practices. This is in contrast to Pugh et al.~\citeyearpar{pugh_simulated_2015} findings of only small effects due to improved practices.
-
-Looking on historic cropland intensification rates of above 50\% \citep{rudel_agricultural_2009}, a large fraction of increased C input from residue biomass is attributed to productivity improvements.
-
-\hypertarget{limitations-and-uncertainties}{%
-\subsection{Limitations and uncertainties}\label{limitations-and-uncertainties}}
-
-Modeling management effects at the global scale comes with parametric and structural uncertainties. High SOC gains in the first 30 cm of the soil compared to natural vegetation in e.g.~the temperate croplands of Central Europe and the United Kingdom indicate suspiciously high estimates of SOC inputs. As pointed out by Keel et al.~\citeyearpar{keel_large_2017} and Smith et al.~\citeyearpar{smith_how_2020}, carbon input calculations are highly sensitive to the choice of allometric functions determining below- and above-ground residue estimates from harvested quantities (see \ref{tab:c2dm} for coefficients used in this study). Keel et al.~\citeyearpar{keel_large_2017} question whether below ground residues might increase with a fixed root:shoot ratio rather than being independent of productivity gains. Moreover, the study pointed out that plant breeding shifts allometries, which might not be reflected in outdated data sources. While our study considers a dynamic harvest index with rising yields for several crops, we may still overestimate residue biomass in particular for below-ground biomass. However, looking on the evaluation of management effects (see Sect. \ref{sec:ipcccompare}), there is no general indication of overestimating stock change factors at least compared to IPCC default assumptions. Moreover, it is also likely that we are still missing carbon inputs to the soil from e.g.~cover- and inter-cropping practices.
-
-Another uncertainty is connected with the initialization of SOC stocks in 1901, which is assumed to be in steady state considering the land-use pattern of 1901 and agricultural management data of 1965. As shown in Fig. \ref{fig:SOCinit} the SOC debt estimate almost halves (from \textasciitilde26 GtC to \textasciitilde14 GtC), and the SOC debt reduction is strongly reduced (from \textasciitilde4 GtC to \textasciitilde2.5 GtC), if considering initialization SOC stocks under undisturbed natural vegetation. Pugh et al.~\citeyearpar{pugh_simulated_2015} pointed out the importance of accounting for the land-use history, as many CO\textsubscript{2} emissions from agricultural soils are caused by historic land-use change (LUC) and the slow decline of SOC under cropland before it reaches a new equilibrium. Our results of the Initial-natveg scenario show that the qualitative finding of a reduction of SOC debt through improved agricultural management is robust to changing the initialisation of soil organic carbon, even though the level of SOC debt is sensitive to the initialization setting.
-
-Generally, the limit to the first 30 cm of the soil profile follows the IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019} and assumes that most of the SOC dynamic happens in the topsoil. In this regard several aspects are strongly simplified within our approach. Firstly, distribution of carbon inputs into different soil layers are neglected and all carbon inputs are allocated to the topsoil. This particularly overestimates SOC stocks in the first 30 cm of soil below deeper rooting vegetation, which is certainly the case for most of the woody natural vegetated areas. Secondly changes to the subsoil due to tillage are neglected. As Powlson et al.~\citeyearpar{powlson_limited_2014} have shown, the subsoil can be a game changer in evaluating total SOC losses or gains for no-tillage systems. No-tillage effects may seem larger than the actually are, if only focusing on the topsoil. SOC transfer to deeper soil layers under tillage, might enhance subsoil SOC compared to no-till practices. Thirdly, organic soils (like peat- and wetlands) and drained cropland areas are not explicitly considered and emissions from these cropland areas are thus likely substantially underestimated.
-
-This study excludes not only peatland degradation, it also does not account for carbon displacement via leaching and erosion. However, as pointed out by Doetterl et al.~\citeyearpar{doetterl_erosion_2016}, the final fate of leached or eroded carbon is uncertain and might even offset LUC emissions \citep{wang_human-induced_2017}. Whereas for soil quality analysis SOC displacement might play an important role, in this budget approach focusing especially on the SOC debt, displaced but not emitted SOC can be treated as SOC that remains on the cropland.
-Moreover, the exclusive focus on croplands ignores LUC emission on other land-use types such as pastures, rangelands and forestry. Human interventions have led to large changes in SOC stocks there as well \citep{sanderman_soil_2017, friedlingstein_global_2019}. This study does not intend to be a comprehensive LUC emission analysis and acknowledges that land-use changes comes with large overall emissions.
+To evaluate our model results against reference data in five steps: (1) we compare our stock change factors (see Sect. \ref{sec:tier1}) to IPCC default assumptions \citep{lasco_cropland_in_ipcc_2006, ogle_cropland_in_ipcc_2019}; (2) we compare our global (and climate-zone specific) total SOC stocks to other literature estimates; (3) we compare our results to point measurements. To evaluate the representation of our natural SOC stocks (4) we correlated LPJmL4 SOC stocks for PNV with our natural state SOC results on grid level; and (5) we do a similar correlation analysis for our modeled actual SOC stocks in comparison to the results of SoilGrids 2.0 \citep{poggio_soilgrids_2021}, which accounts for actual land use too.
 
 \hypertarget{sec:ipcccompare}{%
-\subsection{Modeled management effect in line with default IPCC assumptions}\label{sec:ipcccompare}}
+\subsubsection{Stock change factors compared to IPCC assumptions}\label{sec:ipcccompare}}
 
-To validate our modeled SOC stocks and stock changes under management, we compare our results to default IPCC stock changes factors of 2006 \citep{eggleston_ipcc_2006} and their refinements in 2019 \citep{calvo_buendia_ipcc_2019}. Both estimates are based on measurement data for croplands (see Table \ref{tab:SCFglo}). To allow for comparison, we aggregate our stock change factors to the four IPCC climate zones (Fig. \ref{fig:CLIMzone}).
+To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors \(F^{\mathrm{SCF}}\) of 2006 \citep{lasco_cropland_in_ipcc_2006} and their refinements in 2019 \citep{ogle_cropland_in_ipcc_2019}. Both estimates are based on measurement data for cropland (see Table \ref{tab:SCFglo}). To allow for comparison, we aggregate our stock change factors weighted by grid-level \(F^{\mathrm{SCF}}\) cropland area to derive average factors for the four IPCC climate zones (Fig. \ref{fig:CLIMzone}).
 
 \begin{table}[ht]
 \centering
-\caption{$F^{\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors: Stock change factors are in good agreement with the default values of the IPCC in general. For the tropical regions the assumptions changed notablly from the guidelines in 2006 \citep{eggleston_ipcc_2006} to the update in 2019 \citep{calvo_buendia_ipcc_2019}. leaving our results in very good agreement with the old default assumptions. Default assumption are given under the assumption of medium input systems, which, considering the yield gap in mainly developing regions in the tropics, might be an overestimation and decrease $F^{\mathrm{SCF}}$ by additional 5-8 percent. Also modelled $F^{SOC}$ have increased for all climates over time.} 
+\caption{$F^{\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \citep{ogle_cropland_in_ipcc_2019}.} 
 \label{tab:SCFglo}
 \begin{tabular}{rlllllll}
   \hline
@@ -516,49 +479,130 @@ To validate our modeled SOC stocks and stock changes under management, we compar
   4 & IPCC2019 & low & invariant & 0.76 & 0.87 & 0.70--0.71 & 0.66--0.67 \\ 
   5 & IPCC2019 & medium & invariant & 0.83 & 0.92 & 0.76--0.77 & 0.69--0.70 \\ 
   6 & IPCC2019 & high & invariant & 0.92 & 0.96 & 0.79--0.80 & 0.77--0.78 \\ 
-  7 & This Study & hist & 1990 & 0.57 & 0.61 & 0.78 & 0.76 \\ 
-  8 & This Study & hist & 2010 & 0.64 & 0.68 & 0.83 & 0.83 \\ 
+  7 & This Study & hist & 1975 & 0.48 & 0.59 & 0.64 & 0.59 \\ 
+  8 & This Study & hist & 2010 & 0.5 & 0.64 & 0.64 & 0.59 \\ 
    \hline
 \end{tabular}
 \end{table}
 
-Whereas our estimates are lower in the two tropical climate zones, temperate zone default factors are higher than Calvo Buendia et al.~\citeyearpar{calvo_buendia_ipcc_2019}. The tropical factors differ substantially between the IPCC guidelines in 2006 \citep{eggleston_ipcc_2006} and their refinement in 2019 \citep{calvo_buendia_ipcc_2019}, with our estimates within this range.
-Taking the simplified assumption, that tropical soils might suffer from insufficient C input rates (low) due to yield gaps, whereas temperate soils in developed regions might be highly managed and fertilized (high), the difference vanishes partially. Our results still show especially in temperate dry regions --- the smallest region area-wise --- small deviations from natural SOC stocks. Considering the impact of irrigation and fertilization on carbon-poor dryland soils, even factors above 1 (see Fig. \ref{fig:SOCmaps}(c)) may be expected.
+Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors changed notably from the guidelines in 2006 \citep{lasco_cropland_in_ipcc_2006} to the update in 2019 \citep{ogle_cropland_in_ipcc_2019}. Our results are in good agreement with the 2006 IPCC factors. Modeled \(F^{SCF}\) have increased or stayed constant for all climate zones over time (1975-2010).
 
-With regard to the time trend, our study shows the substantial impact of changing management factors on the development of stock change factors as also indicated by the time trend of the SOC debt.
+\hypertarget{global-soc-stocks-comparison}{%
+\subsubsection{Global SOC stocks comparison}\label{global-soc-stocks-comparison}}
 
-\hypertarget{soc-stocks-in-line-with-literature}{%
-\subsection{SOC stocks in line with literature}\label{soc-stocks-in-line-with-literature}}
-
-The world's SOC stock and its changes are highly uncertain, which is seen in the wide range of global SOC stock estimates for the first 30 cm of the soil profile \citep{batjes_harmonized_2016, hengl_soilgrids250m_2017, fao_global_2018, schaphoff_lpjml4_2018-1} in Table \ref{fig:SOCglo}).
+We compare our global SOC stocks with a wide range of global SOC stock estimates for the first 30 cm of the soil profile, using data from WISE \citep{batjes_harmonized_2016}, SoilGrids \citep{hengl_soilgrids250m_2017}, GSOC \citep{fao_global_2018}, LPJmL4 \citep{schaphoff_lpjml4_2018-1}, SoilGrids 2.0 \citep{poggio_soilgrids_2021}, and SOCDebtPaper \citep{sanderman_soil_2017} in Fig. \ref{fig:SOCglo}.
 
 \begin{figure}[h]
-\includegraphics[width=8cm]{../ResultNotebooks/Output/Images/glo_comparisonfigure} \caption{Modeled as well as data based estimation for global SOC stock in GtC for the first 30 cm of soil aggregated over all land area: Note that SoilGrids, GSOC and WISE do not consider land-use as well as changes over time and rely on soil profile data gather over a long period of time. This makes it hard to pinpoint a specific year for these SOC estimations. In this context they will be compared to modeled data from LPJmL4 for potential natural vegetation and this study for the year 2010.}\label{fig:SOCglo}
+\includegraphics[width=11cm]{../ResultNotebooks/Output/Images/glo_comparisonfigure} \caption{Modeled as well as observation-based estimates for global SOC stock in $\unit{GtC}$ for the first 30 cm of soil aggregated over all land area. The comparison against observation-based data (SoilGrids, SoilGrids 2.0, GSOC and WISE) is supplemented by modeled data from LPJmL4 \citep{schaphoff_lpjml4_2018-1} and estimates from \citep{sanderman_soil_2017}. We show values of this study for the year 2010 accounting for the historical land-use dynamics as well as for an hypothetical PNV.}\label{fig:SOCglo}
 \end{figure}
 
-The global estimates of the total SOC stock from this study are on the lower end compared to other modeled results or data driven estimates. SoilGrids \citep{hengl_soilgrids250m_2017} especially stands out for their high estimation, whereas all other sources (including our study) are comparabely similar. Looking at regional results in Fig. \ref{fig:SOCreg}, our estimates turn out to be in good agreement for most of the world, with the largest deviations for boreal moist and tropical moist areas. To avoid that this bias influences our results, which originates from uncertainties in the representation of natural land, we focus on SOC changes on cropland. Pristine natural vegetated areas (like permafrost and rain forests) without human land management thus drop out in our calculation of SOC debt and stock change factors.
+The global estimates of the total SOC stock of the upper 30 cm from this study are in the middle of the wide range of other modeled or observation-based estimates. SoilGrids \citep{hengl_soilgrids250m_2017} especially stands out with its high estimate, whereas SoilGrids 2.0 \citep{poggio_soilgrids_2021} marks the lower end. Regional results (Fig. \ref{fig:SOCreg}) show that our estimates are well within the range of other estimates for most regions, but at the lower end for tropical moist and tropical wet areas.
 
-Additionally, our estimates for total SOC stocks of the world (as well as our SOC initialization) are dominated by the representation of natural vegetation, which are only estimated in a basic manner. For example, we do not differentiate the parameterization of nitrogen and lignin content of litterfall for woody and grass plant types. This renders carbon inputs and decay dynamics for natural litterfall rather uncertain. The absolute values of SOC stocks and debt from land-use change have to be interpreted with caution. As our default litter parameterization accounts for woody plant types, larger uncertainty in natural land SOC dynamics may arise especially in less forested areas.
+\hypertarget{point-based-evaluation}{%
+\subsubsection{Point-based evaluation}\label{point-based-evaluation}}
 
-We conducted a sensitivity analysis (Fig. \ref{fig:SOClitter}) based on various plant parameterizations from the Century model (see Sect. \ref{sec:scenlitterpnv}). This shows that the general trend of decreasing SOC debt of \textasciitilde4 GtC within the period of 1975--2010 is not altered under various estimates for natural SOC stocks.
+We correlate our SOC results for natural vegetation and cropland in 2010 with literature values from point measurements (for data base see appendix of \citep{sanderman_soil_2017}).
+
+\begin{figure}[h]
+\includegraphics[width=10cm]{../ResultNotebooks/Output/Images/scatterComparePointData_2010} \caption{Correlation between modeled and measured $SOC$ stocks. Given the wide span between minimun and maximum measured $SOC$ stocks within in a given cell, we correlated median values with our modeled results. Both cropland and areas with natural vegetation tend to be lower in our results than in the point measurements.}\label{fig:SOCpoint}
+\end{figure}
+
+\hypertarget{natural-soc-stock-comparison-with-lpjml4}{%
+\subsubsection{Natural SOC stock comparison with LPJmL4}\label{natural-soc-stock-comparison-with-lpjml4}}
+
+Estimates of SOC stocks under natural vegetation influence our modeled results for cropland, which has been converted from natural vegetation at some point in time. We therefore also compare our modeled results for SOC under natural vegetation (derived using litterfall of LPJmL4) against estimates of SOC by LPJmL4 for a PNV simulation. Both models are driven by the same climate conditions and the same natural litterfall and just differ in the representation of SOC and litter dynamics. With our focus on cropland SOC dynamics, we compare only cells with more than \(1000\,\unit{ha}\) of cropland (capturing 99.9\% of global cropland area).
+
+\begin{figure}[h]
+\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv} \caption{Correlation between modeled SOC stocks of LPJmL4 and this study for an hypothetical potential natural state (PNV) for the year 2010. The grey lines indicate the 1:1 line.}\label{fig:SOCLPJmL4}
+\end{figure}
+
+Spatial correlations of PNV SOC stock values are high (global \(R2=0.81\)), especially for dry climate zones (Fig. \ref{fig:SOCLPJmL4}). For temperate and tropical moist areas estimates of this study tend to be a bit lower compared to LPJmL4 results.
+
+\hypertarget{actual-soc-stock-comparison-with-soilgrids-2.0}{%
+\subsubsection{Actual SOC stock comparison with SoilGrids 2.0}\label{actual-soc-stock-comparison-with-soilgrids-2.0}}
+
+SoilGrids 2.0 \citep{poggio_soilgrids_2021} is a digital soil mapping approach that uses over 240 000 soil profile observations to produce high resolution soil maps including SOC stocks and estimates of their uncertainties. To evaluate the performance of our model at the global scale, we correlate SoilGrids 2.0 SOC stock values, which were aggregated to 0.5 degree resolution, to our estimates for the year 2010 in Fig. \ref{fig:SOCSoilGrids2}. To focus our comparison on cropland areas, we mask out grid cells with less than \(1000\,\unit{ha}\) of cropland. Spatial correlation is moderate for tropical climate zones, whereas it is low for temperate moist areas. In tropical dry and temperate dry areas, we simulate also very low SOC values (below \(10\,\unit{tC\,ha^{-1}}\)), which is not found in SoilGrids 2.0 whereas our modeled SOC stocks can be substantially higher in temperate moist areas than reported by SoilGrids 2.0.
+Additionally, we use the uncertainty estimates from SoilGrids 2.0 in Fig. \ref{fig:SOCSoilGrids2Q} to identify areas, where our modeled SOC stocks that are below the 5th or above the 95th percentile of the SoilGrids 2.0 data.
+For the vast majority of grid cells our model results are between the 5th and 95th percentile of SoilGrids 2.0 estimates. We underestimate SOC stocks especially in dry areas (e.g.~close to the Sahara). Overestimated stocks are often situated in mountainous regions.
+
+\begin{figure}[h]
+\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu} \caption{Correlation between modeled SOC stocks of this study and projected values from SoilGrids 2.0.}\label{fig:SOCSoilGrids2}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=14cm]{../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2} \caption{Global map on SOC results compared to uncertainty estimates from SoilGrids 2.0.}\label{fig:SOCSoilGrids2Q}
+\end{figure}
+\newpage
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+We have (1) developed a reduced-complexity model and (2) compiled a spatially explicit time series data set of agricultural management data in order to (3) analyze the role of agricultural management in historical cropland SOC dynamics. Our study shows that information on agricultural management alters estimates of the SOC debt and slows down loss of SOC compared to the often used constant management assumptions.
+
+It is important to evaluate the validity of our results as modeling management effects on SOC dynamics at the global scale comes with large uncertainties. The model includes a large number of parameters, and for most of these the uncertainty distributions have not been quantified so far. Moreover, we think that beyond parameter uncertainty, the structural uncertainty from the model design is high. The management data itself is prone to uncertainties as well, as most of it is only indirectly calculated from reported data.
+
+In the following, we give a qualitative assessment of the uncertainties and limitations of this study as well as discuss our three study objectives and results against existing literature.
+
+\hypertarget{comprehensive-historical-agricultural-management-data-set}{%
+\subsection{Comprehensive historical agricultural management data set}\label{comprehensive-historical-agricultural-management-data-set}}
+
+Our spatially explicit time series data set of agricultural management is based on country-specific FAO production and cropland statistics \citep{faostat_faostat_2016} as well as 0.5 degree land-use data from LUH2 \citep{hurtt_harmonization_2020}. Starting from these two sources, we derive a harmonized and consistent data set for the major C flows within the agricultural system (\ref{fig:FlowFig}) using a mass balance approach from the IPCC guidelines Vol. 4 \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019} and other auxiliary data sets \citep[e.g.~][]{porwollik_generating_2019}.
+
+For some of the aspects covered in our data set, for example livestock distribution \citep{robinson_mapping_2014} or manure production and application \citep{zhang_global_2017}, well-compiled data sets in high resolution exist that capture real world conditions much better than our estimates. However, they often come with the caveats of either being static in time, demanding large sets of auxiliary data or being inconsistent with each other.
+
+For most of the parameters used in our management estimates no uncertainty estimates exist. This is why, in our view, most of the uncertainty with respect to the impacts of SOC management is included in the management data itself, and especially in the residue and manure production and application numbers, as these are only indirectly derived from crop and livestock production, feed and area data \citep{faostat_faostat_2016, weindl_livestock_2017}. The uncertainty of recycling shares adds on top of the uncertain total numbers of manure and residue biomass. Previous modeling studies of SOC carbon on cropland often only used stylized scenarios of management practices \citep{pugh_simulated_2015, lutz_simulating_2019}, rather than trying to estimate real management.
+
+While our data set, by including crop residues and manure, likely the largest carbon inputs to soils, it does not account for a list of minor carbon inputs from cover crops, agroforestry, green manure, weed biomass as well as application of human excreta, sewage sludge, processing wastes, forestry residues or biochar. Including these sources would correct our estimates upwards and bring our estimates closer to the IPCC stock change factors (see Sect. \ref{sec:ipcccompare}). Unfortunately, data on the quantity of these inputs is very scarce and does not exist with global coverage.
+
+SOC inputs from above-ground residues had the strongest management effect on SOC debt dynamics on cropland (see Fig. \ref{fig:SOCscen}). As pointed out by Keel et al.~\citeyearpar{keel_large_2017} and Smith et al.~\citeyearpar{smith_how_2020}, carbon input calculations are highly sensitive to the choice of allometric functions determining below- and above-ground residue estimates from harvested quantities (see \ref{tab:c2dm} for coefficients used in this study). Keel et al.~\citeyearpar{keel_large_2017} question whether below-ground residues might increase with a fixed root:shoot ratio rather than being independent of productivity gains. Moreover, the study pointed out that plant breeding shifts allometries, which might not be reflected in outdated data sources. While our study considers a dynamic harvest index with rising yields for several crops, we may still overestimate residue biomass, in particular for below-ground biomass.
+
+\hypertarget{reduced-complexity-soc-model}{%
+\subsection{Reduced complexity SOC model}\label{reduced-complexity-soc-model}}
+
+Our reduced-complexity SOC model is based on a Tier 2 modeling approach. This reduces the computational and data demand of the model in comparison to DGVMs, while still allowing for the explicit representation of agricultural management practices. Along with the effects of various C inputs, the impacts of water supply from rainfall and irrigation as well as tillage systems can also be accounted for in the computation of SOC decay rates. As such, the model can reflect the spatial and temporal heterogeneity in both management and biophysical conditions.
+
+The substantial impact of changing management practices through time is indicated by the development of our estimated stock change factors (see Table \ref{tab:SCFglo}) as well as by the time trend of the SOC debt (see Fig. \ref{fig:SOCmaps}(a)). Residue management has changed over the last decades, especially with the phasing out of residue burning practices in several regions and increased general productivity, showing a clear impact on SOC dynamics --- underlining the importance to account for these effects in soil carbon modeling.
+
+The Tier 2 approach \citep{ogle_cropland_in_ipcc_2019} used here is explicitly designed for agricultural soils, whereas we apply it also to soils under PNV. This is necessary in order to represent SOC losses under land-use change in a dynamic way, as this is an important driver of SOC dynamics. The comparison of simulated PNV data with LPJmL4 shows the model's substantial capability in reproducing PNV SOC stocks (Fig. \ref{fig:SOCLPJmL4}).
+
+Using litterfall estimates from LPJmL4, we have been able to estimate the total SOC stocks of the world, which is dominated by SOC under natural vegetation. However, as the world's SOC stock is highly uncertain, which is seen in the wide range of global SOC stock estimates for the first 30 cm of the soil profile \citep{batjes_harmonized_2016, hengl_soilgrids250m_2017, fao_global_2018, schaphoff_lpjml4_2018-1, poggio_soilgrids_2021, sanderman_soil_2017} in Fig. \ref{fig:SOCglo}, the only conclusion we can draw from this is that our result is within a plausible range.
+To avoid a strong impact of natural land representation and its uncertainties on our results, we focus on SOC changes on cropland. Pristine natural vegetated areas (like permafrost and rain forests) without human land management drop out in our calculation of SOC debt and stock change factors. Natural SOC estimates only influence results when natural land is converted to cropland.
+
+Comparing the geographic SOC patterns to Soil Grids 2.0 \citep{poggio_soilgrids_2021} (see Fig. \ref{fig:SOCSoilGrids2Q}), we find that our model estimates values of SOC stocks greater than the estimated confidence intervals in Soil Grid 2.0 for some mountainous regions across the globe. This could indicate that we are not capable in capturing specific processes that would reduce the vegetation's productivity (such as erosion on steep slopes or shallow soils \citep{borrelli_assessment_2017}). A large swathe of eastern North America was heavily affected by the dust bowl event, with wind erosion removing large parts of the topsoils, a process not considered in our model. Similarly, we likely overestimate SOC stocks for the loess soils in northern China and the Altiplano in Latin America; in both cases erosion is a likely reason. In contrast, we estimate lower SOC stocks at the edges of the Sahara, where uncertain local water availability and artifical irrigation may dominate spatial SOC patterns.
+
+In our model, erosion should however only affect the spatial pattern but not the aggregate SOC pool. As pointed out by Doetterl et al.~\citeyearpar{doetterl_erosion_2016}, the final fate of leached or eroded carbon is uncertain and might even offset LUC emissions \citep{wang_human-induced_2017}. Whereas for soil quality analysis SOC displacement might play an important role, in this budget approach focused especially on the SOC debt, displaced but not emitted SOC can be treated as SOC that remains on the cropland. Erosion and degradation impacts on yields and therefore on soil C inputs are captured by our method as we base them on FAO statistics of actual production. Yet the distribution of production below the country level - which we allocate proportional to LPJmL production potentials that do not reflect erosion feedback to yields - will overestimate yields and therefore biomass inputs to eroded soils.
+
+In comparison with default stock change factors of the IPCC guidelines, our model estimates a stronger decline of SOC stocks (Table \ref{tab:SCFglo}) for almost all regions. Tropical soils might suffer from low C input rates due to large yield gaps (Global Yield Gap and Water Productivity Atlas. Available URL: www.yieldgap.org (accessed on: 03/01/2022)) and high shares of residue removal and burning in lower-income countries \citep{smil_crop_1999, williams_influence_1997, jain_emission_2014}. Yet, even when comparing our etimates to the low-input stock change factors of the IPCC, our SOC loss is roughly twice as large as the revised 2019 IPCC default values, while it shows very good agreement with the older default values from IPCC \citeyearpar{lasco_cropland_in_ipcc_2006}. Don et al.~\citeyearpar{don_impact_2011} estimated SOC losses for tropical soils of around 25\% on average corresponding to a stock change factor of 0.75, but also reported a wide range of measured SOC changes from -80\% to +58\%. Fujisaki et al.~\citeyearpar{fujisaki_forest_2015} however found much lower loss rates of around 9\%, attributing the difference to the different time period length since the conversion to cropland. As our results do not specifically account for cropland age and most of the cropland is older than 20 years (as assumed for the default IPCC Tier 1 stock change factors) our stock change factors have to be lower by definition following the steady-state assumption that cropland will continue to approach a new equilibrium. For the same reason, our estimates for temperate regions might be lower than both IPCC \citeyearpar{lasco_cropland_in_ipcc_2006} and IPCC \citeyearpar{ogle_cropland_in_ipcc_2019} default values.
+With the production-increasing impact of irrigation and fertilization on carbon-poor dryland soils, SOC under cropland can also be higher than under PNV with stock change factors above 1 (see Fig. \ref{fig:SOCmaps}(d)), but these areas are much smaller than where the stock change factors are well below unity.
+
+Generally, limiting the analysis to the first 30 cm of the soil profile follows the IPCC guidelines \citep{eggleston_ipcc_2006, calvo_buendia_ipcc_2019} and assumes that most of the SOC dynamics happen in the topsoil. In this regard several aspects are strongly simplified within our approach. Firstly, distribution of carbon inputs into different soil layers are neglected and all carbon inputs are allocated to the topsoil. This particularly overestimates SOC stocks in the first 30 cm of soil below deeper rooting vegetation, which is certainly the case for most of the woody natural vegetated areas. Second, changes to the subsoil due to tillage are neglected. As Powlson et al.~\citeyearpar{powlson_limited_2014} have shown, the subsoil can be make a large difference in evaluating total SOC losses or gains for no-tillage systems. No-tillage effects may seem larger than they actually are if only topsoil is considered. SOC transfers to deeper soil layers under tillage might enhance subsoil SOC compared to no-till practices. Finally, organic soils (like peat- and wetlands) and drained cropland areas are not explicitly considered and emissions from these cropland areas are thus likely substantially underestimated.
+
+\hypertarget{soc-debt-and-soc-drivers}{%
+\subsection{SOC debt and SOC drivers}\label{soc-debt-and-soc-drivers}}
+
+The analysis of SOC stock gains and losses is complex and has several dimensions as climatic and anthropogenic effects overlap. There is broad consensus that land conversion to cropland has caused substantial C emissions over the historical period \citep[e.g.~][]{frielingstein_glob_carbon_2020}. There is uncertainty with respect to the overall size of these emissions from different methods and reference points and with respect to the contribution of cropland and agricultural management to these emissions. In order to mitigate greenhouse gas emissions, it is essential to stop the decline of SOC stocks or even transform cropland management to sequester atmospheric C in cropland soils \citep{minasny_soil_2017}. Defining the SOC debt of 1975 as the baseline, and measuring land-use emissions on cropland as the difference between a potential natural state and the state under human interventions \citep[see][]{pugh_simulated_2015}, we find that global cropland has acted as a emissions source since 1975. Annual C loss rates of 0.2 per 1000 C still have the opposite trend as the promoted 4 per 1000 C sequestration rate target \citep{minasny_soil_2017}. Dedicated efforts to increase cropland SOC are thus necessary, as management improvements at historical rates are not enough to counteract ongoing SOC degradation on cropland. Yet our study also shows the substantial impact of changing management on the development of SOC debt (Fig. \ref{fig:SOCscen}).
+
+According to Sanderman et al.~\citeyearpar{sanderman_soil_2017}, the SOC debt since the beginning of human cropping activities has been at around 37 GtC for the first 30 cm of the soil with half of it attributed to SOC depletion on grasslands. Our estimate of 39.6 GtC in 2010 for cropland debt is thus twice as high as their estimate. However, there are large uncertainties in modeling SOC at the global scale, and Sanderman et al.~\citeyearpar{sanderman_soil_2017} pointed out that their results might be conservatively low compared to experimental results.
+
+Furthermore, Sanderman et al.~\citeyearpar{sanderman_soil_2017} modeled historical trends based on agricultural land expansion without considering SOC variations due to time-variant agricultural management. Pugh et al.~\citeyearpar{pugh_simulated_2015} considered management effects like tillage and incorporation of residues in stylized and static scenarios only, so that they could not account for historical management effects on SOC dynamics. Their study moreover concludes that yield gains (by 18\% in their simulations) do not lead to a substantial decline in SOC debt (less than 1\% change). Historical yield increases, however, are often estimated to be well above 50\% \citep{pellegrini_crop_2018, ray_recent_2012, rudel_agricultural_2009}. While we find substantially larger effects of productivity gains than the 1\% reported by Pugh et al.~\citeyearpar{pugh_simulated_2015}, this is not sufficient to compensate SOC losses from moderate global cropland expansion of around 11\% between 1974 and 2010.
+
+The effects of agricultural productivity on cropland SOC dynamics, including historical yield trends and associated increases in residue inputs, can be directly accounted for in our modeling approach. In contrast, process-based studies \citep{pugh_simulated_2015, herzfeld_soc_2021} often lack data on relevant management aspects that drive production increases. Herzfeld et al.~\citeyearpar{herzfeld_soc_2021} also consider historical management trends for fertilizer and manure inputs as well as on residue removal rates and tillage systems, but cannot reproduce the substantial increase in agricultural productivity over the last decades. Still, they find that compared to no-tillage systems, residue management has much larger potential to affect the strength of their projected future global cropland SOC decline. This is consistent with our finding that increasing SOC inputs from above-ground residues had the strongest effect on the slowing-down of the SOC debt increase (Fig. \ref{fig:SOCscen}).
+
+Elliott et al.~\citeyearpar{elliott_management_trends_2018} show that yield trends in the USA can be reproduced by models, but require information on inputs that are not available at the global scale, such as annual data on sowing dates, planting densities, and genetic traits such as kernel number and radiation use efficiency. As such, it will remain challenging for process-based DGVMs to capture the trend of agricultural productivity on cropland SOC dynamics.
+
+Our study emphasizes again that the expansion of cropland is still a major source of CO\textsubscript{2} emissions --- not only through the removal of vegetation, but also by a slow depletion of C stocks in soils. Our estimates indicate a SOC debt of 39.6 GtC in 2010, and every additional deforestated hectare adds to this debt. Avoided deforestation and other environmental regulation leads to intensification on existing cropland \citep{humpenoder_large-scale_2018} and our results show that such intensification could lead to increased cropland SOC, if residues are returned to the soil --- amplifying the C sequestration potential of avoided deforestation.
+
+There is also ample potential for further improved SOC management. As shown in Fig. \ref{fig:FlowFig}, approximately one fifth of total annual C sequestration by crops is lost through soils (0.8 GtC per year). However, even larger losses occur at the end of the food supply chain (1.2 GtC year), at the soil surface (1.4 GtC), during residue burning (0.3 Gt C) and with manure management (0.2). Improved management could include, firstly, a circular flow from the food supply chain back to soils. Waste composting or excreta recycling could represent a major additional C input to cropland soils \citep{brenzinger_organic_2018}. Secondly, soil carbon sequestration techniques \citep{smith_soil_2016}, deep ploughing \citep{alcantara_deep_2016} or the transformation of C inputs to more recalcitrant biochar \citep{woolf_sustainable_2010} may transfer larger parts of the biomass at the litter soil barrier into permanent soil pools. Thirdly, reducing the share of residue burning and improved manure recycling could further increase C inputs. Finally, other carbon-accumulating practices, such as the cultivation of cover crops \citep{poeplau_carbon_2015, porwollik_covercrops_2022} and agroforestry \citep{lorenz_soil_2014} could increase total C sequestration on cropland.
 \newpage
 
 \conclusions
 
-Our global SOC model is able to estimate spatially explicit SOC stocks, SOC debts and stock change factor considering agricultural management. It is --- to our knowledge --- the first study that quantifies the impact of time-variant and spatially explicit historic agricultural management on global SOC stocks.
+We have compiled a spatially explicit and time-variant data set on agricultural management aspects relevant for cropland SOC dynamics. We have also developed a reduced-complexity SOC model that is able to be applied in optimization-based IAM frameworks, for which detailed process-based models are computationally too expensive. Making use of these data and model, we are able to estimate spatially explicit SOC stocks, SOC debts, and stock change factors considering agricultural management. It is --- to our knowledge --- the first study that analyzes the role of time-variant and spatially explicit historical agricultural management for global SOC dynamics.
 
-Our results clearly demonstrate that agricultural management needs to be explicitly considered in global carbon assessments and models. That also implies that we need better monitoring of agricultural practices to create this data, but also better accessibility of existing data. Our data-set and the MADRaT package \citep{dietrich_madrat_2020} constitute a starting point for building comprehensive data sets on agricultural management aspects.
+Our results demonstrate that historical changes in agricultural management have shaped the SOC debt on cropland. It is thus necessary to explicitly consider agricultural management in a dynamic manner in global carbon assessments and models, especially when exploring climate mitigation pathways with so-called land-based solutions \citep[e.g.~][]{popp_land-use_2016}. That also implies that we need better monitoring of agricultural practices to create this data, but also better accessibility of existing data. Our open-source model \citep{karstens_mrsoil_2020}, published data-set \citep{karstens_model_2020} and the flexible data processing with the MADRaT package \citep{dietrich_madrat_2020} constitute a starting point for building comprehensive data sets on agricultural management aspects.
 
-Our study again highlights that the expansion of croplands is still a major source of CO\textsubscript{2} emissions --- not only by the removal of vegetation, but also by a slow depletion of soils. Our estimates indicate a SOC debt of 22 GtC in 2010, and every additional deforestation adds to this debt.
-
-However, our results also indicate that the changes in cropland management have led to increased SOC stocks in global cropland soils as a continuous trend since 1975. Even more, this trend of improved management on existing croplands more than overcompensates the depletion of SOC stocks on newly converted soils. The finding of this recovery of cropland SOC stocks challenges the assumption that cropland soils are a CO\textsubscript{2} source. Only under the assumption that cropland management is static over time, as typically assumed in other studies on cropland SOC stocks, we can reproduce their finding that cropland soils are a source of CO\textsubscript{2}. The estimated increase in cropland SOC is therefore caused by changing agricultural management, with the largest contribution stemming from increased carbon inputs to soils from crop residues.
-
-Continuing the historical development, a further closure of the yield gaps may be beneficial to SOC stocks. Forest protection schemes for climate change mitigation would not only reduce SOC losses on newly converted land, they would likely also require further productivity improvements in existing croplands to meet crop demand \citep{popp_land-use_2014-1} --- and thereby usually further reduce the SOC debt on croplands.
-
-While further crop productivity gains lead to co-benefits for SOC stocks, they are likely not enough to help meeting ambitious climate mitigation targets. Our findings on sequestration rates are still more than an order of magnitude lower than promoted by the 4 per 1000 initiative.
-
-Yet, there is ample potential for further improved SOC management. As shown in Fig. \ref{fig:FlowFig}, approximately one fifth of total annual C sequestration by crops is lost through soils (0.8 GtC per year). Large losses in fact occur at the end of the food supply chain (1.2 GtC year), and at the litter soil barrier (1.4 GtC). Improved management could include, firstly, a circular flow from the food supply chain back to soils. Waste composting or excreta recycling could represent a major additional N input to cropland soils \citep{brenzinger_organic_2018}. Secondly, soil carbon sequestration techniques \citep{smith_soil_2016}, deep ploughing \citep{alcantara_deep_2016} or the transformation of c inputs to more recalcitrant biochar \citep{woolf_sustainable_2010} may transfer larger parts of the biomass at the litter soil barrier into permanent soil pools. Thirdly, reducing the share of residue burning and improved manure recycling could further increase C inputs. Finally, other carbon-accumulating practices, such as the cultivation of cover crops \citep{poeplau_carbon_2015} and agroforestry \citep{lorenz_soil_2014} could increase total C sequestration on croplands.
-
+With the reduced-complexity SOC model we are able to account for agricultural management effects on cropland SOC dynamics within optimization-based IAM frameworks. Reduced input data requirements such as accounting for changes in productivity rather than reproducing the processes that lead to such changes in productivity \citep{elliott_management_trends_2018} will help to explore the role of agricultural management in sustainable development pathway analyses \citep{sorgel_sustainable_2021}.
+However, we clearly see that increases in agricultural productivity are not sufficient to create positive net SOC sequestration in cropland soils. More management options that explicitly target the sequestration of C in cropland soils need to be considered. Our open-source model can be expanded to account for additional management options for carbon farming, such as cover crops, agroforestry, or biochar applications.
 
 
 
@@ -572,13 +616,12 @@ Yet, there is ample potential for further improved SOC management. As shown in F
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 \section{Figures and tables in appendices}
-
 \subsection{Methods}
 
 \begin{figure}[h]
-\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones} 
-\caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \citep{eggleston_ipcc_2006} and has been reimplented by \citet{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
-\label{fig:CLIMzone}
+  \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones} 
+  \caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \citep{eggleston_ipcc_2006} and has been reimplented by \citet{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
+  \label{fig:CLIMzone}
 \end{figure}
 
 \begin{sidewaystable*}[htbp]
@@ -623,18 +666,12 @@ cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42  
 \label{tab:c2dm}
 \end{sidewaystable*}
 
-\subsection{Discussion}
+\subsection{Results}
 
 \begin{figure}[H]
 \includegraphics[width=16cm]{../ResultNotebooks/Output/Images/reg_comparisonfigure} 
 \caption{Modelled as well as data based estimation for climate zone specific SOC stock in GtC for the first 30 cm of soil aggregated over all land area: SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010. PNV denotes the potential natural vegetation state without considering human cropping activities, calculated as reference stock within our model. We use the climate zone specification of the IPCC \citep{eggleston_ipcc_2006}.}
 \label{fig:SOCreg}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/scenario_litter} 
-\caption{Global $\Delta SOC$ for different litter parameterization choices: Whereas perennial grasses (scenario name \textit{LitterPNV-PerennialGrasses}) are given by the IPCC guidelines \citep{calvo_buendia_ipcc_2019}, we used CENTURY configuration file for woody biomass parameterization (see tree.100 in \citealt{century_model_2000}). \textit{LitterPNV-CenturyAverage} forms the baseline parameterization as used within the study and is calculated as the average over all tree compartments and tree types equally. Litter parameterization has the ability to change global SOC stocks and SOC debt, but is robust concerning trends and sequestration rates.}
-\label{fig:SOClitter}
 \end{figure}
 \noappendix
 
@@ -689,5 +726,6 @@ Thanks to Vera Porwollik for contributing the time resolved tillage data set bas
 %% \citep[e.g.,][p.~32]{jones90}| & (e.g., Jones et al., 1990, p.~32)
 %% \citeauthor{jones90}|          & Jones et al.
 %% \citeyear{jones90}|            & 1990
+
 
 \end{document}

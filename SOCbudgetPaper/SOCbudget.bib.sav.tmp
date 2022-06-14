@@ -6124,48 +6124,4 @@ DOI = {10.5194/bg-19-957-2022}
   number   = {8},
   pages    = {084015},
   volume   = {12},
-  abstract = {Historical changes in soil carbon associated with land-use change (LUC) result mainly from the changes in the quantity of litter inputs to the soil and the turnover of carbon in soils. We use a factor separation technique to assess how the input-driven and turnover-driven controls, as well as their synergies, have contributed to historical changes in soil carbon associated with LUC. We apply this approach to equilibrium simulations of present-day and pre-industrial land use performed using the dynamic global vegetation model JSBACH. Our results show that both the input-driven and turnover-driven changes generally contribute to a gain in soil carbon in afforested regions and a loss in deforested regions. However, in regions where grasslands have been converted to croplands, we find an input-driven loss that is partly offset by a turnover-driven gain, which stems from a decrease in the fire-related carbon losses. Omitting land management through crop and wood harvest substantially reduces the global losses through the input-driven changes. Our study thus suggests that the dominating control of soil carbon losses is via the input-driven changes, which are more directly accessible to human management than the turnover-driven ones.},
-  doi      = {10.1088/1748-9326/aa7ca9},
-  file     = {/home/kristine/Zotero/storage/LPELM423/abstract.html},
-  langid   = {english},
-}
-
-@Article{morais_detailed_2019,
-  author    = {Morais, Tiago G. and Teixeira, Ricardo F. M. and Domingos, Tiago},
-  journal   = {PLOS ONE},
-  title     = {Detailed Global Modelling of Soil Organic Carbon in Cropland, Grassland and Forest Soils},
-  year      = {2019},
-  issn      = {1932-6203},
-  month     = sep,
-  number    = {9},
-  pages     = {e0222604},
-  volume    = {14},
-  abstract  = {Assessments of the global carbon (C) cycle typically rely on simplified models which consider large areas as homogeneous in terms of the response of soils to land use or consider very broad land classes. For example, ``cropland'' is typically modelled as an aggregation of distinct practices and individual crops over large regions. Here, we use the process-based Rothamsted soil Carbon Model (RothC model), which has a history of being successfully applied at a global scale, to calculate attainable SOC stocks and C mineralization rates for each of c. 17,000 regions (combination of soil type and texture, climate type, initial land use and country) in the World, under near-past climate conditions. We considered 28 individual crops and, for each, multiple production practices, plus 16 forest types and 1 grassland class (total of 80 classes). We find that conversion to cropland can result in SOC increases, particularly when the soil remains covered with crop residues (an average gain of 12 t C/ha) or using irrigation (4 t C/ha), which are mutually reinforcing effects. Attainable SOC stocks vary significantly depending on the land use class, particularly for cropland. Common aggregations in global modelling of a single agricultural class would be inaccurate representations of these results. Attainable SOC stocks obtained here were compared to long-term experiment data and are well aligned with the literature. Our results provide a regional and detailed understanding of C sequestration that will also enable better greenhouse gas reporting at national level as alternatives to IPCC tier 2 defaults.},
-  doi       = {10.1371/journal.pone.0222604},
-  file      = {/home/kristine/Zotero/storage/LB3ECK8C/Morais et al. - 2019 - Detailed global modelling of soil organic carbon i.pdf;/home/kristine/Zotero/storage/ZZ7CQ5CS/article.html},
-  keywords  = {Agricultural irrigation, Agricultural soil science, Crops, Fertilizers, Forests, Grasslands, Maize, Soil mineralization},
-  langid    = {english},
-  publisher = {{Public Library of Science}},
-}
-
-@Book{eggleston_ipcc_2006,
-  editor    = {H.S Eggleston and L. Buendia and K. Miwa and T. Ngara and K. Tanabe (eds)},
-  publisher = {Published: IGES, Japan.},
-  title     = {{{IPCC}} 2006, 2006 {{IPCC Guidelines}} for {{National Greenhouse Gas Inventories}}, {{Prepared}} by the {{National Greenhouse Gas Inventories Programme}}},
-  year      = {2006},
-}
-
-@Book{forster_sr1p5_2018,
-  author = {P. Forster and D. Huppmann and E. Kriegler and L. Mundaca and C. Smith and J. Rogelj and R. Séférian},
-  title  = {Mitigation Pathways Compatible with 1.5°C in the Context of Sustainable Development Supplementary Material. In: Global Warming of 1.5°C. An IPCC Special Report on the impacts of global warming of 1.5°C above pre-industrial levels and related global greenhouse gas emission pathways, in the context of strengthening the global response to the threat of climate change, sustainable development, and efforts to eradicate poverty [Masson-Delmotte,V., P. Zhai, H.-O. Pörtner, D. Roberts, J. Skea, P.R. Shukla, A. Pirani, W. Moufouma-Okia, C. Péan, R. Pidcock, S. Connors, J.B.R. Matthews, Y. Chen, X. Zhou, M.I. Gomis, E. Lonnoy, T. Maycock, M. Tignor, and T. Waterfield (eds.)]. Available from https://www.ipcc.ch/sr15},
-  year   = {2018},
-}
-
-@Comment{jabref-meta: databaseType:bibtex;}
-
-@Comment{jabref-meta: grouping:
-0 AllEntriesGroup:;
-1 StaticGroup:Markings\;2\;1\;\;\;\;;
-2 StaticGroup:[kristine:]\;2\;1\;\;\;\;;
-2 StaticGroup:kristine:6\;2\;1\;\;\;\;;
-}
+  abstract = {Historical changes in soil carbon associated with land-use change (LUC) result mainly from the changes in the quantity of litter inputs to the soil and the turnover of carbon in soils. We use a factor separation technique to assess how t
