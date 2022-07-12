@@ -1,6 +1,6 @@
 # Results
 
-Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in Karstens [-@karstens_model_2020]. In the following, the most important results [see @karstens_result_2020 for post-processing script] are summarized.
+Detailed results for the spatially explicit global SOC budget including intermediate results on input data as well as SOC stock results for all scenario runs can be found in the data repository from Karstens [-@karstens_model_2020]. In the following, the most important results [see @karstens_result_2020 for post-processing scripts] are summarized.
 
 ## SOC distribution and depletion
 
@@ -13,7 +13,8 @@ captionSOCmaps <- "Global SOC stocks and SOC stock changes on cropland for the f
 knitr::include_graphics("../ResultNotebooks/Output/Images/4panelfigure.png")
 ```
 
-The global SOC debt has increased by about 14% in the period between 1975 and 2010 from $34.6$ to $39.6\,\unit{GtC}$ (Fig. \@ref(fig:SOCmaps)(a)). This corresponds to an average loss rate of $0.14\,\unit{GtC\,yr^{-1}}$ in comparison to a hypothetical potential natural vegetation (PNV) state. Considering our estimate of the global SOC stock of around $705\,\unit{GtC}$ in the upper $30\,\unit{cm}$ in 1975, global SOC decreased by 0.2 per 1000 per year for the period between 1975--2010. The speed of this SOC loss has decreased towards the end of the modeling period.
+The global SOC debt has increased by about 14% in the period between 1975 and 2010 from $34.6$ to $39.6\,\unit{GtC}$ (Fig. \@ref(fig:SOCmaps)(a)). This corresponds to an average loss rate of $0.14\,\unit{GtC\,yr^{-1}}$ in comparison to a hypothetical potential natural vegetation (PNV) state. Considering our estimate of the global SOC stock of around $705\,\unit{GtC}$ in the upper $30\,\unit{cm}$ in 1975, global SOC decreased by 0.2 per 1000 per year for the period between 1975 and 2010 in comparison to the PNV state. The speed of this SOC loss has decreased towards the end of the modeling period.
+Note that the SOC stock itself --- without comparing it to a a PNV state --- increases during the period between 1975 and 2010 from $705\,\unit{GtC}$ to $712\,\unit{GtC}$, which corresponds to overall SOC stock increase of $0.2\,\unit{GtC\,yr^{-1}}$.
 
 In Fig. \@ref(fig:SOCmaps)(b) we provide a world map of SOC stocks estimates for the first $30\,\unit{cm}$ on cropland considering historical management data for the year 2010. Values range between over $100\,\unit{t\,ha^{-1}}$ in northern temperate cropland to less than $5\,\unit{t\,ha^{-1}}$ for arid and semiarid cropland.
 Our spatially explicit results show hotspots of SOC losses and gains compared to SOC under PNV in two complementary ways: 
@@ -67,7 +68,7 @@ To evaluate our model results against reference data in five steps: (1) we compa
 
 ### Stock change factors compared to IPCC assumptions {#sec:ipcccompare}
 
-To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors $F^{\mathrm{SCF}}$ of 2006 [@lasco_cropland_in_ipcc_2006] and their refinements in 2019 [@ogle_cropland_in_ipcc_2019]. Both estimates are based on measurement data for cropland (see Table \@ref(tab:SCFglo)). To allow for comparison, we aggregate our stock change factors weighted by grid-level $F^{\mathrm{SCF}}$ cropland area to derive average factors for the four IPCC climate zones (Fig. \@ref(fig:CLIMzone)).
+To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors $F^{\mathrm{SCF}}$ of 2006 [@lasco_cropland_in_ipcc_2006] and their refinements in 2019 [@ogle_cropland_in_ipcc_2019]. Both estimates are based on measurement data for cropland (see Table \@ref(tab:SCFglo)). To allow for comparison, we aggregate our stock change factors weighted by grid-level cropland area to derive average factors for the four IPCC climate zones (Fig. \@ref(fig:CLIMzone)). Note that IPCC Tier 1 factors are derived under the assumption that there is a linear change between steady states over 20 years, whereas our aggregated factors just reflect the relative change compared to a given potential natural vegetation reference stock without specifically tracking the time scale of the stock change. 
 
 ```{r SCFglo, echo=FALSE, results = 'asis'}
 table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
@@ -75,7 +76,7 @@ library(xtable)
 print(xtable(table$comparison_table, digit=2, label="tab:SCFglo",
               caption="$F^{\\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \\citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \\citep{ogle_cropland_in_ipcc_2019}."), comment=FALSE, caption.placement = "top")
 ```
-Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors changed notably from the guidelines in 2006 [@lasco_cropland_in_ipcc_2006] to the update in 2019 [@ogle_cropland_in_ipcc_2019]. Our results are in good agreement with the 2006 IPCC factors. Modeled $F^{SCF}$ have increased or stayed constant for all climate zones over time (1975-2010).
+Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors increased notably from the guidelines in 2006 [@lasco_cropland_in_ipcc_2006] to the update in 2019 [@ogle_cropland_in_ipcc_2019] due to the inclusion of more data points. Our results are in good agreement with the 2006 IPCC factors. Modeled $F^{SCF}$ have increased or stayed constant for all climate zones over time (1975-2010).
 
 ### Global SOC stocks comparison
 
@@ -90,34 +91,17 @@ captionSOCglo <- "Modeled as well as observation-based estimates for global SOC 
 knitr::include_graphics("../ResultNotebooks/Output/Images/glo_comparisonfigure.png")
 ```
 
-The global estimates of the total SOC stock of the upper 30 cm from this study are in the middle of the wide range of other modeled or observation-based estimates. SoilGrids [@hengl_soilgrids250m_2017] especially stands out with its high estimate, whereas SoilGrids 2.0 [@poggio_soilgrids_2021] marks the lower end. Regional results (Fig. \@ref(fig:SOCreg)) show that our estimates are well within the range of other estimates for most regions, but at the lower end for tropical moist and tropical wet areas.
+The global estimates of the total SOC stock of the upper 30 cm from this study are in the middle of the wide range of other modeled or observation-based estimates. Regional results (Fig. \@ref(fig:SOCreg)) show that our estimates are well within the range of other estimates for most regions, but at the lower end for tropical moist and tropical wet areas. SoilGrids [@hengl_soilgrids250m_2017] especially stands out with its high estimate, since they include the litter horizon on top of the soil, that might dominate especially polar and boreal soils. SoilGrids 2.0 [@poggio_soilgrids_2021] however, excludes litter C and thus marks the lower end for particularly northern regions. For the same reason it is also more comparable to our results, which do not account for litter C as well. 
 
 ### Point-based evaluation
 
-We correlate our SOC results for natural vegetation and cropland in 2010 with literature values from point measurements (for data base see appendix of [@sanderman_soil_2017]).
-
-```{r captionSOCpoint, echo=FALSE}
-captionSOCpoint <- "Correlation between modeled and measured $SOC$ stocks. Given the wide span between minimun and maximum measured $SOC$ stocks within in a given cell, we correlated median values with our modeled results. Both cropland and areas with natural vegetation tend to be lower in our results than in the point measurements."
-```
-
-```{r SOCpoint, out.width = "10cm", fig.cap = captionSOCpoint, echo=FALSE, fig.pos="h"}
-# All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/scatterComparePointData_2010.png")
-```
+In Fig. \@ref(fig:SOCpoint) we correlate our SOC results for natural vegetation and cropland in 2010 with literature values from point measurements [for data base see appendix of @sanderman_soil_2017]. The goodness of the fit is very low with an $R^2$ of $0.13$. Individually the correlations are even lower with a $R^2$ of $0.09$ for cropland and $0.08$ for areas of natural vegetation. This point to the fact that differences between land-use type SOC stocks could be better matched than the spatial pattern of the rather small point measurement data base. 
+Due to the low number of small-scale measurements, statistical properties of the point data variability are not derived and thus, could not be used to improve the point-to-grid-cell comparison [see @rammig_generic_2018]. 
 
 ### Natural SOC stock comparison with LPJmL4
 
-Estimates of SOC stocks under natural vegetation influence our modeled results for cropland, which has been converted from natural vegetation at some point in time. We therefore also compare our modeled results for SOC under natural vegetation (derived using litterfall of LPJmL4) against estimates of SOC by LPJmL4 for a PNV simulation. Both models are driven by the same climate conditions and the same natural litterfall and just differ in the representation of SOC and litter dynamics. With our focus on cropland SOC dynamics, we compare only cells with more than $1000\,\unit{ha}$ of cropland (capturing 99.9% of global cropland area).
-
-
-```{r captionSOCLPJmL4, echo=FALSE}
-captionSOCLPJmL4 <- "Correlation between modeled SOC stocks of LPJmL4 and this study for an hypothetical potential natural state (PNV) for the year 2010. The grey lines indicate the 1:1 line."
-```
-
-```{r SOCLPJmL4, out.width = "13cm", fig.cap = captionSOCLPJmL4, echo=FALSE, fig.pos="h"}
-# All defaults
-knitr::include_graphics("../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png")
-```
+Estimates of SOC stocks under natural vegetation influence our modeled results for cropland, which has been converted from natural vegetation at some point in time. As the Tier 2 modeling approach [@ogle_cropland_in_ipcc_2019] is not specifically parameterized for natural vegetation it is important to evaluate its suitability to produce reasonable results in that domain as well at least comparable to other modeling approaches.
+We therefore also compare our modeled results for SOC under natural vegetation (derived using litterfall of LPJmL4) against estimates of SOC by LPJmL4 for a PNV simulation (see Fig.\@ref(fig:SOCLPJmL4)). Both models are driven by the same climate conditions and the same natural litterfall and just differ in the representation of SOC and litter dynamics. With our focus on cropland SOC dynamics, we compare only cells with more than $1000\,\unit{ha}$ of cropland (capturing 99.9% of global cropland area).
 Spatial correlations of PNV SOC stock values are high (global $R2=0.81$), especially for dry climate zones (Fig. \@ref(fig:SOCLPJmL4)). For temperate and tropical moist areas estimates of this study tend to be a bit lower compared to LPJmL4 results.
 
 ### Actual SOC stock comparison with SoilGrids 2.0
