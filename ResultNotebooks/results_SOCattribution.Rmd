@@ -1,0 +1,265 @@
+---
+  title: "Global SOC scenarios"
+output:
+  md_document:
+  variant: markdown_github
+html_document:  
+  pdf_document: default
+---
+
+```{r load}
+library(mrcommons)
+library(mrvalidation)
+library(mrsoil)
+library(magpiesets)
+
+rev         <- "rev30"
+scenarios   <- c("histManagement", "constManagement-1975")
+filesNeeded <- c("SoilCarbon.rds", "Landuse.rds")
+outputdir   <- "Output/"
+```
+
+
+```{r Load data and calc globals}
+
+SOCscen <- NULL
+
+for (scen in scenarios) {
+  print(scen)
+  SoilCarbon <- read.magpie(
+                  paste0("Data/", paste0(rev, scen), "/SoilCarbon.rds"))
+  Landuse    <- read.magpie(
+                  paste0("Data/", paste0(rev, scen), "/Landuse.rds"))
+  SoilCarbon[, , "naturalstate.crop"] <- SoilCarbon[, , "naturalstate.natveg"]
+  SOCStock   <- toolConditionalReplace(dimSums(dimSums(
+    SoilCarbon[, , c("actualstate", "naturalstate")], dim = 3.3) *
+      Landuse, dim = 3.2), "is.nan()", 0)
+  SOCscen    <- mbind(SOCscen, 
+                      add_dimension(SOCStock,
+                                    dim = 3.1, nm = scen, add = "scenario"))
+}
+
+SOCDebt       <- collapseNames(SOCscen[, , "actualstate"] -
+                                 SOCscen[, , "naturalstate"])
+SOCDebtChange <- collapseDim(SOCDebt[, c(1975:2010), ] -
+                               SOCDebt[, "y1975", ])
+
+landMask   <- collapseDim(Landuse[, 1, 1])
+landMask[] <- NA
+for (y in c(1975:2010)) landMask[Landuse[, y, "crop"] > 0.001] <- 1
+
+LUCattr <- toolConditionalReplace(
+             SOCDebtChange[, "y2010", "constManagement-1975"],
+             "is.na()", 0) * landMask
+
+MANattr <- toolConditionalReplace(
+             (SOCDebtChange[, "y2010", "histManagement"] -
+              SOCDebtChange[, "y2010", "constManagement-1975"]),
+             "is.na()", 0) * landMask
+
+saveRDS(
+  mbind(
+    add_dimension(collapseNames(SOCDebt[, "y2010", "histManagement"]) *
+                    landMask, dim = 3.1, add = "type", nm = "SOCDebt"),
+    add_dimension(collapseNames(SOCDebtChange[, "y2010", "histManagement"]) *
+                    landMask, dim = 3.1, add = "type", nm = "SOCDebtChange"),
+    add_dimension(collapseNames(LUCattr),
+                  dim = 3.1, add = "type", nm = "LUCdiff"),
+    add_dimension(collapseNames(MANattr),
+                  dim = 3.1, add = "type", nm = "MANdiff")),
+  paste0(outputdir, "SOCDebtSpatial.rds"))
+
+
+# LUCattr <- toolConditionalReplace(
+#              SOCDebtChange[,"y2010", "constManagement-1975"] /
+#              SOCDebtChange[,"y2010","histManagement"],
+#              "is.na()", 0) * landMask
+#
+# MANattr <- toolConditionalReplace(
+#              (SOCDebtChange[,"y2010","histManagement"] -
+#               SOCDebtChange[,"y2010", "constManagement-1975"]) /
+#               SOCDebtChange[,"y2010","histManagement"],
+#              "is.na()", 0) * landMask
+#
+# signLUC   <- landMask
+# signLUC[] <- 1
+# signLUC[SOCDebtChange[,"y2010","constManagement-1975"] < 0] <- (-1)
+#
+# signMAN   <- landMask
+# signMAN[] <- 1
+# signMAN[(SOCDebtChange[,"y2010","histManagement"] -
+#            SOCDebtChange[,"y2010","constManagement-1975"]) < 0] <- (-1)
+#
+# signLUCattr <- collapseNames(abs(LUCattr) * signLUC)
+# signMANattr <- collapseNames(abs(MANattr) * signMAN)
+#
+# saveRDS(mbind(add_dimension(signLUCattr, dim = 3.1,
+#                             add = "type", nm = "LUCattr"),
+#               add_dimension(signMANattr, dim = 3.1,
+#                             add = "type", nm = "MANattr")),
+#         paste0(outputdir, "SOCattribution.rds"))
+```
+
+
+```{r grid plot, out.height=800 , out.width=1200}
+
+library(reshape2)
+
+
+SOCDebtSpatial <- readRDS(paste0(outputdir, "SOCDebtSpatial.rds"))
+magpie_coord   <- toolGetMapping("magpie_coord.rda",
+                                type = "cell", where = "mappingfolder")
+
+SOCDebt2plot       <- 
+  merge(as.data.frame(SOCDebtSpatial[, , "SOCDebt"]),
+        data.frame(magpie_coord, Cell = c(1:59199)), by = "Cell")
+SOCDebtChange2plot <- 
+  merge(as.data.frame(SOCDebtSpatial[, , "SOCDebtChange"]),
+        data.frame(magpie_coord, Cell = c(1:59199)), by = "Cell")
+LUCattri2plot      <- 
+  merge(as.data.frame(SOCDebtSpatial[, , "LUCdiff"]),
+        data.frame(magpie_coord, Cell = c(1:59199)), by = "Cell")
+MANattri2plot      <- 
+  merge(as.data.frame(SOCDebtSpatial[, , "MANdiff"]),
+        data.frame(magpie_coord, Cell = c(1:59199)), by = "Cell")
+
+library(ggplot2)
+theme_set(theme_bw())
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(RColorBrewer)
+library(sp)
+library(rworldmap)
+library(oce)
+library(scales)
+library(cowplot)
+
+legend_size <- 10
+
+map.world <- map_data("world")
+world         <- ne_countries(scale = "medium", returnclass = "sf")
+data(coastlineWorld)
+coastline.world <- data.frame(longitude = coastlineWorld[["longitude"]],
+                              latitude = coastlineWorld[["latitude"]])
+
+SOCplotmap   <- function(data, name, cols, limits,
+                         values = NULL, breaks, labels, legend_width) {
+
+out <- ggplot(data = world) + geom_sf() +
+              geom_tile(data = subset(data, Year == "2010", 
+                                      c("lon", "lat", "Value")),
+                        aes(x = lon, y = lat, fill = Value)) +
+        scale_fill_stepsn(limits   = limits,
+                      colours  = cols,
+                      name     = name,
+                      values   = values,
+                      breaks   = breaks,
+                      labels   = labels,
+                      na.value = "white",
+                      guide    = guide_legend(
+                        title.theme    = element_text(size = legend_size),
+                        direction      = "horizontal",
+                        title.position = "top",
+                        # I shift the labels around, the should be placed
+                        # exactly at the right end of each legend key
+                        title.hjust    = 0.5,
+                        label.hjust    = 1,
+                        nrow           = 1,
+                        byrow          = FALSE,
+                        label.position = "bottom",
+                        keyheight      = 0.5,
+                        keywidth       = legend_width
+                      )) +
+    theme(legend.position = "bottom",
+          axis.title.x     = element_blank(),
+          axis.title.y     = element_blank(),
+          legend.text      = element_text(size = legend_size),
+          rect             = element_blank(),
+          panel.background = element_rect(fill = "#F8F8FF", size = c(0.7, 0.7)),
+          plot.margin      = margin(t = 0, r = 0, b = 0, l = 0, unit = "pt")
+          )
+
+    return(out)
+}
+
+cols     <- colorRampPalette(brewer.pal(11, "RdYlBu"))(11)[c(1:6, 7, 9, 11)]
+lim_debt <- 10
+val_debt <- c(-10, -6, -4, -2, -1, 0, 1, 10)
+debt          <- 
+  SOCplotmap(data     = SOCDebt2plot,
+             limits   = c(-lim_debt, lim_debt),
+             cols     = cols,
+             name     = expression("\u0394SOC in 2010 in million tons of carbon"),
+             values   = (val_debt + lim_debt) / (2 * lim_debt),
+             breaks   = val_debt[-1],
+             labels   =  c("< -6", "    -4", "    -2", "    -1 ", "   0", "  1", "> 1"),
+             legend_width = 2.3)
+
+
+cols          <- colorRampPalette(brewer.pal(11, "RdYlBu"))(10)
+lim_abs       <- 1.5
+val_abs       <- seq(-lim_abs, lim_abs, length.out = 11)
+debttrend_abs <-
+  SOCplotmap(data     = SOCDebtChange2plot,
+             limits   = c(-lim_abs, lim_abs),
+             cols     = cols,
+             name     = expression("\u0394SOC change from 1975 to 2010 in million tons of carbon"),
+             values   = (val_abs + lim_abs) / (2 * lim_abs),
+             breaks   = val_abs[-1],
+             labels   = c(paste0("< ", val_abs[2]),
+                          as.character(val_abs[c(-1, -2, -11)]),
+                          paste0("> ", val_abs[10])),
+             legend_width = 1.5)
+
+debttrend_luc <- 
+  SOCplotmap(data     = LUCattri2plot,
+             limits   = c(-lim_abs, lim_abs),
+             cols     = cols,
+             name     = expression("\u0394SOC change from 1975 to 2010 in million tons of carbon"),
+             values   = (val_abs + lim_abs) / (2 * lim_abs),
+             breaks   = val_abs[-1],
+             labels   = c(paste0("< ", val_abs[2]),
+                          as.character(val_abs[c(-1, -2, -11)]),
+                          paste0("> ", val_abs[10])),
+             legend_width = 1.5)
+
+debttrend_man <- 
+  SOCplotmap(data     = MANattri2plot,
+             limits   = c(-lim_abs, lim_abs),
+             cols     = cols,
+             name     = expression("\u0394SOC change from 1975 to 2010 in million tons of carbon"),
+             values   = (val_abs + lim_abs) / (2 * lim_abs),
+             breaks   = val_abs[-1],
+             labels   = c(paste0("< ", val_abs[2]),
+                          as.character(val_abs[c(-1, -2, -11)]),
+                          paste0("> ", val_abs[10])),
+             legend_width = 1.5)
+
+debt
+debttrend_abs
+debttrend_luc
+debttrend_man
+
+library(gridExtra)
+library(cowplot)
+
+
+grid  <- plot_grid(debt,
+                   debttrend_abs + guides(fill = "none"),
+                   debttrend_luc + guides(fill = "none"),
+                   debttrend_man, ncol = 1,
+                   labels = c("(a)  - \u0394SOC ",
+                              "(b1) - total \u0394SOC change",
+                              "(b2) - \u0394SOC change due to LUC",
+                              "(b3) - \u0394SOC change due to MAN"),
+                   label_fontface = "plain", label_size = 10,
+                   align = "v",  rel_heights = c(1.40, 1, 1, 1.40),
+                   label_x = 0.01, hjust = 0, vjust = 1.1
+                   )
+
+grid
+
+ggsave(paste0(outputdir, "Images/SpatialDebtFigure.png"), plot = grid,
+       width = 10, height = 26, dpi = 300, units = "cm")
+```

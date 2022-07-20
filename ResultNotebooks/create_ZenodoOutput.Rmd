@@ -1,0 +1,46 @@
+---
+  title: "SOC budget aóutput creator"
+output:
+  html_document:
+  df_print: paged
+pdf_document: default
+bookdown::pdf_document2: default
+keep_md: true
+---
+
+
+Load all folder and create NetCDF files:
+
+```{r load files}
+
+rev        <- "Data/rev30"
+scenarios   <- c("histManagement", "constManagement-1975", "constManure-1975", "constResidues-1975", "constTillage-mixedtill")
+
+
+for (s in scenarios[1]) {
+
+   path  <- paste0(rev, s)
+   files <- list.files(path, pattern = "*rds")
+   # dir.create(s)
+
+
+   for (f in files) {
+
+     tmp <- readRDS(paste0(path, "/", f))
+     f   <- gsub(".rds", "", f)
+     items <- getItems(tmp)
+
+
+     if (length(unlist(items[1])) == 59199) output <- ".nc" else output <- ".csv"
+     print(paste(s, f))
+     print(unlist(items[2])[c(1, length(unlist(items[2])))])
+     print(unname(unlist(items[3])))
+
+     # write.magpie(tmp, file_name = paste0(f, output), file_folder = paste0(outputdir, s))
+   }
+
+   # tar(paste0(s, ".tgz"), files = s, compression = "gzip")
+
+}
+```
+
