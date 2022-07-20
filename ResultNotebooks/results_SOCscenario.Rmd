@@ -292,7 +292,7 @@ library(gridExtra)
 library(cowplot)
 
 theme_set(theme_bw())
-legend_size <- 10
+legend_size <- 12
 scen_cols   <- c("#648FFF", "#785EF0", "#DC267F")
 
 input_cols  <- scen_cols[1:4]
@@ -327,12 +327,15 @@ initSOCemis <-
         axis.title.x = element_text(size = legend_size, 
                                     margin = margin(t = 10, r = 0, b = 0, l = 0, 
                                                     unit = "pt")),
-        axis.text.x = element_text(angle = 60, hjust = 0.8, vjust = 0.8, 
+        axis.text.x  = element_text(angle = 60, hjust = 0.8, vjust = 0.8, 
                                    size = legend_size),
+        axis.text.y  = element_text(size = legend_size),
+        legend.title = element_text(size = legend_size),
+        legend.text  = element_text(size = legend_size),
         legend.position = "right", legend.direction = "vertical")
 
 initSOCemis
 
 ggsave(paste0(outputdir, "Images/scenario_init.png"), 
-       plot = initSOCemis, width = 12, height = 8, dpi = 300, units = "cm")
+       plot = initSOCemis, width = 15, height = 10, dpi = 300, units = "cm")
 ```
