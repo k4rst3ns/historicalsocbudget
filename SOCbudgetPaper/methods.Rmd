@@ -17,7 +17,7 @@ To initialize the first year of our simulation period we use a spin-up period of
 
 In a simple first order kinetic approach the steady-state soil organic carbon stocks $SOC^{\mathrm{eq}}$ are given by 
 \begin{equation}
-SOC^{\mathrm{eq}}_{i,t,sub,lu} =\frac{C^{\mathrm{in}}_{i,t,sub,lu}}{k_{i,t,sub,lu}}
+ SOC^{\mathrm{eq}}_{i,t,sub,lu} =\frac{C^{\mathrm{in}}_{i,t,sub,lu}}{k_{i,t,sub,lu}}
 (\#eq:inoutflow)
 \end{equation}
 with $C^{\textrm{in}}$ being the carbon inputs to the soil, $k$ denotes the soil organic carbon decay rate. This equation is valid for all grid cells $i$ and all years $t$. We use the Tier 2 modeling approach for our calculations, which assumes three soil carbon sub-pools $sub$ (active, slow and passive) and interactions between them, following the approach in the Century model [@parton_analysis_1987]. Annual carbon inflow to each sub-pool and annual decay rates of each sub-pool are land-use type $lu$ specific. 
@@ -161,7 +161,7 @@ The initialization of $SOC$ pools is very important and has to include the prope
 We initialize our $SOC$ sub-pools using a three-step approach, since input data availability is limited for climate and litter estimates (starting only in 1901) as well as for agricultural management data (starting only in 1965):
 
 Firstly, in order to account for the impacts of legacy fluxes from land-use changes long before the time horizon of interest, we consider land-use change from 1510 onwards. In 1510, we assume all $SOC$ pools to be in natural steady-state, implying that all land-use change prior to that time occurs in 1510. We assume that by 1901, all cropland converted in 1510 has reached its new steady state, so that it is not necessary to explicitly account for even older land conversion. Model inputs for 1901--1930 for climate and natural vegetation litterfall are repeated for 1510--1900 to mimic constant climate conditions for this first initializing period. Similarly, agricultural management data are held constant at the level of 1965 until 1965. 
-We acknowledge that this introduces a bias as agricultural management has changed prior to 1965, but this approach follows others studies looking on effects of land-use change and management [e.g. @schaphoff_lpjml4_2018-1; @herzfeld_soc_2021] and is limited by data availability on harvest statistics (and other management effects).
+We acknowledge that this introduces a bias as agricultural management has changed prior to 1965, but this approach follows others studies on effects of land-use change and management [e.g. @schaphoff_lpjml4_2018-1; @herzfeld_soc_2021] and is limited by data availability on harvest statistics (and other management effects).
 
 Secondly, with the availability of transient climate data after 1901, we account not only for land-use change, but also for historical climate change and consequently natural litter inputs to the soil from 1901 to 1965 still considering constant agricultural input data, which are not available prior to 1965.
 

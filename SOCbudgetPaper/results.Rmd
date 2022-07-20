@@ -22,10 +22,10 @@ Our spatially explicit results show hotspots of SOC losses and gains compared to
 2. Relative SOC changes measured as stock changes factors $F^{SCF}$ (Fig. \@ref(fig:SOCmaps)(d)) are a helpful metric to analyze the impact of human cropping activities. They indicate areas with large differences in carbon inflows or SOC decay compared to natural vegetation, that may hold potential to be overcome by improved agricultural practices. Large parts of tropical cropland seem to suffer from strongly reduced relative stocks, indicating SOC degradation. Conversely, irrigated cropland at the border to dry, unsuitable areas worldwide shows a strong relative increase in SOC stocks.
 
 ```{r captionSOCdebt, echo=FALSE}
-captionSOCdebt <- "Global total $\\Delta SOC$ and $\\Delta SOC$ change for the first 30 cm of the soil profile. Panel (a) shows global $\\Delta SOC$ as the difference between $SOC$ under historical land use and $SOC$ under potential natural vegetation (PNV) in the year 2010 summed over all land-use types. Computing the difference between the $\\Delta SOC$ estimate for 2010 and for 1975 (b1) depicts areas of SOC depletion (SOC debt increase, red) and SOC accumulation (SOC debt decline, blue). Panel (b2) shows the of land-use change (LUC) induced change of ∆SOC between 1975 and 2010, whereas panel (b3) depicts the change due to changing agricultural management (MAN)."
+captionSOCdebt <- "Global total $\\Delta SOC$ and $\\Delta SOC$ change for the first 30 cm of the soil profile. Panel (a) shows global $\\Delta SOC$ as the difference between $SOC$ under historical land use and $SOC$ under potential natural vegetation (PNV) in the year 2010 summed over all land-use types. Computing the difference between the $\\Delta SOC$ estimate for 2010 and for 1975 (b1) depicts areas of SOC depletion (SOC debt increase, red) and SOC accumulation (SOC debt decline, blue). Panel (b2) shows the of land-use change (LUC) induced change of $\\Delta SOC$ between 1975 and 2010, whereas panel (b3) depicts the change due to changing agricultural management (MAN)."
 ```
 
-```{r SOCdebt, out.width = "9cm", fig.cap = captionSOCdebt, echo=FALSE, fig.pos="h"}
+```{r SOCdebt, out.width = "6.3cm", fig.cap = captionSOCdebt, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/SpatialDebtFigure.png")
 ```
@@ -72,15 +72,18 @@ To evaluate our model results against reference data in five steps: (1) we compa
 
 ### Stock change factors compared to IPCC assumptions {#sec:ipcccompare}
 
-To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors $F^{\mathrm{SCF}}$ of 2006 [@lasco_cropland_in_ipcc_2006] and their refinements in 2019 [@ogle_cropland_in_ipcc_2019]. Both estimates are based on measurement data for cropland (see Table \@ref(tab:SCFglo)). To allow for comparison, we aggregate our stock change factors weighted by grid-level cropland area to derive average factors for the four IPCC climate zones (Fig. \@ref(fig:CLIMzone)). Note that IPCC Tier 1 factors are derived under the assumption that there is a linear change between steady states over 20 years, whereas our aggregated factors just reflect the relative change compared to a given potential natural vegetation reference stock without specifically tracking the time scale of the stock change. 
+To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors $F^{\mathrm{SCF}}$ of 2006 [@lasco_cropland_in_ipcc_2006] and their refinements in 2019 [@ogle_cropland_in_ipcc_2019]. Both estimates are based on measurement data for cropland (see Fig. \@ref(fig:SCFglo)). To allow for comparison, we aggregate our stock change factors weighted by grid-level cropland area to derive median factors for the four IPCC climate zones (Fig. \@ref(fig:CLIMzone)). Note that IPCC Tier 1 factors are derived under the assumption that there is a linear change between steady states over 20 years, whereas our aggregated factors just reflect the relative change compared to a given potential natural vegetation reference stock without specifically tracking the time scale of the stock change.
 
-```{r SCFglo, echo=FALSE, results = 'asis'}
-table <- readRDS("../ResultNotebooks/Output/SFC_comparison.rds")
-library(xtable)
-print(xtable(table$comparison_table, digit=2, label="tab:SCFglo",
-              caption="$F^{\\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \\citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \\citep{ogle_cropland_in_ipcc_2019}."), comment=FALSE, caption.placement = "top")
+```{r captionSCFglo, echo=FALSE}
+captionSCFglo <- "$F^{\\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \\citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \\citep{ogle_cropland_in_ipcc_2019}. IPCC factors vary a bit with different types of management (low, medium, high). The results of the study span over a wide range -- indicated by the span between the 5th and 95th percentile -- but not overlapping with the IPCCs 2019 factors for tropical moist. The median for most regions is considerably lower than the IPCC factors."
 ```
-Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors increased notably from the guidelines in 2006 [@lasco_cropland_in_ipcc_2006] to the update in 2019 [@ogle_cropland_in_ipcc_2019] due to the inclusion of more data points. Our results are in good agreement with the 2006 IPCC factors. Modeled $F^{SCF}$ have increased or stayed constant for all climate zones over time (1975-2010).
+
+```{r SCFglo, out.width = "15cm", fig.cap = captionSCFglo, echo=FALSE, fig.pos="h"}
+# All defaults
+knitr::include_graphics("../ResultNotebooks/Output/Images/SCF_comparison.png")
+```
+
+Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors increased notably from the guidelines in 2006 [@lasco_cropland_in_ipcc_2006] to the update in 2019 [@ogle_cropland_in_ipcc_2019] due to the inclusion of more data points. Our results span over a broad range due to the different ages of the cropland but also due to different agricultural management practices within climate regions.
 
 ### Global SOC stocks comparison
 
@@ -90,7 +93,7 @@ We compare our global SOC stocks with a wide range of global SOC stock estimates
 captionSOCglo <- "Modeled as well as observation-based estimates for global SOC stock in $\\unit{GtC}$ for the first 30 cm of soil aggregated over all land area. The comparison against observation-based data (SoilGrids, SoilGrids 2.0, GSOC and WISE) is supplemented by modeled data from LPJmL4 \\citep{schaphoff_lpjml4_2018-1} and estimates from \\citep{sanderman_soil_2017}. We show values of this study for the year 2010 accounting for the historical land-use dynamics as well as for an hypothetical PNV."
 ```
 
-```{r SOCglo, out.width = "11cm", fig.cap = captionSOCglo, echo=FALSE, fig.pos="h"}
+```{r SOCglo, out.width = "7cm", fig.cap = captionSOCglo, echo=FALSE, fig.pos="h"}
 # All defaults
 knitr::include_graphics("../ResultNotebooks/Output/Images/glo_comparisonfigure.png")
 ```

@@ -301,7 +301,7 @@ limits <- c(-55, -25)
 breaks <- c(-30, -40, -50)
 
 
-startY <- 1965
+startY <- 1975
 
 initSOCemis <- 
   ggplot() + 

@@ -280,7 +280,8 @@ table
 #comparison_table
 range_table <- dcast(range_table, Source + Management + Region ~ Data)
 
-cols <- c("#648FFF", "#DC267F", "#FFB000")[3:1]
+cols        <- c("#648FFF", "#DC267F", "#FFB000")[3:1]
+legend_size <- 12
   
 SCFTable <- 
   ggplot() + 
@@ -294,16 +295,24 @@ SCFTable <-
     labs(y = "Stock Change Factor",
          x = "Climate Zone") +
     scale_color_manual(values = cols) +
+    scale_x_discrete(labels = c("tropical\nmoist", "tropical\ndry", 
+                                "temperate\ndry",  "temperate\nmoist")) +
     guides(shape = guide_legend(order = 2),col = guide_legend(order = 1)) +
     theme(rect = element_blank(),
-                        axis.title.y = element_text(size = legend_size,
-                                                   margin = margin(t = 0, r = 10, b = 0, l = 0, 
+          axis.title.y = element_text(size = legend_size,
+                                      margin = margin(t = 0, r = 10, b = 0, l = 0, 
                                                                    unit = "pt")),
-                        axis.title.x = element_text(size = legend_size,
-                                                   margin = margin(t = 10, r = 0, b = 0, l = 0, 
-                                                                   unit = "pt")))
-                  
+          axis.title.x = element_text(size = legend_size,
+                                      margin = margin(t = 10, r = 0, b = 0, l = 0, 
+                                                                   unit = "pt")),
+          axis.text.x  = element_text(size = legend_size),
+          axis.text.y  = element_text(size = legend_size),
+          legend.title = element_text(size = legend_size),
+          legend.text  = element_text(size = legend_size),
+          legend.spacing.y = unit(0.1, "cm"))
 
+                  
+SCFTable 
 
 ggsave(paste0(outputdir, "Images/SCF_comparison.png"), 
        plot = SCFTable, height = 8, width = 18, units = "cm", dpi = 300)
