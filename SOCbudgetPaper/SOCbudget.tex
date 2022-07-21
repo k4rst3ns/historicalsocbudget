@@ -605,6 +605,7 @@ Our results demonstrate that historical changes in agricultural management have 
 
 With the reduced-complexity SOC model we are able to account for agricultural management effects on cropland SOC dynamics within optimization-based IAM frameworks. Reduced input data requirements such as accounting for changes in productivity rather than reproducing the processes that lead to such changes in productivity \citep{elliott_management_trends_2018} will help to explore the role of agricultural management in sustainable development pathway analyses \citep{sorgel_sustainable_2021}.
 However, we clearly see that increases in agricultural productivity are not sufficient to create positive net SOC sequestration in cropland soils. More management options that explicitly target the sequestration of C in cropland soils need to be considered. Our open-source model can be expanded to account for additional management options for carbon farming, such as cover crops, agroforestry, or biochar applications.
+\newpage
 
 
 
@@ -621,13 +622,13 @@ However, we clearly see that increases in agricultural productivity are not suff
 
 \subsection{Methods}
 
-\begin{figure}[h]
+\begin{figure}[!hp]
 \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones.png} 
 \caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \citep{eggleston_ipcc_2006} and has been reimplented by \citet{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
 \label{fig:CLIMzone}
 \end{figure}
 
-\begin{sidewaystable*}[htbp]
+\begin{sidewaystable*}[!htbp]
 \caption{Parameterization of harvested organs and their corresponding residues parts as well as allometric coefficients: This table is mainly based on \citet{bodirsky_n2o_2012} together with simple carbon to dry matter assumptions. Allometric coefficients are used as descriped in \citet{eggleston_ipcc_2006} with HI\textsuperscript{prod} being slope\textsubscript{(T)}, HI\textsuperscript{area} intercept\textsubscript{(T)} and RS R\textsubscript{BG-BIO}.
 }
 \begin{tabular}{lllllllllllll}
@@ -668,32 +669,40 @@ cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42  
   \label{tab:c2dm}
 \end{sidewaystable*}
 
+\newpage
+
 \subsection{Results}
 
-\begin{figure}[h]
+\begin{figure}[!hp]
 \includegraphics[width=12cm]{../ResultNotebooks/Output/Images/scenario_init.png} 
 \caption{Global $\Delta SOC$ for different SOC initialization choices in the start year 1901: Starting in 1901 with steady-state SOC under vegetation for all land-use types without any human cropping activities (Initial-natveg) lead to a smaller $\Delta SOC$ in 1975 and a steeper increase till 2010, as compared to initialzing with steady-state SOC stocks under historic land-use (Initial-spinup1510). On the other hand, assuming all SOC to be in land-use specific steady-state already in 1901 (Initial-eq) leads to the opposite effect of an already higher $\Delta SOC$ in 1975 and a less steeper increase till 2010. However, the difference between the dynamic historical management assumption (histManagement) compared to constant management assumption from 1975 on (constManagement) are of a similar size for all initialization choices.}
 \label{fig:SOCinit}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!hp]
 \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/reg_comparisonfigure.png} 
 \caption{Modelled as well as data based estimation for climate zone specific SOC stock in GtC for the first 30 cm of soil aggregated over all land area: SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010. PNV denotes the potential natural vegetation state without considering human cropping activities, calculated as reference stock within our model. We use the climate zone specification of the IPCC \citep{eggleston_ipcc_2006}.}
 \label{fig:SOCreg}
 \end{figure}
 
-\begin{figure}[h]
+\newpage
+
+\begin{figure}[ht]
 \includegraphics[width=10cm]{../ResultNotebooks/Output/Images/scatterComparePointData_2010.png} 
 \caption{Correlation between modeled and measured $SOC$ stocks. Given the wide span between minimun and maximum measured $SOC$ stocks within in a given cell, we correlated median values with our modeled results. Both cropland ($R2=0.09$) and areas with natural vegetation ($R2=0.08$) tend to be lower in our results than in the point measurements.}
 \label{fig:SOCpoint}
 \end{figure}
 
- \begin{figure}[h]
+\newpage
+
+ \begin{figure}[ht]
 \includegraphics[width=13cm]{../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png}
 \caption{Correlation between modeled SOC stocks of LPJmL4 and this study for an hypothetical potential natural state (PNV) for the year 2010. The grey lines indicate the 1:1 line.}
 \label{fig:SOCLPJmL4}
 \end{figure}
 \noappendix
+
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \authorcontribution{KK, BLB and AP designed the study and the model idea. KK wrote the code build on work of BLB, IW. JPD revised and improved the model code. CM, JH and SR provided the LPJmL simulation data. KK wrote the paper with important contributions of BLB and CM. MK, JS, SR and IW provided extensive feedback to outline of the study. All authors discussed the results and commented on the manuscript.} %% optional section
