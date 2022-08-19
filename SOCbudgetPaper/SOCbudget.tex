@@ -268,7 +268,7 @@ For natural vegetation, we assume rainfed and non-tilled conditions, whereas for
 \subsubsection{SOC transfer between land-use types}\label{sec:carbontransfer}}
 
 \begin{figure}[h]
-\includegraphics[width=8cm]{../ResultNotebooks/Output/Images/LUtransitions} \caption{Scheme of land-use transition representation. Given an initial land-use pattern (as in this example 2 ha land under natural vegetation and 1 ha of cropland), there are separate $SOC$ stocks for natural vegetation and cropland. While in this example we assume $SOC$ under natural vegetation to be in steady state, the cropland $SOC$ stock approaches its steady state without having reached it yet (a). Upon cropland expansion (in this example half of the natural vegetation is cleared to be used as cropland), $SOC$ stocks on cropland increase due to a transfer of land from natural vegetation (b). Explicitly representing newly converted cropland and existing cropland to account for SOC dynamics (c) leads to the same weighted mean value as averaging $SOC$ stocks (d), due to the linearity of Eq. \ref{eq:SOCstate} and cropland-age independent decay rates (see Eq. \ref{eq:decayrates}).}\label{fig:LUtrans}
+\includegraphics[width=8cm]{LUtransitions.png} \caption{Scheme of land-use transition representation. Given an initial land-use pattern (as in this example 2 ha land under natural vegetation and 1 ha of cropland), there are separate $SOC$ stocks for natural vegetation and cropland. While in this example we assume $SOC$ under natural vegetation to be in steady state, the cropland $SOC$ stock approaches its steady state without having reached it yet (a). Upon cropland expansion (in this example half of the natural vegetation is cleared to be used as cropland), $SOC$ stocks on cropland increase due to a transfer of land from natural vegetation (b). Explicitly representing newly converted cropland and existing cropland to account for SOC dynamics (c) leads to the same weighted mean value as averaging $SOC$ stocks (d), due to the linearity of Eq. \ref{eq:SOCstate} and cropland-age independent decay rates (see Eq. \ref{eq:decayrates}).}\label{fig:LUtrans}
 \end{figure}
 
 We calculate \(SOC\) stocks based on the area shares of land-use types \(lu\) within our grid cells \(i\). If land is converted from one land-use type \(lu=\{crop,natveg\}\) into the other \(!lu=\{natveg,crop\}\), a respective share of the \(SOC\) is reallocated within our budget. We do not distinguish between newly converted and existing cropland, but can work with the average carbon content as the relative decay of \(SOC\) is proportional to the \(SOC\) stock (see \ref{fig:LUtrans}). We account for land conversion at the beginning of each time step \(t\) by calculating a preliminary stock \(SOC_{t^*}\) via
@@ -422,7 +422,7 @@ Detailed results for the spatially explicit global SOC budget including intermed
 \subsection{SOC distribution and depletion}\label{soc-distribution-and-depletion}}
 
 \begin{figure}[h]
-\includegraphics[width=18cm]{../ResultNotebooks/Output/Images/4panelfigure} \caption{Global SOC stocks and SOC stock changes on cropland for the first 30 cm of the soil profile considering historical management data. Panel (a) shows global $\Delta SOC$ between historical land use and potential natural vegetation (PNV). The distribution of total global SOC stocks for the first 30 cm on cropland for the year 2010 is depcited in panel (b). Absolute (c) and relative (d) SOC stocks changes for the year 2010 are compared to a potential natural state identify different hotspots of SOC losses and gains.}\label{fig:SOCmaps}
+\includegraphics[width=18cm]{4PanelFigure.png} \caption{Global SOC stocks and SOC stock changes on cropland for the first 30 cm of the soil profile considering historical management data. Panel (a) shows global $\Delta SOC$ between historical land use and potential natural vegetation (PNV). The distribution of total global SOC stocks for the first 30 cm on cropland for the year 2010 is depcited in panel (b). Absolute (c) and relative (d) SOC stocks changes for the year 2010 are compared to a potential natural state identify different hotspots of SOC losses and gains.}\label{fig:SOCmaps}
 \end{figure}
 
 The global SOC debt has increased by about 14\% in the period between 1975 and 2010 from \(34.6\) to \(39.6\,\unit{GtC}\) (Fig. \ref{fig:SOCmaps}(a)). This corresponds to an average loss rate of \(0.14\,\unit{GtC\,yr^{-1}}\) in comparison to a hypothetical potential natural vegetation (PNV) state. Considering our estimate of the global SOC stock of around \(705\,\unit{GtC}\) in the upper \(30\,\unit{cm}\) in 1975, global SOC decreased by 0.2 per 1000 per year for the period between 1975 and 2010 in comparison to the PNV state. The speed of this SOC loss has decreased towards the end of the modeling period.
@@ -434,7 +434,7 @@ Our spatially explicit results show hotspots of SOC losses and gains compared to
 2. Relative SOC changes measured as stock changes factors \(F^{SCF}\) (Fig. \ref{fig:SOCmaps}(d)) are a helpful metric to analyze the impact of human cropping activities. They indicate areas with large differences in carbon inflows or SOC decay compared to natural vegetation that may hold potential to be overcome by improved agricultural practices. Large parts of tropical cropland seem to suffer from strongly reduced relative stocks, indicating SOC degradation. Conversely, irrigated cropland at the border to dry, unsuitable areas worldwide shows a strong relative increase in SOC stocks.
 
 \begin{figure}[h]
-\includegraphics[width=6.3cm]{../ResultNotebooks/Output/Images/SpatialDebtFigure} \caption{Global total $\Delta SOC$ and $\Delta SOC$ change for the first 30 cm of the soil profile. Panel (a) shows global $\Delta SOC$ as the difference between $SOC$ under historical land use and $SOC$ under potential natural vegetation (PNV) in the year 2010 summed over all land-use types. Computing the difference between the $\Delta SOC$ estimate for 2010 and for 1975 (b1) depicts areas of SOC depletion (SOC debt increase, red) and SOC accumulation (SOC debt decline, blue). Panel (b2) shows the of land-use change (LUC) induced change of $\Delta SOC$ between 1975 and 2010, whereas panel (b3) depicts the change due to changing agricultural management (MAN).}\label{fig:SOCdebt}
+\includegraphics[width=6.3cm]{SpatialDebtFigure.png} \caption{Global total $\Delta SOC$ and $\Delta SOC$ change for the first 30 cm of the soil profile. Panel (a) shows global $\Delta SOC$ as the difference between $SOC$ under historical land use and $SOC$ under potential natural vegetation (PNV) in the year 2010 summed over all land-use types. Computing the difference between the $\Delta SOC$ estimate for 2010 and for 1975 (b1) depicts areas of SOC depletion (SOC debt increase, red) and SOC accumulation (SOC debt decline, blue). Panel (b2) shows the of land-use change (LUC) induced change of $\Delta SOC$ between 1975 and 2010, whereas panel (b3) depicts the change due to changing agricultural management (MAN).}\label{fig:SOCdebt}
 \end{figure}
 
 The spatial distribution of the total \(\Delta SOC\) summed over all land-use types (Fig. \ref{fig:SOCdebt}(a)) and its change from 1975 to 2010 (Fig. \ref{fig:SOCdebt}(b1)) reveals areas of SOC debt decline and increase.
@@ -444,7 +444,7 @@ Regions with large cropland expansion (e.g.~Brazil, Southeast Asia, Canada) cont
 \subsection{Carbon flows in the cropland system}\label{carbon-flows-in-the-cropland-system}}
 
 \begin{figure}[h]
-\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/CarbonBudget} \caption{Global carbon flows within the cropland system for the year 2010 (in $\unit{MtC}$). Carbon is first photosynthesised by crop plants and then used for livestock feed and various other usages subsumed under human demand. After accounting for losses within the cropland system, there are three major C inputs to cropland SOC: manure, above- and below-ground residues. Large parts of C, however, are mineralized on the field before entering the soil. Additionally, C is transferred to and from global cropland soil stock via land-use change between cropland and natural vegetation. Finally, SOC is mineralized and flows back to the atmosphere.}\label{fig:FlowFig}
+\includegraphics[width=16cm]{CarbonBudget.png} \caption{Global carbon flows within the cropland system for the year 2010 (in $\unit{MtC}$). Carbon is first photosynthesised by crop plants and then used for livestock feed and various other usages subsumed under human demand. After accounting for losses within the cropland system, there are three major C inputs to cropland SOC: manure, above- and below-ground residues. Large parts of C, however, are mineralized on the field before entering the soil. Additionally, C is transferred to and from global cropland soil stock via land-use change between cropland and natural vegetation. Finally, SOC is mineralized and flows back to the atmosphere.}\label{fig:FlowFig}
 \end{figure}
 
 C is removed from the atmosphere via plant growth and allocated to different plant parts, which we aggregate to three pools (harvested organ, above- and below-ground residues). Whereas harvested organs as well as above ground-residues are taken (partially) from the field to be used for other purposes, below-ground residues (\(729\,\unit{MtC}\) in 2010) are directly returned to the field. We divide crop biomass usage into feed usage and aggregate all other usage types (e.g.~food, bioenergy and material) into a human demand category. Livestock feed demand for crop organ harvest and above-ground residues of \(1136\,\unit{MtC}\) is roughly equal to the human demand of \(1129\,\unit{MtC}\). Whereas large parts of feed intake are returned to the soils via manure (C input from manure at \(384\,\unit{MtC}\)), we assume the carbon demanded from humans (ending up as e.g.~compost, night soil and sewage) is not returned to soils. Besides manure C and below-ground residues, above-ground residues form the largest C input to the soil with \(1350\,\unit{MtC}\) returned to the fields in the year 2010. However, around 60\% of this organic C decomposes before it is integrated into soils. Due to the different composition of organic C, proportionally more C enters the slow pool from manure than from crop residue.
@@ -454,7 +454,7 @@ According to our model results, land-use change dynamics led to a C transfer fro
 \subsection{Agricultural management effects on SOC debt}\label{agricultural-management-effects-on-soc-debt}}
 
 \begin{figure}[h]
-\includegraphics[width=14cm]{../ResultNotebooks/Output/Images/scenario_horiz} \caption{(a) Global $\Delta SOC$ in $\unit{GtC}$ for different management scenarios. The stylized scenarios deviate from historical agricultural management patterns (histManagement) by holding effects of carbon inflows from residues (constResidues) or manure (constManure) constant at the 1975 level, or neglecting adoption of no-tillage practices over time (constTillage). The scenario constManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a hypothetical natural vegetation state. Panel (b) shows the carbon inflows from crop residue and manure.}\label{fig:SOCscen}
+\includegraphics[width=14cm]{ScenarioManageHoriz.png} \caption{(a) Global $\Delta SOC$ in $\unit{GtC}$ for different management scenarios. The stylized scenarios deviate from historical agricultural management patterns (histManagement) by holding effects of carbon inflows from residues (constResidues) or manure (constManure) constant at the 1975 level, or neglecting adoption of no-tillage practices over time (constTillage). The scenario constManagement combines all three modifications. Note that $\Delta SOC$ is defined as the difference of SOC under land-use compared to a hypothetical natural vegetation state. Panel (b) shows the carbon inflows from crop residue and manure.}\label{fig:SOCscen}
 \end{figure}
 
 We analyze the relative impact of different management practices by comparing the actual historical management scenario with counterfactual scenarios, where individual management practices (residues in constResidues, manure in constManure, tillage practices in constTillage, all three in constManagement) are kept static at the 1975 values (Figure \ref{fig:SOCscen}(a)). As shown by the difference between the constResidues scenario and the other counterfactuals, changes in residue return rates dominate the management effects. Without the historical increase in C inputs from residues to agricultural soils, the global \(\Delta SOC\) would decrease to \(41.7\,\unit{GtC}\) at a rate of \(0.20\,\unit{GtC\,yr^{-1}}\) --- a 35\% increase compared to \(0.14\,\unit{GtC\,yr^{-1}}\) for the histManagement estimates. Both the constManure and constTillage scenarios show only small deviations from the historical agricultural management values with \(0.15\,\unit{GtC\,yr^{-1}}\). The effect of no-tillage only becomes discernible from 2000 onwards.
@@ -476,7 +476,7 @@ To evaluate our model results against reference data in five steps: (1) we compa
 To evaluate our modeled SOC stocks and stock changes under agricultural management, we compare our results to the default IPCC stock change factors \(F^{\mathrm{SCF}}\) of 2006 \citep{lasco_cropland_in_ipcc_2006} and their refinements in 2019 \citep{ogle_cropland_in_ipcc_2019}. Both estimates are based on measurement data for cropland (see Fig. \ref{fig:SCFglo}). To allow for comparison, we aggregate our stock change factors weighted by grid-level cropland area to derive median factors for the four IPCC climate zones (Fig. \ref{fig:CLIMzone}). Note that IPCC Tier 1 factors are derived under the assumption that there is a linear change between steady states over 20 years, whereas our aggregated factors just reflect the relative change compared to a given potential natural vegetation reference stock without specifically tracking age of the cropland.
 
 \begin{figure}[h]
-\includegraphics[width=16cm]{../ResultNotebooks/Output/Images/SCF_comparison} \caption{$F^{\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \citep{ogle_cropland_in_ipcc_2019}. IPCC factors vary a bit with different types of management (low, medium, high). The results of the study span over a wide range -- indicated by the span between the 5th and 95th percentile -- but not overlapping with the IPCCs 2019 factors for tropical moist. The median for most regions is considerably lower than the IPCC factors.}\label{fig:SCFglo}
+\includegraphics[width=16cm]{SCFcomparison.png} \caption{$F^{\mathrm{SCF}}$ in comparison to IPCC Tier 1 default factors from the guidelines in 2006 \citep{lasco_cropland_in_ipcc_2006} and the update in 2019 \citep{ogle_cropland_in_ipcc_2019}. IPCC factors vary a bit with different types of management (low, medium, high). The results of the study span over a wide range -- indicated by the span between the 5th and 95th percentile -- but not overlapping with the IPCCs 2019 factors for tropical moist. The median for most regions is considerably lower than the IPCC factors.}\label{fig:SCFglo}
 \end{figure}
 
 Stock change factors for temperate climate zones of this study are lower than the default values of the IPCC. For the tropical regions the IPCC factors increased notably from the guidelines in 2006 \citep{lasco_cropland_in_ipcc_2006} to the update in 2019 \citep{ogle_cropland_in_ipcc_2019} due to the inclusion of more data points. Our results span over a broad range due to the different ages of the cropland but also due to different agricultural management practices within climate regions.
@@ -487,7 +487,7 @@ Stock change factors for temperate climate zones of this study are lower than th
 We compare our global SOC stocks with a wide range of global SOC stock estimates for the first 30 cm of the soil profile, using data from WISE \citep{batjes_harmonized_2016}, SoilGrids \citep{hengl_soilgrids250m_2017}, GSOC \citep{fao_global_2018}, LPJmL4 \citep{schaphoff_lpjml4_2018-1}, SoilGrids 2.0 \citep{poggio_soilgrids_2021}, and SOCDebtPaper \citep{sanderman_soil_2017} in Fig. \ref{fig:SOCglo}.
 
 \begin{figure}[h]
-\includegraphics[width=7cm]{../ResultNotebooks/Output/Images/glo_comparisonfigure} \caption{Modeled as well as observation-based estimates for global SOC stock in $\unit{GtC}$ for the first 30 cm of soil aggregated over all land area. The comparison against observation-based data (SoilGrids, SoilGrids 2.0, GSOC and WISE) is supplemented by modeled data from LPJmL4 \citep{schaphoff_lpjml4_2018-1} and estimates from \citep{sanderman_soil_2017}. We show values of this study for the year 2010 accounting for the historical land-use dynamics as well as for an hypothetical PNV.}\label{fig:SOCglo}
+\includegraphics[width=7cm]{gloComparisonFigure.png} \caption{Modeled as well as observation-based estimates for global SOC stock in $\unit{GtC}$ for the first 30 cm of soil aggregated over all land area. The comparison against observation-based data (SoilGrids, SoilGrids 2.0, GSOC and WISE) is supplemented by modeled data from LPJmL4 \citep{schaphoff_lpjml4_2018-1} and estimates from \citep{sanderman_soil_2017}. We show values of this study for the year 2010 accounting for the historical land-use dynamics as well as for an hypothetical PNV.}\label{fig:SOCglo}
 \end{figure}
 
 The global estimates of the total SOC stock of the upper 30 cm from this study are in the middle of the wide range of other modeled or observation-based estimates. Regional results (Fig. \ref{fig:SOCreg}) show that our estimates are well within the range of other estimates for most regions, but at the lower end for tropical moist and tropical wet areas. SoilGrids \citep{hengl_soilgrids250m_2017} especially stands out with its high estimate, since they include the litter horizon on top of the soil that might dominate especially polar and boreal soils. SoilGrids 2.0 \citep{poggio_soilgrids_2021} however, excludes litter C and thus marks the lower end for particularly northern regions. For the same reason it is also more comparable to our results, which do not account for litter C as well.
@@ -513,11 +513,11 @@ Additionally, we use the uncertainty estimates from SoilGrids 2.0 in Fig. \ref{f
 For the vast majority of grid cells our model results are between the 5th and 95th percentile of SoilGrids 2.0 estimates. We underestimate SOC stocks especially in dry areas (e.g.~close to the Sahara). Overestimated stocks are often situated in mountainous regions.
 
 \begin{figure}[h]
-\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/scatterCompareSoilGrids2_2010_lu} \caption{Correlation between modeled SOC stocks of this study and projected values from SoilGrids 2.0.}\label{fig:SOCSoilGrids2}
+\includegraphics[width=13cm]{scatterCompareSoilGrids2_2010_lu.png} \caption{Correlation between modeled SOC stocks of this study and projected values from SoilGrids 2.0.}\label{fig:SOCSoilGrids2}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=14cm]{../ResultNotebooks/Output/Images/SOCquantilesSoilGrids2} \caption{Global map on SOC results compared to uncertainty estimates from SoilGrids 2.0.}\label{fig:SOCSoilGrids2Q}
+\includegraphics[width=14cm]{SOCquantilesSoilGrids2.png} \caption{Global map on SOC results compared to uncertainty estimates from SoilGrids 2.0.}\label{fig:SOCSoilGrids2Q}
 \end{figure}
 
 \newpage
@@ -623,25 +623,29 @@ However, we clearly see that increases in agricultural productivity are not suff
 \subsection{Methods}
 
 \begin{figure}[!hp]
-\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/climatezones.png} 
+\includegraphics[width=13cm]{ClimateZones.png} 
 \caption{Climate zone map adpated from IPCC: The climate zone classification is based on the classification scheme of the IPCC guidelines \citep{eggleston_ipcc_2006} and has been reimplented by \citet{carre_background_2010}, which is the source of this data. Note that the reduced set, used for the comparison of stock change factors is included in the color code with temperate moist in light blue, temperate dry in dark violett, tropical moist in red and tropical dry in orange.}
 \label{fig:CLIMzone}
 \end{figure}
 
-\begin{sidewaystable*}[!htbp]
+\begin{table*}[!htbp]
 \caption{Parameterization of harvested organs and their corresponding residues parts as well as allometric coefficients: This table is mainly based on \citet{bodirsky_n2o_2012} together with simple carbon to dry matter assumptions. Allometric coefficients are used as descriped in \citet{eggleston_ipcc_2006} with HI\textsuperscript{prod} being slope\textsubscript{(T)}, HI\textsuperscript{area} intercept\textsubscript{(T)} and RS R\textsubscript{BG-BIO}.
 }
 \begin{tabular}{lllllllllllll}
 \tophline
-         &                                 & \multicolumn{3}{l}{Harvested Organs} & \multicolumn{3}{l}{Above-ground Residues} & \multicolumn{2}{l}{Below-ground Residues} & \multicolumn{3}{l}{Allometric coefficients}                \\
-Crop code  & Crop Type                       & nr/dm       & wm/dm      & c/dm      & nr/dm         & wm/dm        & c/dm       & nr/dm                & c/dm               & HI\textsuperscript{area} & HI\textsuperscript{prod} & RS   \\
+         &                                 & 
+         \multicolumn{3}{l}{\shortstack[l]{Harvested\\Organs}} & 
+         \multicolumn{3}{l}{\shortstack[l]{Above-ground\\Residues}} & 
+         \multicolumn{2}{l}{\shortstack[l]{Below-ground\\Residues}} & 
+         \multicolumn{3}{l}{\shortstack[l]{Allometric\\coefficients}}                \\
+Crop code  & Crop Type          & nr/dm       & wm/dm      & c/dm      & nr/dm         & wm/dm        & c/dm       & nr/dm                & c/dm               & HI\textsuperscript{area} & HI\textsuperscript{prod} & RS   \\
  \middlehline
 tece       & Temperate cereals               & 0.0217      & 1.14       & 0.42      & 0.0074        & 1.11         & 0.42       & 0.0098               & 0.38               & 0.58                     & 1.36                     & 0.24 \\
 maiz       & Maize                           & 0.016       & 1.14       & 0.42      & 0.0088        & 1.18         & 0.42       & 0.007                & 0.38               & 0.61                     & 1.03                     & 0.22 \\
 trce       & Tropical cereals                & 0.0163      & 1.14       & 0.42      & 0.007         & 1.18         & 0.42       & 0.006                & 0.38               & 0.79                     & 1.06                     & 0.22 \\
 rice\_pro  & Rice                            & 0.0128      & 1.15       & 0.42      & 0.007         & 1.11         & 0.42       & 0.009                & 0.38               & 2.46                     & 0.95                     & 0.16 \\
 soybean    & Soybean                         & 0.0629      & 1.13       & 0.42      & 0.008         & 1.11         & 0.42       & 0.008                & 0.38               & 1.35                     & 0.93                     & 0.19 \\
-rapeseed   & Other oil crops (incl rapeseed) & 0.0334      & 1.08       & 0.42      & 0.0081        & 1.11         & 0.42       & 0.0081               & 0.38               & 0                        & 1.86                     & 0.22 \\
+rapeseed   & \begin{tabular}{@{}l@{}}Other oil crops\\(incl rapeseed)\end{tabular} & 0.0334      & 1.08       & 0.42      & 0.0081        & 1.11         & 0.42       & 0.0081               & 0.38               & 0                        & 1.86                     & 0.22 \\
 groundnut  & Groundnuts                      & 0.0299      & 1.06       & 0.42      & 0.0224        & 1.11         & 0.42       & 0.008                & 0.38               & 1.54                     & 1.07                     & 0.19 \\
 sunflower  & Sunflower                       & 0.0216      & 1.08       & 0.42      & 0.008         & 1.11         & 0.42       & 0.008                & 0.38               & 0                        & 1.86                     & 0.22 \\
 oilpalm    & Oilpalms                        & 0.0027      & 1.01       & 0.49      & 0.0052        & 1.11         & 0.48       & 0.0053               & 0.47               & 0                        & 1.86                     & 0.24 \\
@@ -650,37 +654,37 @@ potato     & Potatoes                        & 0.0144      & 4.55       & 0.42  
 cassav\_sp & Tropical roots                  & 0.0053      & 2.95       & 0.42      & 0.0101        & 6.67         & 0.42       & 0.014                & 0.38               & 0                        & 0.85                     & 0.2  \\
 sugr\_cane & Sugar beet                      & 0.0024      & 3.7        & 0.42      & 0.008         & 3.82         & 0.42       & 0.008                & 0.38               & 0                        & 0.67                     & 0.07 \\
 sugr\_beet & Sugar beet                      & 0.0056      & 4.17       & 0.42      & 0.0176        & 5            & 0.42       & 0.014                & 0.38               & 0                        & 0.54                     & 0.2  \\
-others     & Fruits, Vegetables, Nuts          & 0.0267      & 5.49       & 0.42      & 0.0081        & 1.88         & 0.42       & 0.007                & 0.38               & 0                        & 0.39                     & 0.22 \\
+others     & \begin{tabular}{@{}l@{}}Fruits, Vegetables,\\Nuts\end{tabular}          & 0.0267      & 5.49       & 0.42      & 0.0081        & 1.88         & 0.42       & 0.007                & 0.38               & 0                        & 0.39                     & 0.22 \\
 foddr      & Forage                          & 0.0201      & 4.29       & 0.42      & 0.0192        & 4.1          & 0.42       & 0.0141               & 0.38               & 0                        & 0.28                     & 0.45 \\
 cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42      & 0.0093        & 1.18         & 0.42       & 0.007                & 0.38               & 0                        & 1.48                     & 0.13 \\
 \bottomhline
-         &                 & \multicolumn{6}{l}{
-                                           \begin{minipage}[t]{0.25\columnwidth}
+         &                 & \multicolumn{5}{l}{
+                                           \begin{minipage}[t]{0.3\columnwidth}
                                                       nr/dm -- nitrogen to dry matter ratio\\
                                                       wm/dm -- wet matter to dry matter ratio\\
                                                       c/dm  -- carbon to dry matter ratio\\
                                                       \end{minipage}} &
-                                                                        \multicolumn{5}{l}{
-                                                                            \begin{minipage}[t]{0.25\columnwidth}
+                                                                        \multicolumn{6}{l}{
+                                                                            \begin{minipage}[t]{0.3\columnwidth}
                                                                                         HI\textsuperscript{area} -- harvest index per area\\
                                                                                         HI\textsuperscript{prod} -- harvest index per production\\
                                                                                         RS -- root:shoot ratio \end{minipage}} 
   \end{tabular}
   \label{tab:c2dm}
-\end{sidewaystable*}
+\end{table*}
 
 \newpage
 
 \subsection{Results}
 
 \begin{figure}[!hp]
-\includegraphics[width=12cm]{../ResultNotebooks/Output/Images/scenario_init.png} 
+\includegraphics[width=12cm]{ScenarioInit.png} 
 \caption{Global $\Delta SOC$ for different SOC initialization choices in the start year 1901: Starting in 1901 with steady-state SOC under vegetation for all land-use types without any human cropping activities (Initial-natveg) lead to a smaller $\Delta SOC$ in 1975 and a steeper increase till 2010, as compared to initialzing with steady-state SOC stocks under historic land-use (Initial-spinup1510). On the other hand, assuming all SOC to be in land-use specific steady-state already in 1901 (Initial-eq) leads to the opposite effect of an already higher $\Delta SOC$ in 1975 and a less steeper increase till 2010. However, the difference between the dynamic historical management assumption (histManagement) compared to constant management assumption from 1975 on (constManagement) are of a similar size for all initialization choices.}
 \label{fig:SOCinit}
 \end{figure}
 
 \begin{figure}[!hp]
-\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/reg_comparisonfigure.png} 
+\includegraphics[width=13cm]{regComparisonFigure.png} 
 \caption{Modelled as well as data based estimation for climate zone specific SOC stock in GtC for the first 30 cm of soil aggregated over all land area: SoilGrids, GSOC and WISE do not consider changes over time and rely on soil profile data gather over a long period of time, which makes it hard to pinpoint a specific year to these SOC estimations. In this context they will be compared to modelled data (LPJmL4, this study) for the year 2010. PNV denotes the potential natural vegetation state without considering human cropping activities, calculated as reference stock within our model. We use the climate zone specification of the IPCC \citep{eggleston_ipcc_2006}.}
 \label{fig:SOCreg}
 \end{figure}
@@ -688,7 +692,7 @@ cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42  
 \newpage
 
 \begin{figure}[ht]
-\includegraphics[width=10cm]{../ResultNotebooks/Output/Images/scatterComparePointData_2010.png} 
+\includegraphics[width=10cm]{scatterComparePointData_2010.png} 
 \caption{Correlation between modeled and measured $SOC$ stocks. Given the wide span between minimun and maximum measured $SOC$ stocks within in a given cell, we correlated median values with our modeled results. Both cropland ($R2=0.09$) and areas with natural vegetation ($R2=0.08$) tend to be lower in our results than in the point measurements.}
 \label{fig:SOCpoint}
 \end{figure}
@@ -696,7 +700,7 @@ cottn\_pro & Cotton seed                     & 0.0365      & 1.09       & 0.42  
 \newpage
 
  \begin{figure}[ht]
-\includegraphics[width=13cm]{../ResultNotebooks/Output/Images/scatterCompareLPJmL42010_pnv.png}
+\includegraphics[width=13cm]{scatterCompareLPJmL42010_pnv.png}
 \caption{Correlation between modeled SOC stocks of LPJmL4 and this study for an hypothetical potential natural state (PNV) for the year 2010. The grey lines indicate the 1:1 line.}
 \label{fig:SOCLPJmL4}
 \end{figure}
