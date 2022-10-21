@@ -82,7 +82,7 @@ saveRDS(SCF_table, paste0(outputdir, "SFC_climatezone+range.rds"))
 ```{r plot climte map}
 
 climateIPCCr <- readRDS(paste0("Data/", rev, scen, "/IPCC_reduced.rds"))
-climateIPCC  <- readRDS(paste0("Data/", re, scen, "/IPCC.rds"))
+climateIPCC  <- readRDS(paste0("Data/", rev, scen, "/IPCC.rds"))
 
 getNames(climateIPCC) <- c("W-Temp Moist", "W-Temp Dry", "C-Temp Moist", 
                            "C-Temp Dry", "Polar Moist", "Polar Dry", 
@@ -91,7 +91,7 @@ getNames(climateIPCC) <- c("W-Temp Moist", "W-Temp Dry", "C-Temp Moist",
 
 climateIPCC <- climateIPCC[, , c(5, 7, 3, 1, 6, 8, 4, 2, 9, 11, 10, 12)]
 
-magpie_coord <- toolGetMapping("magpie_coord.rda", type = "cell")
+magpie_coord <- toolGetMapping("magpie_coord.rda", type = "cell", where="mappingfolder")
 climate2plot <- dimSums(climateIPCC * 
                           new.magpie("GLO", NULL, 
                                      getNames(climateIPCC), 
@@ -276,6 +276,7 @@ table
 ```
 
 ```{r table2boxplot, fig.height=3, fig.width=6}
+library(ggplot2)
 
 #comparison_table
 range_table <- dcast(range_table, Source + Management + Region ~ Data)
@@ -309,11 +310,15 @@ SCFTable <-
           axis.text.y  = element_text(size = legend_size),
           legend.title = element_text(size = legend_size),
           legend.text  = element_text(size = legend_size),
-          legend.spacing.y = unit(0.1, "cm"))
+          legend.spacing.y = unit(0.1, "cm"),
+          legend.position="bottom",
+          legend.direction = "vertical",
+          legend.box = "horizontal"
+          )
 
                   
 SCFTable 
 
 ggsave(paste0(outputdir, "Images/SCF_comparison.png"), 
-       plot = SCFTable, height = 8, width = 18, units = "cm", dpi = 300)
+       plot = SCFTable, height = 11, width = 17, units = "cm", dpi = 300)
 ```

@@ -183,7 +183,9 @@ vSOCemis <-
                                                     unit = "pt")),
         axis.text.x = element_text(angle = 60, hjust = 0.8, vjust = 0.8, 
                                    size = legend_size),
-        legend.position = "right", legend.direction = "vertical")
+        legend.position = "right", legend.direction = "vertical",
+        legend.margin = margin(0, 0, -1, 0),
+        legend.box.margin = margin(0, 0, 0, -20))
 
 
 vSOCinput <- 
@@ -202,7 +204,9 @@ vSOCinput <-
                                                     unit = "pt")),
         axis.text.x = element_text(angle = 60, hjust = 0.8, vjust = 0.8, 
                                    size = legend_size), 
-        legend.direction = "vertical")
+        legend.direction = "vertical", 
+        legend.margin = margin(-140, 0, 0, 0),
+        legend.box.margin = margin(0, 0, 0, -20))
 
 hSOCemis
 hSOCinput
@@ -221,7 +225,7 @@ vgrid <- plot_grid(plot_grid(vSOCemis  + theme(legend.position = "none"),
                    plot_grid(get_legend(vSOCemis), get_legend(vSOCinput), 
                              ncol = 1, label_fontface = "plain", 
                              label_size = 10, align = "v"),
-                   align = "h")
+                   align = "h", rel_widths = c(1.4, 1))
 
 hgrid
 vgrid
@@ -229,7 +233,7 @@ vgrid
 ggsave(paste0(outputdir, "Images/scenario_horiz.png"), 
        plot = hgrid, width = 15, height = 10, dpi = 300, units = "cm")
 ggsave(paste0(outputdir, "Images/scenario_verti.png"), 
-       plot = vgrid, width = 12, height = 15, dpi = 300, units = "cm")
+       plot = vgrid, width = 13, height = 15, dpi = 300, units = "cm")
 ```
 
 

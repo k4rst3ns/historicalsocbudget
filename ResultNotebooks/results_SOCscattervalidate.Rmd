@@ -148,7 +148,7 @@ for (i in 1:length(climates)) {
   text(max, min[i], paste0("Climate zone: ", gsub("_", " ", climates[i])), adj = c(1, 0))
 }
 
-dev.copy(png, paste0(outputdir, "scatterCompareSoilGrids2_2010_lu.png"), width = 1500, height = 1500, res = 250)
+dev.copy(png, paste0(outputdir, "scatterCompareSoilGrids2_2010_lu.png"), width = 1300, height = 1300, res = 250)
 dev.off()
 
 print(round(cor(SoilGrids2[, years, ], SOCStock_lu[, years, ], use = "complete.obs"), 2))
@@ -202,8 +202,8 @@ SOCplotmap   <- function(data, name, cols, limits, values = NULL, breaks, labels
                         title.position = "top",
                         # I shift the labels around, the should be placed
                         # exactly at the right end of each legend key
-                        title.hjust    = 0.5,
-                        label.hjust    = 1,
+                        title.hjust    = 0,
+                        label.hjust    = 0,
                         nrow           = 1,
                         byrow          = FALSE,
                         label.position = "bottom",
@@ -211,6 +211,8 @@ SOCplotmap   <- function(data, name, cols, limits, values = NULL, breaks, labels
                         keywidth       = 2
                       )) +
     theme(legend.position = "bottom",
+          legend.direction = "horizontal",
+          legend.margin    = margin(t = 0, r = 0, b = 0, l = 1, unit = "cm"),
           axis.title.x     = element_blank(),
           axis.title.y     = element_blank(),
           legend.text      = element_text(size = legend_size),
@@ -224,14 +226,14 @@ SOCplotmap   <- function(data, name, cols, limits, values = NULL, breaks, labels
 
 cols              <- c("#648FFF", "#DC267F", "#FFB000")[c(1, 3, 2)]
 SoilGrids2InMap   <- SOCplotmap(data     =  soilgrid22plot,
-                                 limits   = c(0.5, 1.5),
-                                 cols     = cols,
-                                 name     = expression("Modeled SOC stock in relation to uncertainty range of SoilGrids 2.0"),
-                            breaks   = c(0.5, 1.0, 1.5),
-                            labels   = c("lower than Q0.05", "inside [Q0.05, Q0.95] ", "higher than Q0.95", "No Cropland"))
+                                limits   = c(0.5, 1.5),
+                                cols     = cols,
+                                name     = NULL,
+                                breaks   = c(0.5, 1.0, 1.5),
+                                labels   = c("< Q0.05", "inside [Q0.05, Q0.95] ", "> Q0.95", ""))
 
 SoilGrids2InMap
-ggsave(paste0(outputdir, "/SOCquantilesSoilGrids2.png"),    plot = SoilGrids2InMap,    width = 15, height = 10, dpi = 300, units = "cm")
+ggsave(paste0(outputdir, "/SOCquantilesSoilGrids2.png"),    plot = SoilGrids2InMap,    width = 10, height = 7, dpi = 400, units = "cm")
 ```
 
 
